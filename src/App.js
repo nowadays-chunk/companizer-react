@@ -1,39 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+
+// ⛔️ Removed Firebase + Stripe
+// import { onAuthStateChanged } from 'firebase/auth';
+// import { auth } from './utils/firebaseConfig';
+// import { loadStripe } from '@stripe/stripe-js';
+// import { Elements } from '@stripe/react-stripe-js';
+
 import Dashboard from './layout/Dashboard';
 import HomePage from './pages/HomePage';
 import Blog from './pages/Blog';
 import Article from './pages/Article';
 import ProtectedRoute from './components/Partials/ProtectedRoute';
-import { auth } from './utils/firebaseConfig';
 import OrganizationRegistration from './components/Authentication/OrganizationRegistration';
 import { TranslationProvider } from './contexts/TranslationProvider';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
 import GanttChart from './pages/GanttChart';
 import Treasury from './pages/Treasury';
-import Management from './pages/Management'
-import Visualizer from './pages/UnitVisualizer'
+import Management from './pages/Management';
+import Visualizer from './pages/UnitVisualizer';
 import BilanComptable from './pages/BilanComptable';
 
-const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
-
-if (!process.env.REACT_APP_STRIPE_PUBLIC_KEY) {
-  console.error("Stripe public key is missing. Make sure to set REACT_APP_STRIPE_PUBLIC_KEY in your .env file.");
-}
+// If you enable Stripe again later, restore this:
+// const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
 
 const App = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [language, setLanguage] = useState('en'); // Default language
 
+  // ✅ New auth bootstrap: read from localStorage (set by axios login / registration)
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
-      setLoading(false); // Stop loading once auth state is determined
-    });
-    return () => unsubscribe();
+    try {
+      const token = localStorage.getItem('token');
+      const rawUser = localStorage.getItem('userData');
+
+      if (token && rawUser) {
+        const parsedUser = JSON.parse(rawUser);
+        setUser(parsedUser);
+      } else {
+        setUser(null);
+      }
+    } catch (err) {
+      console.error('Error reading auth data from localStorage:', err);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   if (loading) {
@@ -45,98 +57,98 @@ const App = () => {
   };
 
   return (
-    <Elements stripe={stripePromise}>
-      <TranslationProvider>
+    <TranslationProvider>
+      <Routes>
+        <Route
+          path="/"
+          element={<HomePage />}
+        />
 
-        <Routes>
-          <Route
-            path="/"
-            element={<HomePage />}
-          />
-          <Route
-            path="/summary"
-            element={
-              <ProtectedRoute user={user}>
-                <Dashboard>
-                  <Treasury />
-                </Dashboard>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/bilan-comptable"
-            element={
-              <ProtectedRoute user={user}>
-                <Dashboard>
-                  <BilanComptable />
-                </Dashboard>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/:module/:subModule/:component"
-            element={
-              <ProtectedRoute user={user}>
-                <Dashboard>
-                  <Management />
-                </Dashboard>
-              </ProtectedRoute>
-            }
-          />
-          { /* Blog and documentation */}
-          <Route
-            path="/blog"
-            element={
-              <ProtectedRoute user={user}>
-                <Dashboard>
-                  <Blog language={language} switchLanguage={switchLanguage} />
-                </Dashboard>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/article/:slug"
-            element={
-              <ProtectedRoute user={user}>
-                <Dashboard>
-                  <Article language={language} switchLanguage={switchLanguage} />
-                </Dashboard>
-              </ProtectedRoute>
-            }
-          />
-          { /* Authentication */}
-          <Route
-            path="/registration"
-            element={
-              <OrganizationRegistration />
-            }
-          />
- 
+        <Route
+          path="/summary"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Treasury />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
 
-          <Route
-            path="/gantt-chart"
-            element={
-              <ProtectedRoute user={user}>
-                <Dashboard>
-                  <GanttChart />
-                </Dashboard>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/:entity/:id"
-            element={
-              <ProtectedRoute user={user}>
-                <Dashboard>
-                  <Visualizer />
-                </Dashboard>
-              </ProtectedRoute>
-            }
-          />
-          { /* Configuration */}
-        </Routes>
-      </TranslationProvider>
-    </Elements>
+        <Route
+          path="/bilan-comptable"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <BilanComptable />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/:module/:subModule/:component"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Management />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Blog and documentation */}
+        <Route
+          path="/blog"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Blog language={language} switchLanguage={switchLanguage} />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/article/:slug"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Article language={language} switchLanguage={switchLanguage} />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Authentication */}
+        <Route
+          path="/registration"
+          element={<OrganizationRegistration />}
+        />
+
+        <Route
+          path="/gantt-chart"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <GanttChart />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/:entity/:id"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Visualizer />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </TranslationProvider>
   );
 };
 

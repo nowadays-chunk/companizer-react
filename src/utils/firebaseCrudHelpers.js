@@ -1,131 +1,122 @@
-import { db } from './firebaseConfig'; // Assuming you have a Firebase config file
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where, getDoc } from 'firebase/firestore';
+// src/utils/orgApiHelpers.js
+import api from "./apiClient";
 
-const organizationId = JSON.parse(localStorage.getItem('userData')).organizationId;
-
-// Function to fetch documents specific to an organization from a subcollection
+// GET /api/subcollections/:subcollectionName
 export const fetchDocuments = async (subcollectionName) => {
   try {
-    const subcollectionRef = collection(db, 'organizations', organizationId, subcollectionName);
-    const snapshot = await getDocs(subcollectionRef);
-    const documentsList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    return documentsList;
+    const { data } = await api.get(`/subcollections/${subcollectionName}`);
+    return data;
   } catch (error) {
     console.error(`Error fetching documents from ${subcollectionName}:`, error);
     return [];
   }
 };
 
-// Function to add a new document linked to an organization in a subcollection
+// POST /api/subcollections/:subcollectionName
 export const addDocument = async (subcollectionName, documentData) => {
   try {
-    documentData.organizationId = organizationId;
-    const subcollectionRef = collection(db, 'organizations', organizationId, subcollectionName);
-    const docRef = await addDoc(subcollectionRef, documentData);
-    return docRef.id; // Return the ID of the newly created document
+    const { data } = await api.post(
+      `/subcollections/${subcollectionName}`,
+      documentData
+    );
+    return data.id;
   } catch (error) {
     console.error(`Error adding document to ${subcollectionName}:`, error);
     throw new Error(`Could not add document to ${subcollectionName}`);
   }
 };
 
-// Function to update an existing document in a subcollection
+// PUT /api/subcollections/:subcollectionName/:documentId
 export const updateDocument = async (subcollectionName, documentId, documentData) => {
   try {
-    const docRef = doc(db, 'organizations', organizationId, subcollectionName, documentId);
-    await updateDoc(docRef, documentData);
+    await api.put(
+      `/subcollections/${subcollectionName}/${documentId}`,
+      documentData
+    );
   } catch (error) {
     console.error(`Error updating document in ${subcollectionName}:`, error);
     throw new Error(`Could not update document in ${subcollectionName}`);
   }
 };
 
-// Function to delete a document from a subcollection
+// DELETE /api/subcollections/:subcollectionName/:documentId
 export const deleteDocument = async (subcollectionName, documentId) => {
   try {
-    const docRef = doc(db, 'organizations', organizationId, subcollectionName, documentId);
-    await deleteDoc(docRef);
+    await api.delete(`/subcollections/${subcollectionName}/${documentId}`);
   } catch (error) {
     console.error(`Error deleting document from ${subcollectionName}:`, error);
     throw new Error(`Could not delete document from ${subcollectionName}`);
   }
 };
 
-// Function to fetch a document from subcollection that has a value in a property
-export const fetchDocumentsBySelectValue = async (relativeCollection, foreignKey, foreignValue) => {
+// GET /api/subcollections/:relativeCollection/search-array?field=...&value=...
+export const fetchDocumentsBySelectValue = async (
+  relativeCollection,
+  foreignKey,
+  foreignValue
+) => {
   try {
-    const subcollectionRef = collection(db, 'organizations', organizationId, relativeCollection);
-
-    // Create a query against the collection
-    const q = query(subcollectionRef, where(foreignKey, 'array-contains', foreignValue));
-
-    // Execute the query and get the documents
-    const snapshot = await getDocs(q);
-    const documentsList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-    return documentsList;
+    const { data } = await api.get(
+      `/subcollections/${relativeCollection}/search-array`,
+      {
+        params: { field: foreignKey, value: foreignValue },
+      }
+    );
+    return data;
   } catch (error) {
     console.error(`Error fetching documents from ${relativeCollection}:`, error);
     return [];
   }
-}
+};
 
-// Function to fetch a document from subcollection that has a value in a list property
-export const fetchDocumentsByFieldValue = async (relativeCollection, fieldName, fieldValue) => {
+// GET /api/subcollections/:relativeCollection/search?field=...&value=...
+export const fetchDocumentsByFieldValue = async (
+  relativeCollection,
+  fieldName,
+  fieldValue
+) => {
   try {
-    const subcollectionRef = collection(db, 'organizations', organizationId, relativeCollection);
-
-    // Create a query against the collection
-    const q = query(subcollectionRef, where(fieldName, '==', fieldValue));
-
-    // Execute the query and get the documents
-    const snapshot = await getDocs(q);
-    const documentsList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-    return documentsList;
+    const { data } = await api.get(
+      `/subcollections/${relativeCollection}/search`,
+      {
+        params: { field: fieldName, value: fieldValue },
+      }
+    );
+    return data;
   } catch (error) {
     console.error(`Error fetching documents from ${relativeCollection}:`, error);
     return [];
   }
-}
-// Function to fetch a single document from subcollection with an Id
+};
+
+// GET /api/subcollections/:subcollectionName/:documentId
 export const fetchDocumentById = async (subcollectionName, documentId) => {
-  console.log("Fetching document with ID:", documentId);
-  console.log("In subcollection:", subcollectionName);
-  console.log("Under organization ID:", organizationId);
-
   try {
-    const docRef = doc(db, 'organizations', organizationId, subcollectionName, documentId);
-    console.log("Document Reference:", docRef.path); // Log the path being queried
-
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data()); // Log the retrieved data
-      return { id: docSnap.id, ...docSnap.data() };
-    } else {
-      console.error(`No document found with ID ${documentId} in ${subcollectionName}`);
-      return null;
-    }
+    const { data } = await api.get(
+      `/subcollections/${subcollectionName}/${documentId}`
+    );
+    return data;
   } catch (error) {
-    console.error(`Error fetching document with ID ${documentId} from ${subcollectionName}:`, error);
+    console.error(
+      `Error fetching document with ID ${documentId} from ${subcollectionName}:`,
+      error
+    );
     return null;
   }
 };
 
-
-export const helpersWrapper = (collection) => {
-  const fetchItems = () => fetchDocuments(collection);
-  const addItem = (item) => addDocument(collection, item);
-  const updateItem = (id, item) => updateDocument(collection, id, item);
-  const deleteItem = (id) => deleteDocument(collection, id);
-  const fetchItemById = (id) => fetchDocumentById(collection, id);
+export const helpersWrapper = (collectionName) => {
+  const fetchItems = () => fetchDocuments(collectionName);
+  const addItem = (item) => addDocument(collectionName, item);
+  const updateItem = (id, item) => updateDocument(collectionName, id, item);
+  const deleteItem = (id) => deleteDocument(collectionName, id);
+  const fetchItemById = (id) => fetchDocumentById(collectionName, id);
 
   return {
     fetchItems,
     addItem,
     updateItem,
     deleteItem,
-    fetchItemById
-  }
-}
+    fetchItemById,
+  };
+};
