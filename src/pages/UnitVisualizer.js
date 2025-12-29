@@ -11,19 +11,34 @@ import {
     Container,
     Box,
 } from '@mui/material';
+
 import { Link } from 'react-router-dom';
+import { fetchDocumentById } from '../utils/firebaseCrudHelpers'; // Assume this is a utility to fetch item data
+
+const pathify = (urlParam) => {
+    return urlParam.split('-').map((s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+    }).join('');
+}
 
 const Visualizer = () => {
-    const { entity, id } = useParams();
-    const componentName = entity.charAt(0).toUpperCase() + entity.slice(1);
+    const { main, sub, entity, id } = useParams();
+    const holdingFolder = pathify(main);
+    const subFolder = pathify(sub);
+    const componentName = pathify(entity);
     const [itemData, setItemData] = useState(null);
     const [config, setConfig] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const fetchItemById = (entity, id) => {
+        return fetchDocumentById(entity.replace('-', '_'), id)
+    };
+
     useEffect(() => {
         const loadConfigAndData = async () => {
             try {
-                const configModule = await import(`../components/Management/${componentName}`);
+                console.log("component : ", componentName);
+                const configModule = await import(`../components/Management/${holdingFolder}/${subFolder}/${componentName}`);
                 setConfig(configModule);
             } catch (error) {
                 console.error("Error loading configuration:", error);
@@ -37,7 +52,7 @@ const Visualizer = () => {
         const fetchData = async () => {
             if (config) {
                 try {
-                    const data = await config.fetchItemById(id);
+                    const data = await fetchItemById(entity, id);
                     setItemData(data);
                 } catch (error) {
                     console.error("Error fetching item data:", error);

@@ -106,11 +106,12 @@ export const fetchDocumentById = async (subcollectionName, documentId) => {
 };
 
 export const helpersWrapper = (collectionName) => {
-  const fetchItems = () => fetchDocuments(collectionName);
-  const addItem = (item) => addDocument(collectionName, item);
-  const updateItem = (id, item) => updateDocument(collectionName, id, item);
-  const deleteItem = (id) => deleteDocument(collectionName, id);
-  const fetchItemById = (id) => fetchDocumentById(collectionName, id);
+  const tableName = collectionName.replace('-', '_');
+  const fetchItems = () => fetchDocuments(tableName);
+  const addItem = (item) => addDocument(tableName, item);
+  const updateItem = (id, item) => updateDocument(tableName, id, item);
+  const deleteItem = (id) => deleteDocument(tableName, id);
+  const fetchItemById = (id) => fetchDocumentById(tableName, id);
 
   return {
     fetchItems,

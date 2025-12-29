@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Container, Paper, Button, CircularProgress, Backdrop, FormControlLabel, Switch } from '@mui/material';
+import {
+  Box,
+  Container,
+  Paper,
+  Button,
+  CircularProgress,
+  Backdrop,
+  FormControlLabel,
+  Switch,
+} from '@mui/material';
 
 import FilterManager from './FilterManager';
 import BaseTableToolbar from './BaseTableToolbar';
 import BaseTable from './BaseTable.js';
 import BaseModal from './BaseModal';
-
+import { keyToLinkMap } from '../../../layout/keyToLinkMap';
 import { faker } from '@faker-js/faker';
 
 const getRandomElementId = (options) => {
-  if(!options || options.length == 0) return null;
+  if (!options || options.length === 0) return null;
   return options[Math.floor(Math.random() * options.length)].id;
 };
 
 const getMultipleRandomElementIds = (options) => {
-  if(!options || options.length === 0) return []
+  if (!options || options.length === 0) return [];
   const selectedOptions = [];
-  const maxSelections = Math.min(3, options.length); // Ensure no more than 3 selections and not more than available options
-  const numSelections = Math.floor(Math.random() * maxSelections) + 1; // Random number of selections between 1 and maxSelections
+  const maxSelections = Math.min(3, options.length); // no more than 3 and not more than available options
+  const numSelections = Math.floor(Math.random() * maxSelections) + 1; // 1..maxSelections
 
   while (selectedOptions.length < numSelections) {
     const option = getRandomElementId(options);
@@ -27,6 +36,43 @@ const getMultipleRandomElementIds = (options) => {
   }
 
   return selectedOptions;
+};
+
+// ----- generic numeric helper obeying min / max / decimals -----
+const getRandomNumberInRange = (min = 0, max = 1000, decimals = 0) => {
+  const rand = Math.random() * (max - min) + min;
+  if (decimals > 0) {
+    return Number(rand.toFixed(decimals));
+  }
+  return Math.round(rand);
+};
+
+// ----- UPDATED: date helper returning MySQL DATETIME string -----
+const getRandomDateISO = (mode = 'past') => {
+  const now = new Date();
+  const threeYears = 1000 * 60 * 60 * 24 * 365 * 3;
+  let ts;
+
+  if (mode === 'future') {
+    ts = now.getTime() + Math.random() * threeYears;
+  } else if (mode === 'past') {
+    ts = now.getTime() - Math.random() * threeYears;
+  } else {
+    ts = now.getTime() - threeYears / 2 + Math.random() * threeYears;
+  }
+
+  const d = new Date(ts);
+  const pad = (n) => String(n).padStart(2, '0');
+
+  // MySQL DATETIME(6) accepts this format just fine
+  return (
+    `${d.getFullYear()}-` +
+    `${pad(d.getMonth() + 1)}-` +
+    `${pad(d.getDate())} ` +
+    `${pad(d.getHours())}:` +
+    `${pad(d.getMinutes())}:` +
+    `${pad(d.getSeconds())}`
+  );
 };
 
 export default function BaseTableComponent({
@@ -93,7 +139,7 @@ export default function BaseTableComponent({
   };
 
   const handleDeleteItems = async () => {
-    if (window.confirm("Are you sure you want to delete the selected items?")) {
+    if (window.confirm('Are you sure you want to delete the selected items?')) {
       setLoading(true);
       for (const id of selected) {
         await deleteItem(id);
@@ -121,40 +167,89 @@ export default function BaseTableComponent({
   const handleViewItem = () => {
     if (selected.length === 1) {
       const id = selected[0];
-      const url = `/#/${entityName.toLowerCase()}/${id}`;
+      const baseSlashedURL = keyToLinkMap[entityName.toLowerCase().replace(/ /g, '-')];
+      const url = `/#${baseSlashedURL}/${id}`;
       window.open(url, '_blank', 'noopener,noreferrer');
     }
   };
 
-
+  // ===== generateRandomRow with min / max / decimals support =====
   const generateRandomRow = async () => {
     try {
-      const newRow = Object.keys(refreshedFieldsConfig).reduce((acc, key) => {
-        const field = refreshedFieldsConfig[key];
-        let value;
-        if (field.faker) {
-          const fakerPath = field.faker.split('.');
-          value = fakerPath.reduce((acc, method) => acc[method], faker);
-          if (field.type === 'select' && field.multiple) {
-            value = getMultipleRandomElementIds(field.options);
-          } else if (field.type === 'select') {
-            value = getRandomElementId(field.options);
-          } else if (field.faker === 'date.month') {
-            const month = new Date(0, Math.floor(Math.random() * 12)).toLocaleString('default', { month: 'long' });
-            value = month.charAt(0).toUpperCase() + month.slice(1);
-          }else if (field.faker.includes('date')) {
-            value = new Date(value()).toISOString();
-          } else {
-            value = typeof value === 'function' ? value() : value;
-          } 
-        } else {
-          value = field.type === 'number' ? faker.datatype.number() : faker.lorem.word();
-        }
-        acc[key] = value;
-        return acc;
-      }, {});
+      const newRow = Object.entries(refreshedFieldsConfig).reduce(
+        (acc, [key, field]) => {
+          let value;
 
-      console.log("New row : ", newRow)
+          // 1) SELECT fields (single & multiple)
+          if (field.type === 'select') {
+            if (field.multiple) {
+              value = getMultipleRandomElementIds(field.options);
+            } else {
+              value = getRandomElementId(field.options);
+            }
+          }
+          // 2) DATE fields -> MySQL DATETIME string (past or future)
+          else if (field.type === 'date') {
+            if (field.faker === 'date.future') {
+              value = getRandomDateISO('future');
+            } else if (field.faker === 'date.past') {
+              value = getRandomDateISO('past');
+            } else {
+              // generic date
+              value = getRandomDateISO();
+            }
+          }
+          // 3) NUMBER fields -> use min / max / decimals from fieldConfig
+          else if (field.type === 'number') {
+            const min = field.min ?? 0;
+            const max = field.max ?? 1000;
+            const decimals = field.decimals ?? 0;
+            value = getRandomNumberInRange(min, max, decimals);
+          }
+          // 4) SPECIAL case: date.month (even if type is "text")
+          else if (field.faker === 'date.month') {
+            const monthIndex = Math.floor(Math.random() * 12); // 0..11
+            const month = new Date(0, monthIndex).toLocaleString('default', {
+              month: 'long',
+            });
+            value = month.charAt(0).toUpperCase() + month.slice(1);
+          }
+          // 5) Generic faker for text/etc
+          else if (field.faker) {
+            try {
+              const fakerFnOrVal = field.faker
+                .split('.')
+                .reduce((accObj, method) => accObj?.[method], faker);
+
+              value =
+                typeof fakerFnOrVal === 'function'
+                  ? fakerFnOrVal()
+                  : fakerFnOrVal ?? faker.lorem.word();
+            } catch (e) {
+              // fallback if faker path is wrong
+              value = faker.lorem.word();
+            }
+          } else {
+            // 6) Fallbacks when nothing else is defined
+            if (field.type === 'number') {
+              const min = field.min ?? 0;
+              const max = field.max ?? 1000;
+              const decimals = field.decimals ?? 0;
+              value = getRandomNumberInRange(min, max, decimals);
+            } else if (field.type === 'date') {
+              value = getRandomDateISO();
+            } else {
+              value = faker.lorem.word();
+            }
+          }
+
+          acc[key] = value;
+          return acc;
+        },
+        {}
+      );
+
+      console.log('New row : ', newRow);
       await addItem(newRow);
       const data = await fetchItems();
       setItems(data);
@@ -166,7 +261,11 @@ export default function BaseTableComponent({
   return (
     <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
       <Box sx={{ maxWidth: '80vw', position: 'relative' }}>
-        <FilterManager filters={filters} setFilters={setFilters} fieldConfig={fieldConfig} />
+        <FilterManager
+          filters={filters}
+          setFilters={setFilters}
+          fieldConfig={fieldConfig}
+        />
         <Paper sx={{ width: '100%', mb: 2 }}>
           <BaseTableToolbar
             numSelected={selected.length}
@@ -183,15 +282,20 @@ export default function BaseTableComponent({
           >
             Generate Random Row
           </Button>
-          <Button onClick={handleViewItem} variant="contained" color="primary" sx={{ margin: 2 }}>
+          <Button
+            onClick={handleViewItem}
+            variant="contained"
+            color="primary"
+            sx={{ margin: 2 }}
+          >
             View Selected
           </Button>
           <BaseTable
             items={filteredItems}
             order={order}
-            setOrder={setOrder}          // Ensure this is passed
+            setOrder={setOrder}
             orderBy={orderBy}
-            setOrderBy={setOrderBy}      // Ensure this is passed
+            setOrderBy={setOrderBy}
             selected={selected}
             setSelected={setSelected}
             page={page}
@@ -203,7 +307,12 @@ export default function BaseTableComponent({
             fieldConfig={fieldConfig}
           />
         </Paper>
-        <FormControlLabel control={<Switch checked={dense} onChange={() => setDense(!dense)} />} label="Dense padding" />
+        <FormControlLabel
+          control={
+            <Switch checked={dense} onChange={() => setDense(!dense)} />
+          }
+          label="Dense padding"
+        />
         <BaseModal
           open={modalOpen}
           onClose={() => setModalOpen(false)}
@@ -211,7 +320,10 @@ export default function BaseTableComponent({
           initialData={currentItem}
           fieldConfig={fieldConfig}
         />
-        <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={loading}
+        >
           <CircularProgress color="inherit" />
         </Backdrop>
       </Box>

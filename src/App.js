@@ -138,7 +138,7 @@ const App = () => {
         />
 
         <Route
-          path="/:entity/:id"
+          path="/:main/:sub/:entity/:id"
           element={
             <ProtectedRoute user={user}>
               <Dashboard>
