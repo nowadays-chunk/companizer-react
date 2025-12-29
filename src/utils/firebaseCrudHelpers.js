@@ -12,22 +12,27 @@ export const fetchDocuments = async (subcollectionName) => {
   }
 };
 
+// ✅ CREATE — keep the name: createDocument
 // POST /api/subcollections/:subcollectionName
-export const addDocument = async (subcollectionName, documentData) => {
+export const createDocument = async (subcollectionName, documentData) => {
   try {
     const { data } = await api.post(
       `/subcollections/${subcollectionName}`,
       documentData
     );
-    return data.id;
+    return data.id; // backend sends { id: ... }
   } catch (error) {
-    console.error(`Error adding document to ${subcollectionName}:`, error);
-    throw new Error(`Could not add document to ${subcollectionName}`);
+    console.error(`Error creating document in ${subcollectionName}:`, error);
+    throw new Error(`Could not create document in ${subcollectionName}`);
   }
 };
 
 // PUT /api/subcollections/:subcollectionName/:documentId
-export const updateDocument = async (subcollectionName, documentId, documentData) => {
+export const updateDocument = async (
+  subcollectionName,
+  documentId,
+  documentData
+) => {
   try {
     await api.put(
       `/subcollections/${subcollectionName}/${documentId}`,
@@ -105,10 +110,12 @@ export const fetchDocumentById = async (subcollectionName, documentId) => {
   }
 };
 
+// Convenience wrapper for tables
 export const helpersWrapper = (collectionName) => {
-  const tableName = collectionName.replace('-', '_');
+  const tableName = collectionName.replace("-", "_");
+
   const fetchItems = () => fetchDocuments(tableName);
-  const addItem = (item) => addDocument(tableName, item);
+  const addItem = (item) => createDocument(tableName, item);
   const updateItem = (id, item) => updateDocument(tableName, id, item);
   const deleteItem = (id) => deleteDocument(tableName, id);
   const fetchItemById = (id) => fetchDocumentById(tableName, id);

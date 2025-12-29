@@ -22,7 +22,7 @@ const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
-    marginTop: 100,
+    marginTop: 50,
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin'),

@@ -13,7 +13,6 @@ import {
 import FilterManager from './FilterManager';
 import BaseTableToolbar from './BaseTableToolbar';
 import BaseTable from './BaseTable.js';
-import BaseModal from './BaseModal';
 import { keyToLinkMap } from '../../../layout/keyToLinkMap';
 import { faker } from '@faker-js/faker';
 
@@ -93,8 +92,6 @@ export default function BaseTableComponent({
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [filters, setFilters] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [currentItem, setCurrentItem] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -127,18 +124,44 @@ export default function BaseTableComponent({
     setFilteredItems(filteredData);
   }, [filters, items]);
 
-  const handleAddItem = () => {
-    setCurrentItem(null);
-    setModalOpen(true);
+  const getBaseSlashedURL = () => {
+    return keyToLinkMap[entityName.toLowerCase().replace(/ /g, '-')];
   };
 
+  const openTabsForSelected = (mode) => {
+    const baseSlashedURL = getBaseSlashedURL();
+    if (!baseSlashedURL || selected.length === 0) return;
+
+    selected.forEach((id) => {
+      const url = `/#${baseSlashedURL}/${mode}/${id}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
+  };
+
+  // CREATE -> open single "create" page (no need for selection)
+  const handleAddItem = () => {
+    const baseSlashedURL = getBaseSlashedURL();
+    if (!baseSlashedURL) return;
+
+    const url = `/#${baseSlashedURL}/create`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  // EDIT -> open edit tab for each selected item
   const handleEditItem = () => {
-    const itemToEdit = filteredItems.find((item) => item.id === selected[0]);
-    setCurrentItem(itemToEdit);
-    setModalOpen(true);
+    if (selected.length === 0) return;
+    openTabsForSelected('edit');
+  };
+
+  // VIEW -> open view tab for each selected item
+  const handleViewItem = () => {
+    if (selected.length === 0) return;
+    openTabsForSelected('view');
   };
 
   const handleDeleteItems = async () => {
+    if (!selected.length) return;
+
     if (window.confirm('Are you sure you want to delete the selected items?')) {
       setLoading(true);
       for (const id of selected) {
@@ -151,29 +174,8 @@ export default function BaseTableComponent({
     }
   };
 
-  const handleModalSubmit = async (itemData) => {
-    setLoading(true);
-    if (currentItem) {
-      await updateItem(currentItem.id, itemData);
-    } else {
-      await addItem(itemData);
-    }
-    const data = await fetchItems();
-    setItems(data);
-    setModalOpen(false);
-    setLoading(false);
-  };
-
-  const handleViewItem = () => {
-    if (selected.length === 1) {
-      const id = selected[0];
-      const baseSlashedURL = keyToLinkMap[entityName.toLowerCase().replace(/ /g, '-')];
-      const url = `/#${baseSlashedURL}/${id}`;
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
-  };
-
-  // ===== generateRandomRow with min / max / decimals support =====
+  // NOTE: addItem / updateItem are still available if you want
+  // to keep "Generate Random Row" using the API directly.
   const generateRandomRow = async () => {
     try {
       const newRow = Object.entries(refreshedFieldsConfig).reduce(
@@ -312,13 +314,6 @@ export default function BaseTableComponent({
             <Switch checked={dense} onChange={() => setDense(!dense)} />
           }
           label="Dense padding"
-        />
-        <BaseModal
-          open={modalOpen}
-          onClose={() => setModalOpen(false)}
-          onSubmit={handleModalSubmit}
-          initialData={currentItem}
-          fieldConfig={fieldConfig}
         />
         <Backdrop
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}

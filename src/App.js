@@ -137,16 +137,39 @@ const App = () => {
           }
         />
 
-        <Route
-          path="/:main/:sub/:entity/:id"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Visualizer />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+       <Route
+        path="/:main/:sub/:entity/view/:id"
+        element={
+          <ProtectedRoute user={user}>
+            <Dashboard>
+              <Visualizer mode="view"/>
+            </Dashboard>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/:main/:sub/:entity/edit/:id"
+        element={
+          <ProtectedRoute user={user}>
+            <Dashboard>
+              <Visualizer mode="edit"/>
+            </Dashboard>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/:main/:sub/:entity/create"
+        element={
+          <ProtectedRoute user={user}>
+            <Dashboard>
+              <Visualizer mode="create"/>
+            </Dashboard>
+          </ProtectedRoute>
+        }
+      />
+
       </Routes>
     </TranslationProvider>
   );
