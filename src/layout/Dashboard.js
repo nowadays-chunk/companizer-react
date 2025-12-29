@@ -1,15 +1,17 @@
+// src/layout/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import {
   Box,
   CssBaseline,
   IconButton,
   Button,
-  Container
+  Container,
 } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import MenuIcon from '@mui/icons-material/Menu';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 import { translate } from '../utils/translate';
 import { useTranslation } from '../contexts/TranslationProvider';
@@ -18,34 +20,48 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import DrawerDashboard from './Drawer';
 import { keyToLinkMap } from './keyToLinkMap';
 
-const drawerWidth = 300;
-
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    marginTop: 50,
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin'),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && { marginLeft: 0 }),
-  }),
-);
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ open }) => ({
-  transition: '0.3s',
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-  }),
-}));
+const expandedDrawerWidth = 300;
+const collapsedDrawerWidth = 70;
 
 // count /a/b/c format routes only
 const isThreeSegmentRoute = (route) =>
   route.split('/').filter(Boolean).length === 3;
 
 const validRoutes = Object.values(keyToLinkMap).filter(isThreeSegmentRoute);
+
+const Main = styled('main', {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  marginTop: 50,
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create(['margin', 'width'], {
+    duration: theme.transitions.duration.standard,
+  }),
+  marginLeft: open ? expandedDrawerWidth : collapsedDrawerWidth,
+  [theme.breakpoints.down('md')]: {
+    // still align with collapsed/expanded drawer, but smaller screens
+    marginLeft: open ? expandedDrawerWidth : collapsedDrawerWidth,
+    padding: theme.spacing(2),
+  },
+}));
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    duration: theme.transitions.duration.standard,
+  }),
+  zIndex: theme.zIndex.drawer + 1,
+  ...(open && {
+    width: `calc(100% - ${expandedDrawerWidth}px)`,
+    marginLeft: `${expandedDrawerWidth}px`,
+  }),
+  ...(!open && {
+    width: `calc(100% - ${collapsedDrawerWidth}px)`,
+    marginLeft: `${collapsedDrawerWidth}px`,
+  }),
+}));
 
 const Dashboard = ({ children }) => {
   const theme = useTheme();
@@ -65,33 +81,35 @@ const Dashboard = ({ children }) => {
     localStorage.setItem('showAnalytics', JSON.stringify(showAnalytics));
   }, [showAnalytics]);
 
-  const handleDrawerOpen = () => setOpen(true);
-  const handleDrawerClose = () => setOpen(false);
+  const handleDrawerToggle = () => setOpen((prev) => !prev);
 
-  // ✅ SIMPLE LOGOUT — NO AXIOS
+  // simple logout
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userData');
     localStorage.removeItem('organizationData');
-
     window.location.href = '/';
   };
 
   const toggleShowAnalytics = () => {
-    setShowAnalytics(prev => !prev);
+    setShowAnalytics((prev) => !prev);
     setCurrentAnalysisPage(0);
   };
 
   const handleNextAnalysis = () => {
     const index = validRoutes.indexOf(location.pathname);
-    if (index !== -1)
+    if (index !== -1) {
       navigate(validRoutes[(index + 1) % validRoutes.length]);
+    }
   };
 
   const handlePreviousAnalysis = () => {
     const index = validRoutes.indexOf(location.pathname);
-    if (index !== -1)
-      navigate(validRoutes[(index - 1 + validRoutes.length) % validRoutes.length]);
+    if (index !== -1) {
+      navigate(
+        validRoutes[(index - 1 + validRoutes.length) % validRoutes.length]
+      );
+    }
   };
 
   // keyboard shortcuts
@@ -114,27 +132,44 @@ const Dashboard = ({ children }) => {
       <CssBaseline />
 
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar
+          sx={{
+            minHeight: 56,
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          {/* Drawer toggle on left */}
           <IconButton
             color="inherit"
-            onClick={handleDrawerOpen}
+            onClick={handleDrawerToggle}
             edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
 
-          <Container sx={{ display: 'flex', justifyContent: 'end' }}>
+          {/* Right side controls */}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              gap: 1,
+              flexWrap: 'nowrap',
+              overflowX: 'auto',
+            }}
+          >
             <Button
               variant="outlined"
               color="inherit"
+              size="small"
               onClick={toggleShowAnalytics}
-              sx={{ mr: 2 }}
+              sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
             >
               {showAnalytics
-                ? translate("Show Data", language)
-                : translate("Show Analysis", language)
-              }
+                ? translate('Show Data', language)
+                : translate('Show Analysis', language)}
             </Button>
 
             {showAnalytics && (
@@ -142,7 +177,8 @@ const Dashboard = ({ children }) => {
                 <Button
                   variant="outlined"
                   color="inherit"
-                  sx={{ mr: 2 }}
+                  size="small"
+                  sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
                   onClick={handlePreviousAnalysis}
                 >
                   Previous
@@ -151,7 +187,8 @@ const Dashboard = ({ children }) => {
                 <Button
                   variant="outlined"
                   color="inherit"
-                  sx={{ mr: 2 }}
+                  size="small"
+                  sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
                   onClick={handleNextAnalysis}
                 >
                   Next
@@ -162,33 +199,36 @@ const Dashboard = ({ children }) => {
             <Button
               variant="outlined"
               color="inherit"
-              sx={{ mr: 2 }}
+              size="small"
+              sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
               onClick={toggleLanguage}
             >
-              {translate("Switch Language", language)}
+              {translate('Switch Language', language)}
             </Button>
 
             <Button
               variant="outlined"
               color="inherit"
+              size="small"
+              sx={{ whiteSpace: 'nowrap', flexShrink: 0 }}
               onClick={handleLogout}
             >
-              {translate("Logout", language)}
+              {translate('Logout', language)}
             </Button>
-          </Container>
+          </Box>
         </Toolbar>
       </AppBar>
 
       <DrawerDashboard
-        setShowAnalytics={setShowAnalytics}
-        setCurrentAnalysisPage={setCurrentAnalysisPage}
+        open={open}
+        onToggleDrawer={handleDrawerToggle}
       />
 
-      <Main open={open} sx={{ marginLeft: '300px' }}>
+      <Main open={open}>
         <Box>
           {React.cloneElement(children, {
             showAnalytics,
-            currentAnalysisPage
+            currentAnalysisPage,
           })}
         </Box>
       </Main>

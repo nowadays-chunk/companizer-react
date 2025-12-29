@@ -1,8 +1,12 @@
+// src/layout/Drawer.jsx (DashboardDrawer)
 import React, { useState } from 'react';
-import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
+import {
+  styled,
+  ThemeProvider,
+  createTheme,
+} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -10,136 +14,331 @@ import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import Collapse from '@mui/material/Collapse';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
 
 import { drawerItems } from './drawerItems';
-import { keyToActionMap } from './keyToActionMap';
 import { keyToLinkMap } from './keyToLinkMap';
-console.log(Object.keys(keyToActionMap).filter((key) => keyToActionMap[key].includes('fetchItems')))
+import { moduleToIconMap } from './moduleToIconMap';
+
+const expandedDrawerWidth = 300;
+const collapsedDrawerWidth = 70; // icons + padding
 
 const FireNav = styled(List)(({ theme }) => ({
-    '& .MuiListItemButton-root': {
-        paddingLeft: 24,
-        paddingRight: 24,
-    },
-    '& .MuiListItemIcon-root': {
-        minWidth: 0,
-        marginRight: 16,
-    },
-    '& .MuiSvgIcon-root': {
-        fontSize: 20,
-    },
+  '& .MuiListItemButton-root': {
+    paddingLeft: 24,
+    paddingRight: 24,
+  },
+  '& .MuiListItemIcon-root': {
+    minWidth: 0,
+    marginRight: 16,
+  },
+  '& .MuiSvgIcon-root': {
+    fontSize: 20,
+  },
 }));
 
-    
+// fills all remaining space below header, no extra margin/gap
 const StyledFireNav = styled('div')({
-    height: 'calc(100% - 56px)',
-    marginTop: '60px', // Adjust the height to accommodate the fixed header
-    overflowY: 'auto',
-    '&::-webkit-scrollbar': {
-        width: '4px',
-    },
-    '&::-webkit-scrollbar-track': {
-        background: '#f1f1f1',
-    },
-    '&::-webkit-scrollbar-thumb': {
-        background: '#888',
-        borderRadius: '4px',
-    },
-    '&::-webkit-scrollbar-thumb:hover': {
-        background: '#555',
-    },
+  flex: 1,
+  overflowY: 'auto',
+  '&::-webkit-scrollbar': {
+    width: '4px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: '#f1f1f1',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: '#888',
+    borderRadius: '4px',
+  },
+  '&::-webkit-scrollbar-thumb:hover': {
+    background: '#555',
+  },
 });
 
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: { main: 'rgb(102, 157, 246)' },
+    background: { paper: 'rgb(5, 30, 52)' },
+  },
+});
 
-export default function DashboardDrawer() {
-    const [openItems, setOpenItems] = useState({});
+export default function DashboardDrawer({ open, onToggleDrawer }) {
+  const [openItems, setOpenItems] = useState({});
 
-    const handleClick = (key) => {
-        setOpenItems((prev) => ({ ...prev, [key]: !prev[key] }));
-    };
+  const handleClick = (key) => {
+    setOpenItems((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
 
-    const theme = createTheme({
-        palette: {
-            mode: 'dark',
-            primary: { main: 'rgb(102, 157, 246)' },
-            background: { paper: 'rgb(5, 30, 52)' },
-        },
-    });
+  return (
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: 'flex' }}>
+        <Paper
+          elevation={0}
+          sx={{
+            width: open ? expandedDrawerWidth : collapsedDrawerWidth,
+            borderRadius: '0px',
+            zIndex: 10,
+            height: '100vh',
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            bgcolor: 'background.paper',
+          }}
+        >
+         {/* Drawer header with logo + collapse toggle */}
+        <Box
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                alignContent: 'space-between',
+                justifyItems: 'space-between',
+                px: open ? 8 : 1,
+                height: 65,
+                background: 'rgb(5, 30, 52)',
+                borderBottom: '1px solid #1f2933',
+            }}
+        >
+            {/* Logo / brand (Companizer) */}
+            {open && (
+                <ListItemButton
+                    component={Link}
+                    to="/summary"
+                    disableGutters
+                    sx={{
+                        flexGrow: 1,
+                        height: '100%',
+                        borderRadius: 1,
+                        px: 1,
+                        '&:hover': {
+                        backgroundColor: 'rgba(255,255,255,0.08)',
+                        },
+                    }}
+                >
+                <ListItemText
+                    primary="Companizer"
+                    primaryTypographyProps={{
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        letterSpacing: 0,
+                    }}
+                    sx={{
+                    '& .MuiTypography-root': {
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                    },
+                    }}
+                />
+                </ListItemButton>
+            )}
 
-    return (
-        <ThemeProvider theme={theme}>
-            <Box sx={{ display: 'flex' }}>
-                <Paper elevation={0} sx={{ width: 300, borderRadius: '0px', zIndex: 10, height: '100%', position: 'fixed' }}>
-                    <Box sx={{ position: 'fixed', top: 0, width: 'inherit', background: 'rgb(5, 30, 52)', borderBottom: '1px solid #ddd' }}>
-                        <ListItemButton component="a" href="/">
-                            <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
-                            <ListItemText
-                                primary="Vault Insight"
-                                primaryTypographyProps={{
-                                    fontSize: 20,
-                                    fontWeight: 'medium',
-                                    letterSpacing: 0,
-                                }}
-                            />
+            {/* Collapse / expand toggle — perfect circle */}
+            <Tooltip title={open ? 'Collapse' : 'Expand'}>
+                <ListItemButton
+                onClick={onToggleDrawer}
+                disableGutters
+                sx={{
+                    minWidth: 0,
+                    width: 44,
+                    height: 44,
+                    borderRadius: '50%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    '&:hover': {
+                    backgroundColor: 'rgba(255,255,255,0.12)',
+                    },
+                }}
+                >
+                <ListItemIcon
+                    sx={{
+                    minWidth: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    }}
+                >
+                    {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                </ListItemIcon>
+                </ListItemButton>
+            </Tooltip>
+        </Box>
+
+          {/* Navigation area - right under header, no extra gap */}
+          <StyledFireNav>
+            {/* Collapsed: icons-only list */}
+            {!open && (
+              <FireNav component="nav" disablePadding>
+                {drawerItems.map(({ key, label, children }) => {
+                  const TopIcon = moduleToIconMap[key];
+
+                  // If this top item has exactly ONE leaf child, clicking the icon goes directly there.
+                  let targetPath = '#';
+                  if (
+                    Array.isArray(children) &&
+                    children.length === 1 &&
+                    !children[0].children
+                  ) {
+                    const leafKey = children[0].key;
+                    targetPath = keyToLinkMap[leafKey] || '#';
+                  }
+
+                  const ButtonComponent =
+                    targetPath !== '#' ? Link : 'button';
+
+                  return (
+                    <Tooltip key={key} title={label} placement="right">
+                      <ListItemButton
+                        component={ButtonComponent}
+                        {...(ButtonComponent === Link ? { to: targetPath } : {})}
+                        sx={{
+                          justifyContent: 'center',
+                          py: 1.5,
+                        }}
+                      >
+                        <ListItemIcon
+                          sx={{
+                            minWidth: 0,
+                            justifyContent: 'center',
+                          }}
+                        >
+                          {TopIcon ? <TopIcon /> : <ChevronRightIcon />}
+                        </ListItemIcon>
+                      </ListItemButton>
+                    </Tooltip>
+                  );
+                })}
+              </FireNav>
+            )}
+
+            {/* Expanded: full nested structure with labels */}
+            {open && (
+              <FireNav component="nav" disablePadding sx={{ pt: 0 }}>
+                {drawerItems.map(
+                  ({ key, label, description, children }) => {
+                    const TopIcon = moduleToIconMap[key];
+
+                    return (
+                      <React.Fragment key={key}>
+                        <ListItemButton onClick={() => handleClick(key)}>
+                          <ListItemIcon>
+                            {TopIcon ? <TopIcon /> : <ChevronRightIcon />}
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={label}
+                            primaryTypographyProps={{
+                              fontSize: 15,
+                              fontWeight: 'medium',
+                              lineHeight: '20px',
+                            }}
+                          />
+                          {children ? (
+                            openItems[key] ? <ExpandLess /> : <ExpandMore />
+                          ) : null}
                         </ListItemButton>
-                        <Divider />
-                    </Box>
-                    <StyledFireNav>
-                        <Box > {/* Offset to avoid overlap with fixed header */}
-                            <List component="nav" disablePadding>
-                                {drawerItems.map(({ key, label, icon, description, children }) => (
-                                    <React.Fragment key={key}>
-                                        <ListItemButton onClick={() => handleClick(key)}>
-                                            <ListItemIcon>{icon}</ListItemIcon>
-                                            <ListItemText
-                                                primary={`${label}`}
-                                                primaryTypographyProps={{
-                                                    fontSize: 15,
-                                                    fontWeight: 'medium',
-                                                    lineHeight: '20px',
+
+                        {children && (
+                          <Collapse
+                            in={openItems[key]}
+                            timeout="auto"
+                            unmountOnExit
+                          >
+                            <List component="div" disablePadding>
+                              {children.map(
+                                ({
+                                  key: subKey,
+                                  label: subLabel,
+                                  children: subChildren,
+                                }) => (
+                                  <React.Fragment key={subKey}>
+                                    <ListItemButton
+                                      onClick={() => handleClick(subKey)}
+                                    >
+                                      <ListItemText
+                                        sx={{ pl: 4 }}
+                                        primary={`• ${subLabel}`}
+                                      />
+                                      {subChildren ? (
+                                        openItems[subKey] ? (
+                                          <ExpandLess />
+                                        ) : (
+                                          <ExpandMore />
+                                        )
+                                      ) : (
+                                        <ChevronRightIcon />
+                                      )}
+                                    </ListItemButton>
+
+                                    {subChildren && (
+                                      <Collapse
+                                        in={openItems[subKey]}
+                                        timeout="auto"
+                                        unmountOnExit
+                                      >
+                                        <List
+                                          component="div"
+                                          disablePadding
+                                        >
+                                          {subChildren.map(
+                                            ({
+                                              key: subSubKey,
+                                              label: subSubLabel,
+                                              description: subDesc,
+                                            }) => (
+                                              <Link
+                                                to={
+                                                  keyToLinkMap[subSubKey] ||
+                                                  '#'
+                                                }
+                                                key={subSubKey}
+                                                style={{
+                                                  textDecoration: 'none',
+                                                  color: 'inherit',
                                                 }}
-                                            />
-                                            {children ? (openItems[key] ? <ExpandLess /> : <ExpandMore />) : null}
-                                        </ListItemButton>
-                                        {children && (
-                                            <Collapse in={openItems[key]} timeout="auto" unmountOnExit>
-                                                <List component="div" disablePadding>
-                                                    {children.map(({ key: subKey, label: subLabel, children: subChildren }) => (
-                                                        <React.Fragment key={subKey}>
-                                                            <ListItemButton onClick={() => handleClick(subKey)}>
-                                                                <ListItemText sx={{ pl: 4 }} primary={`• ${subLabel}`} />
-                                                                {subChildren ? (openItems[subKey] ? <ExpandLess /> : <ExpandMore />) : <ChevronRightIcon />}
-                                                            </ListItemButton>
-                                                            {subChildren && (
-                                                                <Collapse in={openItems[subKey]} timeout="auto" unmountOnExit>
-                                                                    <List component="div" disablePadding>
-                                                                        {subChildren.map(({ key: subSubKey, label: subSubLabel, description }) => (
-                                                                            <Link to={keyToLinkMap[subSubKey] || '#'} key={subSubKey} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                                                                <ListItemButton>
-                                                                                    <Tooltip title={description} placement="right">
-                                                                                        <ListItemText sx={{ pl: 6 }} primary={`• ${subSubLabel}`} />
-                                                                                    </Tooltip>
-                                                                                </ListItemButton>
-                                                                            </Link>
-                                                                        ))}
-                                                                    </List>
-                                                                </Collapse>
-                                                            )}
-                                                        </React.Fragment>
-                                                    ))}
-                                                </List>
-                                            </Collapse>
-                                        )}
-                                    </React.Fragment>
-                                ))}
+                                              >
+                                                <ListItemButton>
+                                                  <Tooltip
+                                                    title={
+                                                      subDesc ||
+                                                      description ||
+                                                      ''
+                                                    }
+                                                    placement="right"
+                                                  >
+                                                    <ListItemText
+                                                      sx={{ pl: 6 }}
+                                                      primary={`• ${subSubLabel}`}
+                                                    />
+                                                  </Tooltip>
+                                                </ListItemButton>
+                                              </Link>
+                                            )
+                                          )}
+                                        </List>
+                                      </Collapse>
+                                    )}
+                                  </React.Fragment>
+                                )
+                              )}
                             </List>
-                        </Box>
-                    </StyledFireNav>
-                </Paper>
-            </Box>
-        </ThemeProvider>
-    );
-};
+                          </Collapse>
+                        )}
+                      </React.Fragment>
+                    );
+                  }
+                )}
+              </FireNav>
+            )}
+          </StyledFireNav>
+        </Paper>
+      </Box>
+    </ThemeProvider>
+  );
+}
