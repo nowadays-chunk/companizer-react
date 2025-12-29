@@ -3,7 +3,6 @@ import {
   Box,
   Container,
   Paper,
-  Button,
   CircularProgress,
   Backdrop,
   FormControlLabel,
@@ -174,8 +173,7 @@ export default function BaseTableComponent({
     }
   };
 
-  // NOTE: addItem / updateItem are still available if you want
-  // to keep "Generate Random Row" using the API directly.
+  // Generate a random row using fieldConfig rules, then save via addItem
   const generateRandomRow = async () => {
     try {
       const newRow = Object.entries(refreshedFieldsConfig).reduce(
@@ -262,7 +260,7 @@ export default function BaseTableComponent({
 
   return (
     <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
-      <Box sx={{ maxWidth: '80vw', position: 'relative' }}>
+      <Box sx={{ maxWidth: '100%', position: 'relative' }}>
         <FilterManager
           filters={filters}
           setFilters={setFilters}
@@ -274,24 +272,11 @@ export default function BaseTableComponent({
             onAdd={handleAddItem}
             onDelete={handleDeleteItems}
             onEdit={handleEditItem}
+            onGenerateRandomRow={generateRandomRow}
+            onViewItem={handleViewItem}
             entityName={entityName}
           />
-          <Button
-            onClick={generateRandomRow}
-            variant="contained"
-            color="primary"
-            sx={{ margin: 2 }}
-          >
-            Generate Random Row
-          </Button>
-          <Button
-            onClick={handleViewItem}
-            variant="contained"
-            color="primary"
-            sx={{ margin: 2 }}
-          >
-            View Selected
-          </Button>
+
           <BaseTable
             items={filteredItems}
             order={order}

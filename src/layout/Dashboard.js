@@ -69,7 +69,7 @@ const Dashboard = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [currentAnalysisPage, setCurrentAnalysisPage] = useState(0);
 
   const [showAnalytics, setShowAnalytics] = useState(() => {
