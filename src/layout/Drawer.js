@@ -92,84 +92,117 @@ export default function DashboardDrawer({ open, onToggleDrawer }) {
             bgcolor: 'background.paper',
           }}
         >
-         {/* Drawer header with logo + collapse toggle */}
-        <Box
+         
+          {/* Drawer header with logo (Companizer) */}
+          <Box
             sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                alignContent: 'space-between',
-                justifyItems: 'space-between',
-                px: open ? 8 : 1,
-                height: 65,
-                background: 'rgb(5, 30, 52)',
-                borderBottom: '1px solid #1f2933',
+              display: 'flex',
+              alignItems: 'center',
+              height: 65,
+              background: 'rgb(5, 30, 52)',
+              borderBottom: '1px solid #1f2933',
+              px: open ? 2 : 1,
             }}
-        >
-            {/* Logo / brand (Companizer) */}
+          >
+
+            {/* LEFT — 84% width when open */}
             {open && (
+              <Box sx={{ flexBasis: '84%', maxWidth: '84%' }}>
                 <ListItemButton
-                    component={Link}
-                    to="/summary"
-                    disableGutters
-                    sx={{
-                        flexGrow: 1,
-                        height: '100%',
-                        borderRadius: 1,
-                        px: 1,
-                        '&:hover': {
-                        backgroundColor: 'rgba(255,255,255,0.08)',
-                        },
-                    }}
+                  component={Link}
+                  to="/summary"
+                  disableGutters
+                  sx={{
+                    height: '100%',
+                    borderRadius: 1,
+                    px: 1,
+                    '&:hover': {
+                      backgroundColor: 'rgba(255,255,255,0.08)',
+                    },
+                  }}
                 >
-                <ListItemText
+                  <ListItemIcon sx={{ minWidth: 28 }}>
+                    <span style={{ fontSize: 22 }}>🔥</span>
+                  </ListItemIcon>
+
+                  <ListItemText
                     primary="Companizer"
                     primaryTypographyProps={{
-                        fontSize: 18,
-                        fontWeight: 'bold',
-                        letterSpacing: 0,
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      letterSpacing: 0,
                     }}
                     sx={{
-                    '& .MuiTypography-root': {
+                      '& .MuiTypography-root': {
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
-                    },
+                      },
                     }}
-                />
+                  />
                 </ListItemButton>
+              </Box>
             )}
 
-            {/* Collapse / expand toggle — perfect circle */}
-            <Tooltip title={open ? 'Collapse' : 'Expand'}>
-                <ListItemButton
-                onClick={onToggleDrawer}
-                disableGutters
+            {/* RIGHT — 16% (icon aligned right) */}
+            {open && (
+              <Box
                 sx={{
-                    minWidth: 0,
+                  flexBasis: '16%',
+                  maxWidth: '16%',
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: '50%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  {/* EMPTY — you said external toggle exists */}
+                </Box>
+              </Box>
+            )}
+
+            {/* COLLAPSED STATE — CENTER FIRE ICON */}
+            {!open && (
+              <Box
+                sx={{
+                  flexBasis: '100%',
+                  maxWidth: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <ListItemButton
+                  component={Link}
+                  to="/summary"
+                  disableGutters
+                  sx={{
                     width: 44,
                     height: 44,
                     borderRadius: '50%',
                     justifyContent: 'center',
-                    alignItems: 'center',
                     '&:hover': {
-                    backgroundColor: 'rgba(255,255,255,0.12)',
+                      backgroundColor: 'rgba(255,255,255,0.12)',
                     },
-                }}
+                  }}
                 >
-                <ListItemIcon
-                    sx={{
-                    minWidth: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    }}
-                >
-                    {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                </ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: 0 }}>
+                    <span style={{ fontSize: 22 }}>🔥</span>
+                  </ListItemIcon>
                 </ListItemButton>
-            </Tooltip>
-        </Box>
+              </Box>
+            )}
+
+          </Box>
 
           {/* Navigation area - right under header, no extra gap */}
           <StyledFireNav>
