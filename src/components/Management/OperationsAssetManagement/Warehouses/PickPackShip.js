@@ -1,26 +1,25 @@
+
 export const fieldsConfig = {
-    locationId: { label: 'Location ID', type: 'text', faker: 'datatype.uuid' },
-    productName: { label: 'Product Name', type: 'text', faker: 'commerce.productName' },
-    aisle: { label: 'Aisle', type: 'text', faker: 'datatype.number' },
-    shelf: { label: 'Shelf', type: 'text', faker: 'datatype.number' },
-    bin: { label: 'Bin', type: 'text', faker: 'datatype.number' },
-    quantityInLocation: { label: 'Quantity in Location', type: 'number', faker: 'datatype.number' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'critical_stock', label: 'Critical Stock' },
-        { id: 'bulk_stock', label: 'Bulk Stock' },
-        { id: 'seasonal_stock', label: 'Seasonal Stock' }
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  pps_id: { label: 'PPS ID', type: 'text', faker: 'datatype.uuid' },
+  order_id: { label: 'Order ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  stage: { label: 'Stage', type: 'select', options: [{ id: 'pick', label: 'Pick' }, { id: 'pack', label: 'Pack' }, { id: 'ship', label: 'Ship' }], faker: 'random.arrayElement' },
+
+  timestamp: { label: 'Timestamp', type: 'text', faker: 'date.recent' },
+  operator: { label: 'Operator', type: 'text', faker: 'name.fullName' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  items_processed: { label: 'Items Processed', type: 'number', faker: 'datatype.number' },
+  duration_minutes: { label: 'Duration (Min)', type: 'number', faker: 'datatype.number' },
+  errors_logged: { label: 'Errors Logged', type: 'number', faker: 'datatype.number' },
+  package_weight: { label: 'Package Weight', type: 'number', faker: 'datatype.float' },
+  label_generated: { label: 'Label Generated', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
-export const entityName = 'Inventory Locations';
-export const collectionName = 'inventory-locations';
+export const entityName = 'Pick Pack Ship';
+export const collectionName = 'pick_pack_ship';

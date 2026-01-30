@@ -1,33 +1,25 @@
+
 export const fieldsConfig = {
-    penaltyId: { label: 'Penalty ID', type: 'text', faker: 'datatype.uuid' },
-    penaltyType: {
-        label: 'Penalty Type',
-        type: 'select',
-        options: [
-            { id: 'financial', label: 'Financial' },
-            { id: 'regulatory', label: 'Regulatory' },
-            { id: 'legal', label: 'Legal' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    amount: { label: 'Amount', type: 'number', faker: 'finance.amount' },
-    dueDate: { label: 'Due Date', type: 'date', faker: 'date.future' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'pending', label: 'Pending' },
-            { id: 'paid', label: 'Paid' },
-            { id: 'overdue', label: 'Overdue' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    imposedBy: { label: 'Imposed By', type: 'text', faker: 'company.name' },
-    responsibleParty: { label: 'Responsible Party', type: 'text', faker: 'name.fullName' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  penalty_id: { label: 'Penalty ID', type: 'text', faker: 'datatype.uuid' },
+  obligation_id: { label: 'Obligation ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  amount: { label: 'Amount', type: 'number', faker: 'finance.amount' },
+  currency: { label: 'Currency', type: 'text', faker: 'finance.currencyCode' },
+
+  date_incurred: { label: 'Date Incurred', type: 'date', faker: 'date.past' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  reason: { label: 'Reason', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'paid', label: 'Paid' }, { id: 'appealed', label: 'Appealed' }, { id: 'pending', label: 'Pending' }], faker: 'random.arrayElement' },
+  issuing_authority: { label: 'Issuing Authority', type: 'text', faker: 'company.name' },
+  remediation_actions: { label: 'Remediation Actions', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  paid_date: { label: 'Paid Date', type: 'date', faker: 'date.recent' }
 };
 
 export const entityName = 'Penalties Management';
-export const collectionName = 'penalties-management';
+export const collectionName = 'penalties_management';

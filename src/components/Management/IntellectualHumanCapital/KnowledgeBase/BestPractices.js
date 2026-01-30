@@ -1,38 +1,25 @@
+
 export const fieldsConfig = {
-    practiceId: { label: 'Practice ID', type: 'text', faker: 'datatype.uuid' },
-    practiceTitle: { label: 'Practice Title', type: 'text', faker: 'lorem.sentence' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    department: { label: 'Department', type: 'text', faker: 'company.bs' },
-    author: { label: 'Author', type: 'text', faker: 'name.fullName' },
-    implementationDate: { label: 'Implementation Date', type: 'date', faker: 'date.past' },
-    reviewDate: { label: 'Review Date', type: 'date', faker: 'date.future' },
-    status: {
-      label: 'Status',
-      type: 'select',
-      options: [
-        { id: 'recommended', label: 'Recommended' },
-        { id: 'mandatory', label: 'Mandatory' },
-        { id: 'optional', label: 'Optional' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'compliance', label: 'Compliance' },
-        { id: 'quality', label: 'Quality' },
-        { id: 'efficiency', label: 'Efficiency' },
-        { id: 'innovation', label: 'Innovation' },
-        { id: 'standardization', label: 'Standardization' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Best Practices';
-  export const collectionName = 'best-practices';
-  
+  practice_id: { label: 'Practice ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  title: { label: 'Title', type: 'text', faker: 'lorem.sentence' },
+  category: { label: 'Category', type: 'text', faker: 'commerce.department' },
+
+  description: { label: 'Description', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  author: { label: 'Author', type: 'text', faker: 'name.fullName' },
+  date_added: { label: 'Date Added', type: 'date', faker: 'date.past' },
+  approval_status: { label: 'Approval Status', type: 'select', options: [{ id: 'draft', label: 'Draft' }, { id: 'approved', label: 'Approved' }, { id: 'archived', label: 'Archived' }], faker: 'random.arrayElement' },
+  tags: { label: 'Tags', type: 'text', faker: 'lorem.words' },
+  rating: { label: 'Rating', type: 'number', faker: 'datatype.number' }, // 1-5
+  view_count: { label: 'View Count', type: 'number', faker: 'datatype.number' }
+};
+
+export const entityName = 'Best Practices';
+export const collectionName = 'best_practices';

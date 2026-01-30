@@ -1,39 +1,23 @@
+
 export const fieldsConfig = {
-    initiativeId: { label: 'Initiative ID', type: 'text', faker: 'datatype.uuid' },
-    initiativeTitle: { label: 'Initiative Title', type: 'text', faker: 'lorem.sentence' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    goals: { label: 'Goals', type: 'text', faker: 'lorem.sentences' },
-    achievedResults: { label: 'Achieved Results', type: 'text', faker: 'lorem.paragraph' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'ongoing', label: 'Ongoing' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'planned', label: 'Planned' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    projectManager: { label: 'Project Manager', type: 'text', faker: 'name.fullName' },
+    initiative_id: { label: 'Initiative ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    name: { label: 'Name', type: 'text', faker: 'lorem.words' },
+    description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
+
+    start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    goal: { label: 'Goal', type: 'text', faker: 'lorem.sentence' }, // e.g. Reduce carbon by 10%
+    progress_percentage: { label: 'Progress (%)', type: 'number', faker: 'datatype.number' },
     budget: { label: 'Budget', type: 'number', faker: 'finance.amount' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'proposed', label: 'Proposed' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Green Initiatives';
-export const collectionName = 'green-initiatives';
+export const collectionName = 'green_initiatives';

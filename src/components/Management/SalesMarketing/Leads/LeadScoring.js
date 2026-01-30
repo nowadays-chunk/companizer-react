@@ -1,24 +1,27 @@
+
 export const fieldsConfig = {
-    leadId: { label: 'Lead ID', type: 'text', faker: 'datatype.uuid' },
-    score: { label: 'Score', type: 'number', faker: 'datatype.number' },
-    criteria: { label: 'Criteria', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'high-value', label: 'High Value Lead' },
-        { id: 'medium-value', label: 'Medium Value Lead' },
-        { id: 'low-value', label: 'Low Value Lead' },
-        { id: 'qualified', label: 'Qualified Lead' },
-        { id: 'unqualified', label: 'Unqualified Lead' },
-      ],
-      multiple: true,
-      faker: 'lorem.words',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Lead Scoring';
-  export const collectionName = 'lead-scoring';
-  
+  scoring_id: { label: 'Scoring ID', type: 'text', faker: 'datatype.uuid' },
+  lead_id: { label: 'Lead ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  total_score: { label: 'Total Score', type: 'number', faker: 'datatype.number' },
+  score_category: { label: 'Score Category', type: 'select', options: [{ id: 'hot', label: 'Hot' }, { id: 'warm', label: 'Warm' }, { id: 'cold', label: 'Cold' }], faker: 'random.arrayElement' },
+
+  last_updated: { label: 'Last Updated', type: 'date', faker: 'date.recent' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  demographic_score: { label: 'Demographic Score', type: 'number', faker: 'datatype.number' },
+  behavioral_score: { label: 'Behavioral Score', type: 'number', faker: 'datatype.number' },
+  firmographic_score: { label: 'Firmographic Score', type: 'number', faker: 'datatype.number' },
+  budget_score: { label: 'Budget Score', type: 'number', faker: 'datatype.number' },
+  authority_score: { label: 'Authority Score', type: 'number', faker: 'datatype.number' },
+  need_score: { label: 'Need Score', type: 'number', faker: 'datatype.number' },
+  timeline_score: { label: 'Timeline Score', type: 'number', faker: 'datatype.number' }
+};
+
+export const entityName = 'Lead Scoring';
+export const collectionName = 'lead_scoring';

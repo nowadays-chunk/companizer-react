@@ -1,44 +1,22 @@
+
 export const fieldsConfig = {
-    recordId: { label: 'Record ID', type: 'text', faker: 'datatype.uuid' },
-    employeeId: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
-    programName: { label: 'Program Name', type: 'text', faker: 'company.bsNoun' },
-    completionDate: { label: 'Completion Date', type: 'date', faker: 'date.past' },
-    result: {
-        label: 'Result',
-        type: 'select',
-        options: [
-            { id: 'pass', label: 'Pass' },
-            { id: 'fail', label: 'Fail' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    score: { label: 'Score', type: 'number', faker: 'datatype.number' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'completed', label: 'Completed' },
-            { id: 'pending', label: 'Pending' },
-            { id: 'failed', label: 'Failed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'important', label: 'Important' },
-            { id: 'review', label: 'Review' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  record_id: { label: 'Record ID', type: 'text', faker: 'datatype.uuid' },
+  employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
+  program_id: { label: 'Program ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  completion_date: { label: 'Completion Date', type: 'date', faker: 'date.recent' },
+  score: { label: 'Score', type: 'number', faker: 'datatype.number' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  status: { label: 'Status', type: 'select', options: [{ id: 'attended', label: 'Attended' }, { id: 'no_show', label: 'No Show' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' },
+  certificate_url: { label: 'Certificate URL', type: 'text', faker: 'internet.url' },
+  feedback: { label: 'Feedback', type: 'text', faker: 'lorem.sentence' }
 };
 
-export const entityName = 'Training Records';
-export const collectionName = 'training-records';
+export const entityName = 'HR Training Records';
+export const collectionName = 'hr_training_records';

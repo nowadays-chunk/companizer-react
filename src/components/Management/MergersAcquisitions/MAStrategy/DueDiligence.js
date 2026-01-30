@@ -1,43 +1,27 @@
+
 export const fieldsConfig = {
-    dueDiligenceId: { label: 'Due Diligence ID', type: 'text', faker: 'datatype.uuid' },
-    targetId: { label: 'Target ID', type: 'text', faker: 'datatype.uuid' },
-    companyName: { label: 'Company Name', type: 'text', faker: 'company.name' },
-    financialReview: { label: 'Financial Review', type: 'text', faker: 'lorem.paragraph' },
-    legalReview: { label: 'Legal Review', type: 'text', faker: 'lorem.paragraph' },
-    operationalReview: { label: 'Operational Review', type: 'text', faker: 'lorem.paragraph' },
-    riskAssessment: { label: 'Risk Assessment', type: 'text', faker: 'lorem.paragraph' },
-    findings: { label: 'Findings', type: 'text', faker: 'lorem.paragraph' },
-    conductedBy: { label: 'Conducted By', type: 'text', faker: 'name.fullName' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.past' },
-    status: {
-      label: 'Status',
-      type: 'select',
-      options: [
-        { id: 'in-progress', label: 'In Progress' },
-        { id: 'completed', label: 'Completed' },
-        { id: 'on-hold', label: 'On Hold' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    approvedBy: { label: 'Approved By', type: 'text', faker: 'name.fullName' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'high-risk', label: 'High Risk' },
-        { id: 'low-risk', label: 'Low Risk' },
-        { id: 'pending', label: 'Pending' },
-        { id: 'completed', label: 'Completed' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Due Diligence';
-  export const collectionName = 'due-diligence';
-  
+  due_diligence_id: { label: 'Due Diligence ID', type: 'text', faker: 'datatype.uuid' },
+  target_id: { label: 'Target ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  category: { label: 'Category', type: 'select', options: [{ id: 'financial', label: 'Financial' }, { id: 'legal', label: 'Legal' }, { id: 'operational', label: 'Operational' }, { id: 'hr', label: 'HR' }], faker: 'random.arrayElement' },
+
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+  end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
+
+  status: { label: 'Status', type: 'select', options: [{ id: 'in_progress', label: 'In Progress' }, { id: 'completed', label: 'Completed' }, { id: 'flagged', label: 'Flagged' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  findings_summary: { label: 'Findings Summary', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+  risk_level: { label: 'Risk Level', type: 'select', options: [{ id: 'high', label: 'High' }, { id: 'medium', label: 'Medium' }, { id: 'low', label: 'Low' }], faker: 'random.arrayElement' },
+  reviewer: { label: 'Reviewer', type: 'text', faker: 'name.fullName' },
+  report_url: { label: 'Report URL', type: 'text', faker: 'internet.url' },
+  approved_by: { label: 'Approved By', type: 'text', faker: 'name.fullName' }
+};
+
+export const entityName = 'Due Diligence';
+export const collectionName = 'due_diligence';

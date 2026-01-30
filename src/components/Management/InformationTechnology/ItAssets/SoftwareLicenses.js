@@ -1,35 +1,29 @@
+
 export const fieldsConfig = {
-    licenseId: { label: 'License ID', type: 'text', faker: 'datatype.uuid' },
-    softwareName: { label: 'Software Name', type: 'text', faker: 'company.bs' },
-    licenseKey: { label: 'License Key', type: 'text', faker: 'datatype.uuid' },
-    purchaseDate: { label: 'Purchase Date', type: 'date', faker: 'date.past' },
-    expirationDate: { label: 'Expiration Date', type: 'date', faker: 'date.future' },
-    assignedTo: { label: 'Assigned To', type: 'text', faker: 'name.fullName' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'expired', label: 'Expired' },
-            { id: 'revoked', label: 'Revoked' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'critical', label: 'Critical' },
-            { id: 'expired', label: 'Expired' },
-            { id: 'active', label: 'Active' },
-            { id: 'license-management', label: 'License Management' },
-        ],
-        multiple: true,
-        faker: 'lorem.words',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  license_id: { label: 'License ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  software_name: { label: 'Software Name', type: 'text', faker: 'lorem.words' },
+  license_key: { label: 'License Key', type: 'text', faker: 'datatype.uuid' },
+
+  seats_total: { label: 'Total Seats', type: 'number', faker: 'datatype.number' },
+  seats_used: { label: 'Seats Used', type: 'number', faker: 'datatype.number' },
+
+  expiry_date: { label: 'Expiry Date', type: 'date', faker: 'date.future' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  vendor: { label: 'Vendor', type: 'text', faker: 'company.name' },
+  purchase_date: { label: 'Purchase Date', type: 'date', faker: 'date.past' },
+  cost_per_seat: { label: 'Cost Per Seat', type: 'number', faker: 'finance.amount' },
+  is_subscription: { label: 'Is Subscription', type: 'checkbox', faker: 'datatype.boolean' },
+  auto_renew: { label: 'Auto Renew', type: 'checkbox', faker: 'datatype.boolean' },
+  admin_email: { label: 'Admin Email', type: 'email', faker: 'internet.email' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Software Licenses';
-export const collectionName = 'software-licenses';
+export const collectionName = 'software_licenses';

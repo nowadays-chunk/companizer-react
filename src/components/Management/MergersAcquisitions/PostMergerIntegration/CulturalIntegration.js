@@ -1,40 +1,25 @@
+
 export const fieldsConfig = {
-    culturalIntegrationId: { label: 'Cultural Integration ID', type: 'text', faker: 'datatype.uuid' },
-    integrationPlanId: { label: 'Integration Plan ID', type: 'text', faker: 'datatype.uuid' },
-    targetId: { label: 'Target ID', type: 'text', faker: 'datatype.uuid' },
-    companyName: { label: 'Company Name', type: 'text', faker: 'company.name' },
-    integrationStrategy: { label: 'Integration Strategy', type: 'text', faker: 'lorem.paragraph' },
-    activities: { label: 'Activities', type: 'text', faker: 'lorem.sentences' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    progress: { label: 'Progress (%)', type: 'number', faker: 'finance.amount' },
-    responsiblePerson: { label: 'Responsible Person', type: 'text', faker: 'name.fullName' },
-    status: {
-      label: 'Status',
-      type: 'select',
-      options: [
-        { id: 'not-started', label: 'Not Started' },
-        { id: 'in-progress', label: 'In Progress' },
-        { id: 'completed', label: 'Completed' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'high-priority', label: 'High Priority' },
-        { id: 'in-progress', label: 'In Progress' },
-        { id: 'completed', label: 'Completed' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Cultural Integration';
-  export const collectionName = 'cultural-integration';
-  
+  integration_id: { label: 'Integration ID', type: 'text', faker: 'datatype.uuid' },
+  target_id: { label: 'Target ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  initiative_name: { label: 'Initiative Name', type: 'text', faker: 'lorem.words' },
+  focus_area: { label: 'Focus Area', type: 'select', options: [{ id: 'values', label: 'Values' }, { id: 'communication', label: 'Communication' }, { id: 'leadership', label: 'Leadership' }], faker: 'random.arrayElement' },
+
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  employee_feedback_score: { label: 'Employee Feedback Score', type: 'number', faker: 'datatype.number' },
+  participation_rate: { label: 'Participation Rate (%)', type: 'number', faker: 'datatype.number' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'planned', label: 'Planned' }, { id: 'active', label: 'Active' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' },
+  notes: { label: 'Notes', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
+  responsible_lead: { label: 'Responsible Lead', type: 'text', faker: 'name.fullName' }
+};
+
+export const entityName = 'Cultural Integration';
+export const collectionName = 'cultural_integration';

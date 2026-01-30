@@ -1,38 +1,25 @@
+
 export const fieldsConfig = {
-    integrationPlanId: { label: 'Integration Plan ID', type: 'text', faker: 'datatype.uuid' },
-    targetId: { label: 'Target ID', type: 'text', faker: 'datatype.uuid' },
-    integrationTitle: { label: 'Integration Title', type: 'text', faker: 'lorem.sentence' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    responsibleTeam: { label: 'Responsible Team', type: 'text', faker: 'company.name' },
-    goals: { label: 'Goals', type: 'text', faker: 'lorem.sentences' },
-    status: {
-      label: 'Status',
-      type: 'select',
-      options: [
-        { id: 'not-started', label: 'Not Started' },
-        { id: 'in-progress', label: 'In Progress' },
-        { id: 'completed', label: 'Completed' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'high-priority', label: 'High Priority' },
-        { id: 'on-hold', label: 'On Hold' },
-        { id: 'completed', label: 'Completed' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Integration Plans';
-  export const collectionName = 'integration-plans';
-  
+  plan_id: { label: 'Plan ID', type: 'text', faker: 'datatype.uuid' },
+  target_id: { label: 'Target ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  plan_name: { label: 'Plan Name', type: 'text', faker: 'lorem.words' },
+  phase: { label: 'Phase', type: 'select', options: [{ id: 'pre_close', label: 'Pre-Close' }, { id: 'day_one', label: 'Day One' }, { id: '100_days', label: '100 Days' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  owner: { label: 'Owner', type: 'text', faker: 'name.fullName' },
+  objectives: { label: 'Objectives', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  timeline_start: { label: 'Timeline Start', type: 'date', faker: 'date.future' },
+  timeline_end: { label: 'Timeline End', type: 'date', faker: 'date.future' },
+  budget_allocated: { label: 'Budget Allocated', type: 'number', faker: 'finance.amount' },
+  progress: { label: 'Progress (%)', type: 'number', faker: 'datatype.number' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'draft', label: 'Draft' }, { id: 'active', label: 'Active' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' }
+};
+
+export const entityName = 'Integration Plans';
+export const collectionName = 'integration_plans';

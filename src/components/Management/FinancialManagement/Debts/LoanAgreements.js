@@ -1,40 +1,25 @@
+
 export const fieldsConfig = {
-    loanId: { label: 'Loan ID', type: 'text', faker: 'datatype.uuid' },
-    lender: { label: 'Lender', type: 'text', faker: 'company.name' },
-    loanAmount: { label: 'Loan Amount', type: 'number', faker: 'finance.amount' },
-    interestRate: { label: 'Interest Rate (%)', type: 'number', faker: 'finance.amount' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'repaid', label: 'Repaid' },
-            { id: 'defaulted', label: 'Defaulted' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    ecoContribution: { label: 'Eco Contribution', type: 'number', faker: 'finance.amount' },  // Eco-tax contribution (French-specific)
-    latePaymentFee: { label: 'Late Payment Fee', type: 'number', faker: 'finance.amount' },  // Penalty for late payments
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  loan_id: { label: 'Loan ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  lender: { label: 'Lender', type: 'text', faker: 'company.name' },
+  principal_amount: { label: 'Principal', type: 'number', faker: 'finance.amount' },
+
+  interest_rate: { label: 'Interest Rate', type: 'number', faker: 'datatype.float' },
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+  end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  type: { label: 'Type', type: 'select', options: [{ id: 'term', label: 'Term Loan' }, { id: 'revolver', label: 'Revolver' }, { id: 'line_of_credit', label: 'Line of Credit' }], faker: 'random.arrayElement' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'paid_off', label: 'Paid Off' }, { id: 'defaulted', label: 'Defaulted' }], faker: 'random.arrayElement' },
+  collateral: { label: 'Collateral', type: 'text', faker: 'lorem.sentence' },
+  outstanding_balance: { label: 'Outstanding Balance', type: 'number', faker: 'finance.amount' }
 };
 
 export const entityName = 'Loan Agreements';
-export const collectionName = 'loan-agreements';
+export const collectionName = 'loan_agreements';

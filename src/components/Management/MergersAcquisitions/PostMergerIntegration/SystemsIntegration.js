@@ -1,26 +1,25 @@
+
 export const fieldsConfig = {
-    systemsIntegrationId: { label: 'Systems Integration ID', type: 'text', faker: 'datatype.uuid' },
-    integrationPlanId: { label: 'Integration Plan ID', type: 'text', faker: 'datatype.uuid' },
-    targetId: { label: 'Target ID', type: 'text', faker: 'datatype.uuid' },
-    itSystemsInvolved: { label: 'IT Systems Involved', type: 'text', faker: 'lorem.words' },
-    integrationStrategy: { label: 'Integration Strategy', type: 'text', faker: 'lorem.paragraph' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    responsibleTeam: { label: 'Responsible Team', type: 'text', faker: 'company.name' },
-    progress: { label: 'Progress (%)', type: 'number', faker: 'finance.amount' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'not-started', label: 'Not Started' },
-            { id: 'in-progress', label: 'In Progress' },
-            { id: 'completed', label: 'Completed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    system_integration_id: { label: 'System Integration ID', type: 'text', faker: 'datatype.uuid' },
+    target_id: { label: 'Target ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    system_name: { label: 'System Name', type: 'text', faker: 'hacker.noun' },
+    disposition: { label: 'Disposition', type: 'select', options: [{ id: 'migrate', label: 'Migrate' }, { id: 'retire', label: 'Retire' }, { id: 'maintain', label: 'Maintain' }], faker: 'random.arrayElement' },
+
+    target_date: { label: 'Target Date', type: 'date', faker: 'date.future' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    data_migration_status: { label: 'Data Migration Status', type: 'number', faker: 'datatype.number' }, // %
+    user_migration_status: { label: 'User Migration Status', type: 'number', faker: 'datatype.number' }, // %
+    technical_lead: { label: 'Technical Lead', type: 'text', faker: 'name.fullName' },
+    risks: { label: 'Risks', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+    cost_to_integrate: { label: 'Cost to Integrate', type: 'number', faker: 'finance.amount' }
 };
 
 export const entityName = 'Systems Integration';
-export const collectionName = 'systems-integration';
+export const collectionName = 'systems_integration';

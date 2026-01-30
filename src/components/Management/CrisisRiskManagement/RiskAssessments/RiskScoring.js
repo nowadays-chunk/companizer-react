@@ -1,56 +1,26 @@
+
 export const fieldsConfig = {
-    scoreId: { label: 'Score ID', type: 'text', faker: 'datatype.uuid' },
-    riskId: { label: 'Risk ID', type: 'text', faker: 'datatype.uuid' },
-    riskTitle: { label: 'Risk Title', type: 'text', faker: 'lorem.sentence' },
-    likelihoodScore: {
-        label: 'Likelihood Score',
-        type: 'select',
-        options: [
-            { id: 'high', label: 'High' },
-            { id: 'medium', label: 'Medium' },
-            { id: 'low', label: 'Low' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    impactScore: {
-        label: 'Impact Score',
-        type: 'select',
-        options: [
-            { id: 'high', label: 'High' },
-            { id: 'medium', label: 'Medium' },
-            { id: 'low', label: 'Low' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    overallRiskScore: { label: 'Overall Risk Score', type: 'number', faker: 'finance.amount' },
-    scoringDate: { label: 'Scoring Date', type: 'date', faker: 'date.past' },
-    scoredBy: { label: 'Scored By', type: 'text', faker: 'name.fullName' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'mitigated', label: 'Mitigated' },
-            { id: 'archived', label: 'Archived' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    score_id: { label: 'Score ID', type: 'text', faker: 'datatype.uuid' },
+    risk_id: { label: 'Risk ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    likelihood: { label: 'Likelihood', type: 'number', faker: 'datatype.number' }, // 1-5 or 1-10
+    impact: { label: 'Impact', type: 'number', faker: 'datatype.number' }, // 1-5 or 1-10
+
+    risk_score: { label: 'Risk Score', type: 'number', faker: 'datatype.number' }, // Calculated
+    score_date: { label: 'Score Date', type: 'date', faker: 'date.recent' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    assessed_by: { label: 'Assessed By', type: 'text', faker: 'name.fullName' },
+    score_methodology: { label: 'Score Methodology', type: 'text', faker: 'lorem.word' }, // Qualitative/Quantitative
+    comments: { label: 'Comments', type: 'text', faker: 'lorem.sentence' },
+    trend: { label: 'Trend', type: 'select', options: [{ id: 'increasing', label: 'Increasing' }, { id: 'stable', label: 'Stable' }, { id: 'decreasing', label: 'Decreasing' }], faker: 'random.arrayElement' },
+    heat_map_zone: { label: 'Heat Map Zone', type: 'select', options: [{ id: 'red', label: 'Red' }, { id: 'amber', label: 'Amber' }, { id: 'green', label: 'Green' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Risk Scoring';
-export const collectionName = 'risk-scoring';
+export const collectionName = 'risk_scoring';

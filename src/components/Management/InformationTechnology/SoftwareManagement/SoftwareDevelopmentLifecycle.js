@@ -1,35 +1,28 @@
+
 export const fieldsConfig = {
-    sdlcId: { label: 'SDLC ID', type: 'text', faker: 'datatype.uuid' },
-    projectName: { label: 'Project Name', type: 'text', faker: 'company.name' },
-    phase: {
-        label: 'Phase',
-        type: 'select',
-        options: [
-            { id: 'requirements', label: 'Requirements' },
-            { id: 'design', label: 'Design' },
-            { id: 'implementation', label: 'Implementation' },
-            { id: 'testing', label: 'Testing' },
-            { id: 'deployment', label: 'Deployment' },
-            { id: 'maintenance', label: 'Maintenance' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    assignedTo: { label: 'Assigned To', type: 'text', faker: 'name.fullName' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'not-started', label: 'Not Started' },
-            { id: 'in-progress', label: 'In Progress' },
-            { id: 'completed', label: 'Completed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  cycle_id: { label: 'Cycle ID', type: 'text', faker: 'datatype.uuid' },
+  project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  phase: { label: 'Phase', type: 'select', options: [{ id: 'requirements', label: 'Requirements' }, { id: 'design', label: 'Design' }, { id: 'coding', label: 'Coding' }, { id: 'testing', label: 'Testing' }, { id: 'deployment', label: 'Deployment' }], faker: 'random.arrayElement' },
+
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+  end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
+
+  status: { label: 'Status', type: 'select', options: [{ id: 'planned', label: 'Planned' }, { id: 'active', label: 'Active' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  owner: { label: 'Owner', type: 'text', faker: 'name.fullName' },
+  team: { label: 'Team', type: 'text', faker: 'hacker.noun' },
+  deliverables: { label: 'Deliverables', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  risks: { label: 'Risks', type: 'text', faker: 'lorem.sentence' },
+  budget_spent: { label: 'Budget Spent', type: 'number', faker: 'finance.amount' },
+  code_repository_url: { label: 'Repo URL', type: 'text', faker: 'internet.url' }
 };
 
 export const entityName = 'Software Development Lifecycle';
-export const collectionName = 'software-development-lifecycle';
+export const collectionName = 'sdlc_phases';

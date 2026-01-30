@@ -1,35 +1,23 @@
+
 export const fieldsConfig = {
-    fulfillmentId: { label: 'Fulfillment ID', type: 'text', faker: 'datatype.uuid' },
-    orderId: { label: 'Order ID', type: 'text', faker: 'datatype.uuid' },
-    status: {
-      label: 'Status',
-      type: 'select',
-      options: [
-        { id: 'pending', label: 'Pending' },
-        { id: 'processing', label: 'Processing' },
-        { id: 'completed', label: 'Completed' },
-        { id: 'canceled', label: 'Canceled' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    fulfillmentDate: { label: 'Fulfillment Date', type: 'date', faker: 'date.past' },
-    warehouseLocation: { label: 'Warehouse Location', type: 'text', faker: 'address.streetAddress' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'completed', label: 'Completed' },
-        { id: 'pending', label: 'Pending' },
-        { id: 'high-priority', label: 'High Priority' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Order Fulfillment';
-  export const collectionName = 'order-fulfillment';
-  
+  fulfillment_id: { label: 'Fulfillment ID', type: 'text', faker: 'datatype.uuid' },
+  order_id: { label: 'Order ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  picked_date: { label: 'Picked Date', type: 'datetime', faker: 'date.recent' },
+  packed_date: { label: 'Packed Date', type: 'datetime', faker: 'date.recent' },
+  shipped_date: { label: 'Shipped Date', type: 'datetime', faker: 'date.recent' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  warehouse_id: { label: 'Warehouse ID', type: 'text', faker: 'datatype.uuid' },
+  shipping_carrier: { label: 'Carrier', type: 'text', faker: 'company.name' },
+  tracking_number: { label: 'Tracking Number', type: 'text', faker: 'random.alphaNumeric' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'processing', label: 'Processing' }, { id: 'shipped', label: 'Shipped' }, { id: 'delivered', label: 'Delivered' }], faker: 'random.arrayElement' }
+};
+
+export const entityName = 'Order Fulfillment';
+export const collectionName = 'order_fulfillment';

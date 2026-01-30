@@ -822,6 +822,7 @@ export const drawerItems = [
                 label: "Vendor Management",
                 description: "Oversees the company’s interactions and contracts with suppliers.",
                 children: [
+                    { key: "vendors-list", label: "Vendors List", description: "The list and information about the vendors the manager adds to keep trace and to link to other entities." },
                     { key: "vendor-assessments", label: "Vendor Assessments", description: "Evaluations of suppliers based on criteria like quality, reliability, and cost." },
                     { key: "vendor-onboarding", label: "Vendor Onboarding", description: "The process of integrating new suppliers into the company’s systems." },
                     { key: "vendor-scorecards", label: "Vendor Scorecards", description: "Tools for measuring and tracking supplier performance." }

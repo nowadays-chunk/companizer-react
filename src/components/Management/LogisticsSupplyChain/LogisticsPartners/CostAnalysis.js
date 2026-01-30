@@ -1,24 +1,24 @@
+
 export const fieldsConfig = {
-    analysisId: { label: 'Analysis ID', type: 'text', faker: 'datatype.uuid' },
-    partnerId: { label: 'Partner ID', type: 'text', faker: 'datatype.uuid' },
-    analysisDate: { label: 'Analysis Date', type: 'date', faker: 'date.past' },
-    totalCost: { label: 'Total Cost', type: 'number', faker: 'finance.amount' },
-    costBreakdown: { label: 'Cost Breakdown', type: 'text', faker: 'lorem.paragraph' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'high-priority', label: 'High Priority' },
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'completed', label: 'Completed' },
-        { id: 'pending-review', label: 'Pending Review' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  analysis_id: { label: 'Analysis ID', type: 'text', faker: 'datatype.uuid' },
+  shipment_id: { label: 'Shipment ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  route_id: { label: 'Route ID', type: 'text', faker: 'datatype.uuid' },
+  estimated_cost: { label: 'Estimated Cost', type: 'number', faker: 'finance.amount' },
+  actual_cost: { label: 'Actual Cost', type: 'number', faker: 'finance.amount' },
+
+  variance: { label: 'Variance', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  cost_breakdown: { label: 'Breakdown', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' }, // Fuel, tolls, taxes
+  currency: { label: 'Currency', type: 'text', faker: 'finance.currencyCode' },
+  date_analyzed: { label: 'Date Analyzed', type: 'date', faker: 'date.recent' }
 };
 
-export const entityName = 'Cost Analysis';
-export const collectionName = 'cost-analysis';
+export const entityName = 'Logistics Cost Analysis';
+export const collectionName = 'logistics_cost_analysis';

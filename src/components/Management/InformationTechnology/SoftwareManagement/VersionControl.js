@@ -1,14 +1,26 @@
+
 export const fieldsConfig = {
-    versionControlId: { label: 'Version Control ID', type: 'text', faker: 'datatype.uuid' },
-    repositoryName: { label: 'Repository Name', type: 'text', faker: 'company.name' },
-    branchName: { label: 'Branch Name', type: 'text', faker: 'lorem.word' },
-    commitId: { label: 'Commit ID', type: 'text', faker: 'datatype.uuid' },
-    author: { label: 'Author', type: 'text', faker: 'name.fullName' },
-    commitMessage: { label: 'Commit Message', type: 'text', faker: 'lorem.sentence' },
-    commitDate: { label: 'Commit Date', type: 'date', faker: 'date.past' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  version_id: { label: 'Version ID', type: 'text', faker: 'datatype.uuid' },
+  project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  version_number: { label: 'Version Number', type: 'text', faker: 'system.semver' },
+  release_date: { label: 'Release Date', type: 'date', faker: 'date.recent' },
+
+  release_notes: { label: 'Release Notes', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  branch_name: { label: 'Branch Name', type: 'text', faker: 'hacker.noun' }, // git branch
+  commit_hash: { label: 'Commit Hash', type: 'text', faker: 'git.commitSha' },
+  author: { label: 'Author', type: 'text', faker: 'name.fullName' },
+  is_stable: { label: 'Is Stable', type: 'checkbox', faker: 'datatype.boolean' },
+  download_url: { label: 'Download URL', type: 'text', faker: 'internet.url' },
+  environment: { label: 'Environment', type: 'select', options: [{ id: 'prod', label: 'Production' }, { id: 'staging', label: 'Staging' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Version Control';
-export const collectionName = 'version-control';
+export const collectionName = 'version_control';

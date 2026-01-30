@@ -1,25 +1,25 @@
+
 export const fieldsConfig = {
-    evaluationId: { label: 'Evaluation ID', type: 'text', faker: 'datatype.uuid' },
-    supplierId: { label: 'Supplier ID', type: 'text', faker: 'datatype.uuid' },
-    evaluationDate: { label: 'Evaluation Date', type: 'date', faker: 'date.past' },
-    performanceScore: { label: 'Performance Score', type: 'number', faker: 'finance.amount' },
-    evaluationSummary: { label: 'Evaluation Summary', type: 'text', faker: 'lorem.paragraph' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'high-performance', label: 'High Performance' },
-        { id: 'medium-performance', label: 'Medium Performance' },
-        { id: 'low-performance', label: 'Low Performance' },
-        { id: 'needs-review', label: 'Needs Review' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Supplier Performance Evaluation';
-  export const collectionName = 'supplier-performance-evaluation';
-  
+  evaluation_id: { label: 'Evaluation ID', type: 'text', faker: 'datatype.uuid' },
+  supplier_id: { label: 'Supplier ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  period: { label: 'Period', type: 'text', faker: 'lorem.word' },
+  quality_score: { label: 'Quality Score', type: 'number', faker: 'datatype.number' }, // 1-100
+  delivery_score: { label: 'Delivery Score', type: 'number', faker: 'datatype.number' },
+  price_score: { label: 'Price Score', type: 'number', faker: 'datatype.number' },
+
+  overall_score: { label: 'Overall Score', type: 'number', faker: 'datatype.number' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  evaluated_by: { label: 'Evaluated By', type: 'text', faker: 'name.fullName' },
+  date_evaluated: { label: 'Date Evaluated', type: 'date', faker: 'date.recent' },
+  recommendation: { label: 'Recommendation', type: 'text', faker: 'lorem.sentence' } // Retain, Replace, Warn
+};
+
+export const entityName = 'Supplier Performance Evaluation';
+export const collectionName = 'supplier_performance_evaluation';

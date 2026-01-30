@@ -1,43 +1,25 @@
+
 export const fieldsConfig = {
-    assetId: { label: 'Asset ID', type: 'text', faker: 'datatype.uuid' },
-    assetType: {
-        label: 'Asset Type',
-        type: 'select',
-        options: [
-            { id: 'hardware', label: 'Hardware' },
-            { id: 'software', label: 'Software' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    purchaseDate: { label: 'Purchase Date', type: 'date', faker: 'date.past' },
-    deploymentDate: { label: 'Deployment Date', type: 'date', faker: 'date.past' },
-    retirementDate: { label: 'Retirement Date', type: 'date', faker: 'date.future' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'in-use', label: 'In Use' },
-            { id: 'retired', label: 'Retired' },
-            { id: 'maintenance', label: 'Maintenance' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    assignedTo: { label: 'Assigned To', type: 'text', faker: 'name.fullName' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'hardware', label: 'Hardware' },
-            { id: 'software', label: 'Software' },
-            { id: 'critical', label: 'Critical' },
-            { id: 'review', label: 'Review' },
-        ],
-        multiple: true,
-        faker: 'lorem.words',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  lifecycle_id: { label: 'Lifecycle ID', type: 'text', faker: 'datatype.uuid' },
+  asset_id: { label: 'Asset ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  stage: { label: 'Stage', type: 'select', options: [{ id: 'procurement', label: 'Procurement' }, { id: 'deployment', label: 'Deployment' }, { id: 'maintenance', label: 'Maintenance' }, { id: 'retired', label: 'Retired' }], faker: 'random.arrayElement' },
+
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+  end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  assigned_to: { label: 'Assigned To', type: 'text', faker: 'name.fullName' },
+  location: { label: 'Location', type: 'text', faker: 'address.city' },
+  condition: { label: 'Condition', type: 'select', options: [{ id: 'new', label: 'New' }, { id: 'good', label: 'Good' }, { id: 'poor', label: 'Poor' }], faker: 'random.arrayElement' },
+  value: { label: 'Value', type: 'number', faker: 'finance.amount' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Asset Lifecycle';
-export const collectionName = 'asset-lifecycle';
+export const collectionName = 'asset_lifecycle';

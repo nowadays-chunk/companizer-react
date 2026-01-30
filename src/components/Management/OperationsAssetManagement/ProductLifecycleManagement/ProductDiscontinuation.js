@@ -1,24 +1,24 @@
+
 export const fieldsConfig = {
-    discontinuationId: { label: 'Discontinuation ID', type: 'text', faker: 'datatype.uuid' },
-    productName: { label: 'Product Name', type: 'text', faker: 'commerce.productName' },
-    reasonForDiscontinuation: { label: 'Reason For Discontinuation', type: 'text', faker: 'lorem.sentence' },
-    discontinuationDate: { label: 'Discontinuation Date', type: 'date', faker: 'date.past' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'phased_out', label: 'Phased Out' },
-        { id: 'obsolete', label: 'Obsolete' },
-        { id: 'replaced', label: 'Replaced' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  discontinuation_id: { label: 'Discontinuation ID', type: 'text', faker: 'datatype.uuid' },
+  product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  reason: { label: 'Reason', type: 'select', options: [{ id: 'low_sales', label: 'Low Sales' }, { id: 'obsolete', label: 'Obsolete' }, { id: 'regulatory', label: 'Regulatory' }, { id: 'strategic', label: 'Strategic' }], faker: 'random.arrayElement' },
+
+  decision_date: { label: 'Decision Date', type: 'date', faker: 'date.past' },
+  end_of_life_date: { label: 'End of Life Date', type: 'date', faker: 'date.future' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  phase_out_plan: { label: 'Phase Out Plan', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  replacement_product_id: { label: 'Replacement Product ID', type: 'text', faker: 'datatype.uuid' },
+  inventory_action: { label: 'Inventory Action', type: 'select', options: [{ id: 'clearance', label: 'Clearance' }, { id: 'scrap', label: 'Scrap' }, { id: 'return', label: 'Return' }], faker: 'random.arrayElement' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'pending', label: 'Pending' }, { id: 'in_progress', label: 'In Progress' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Product Discontinuation';
-export const collectionName = 'product-discontinuation';
+export const collectionName = 'product_discontinuation';

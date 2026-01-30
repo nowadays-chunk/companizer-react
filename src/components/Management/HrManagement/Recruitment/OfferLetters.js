@@ -1,35 +1,25 @@
+
 export const fieldsConfig = {
-    offerId: { label: 'Offer ID', type: 'text', faker: 'datatype.uuid' },
-    jobTitle: { label: 'Job Title', type: 'text', faker: 'name.jobTitle' },
-    applicantName: { label: 'Applicant Name', type: 'text', faker: 'name.fullName' },
-    offerDate: { label: 'Offer Date', type: 'date', faker: 'date.past' },
-    offeredSalary: { label: 'Offered Salary', type: 'number', faker: 'finance.amount' },
-    offerStatus: {
-        label: 'Offer Status',
-        type: 'select',
-        options: [
-            { id: 'accepted', label: 'Accepted' },
-            { id: 'rejected', label: 'Rejected' },
-            { id: 'pending', label: 'Pending' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'important', label: 'Important' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  offer_id: { label: 'Offer ID', type: 'text', faker: 'datatype.uuid' },
+  applicant_id: { label: 'Applicant ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  offer_date: { label: 'Offer Date', type: 'date', faker: 'date.recent' },
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.future' },
+
+  salary: { label: 'Salary', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  job_title: { label: 'Job Title', type: 'text', faker: 'name.jobTitle' },
+  expiry_date: { label: 'Expiry Date', type: 'date', faker: 'date.future' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'sent', label: 'Sent' }, { id: 'accepted', label: 'Accepted' }, { id: 'declined', label: 'Declined' }], faker: 'random.arrayElement' },
+  document_url: { label: 'Document URL', type: 'text', faker: 'internet.url' },
+  hiring_manager: { label: 'Hiring Manager', type: 'text', faker: 'name.fullName' }
 };
 
 export const entityName = 'Offer Letters';
-export const collectionName = 'offer-letters';
+export const collectionName = 'offer_letters';

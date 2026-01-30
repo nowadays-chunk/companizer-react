@@ -1,34 +1,23 @@
+
 export const fieldsConfig = {
-    documentId: { label: 'Document ID', type: 'text', faker: 'datatype.uuid' },
-    shipmentId: { label: 'Shipment ID', type: 'text', faker: 'datatype.uuid' },
-    documentType: {
-      label: 'Document Type',
-      type: 'select',
-      options: [
-        { id: 'bill-of-lading', label: 'Bill of Lading' },
-        { id: 'invoice', label: 'Invoice' },
-        { id: 'export-declaration', label: 'Export Declaration' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    issueDate: { label: 'Issue Date', type: 'date', faker: 'date.past' },
-    expirationDate: { label: 'Expiration Date', type: 'date', faker: 'date.future' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'review', label: 'Review' },
-        { id: 'pending', label: 'Pending' },
-        { id: 'completed', label: 'Completed' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Customs Documentation';
-  export const collectionName = 'customs-documentation';
-  
+  doc_id: { label: 'Doc ID', type: 'text', faker: 'datatype.uuid' },
+  shipment_id: { label: 'Shipment ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  doc_type: { label: 'Doc Type', type: 'select', options: [{ id: 'commercial_invoice', label: 'Commercial Invoice' }, { id: 'packing_list', label: 'Packing List' }, { id: 'bill_of_lading', label: 'Bill of Lading' }], faker: 'random.arrayElement' },
+
+  declaration_date: { label: 'Declaration Date', type: 'date', faker: 'date.recent' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  customs_value: { label: 'Customs Value', type: 'number', faker: 'finance.amount' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'submitted', label: 'Submitted' }, { id: 'cleared', label: 'Cleared' }, { id: 'held', label: 'Held' }], faker: 'random.arrayElement' },
+  reference_number: { label: 'Reference #', type: 'text', faker: 'random.alphaNumeric' },
+  duty_amount: { label: 'Duty Amount', type: 'number', faker: 'finance.amount' }
+};
+
+export const entityName = 'Customs Documentation';
+export const collectionName = 'customs_documentation';

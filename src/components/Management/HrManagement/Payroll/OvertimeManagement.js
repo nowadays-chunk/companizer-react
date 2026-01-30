@@ -1,38 +1,23 @@
+
 export const fieldsConfig = {
-    overtimeId: { label: 'Overtime ID', type: 'text', faker: 'datatype.uuid' },
-    employeeId: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
-    overtimeHours: { label: 'Overtime Hours', type: 'number', faker: 'datatype.number' },
-    ratePerHour: { label: 'Rate Per Hour', type: 'number', faker: 'finance.amount' },
-    totalOvertimePay: { label: 'Total Overtime Pay', type: 'number', faker: 'finance.amount' },
-    overtimeDate: { label: 'Overtime Date', type: 'date', faker: 'date.past' },
-    approvedBy: { label: 'Approved By', type: 'text', faker: 'name.fullName' },
-    approvalDate: { label: 'Approval Date', type: 'date', faker: 'date.past' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'approved', label: 'Approved' },
-            { id: 'pending', label: 'Pending' },
-            { id: 'denied', label: 'Denied' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  overtime_id: { label: 'Overtime ID', type: 'text', faker: 'datatype.uuid' },
+  employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  date: { label: 'Date', type: 'date', faker: 'date.recent' },
+  hours: { label: 'Hours', type: 'number', faker: 'datatype.float' },
+  rate_multiplier: { label: 'Multiplier', type: 'number', faker: 'datatype.float' }, // 1.5, 2.0
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Hourly Rate', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  total_amount: { label: 'Total Amount', type: 'number', faker: 'finance.amount' },
+  reason: { label: 'Reason', type: 'text', faker: 'lorem.sentence' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'requested', label: 'Requested' }, { id: 'approved', label: 'Approved' }, { id: 'rejected', label: 'Rejected' }], faker: 'random.arrayElement' },
+  supervisor_id: { label: 'Supervisor ID', type: 'text', faker: 'datatype.uuid' }
 };
 
 export const entityName = 'Overtime Management';
-export const collectionName = 'overtime-management';
+export const collectionName = 'overtime_management';

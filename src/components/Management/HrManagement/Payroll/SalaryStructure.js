@@ -1,37 +1,25 @@
+
 export const fieldsConfig = {
-    structureId: { label: 'Structure ID', type: 'text', faker: 'datatype.uuid' },
-    employeeId: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
-    baseSalary: { label: 'Base Salary', type: 'number', faker: 'finance.amount' },
-    bonusPercentage: { label: 'Bonus Percentage', type: 'number', faker: 'datatype.number' },
-    allowances: { label: 'Allowances', type: 'number', faker: 'finance.amount' },
-    structureEffectiveDate: { label: 'Effective Date', type: 'date', faker: 'date.past' },
-    structureExpiryDate: { label: 'Expiry Date', type: 'date', faker: 'date.future' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'expired', label: 'Expired' },
-            { id: 'pending', label: 'Pending' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'important', label: 'Important' },
-            { id: 'review', label: 'Review' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  structure_id: { label: 'Structure ID', type: 'text', faker: 'datatype.uuid' },
+  employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  base_salary: { label: 'Base Salary', type: 'number', faker: 'finance.amount' },
+  currency: { label: 'Currency', type: 'text', faker: 'finance.currencyCode' },
+
+  frequency: { label: 'Frequency', type: 'select', options: [{ id: 'monthly', label: 'Monthly' }, { id: 'bi_weekly', label: 'Bi-Weekly' }, { id: 'annual', label: 'Annual' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  effective_date: { label: 'Effective Date', type: 'date', faker: 'date.past' },
+  grade: { label: 'Grade', type: 'text', faker: 'random.alphaNumeric' },
+  housing_allowance: { label: 'Housing Allowance', type: 'number', faker: 'finance.amount' },
+  transport_allowance: { label: 'Transport Allowance', type: 'number', faker: 'finance.amount' },
+  is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Salary Structure';
-export const collectionName = 'salary-structure';
+export const collectionName = 'salary_structure';

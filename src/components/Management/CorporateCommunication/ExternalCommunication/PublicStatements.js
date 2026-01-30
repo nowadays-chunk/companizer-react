@@ -1,44 +1,23 @@
+
 export const fieldsConfig = {
-    statementId: { label: 'Statement ID', type: 'text', faker: 'datatype.uuid' },
-    title: { label: 'Title', type: 'text', faker: 'lorem.sentence' },
-    content: { label: 'Content', type: 'text', faker: 'lorem.paragraphs' },
-    statementDate: { label: 'Statement Date', type: 'date', faker: 'date.past' },
-    audience: {
-        label: 'Audience',
-        type: 'select',
-        options: [
-            { id: 'public', label: 'General Public' },
-            { id: 'investors', label: 'Investors' },
-            { id: 'customers', label: 'Customers' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    distributionChannels: {
-        label: 'Distribution Channels',
-        type: 'select',
-        options: [
-            { id: 'website', label: 'Website' },
-            { id: 'email', label: 'Email' },
-            { id: 'social-media', label: 'Social Media' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    statement_id: { label: 'Statement ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    topic: { label: 'Topic', type: 'text', faker: 'lorem.words' },
+    spokesperson: { label: 'Spokesperson', type: 'text', faker: 'name.fullName' },
+
+    statement_text: { label: 'Statement', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    date_issued: { label: 'Date Issued', type: 'date', faker: 'date.recent' },
+    context: { label: 'Context', type: 'text', faker: 'lorem.sentence' },
+    url_link: { label: 'Link', type: 'text', faker: 'internet.url' },
+    approved_by: { label: 'Approved By', type: 'text', faker: 'name.fullName' }
 };
 
 export const entityName = 'Public Statements';
-export const collectionName = 'public-statements';
+export const collectionName = 'public_statements';

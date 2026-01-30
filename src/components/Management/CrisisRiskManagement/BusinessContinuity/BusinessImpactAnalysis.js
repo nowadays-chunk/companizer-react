@@ -1,37 +1,25 @@
+
 export const fieldsConfig = {
-    analysisId: { label: 'Analysis ID', type: 'text', faker: 'datatype.uuid' },
-    processName: { label: 'Process Name', type: 'text', faker: 'company.bs' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    impactLevel: {
-        label: 'Impact Level',
-        type: 'select',
-        options: [
-            { id: 'high', label: 'High' },
-            { id: 'medium', label: 'Medium' },
-            { id: 'low', label: 'Low' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    recoveryTimeObjective: { label: 'Recovery Time Objective', type: 'text', faker: 'lorem.sentence' },
-    financialImpact: { label: 'Financial Impact', type: 'number', faker: 'finance.amount' },
-    responsiblePerson: { label: 'Responsible Person', type: 'text', faker: 'name.fullName' },
-    analysisDate: { label: 'Analysis Date', type: 'date', faker: 'date.past' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    analysis_id: { label: 'Analysis ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    process_name: { label: 'Process Name', type: 'text', faker: 'commerce.department' },
+    impact_category: { label: 'Impact Category', type: 'select', options: [{ id: 'financial', label: 'Financial' }, { id: 'operational', label: 'Operational' }, { id: 'reputational', label: 'Reputational' }], faker: 'random.arrayElement' },
+
+    financial_impact_daily: { label: 'Financial Impact (Daily)', type: 'number', faker: 'finance.amount' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    max_tolerable_downtime: { label: 'Max Tolerable Downtime', type: 'text', faker: 'lorem.words' },
+    recovery_priorities: { label: 'Recovery Priorities', type: 'select', options: [{ id: 'critical', label: 'Critical' }, { id: 'high', label: 'High' }, { id: 'medium', label: 'Medium' }, { id: 'low', label: 'Low' }], faker: 'random.arrayElement' },
+    dependencies: { label: 'Dependencies', type: 'text', faker: 'lorem.sentence' },
+    analyst_name: { label: 'Analyst Name', type: 'text', faker: 'name.fullName' },
+    analysis_date: { label: 'Analysis Date', type: 'date', faker: 'date.recent' },
+    mitigation_strategies: { label: 'Mitigation Strategies', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Business Impact Analysis';
-export const collectionName = 'business-impact-analysis';
+export const collectionName = 'business_impact_analysis';

@@ -1,26 +1,26 @@
+
 export const fieldsConfig = {
-    trackingId: { label: 'Tracking ID', type: 'text', faker: 'datatype.uuid' },
-    year: { label: 'Year', type: 'text', faker: 'date.past' },
-    totalSavings: { label: 'Total Savings (MWh)', type: 'number', faker: 'finance.amount' },
-    costSavings: { label: 'Cost Savings', type: 'number', faker: 'finance.amount' },
-    reductionTarget: { label: 'Reduction Target (%)', type: 'number', faker: 'finance.amount' },
-    achievedReduction: { label: 'Achieved Reduction (%)', type: 'number', faker: 'finance.amount' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
+  tracking_id: { label: 'Tracking ID', type: 'text', faker: 'datatype.uuid' },
+  initiative_id: { label: 'Initiative ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  month: { label: 'Month', type: 'text', faker: 'date.month' },
+  year: { label: 'Year', type: 'number', faker: 'date.past' },
+
+  kwh_saved: { label: 'kWh Saved', type: 'number', faker: 'datatype.number' },
+  cost_saved: { label: 'Cost Saved', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  baseline_usage: { label: 'Baseline Usage', type: 'number', faker: 'datatype.number' },
+  actual_usage: { label: 'Actual Usage', type: 'number', faker: 'datatype.number' },
+  weather_adjustment: { label: 'Weather Adjustment', type: 'number', faker: 'datatype.float' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' },
+  verified: { label: 'Verified', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Energy Savings Tracking';
-export const collectionName = 'energy-savings-tracking';
+export const collectionName = 'energy_savings_tracking';

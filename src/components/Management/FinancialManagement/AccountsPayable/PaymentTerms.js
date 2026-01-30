@@ -1,38 +1,24 @@
+
 export const fieldsConfig = {
-  termId: { label: 'Term ID', type: 'text', faker: 'datatype.uuid' },
-  termName: { label: 'Term Name', type: 'text', faker: 'finance.transactionType' },
+  term_id: { label: 'Term ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  term_name: { label: 'Term Name', type: 'text', faker: 'lorem.words' }, // e.g. Net 30
+  days_due: { label: 'Days Due', type: 'number', faker: 'datatype.number' },
+
+  discount_percentage: { label: 'Discount (%)', type: 'number', faker: 'datatype.float' },
+  discount_days: { label: 'Discount Days', type: 'number', faker: 'datatype.number' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  is_default: { label: 'Is Default', type: 'checkbox', faker: 'datatype.boolean' },
   description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
-  netDays: { label: 'Net Days', type: 'number', faker: 'datatype.number' },
-  isActive: {
-    label: 'Is Active',
-    type: 'select',
-    options: [
-      { id: 'yes', label: 'Yes' },
-      { id: 'no', label: 'No' },
-    ],
-    faker: 'random.arrayElement',
-  },
-  discountRate: { label: 'Discount Rate', type: 'number', faker: 'datatype.float' }, // Additional field for discount
-  gracePeriodDays: { label: 'Grace Period Days', type: 'number', faker: 'datatype.number' }, // Grace period option
-  penaltyRate: { label: 'Penalty Rate', type: 'number', faker: 'datatype.float' }, // Penalty rate for late payments
-  tags: {
-    label: 'Tags',
-    type: 'select',
-    options: [
-      { id: 'urgent', label: 'Urgent' },
-      { id: 'review', label: 'Review' },
-      { id: 'important', label: 'Important' },
-      { id: 'completed', label: 'Completed' },
-      { id: 'follow-up', label: 'Follow-Up' },
-    ],
-    multiple: true,
-    faker: 'random.arrayElement',
-  },
-  createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-  lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-  createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  penalty_percentage: { label: 'Penalty (%)', type: 'number', faker: 'datatype.float' },
+  is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Payment Terms';
-export const collectionName = 'payment-terms';
+export const collectionName = 'payment_terms';

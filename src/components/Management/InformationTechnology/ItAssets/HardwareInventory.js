@@ -1,48 +1,28 @@
+
 export const fieldsConfig = {
-    inventoryId: { label: 'Inventory ID', type: 'text', faker: 'datatype.uuid' },
-    assetName: { label: 'Asset Name', type: 'text', faker: 'commerce.productName' },
-    assetType: {
-        label: 'Asset Type',
-        type: 'select',
-        options: [
-            { id: 'laptop', label: 'Laptop' },
-            { id: 'desktop', label: 'Desktop' },
-            { id: 'server', label: 'Server' },
-            { id: 'network-device', label: 'Network Device' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    serialNumber: { label: 'Serial Number', type: 'text', faker: 'datatype.uuid' },
-    purchaseDate: { label: 'Purchase Date', type: 'date', faker: 'date.past' },
-    warrantyExpirationDate: { label: 'Warranty Expiration Date', type: 'date', faker: 'date.future' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'available', label: 'Available' },
-            { id: 'in-use', label: 'In Use' },
-            { id: 'under-maintenance', label: 'Under Maintenance' },
-            { id: 'retired', label: 'Retired' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    location: { label: 'Location', type: 'text', faker: 'address.streetAddress' },
-    assignedTo: { label: 'Assigned To', type: 'text', faker: 'name.fullName' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'critical', label: 'Critical' },
-            { id: 'review', label: 'Review' },
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'maintenance', label: 'Maintenance' },
-        ],
-        multiple: true,
-        faker: 'lorem.words',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  hardware_id: { label: 'Hardware ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  device_name: { label: 'Device Name', type: 'text', faker: 'hacker.noun' },
+  serial_number: { label: 'Serial Number', type: 'text', faker: 'finance.account' },
+
+  type: { label: 'Type', type: 'select', options: [{ id: 'laptop', label: 'Laptop' }, { id: 'server', label: 'Server' }, { id: 'mobile', label: 'Mobile' }], faker: 'random.arrayElement' },
+
+  purchase_date: { label: 'Purchase Date', type: 'date', faker: 'date.past' },
+  warranty_expiry: { label: 'Warranty Expiry', type: 'date', faker: 'date.future' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  manufacturer: { label: 'Manufacturer', type: 'text', faker: 'company.name' },
+  model: { label: 'Model', type: 'text', faker: 'lorem.word' },
+  assigned_user_id: { label: 'Assigned User ID', type: 'text', faker: 'datatype.uuid' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'in_use', label: 'In Use' }, { id: 'stock', label: 'In Stock' }, { id: 'repair', label: 'In Repair' }], faker: 'random.arrayElement' },
+  specifications: { label: 'Specifications', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  asset_tag: { label: 'Asset Tag', type: 'text', faker: 'random.alphaNumeric' }
 };
 
 export const entityName = 'Hardware Inventory';
-export const collectionName = 'hardware-inventory';
+export const collectionName = 'hardware_inventory';

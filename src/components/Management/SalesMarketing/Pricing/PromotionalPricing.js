@@ -1,27 +1,29 @@
+
 export const fieldsConfig = {
-    promotionId: { label: 'Promotion ID', type: 'text', faker: 'datatype.uuid' },
-    promotionName: { label: 'Promotion Name', type: 'text', faker: 'commerce.productName' },
-    promotionDescription: { label: 'Promotion Description', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-    discountRate: { label: 'Discount Rate (%)', type: 'number', faker: 'datatype.number' },
-    validFrom: { label: 'Valid From', type: 'date', faker: 'date.past' },
-    validTo: { label: 'Valid To', type: 'date', faker: 'date.future' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'seasonal', label: 'Seasonal' },
-        { id: 'clearance', label: 'Clearance' },
-        { id: 'holiday', label: 'Holiday' },
-        { id: 'limited-time', label: 'Limited Time' },
-        { id: 'bulk-purchase', label: 'Bulk Purchase' },
-      ],
-      multiple: true,
-      faker: 'lorem.words',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Promotional Pricing';
-  export const collectionName = 'promotional-pricing';
-  
+  promo_id: { label: 'Promo ID', type: 'text', faker: 'datatype.uuid' },
+  product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  promo_name: { label: 'Promo Name', type: 'text', faker: 'commerce.productName' },
+  discount_amount: { label: 'Discount Amount', type: 'number', faker: 'finance.amount' },
+
+  start_time: { label: 'Start Time', type: 'date', faker: 'date.future' },
+  end_time: { label: 'End Time', type: 'date', faker: 'date.future' },
+
+  status: { label: 'Status', type: 'select', options: [{ id: 'scheduled', label: 'Scheduled' }, { id: 'active', label: 'Active' }, { id: 'ended', label: 'Ended' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  promo_code: { label: 'Promo Code', type: 'text', faker: 'random.alphaNumeric' },
+  usage_limit: { label: 'Usage Limit', type: 'number', faker: 'datatype.number' },
+  usage_count: { label: 'Usage Count', type: 'number', faker: 'datatype.number' },
+  conditions: { label: 'Conditions', type: 'text', faker: 'lorem.sentence' },
+  marketing_channel: { label: 'Marketing Channel', type: 'text', faker: 'internet.domainWord' },
+  banner_url: { label: 'Banner URL', type: 'text', faker: 'internet.url' }
+};
+
+export const entityName = 'Promotional Pricing';
+export const collectionName = 'promotional_pricing';

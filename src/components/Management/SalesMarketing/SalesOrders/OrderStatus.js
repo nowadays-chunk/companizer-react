@@ -1,34 +1,26 @@
+
 export const fieldsConfig = {
-    orderId: { label: 'Order ID', type: 'text', faker: 'datatype.uuid' },
-    status: {
-      label: 'Status',
-      type: 'select',
-      options: [
-        { id: 'pending', label: 'Pending' },
-        { id: 'processing', label: 'Processing' },
-        { id: 'shipped', label: 'Shipped' },
-        { id: 'delivered', label: 'Delivered' },
-        { id: 'canceled', label: 'Canceled' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    lastUpdated: { label: 'Last Updated', type: 'date', faker: 'date.recent' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'high-priority', label: 'High Priority' },
-        { id: 'low-priority', label: 'Low Priority' },
-        { id: 'delayed', label: 'Delayed' },
-        { id: 'bulk-order', label: 'Bulk Order' },
-      ],
-      multiple: true,
-      faker: 'lorem.words',
-    },
-    updatedBy: { label: 'Updated By', type: 'text', faker: 'name.fullName' },
-  };
-  
-  export const entityName = 'Order Status';
-  export const collectionName = 'order-status';
-  
+  status_id: { label: 'Status ID', type: 'text', faker: 'datatype.uuid' },
+  order_id: { label: 'Order ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  current_status: { label: 'Current Status', type: 'select', options: [{ id: 'new', label: 'New' }, { id: 'processing', label: 'Processing' }, { id: 'shipped', label: 'Shipped' }, { id: 'delivered', label: 'Delivered' }, { id: 'returned', label: 'Returned' }], faker: 'random.arrayElement' },
+  status_date: { label: 'Status Date', type: 'date', faker: 'date.recent' },
+
+  updated_by: { label: 'Updated By', type: 'text', faker: 'name.fullName' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  comments: { label: 'Comments', type: 'text', faker: 'lorem.sentence' },
+  is_visible_to_customer: { label: 'Visible to Customer', type: 'checkbox', faker: 'datatype.boolean' },
+  location: { label: 'Location', type: 'text', faker: 'address.city' }, // E.g., Warehouse A
+  next_step: { label: 'Next Step', type: 'text', faker: 'hacker.verb' },
+  cycle_time_hours: { label: 'Cycle Time (Hours)', type: 'number', faker: 'datatype.float' },
+  alert_flag: { label: 'Alert Flag', type: 'checkbox', faker: 'datatype.boolean' }
+};
+
+export const entityName = 'Order Status';
+export const collectionName = 'order_status_history';

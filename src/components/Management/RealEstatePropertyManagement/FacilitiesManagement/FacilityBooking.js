@@ -1,26 +1,26 @@
+
 export const fieldsConfig = {
-    bookingId: { label: 'Booking ID', type: 'text', faker: 'datatype.uuid' },
-    facilityId: { label: 'Facility ID', type: 'text', faker: 'datatype.uuid' },
-    bookedBy: { label: 'Booked By', type: 'text', faker: 'name.fullName' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.future' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    purpose: { label: 'Purpose', type: 'text', faker: 'lorem.sentence' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'important', label: 'Important' },
-        { id: 'conference', label: 'Conference' },
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'training', label: 'Training' },
-        { id: 'review', label: 'Review' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  booking_id: { label: 'Booking ID', type: 'text', faker: 'datatype.uuid' },
+  facility_id: { label: 'Facility ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  booked_by: { label: 'Booked By', type: 'text', faker: 'name.fullName' },
+  start_time: { label: 'Start Time', type: 'datetime', faker: 'date.recent' },
+  end_time: { label: 'End Time', type: 'datetime', faker: 'date.future' },
+
+  purpose: { label: 'Purpose', type: 'text', faker: 'lorem.sentence' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  attendee_count: { label: 'Attendee Count', type: 'number', faker: 'datatype.number' },
+  resources_required: { label: 'Resources Required', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'confirmed', label: 'Confirmed' }, { id: 'cancelled', label: 'Cancelled' }, { id: 'pending', label: 'Pending' }], faker: 'random.arrayElement' },
+  setup_instructions: { label: 'Setup Instructions', type: 'text', faker: 'lorem.sentence' },
+  cost_code: { label: 'Cost Code', type: 'text', faker: 'finance.account' }
 };
 
 export const entityName = 'Facility Booking';
-export const collectionName = 'facility-booking';
+export const collectionName = 'facility_booking';

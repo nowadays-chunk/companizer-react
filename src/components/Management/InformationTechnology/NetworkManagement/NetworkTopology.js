@@ -1,33 +1,26 @@
+
 export const fieldsConfig = {
-    topologyId: { label: 'Topology ID', type: 'text', faker: 'datatype.uuid' },
-    networkName: { label: 'Network Name', type: 'text', faker: 'company.name' },
-    topologyType: {
-        label: 'Topology Type',
-        type: 'select',
-        options: [
-            { id: 'star', label: 'Star' },
-            { id: 'mesh', label: 'Mesh' },
-            { id: 'bus', label: 'Bus' },
-            { id: 'ring', label: 'Ring' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    deviceCount: { label: 'Device Count', type: 'number', faker: 'finance.amount' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'critical', label: 'Critical' },
-            { id: 'high-priority', label: 'High Priority' },
-            { id: 'device-management', label: 'Device Management' },
-            { id: 'network-architecture', label: 'Network Architecture' },
-        ],
-        multiple: true,
-        faker: 'lorem.words',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  node_id: { label: 'Node ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  node_name: { label: 'Node Name', type: 'text', faker: 'hacker.noun' },
+  node_type: { label: 'Node Type', type: 'select', options: [{ id: 'router', label: 'Router' }, { id: 'switch', label: 'Switch' }, { id: 'server', label: 'Server' }, { id: 'endpoint', label: 'Endpoint' }], faker: 'random.arrayElement' },
+
+  ip_address: { label: 'IP Address', type: 'text', faker: 'internet.ip' },
+  mac_address: { label: 'MAC Address', type: 'text', faker: 'internet.mac' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  location: { label: 'Location', type: 'text', faker: 'address.city' },
+  connected_to: { label: 'Connected To', type: 'text', faker: 'datatype.uuid' }, // Parent node
+  status: { label: 'Status', type: 'select', options: [{ id: 'online', label: 'Online' }, { id: 'offline', label: 'Offline' }], faker: 'random.arrayElement' },
+  last_seen: { label: 'Last Seen', type: 'date', faker: 'date.recent' },
+  firmware_version: { label: 'Firmware Version', type: 'text', faker: 'system.semver' },
+  manufacturer: { label: 'Manufacturer', type: 'text', faker: 'company.name' }
 };
 
 export const entityName = 'Network Topology';
-export const collectionName = 'network-topology';
+export const collectionName = 'network_topology';

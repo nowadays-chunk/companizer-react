@@ -1,33 +1,25 @@
+
 export const fieldsConfig = {
-    agingId: { label: 'Aging ID', type: 'text', faker: 'datatype.uuid' },
-    productName: { label: 'Product Name', type: 'text', faker: 'commerce.productName' },
-    daysInInventory: { label: 'Days in Inventory', type: 'number', faker: 'datatype.number' },
-    agingCategory: {
-      label: 'Aging Category',
-      type: 'select',
-      options: [
-        { id: 'less_than_30_days', label: 'Less than 30 Days' },
-        { id: '30_to_60_days', label: '30 to 60 Days' },
-        { id: 'more_than_60_days', label: 'More than 60 Days' }
-      ],
-      faker: 'random.arrayElement',
-    },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'slow_moving', label: 'Slow Moving' },
-        { id: 'obsolete', label: 'Obsolete' },
-        { id: 'excess_stock', label: 'Excess Stock' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  aging_id: { label: 'Aging ID', type: 'text', faker: 'datatype.uuid' },
+  product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  quantity: { label: 'Quantity', type: 'number', faker: 'datatype.number' },
+  age_days: { label: 'Age (Days)', type: 'number', faker: 'datatype.number' },
+
+  aging_bucket: { label: 'Aging Bucket', type: 'select', options: [{ id: '0-30', label: '0-30 Days' }, { id: '31-60', label: '31-60 Days' }, { id: '61-90', label: '61-90 Days' }, { id: '90+', label: '90+ Days' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  total_value: { label: 'Total Value', type: 'number', faker: 'finance.amount' },
+  location: { label: 'Location', type: 'text', faker: 'address.city' },
+  batch_number: { label: 'Batch Number', type: 'text', faker: 'random.alphaNumeric' },
+  expiry_date: { label: 'Expiry Date', type: 'date', faker: 'date.future' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'available', label: 'Available' }, { id: 'quarantine', label: 'Quarantine' }, { id: 'obsolete', label: 'Obsolete' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Inventory Aging';
-export const collectionName = 'inventory-aging';
+export const collectionName = 'inventory_aging';

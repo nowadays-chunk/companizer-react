@@ -1,38 +1,24 @@
+
 export const fieldsConfig = {
-    reportId: { label: 'Report ID', type: 'text', faker: 'datatype.uuid' },
-    crisisId: { label: 'Crisis ID', type: 'text', faker: 'datatype.uuid' },
-    reportTitle: { label: 'Report Title', type: 'text', faker: 'lorem.sentence' },
-    findings: { label: 'Findings', type: 'text', faker: 'lorem.paragraphs' },
-    recommendations: { label: 'Recommendations', type: 'text', faker: 'lorem.paragraphs' },
-    reportDate: { label: 'Report Date', type: 'date', faker: 'date.past' },
-    preparedBy: { label: 'Prepared By', type: 'text', faker: 'name.fullName' },
-    approvedBy: { label: 'Approved By', type: 'text', faker: 'name.fullName' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'draft', label: 'Draft' },
-            { id: 'final', label: 'Final' },
-            { id: 'archived', label: 'Archived' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    report_id: { label: 'Report ID', type: 'text', faker: 'datatype.uuid' },
+    incident_id: { label: 'Incident ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    incident_summary: { label: 'Summary', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
+    report_date: { label: 'Report Date', type: 'date', faker: 'date.recent' },
+
+    evaluation: { label: 'Evaluation', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    prepared_by: { label: 'Prepared By', type: 'text', faker: 'name.fullName' },
+    lessons_learned: { label: 'Lessons Learned', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+    effectiveness_rating: { label: 'Effectiveness (1-10)', type: 'number', faker: 'datatype.number' },
+    follow_up_actions: { label: 'Follow-up', type: 'text', faker: 'lorem.sentence' }
 };
 
-export const entityName = 'After-Action Reports';
-export const collectionName = 'after-action-reports';
+export const entityName = 'After Action Reports';
+export const collectionName = 'after_action_reports';

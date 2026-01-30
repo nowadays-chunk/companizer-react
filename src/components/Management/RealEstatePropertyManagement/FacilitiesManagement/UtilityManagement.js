@@ -1,34 +1,25 @@
+
 export const fieldsConfig = {
-    utilityId: { label: 'Utility ID', type: 'text', faker: 'datatype.uuid' },
-    propertyId: { label: 'Property ID', type: 'text', faker: 'datatype.uuid' },
-    utilityType: {
-      label: 'Utility Type',
-      type: 'select',
-      options: [
-        { id: 'electricity', label: 'Electricity' },
-        { id: 'water', label: 'Water' },
-        { id: 'gas', label: 'Gas' },
-        { id: 'internet', label: 'Internet' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    consumptionAmount: { label: 'Consumption Amount', type: 'number', faker: 'finance.amount' },
-    billingDate: { label: 'Billing Date', type: 'date', faker: 'date.past' },
-    dueDate: { label: 'Due Date', type: 'date', faker: 'date.future' },
-    paymentStatus: {
-      label: 'Payment Status',
-      type: 'select',
-      options: [
-        { id: 'paid', label: 'Paid' },
-        { id: 'pending', label: 'Pending' },
-        { id: 'overdue', label: 'Overdue' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Utility Management';
-  export const collectionName = 'utility-management';
-  
+  utility_id: { label: 'Utility ID', type: 'text', faker: 'datatype.uuid' },
+  property_id: { label: 'Property ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  utility_type: { label: 'Type', type: 'select', options: [{ id: 'electricity', label: 'Electricity' }, { id: 'water', label: 'Water' }, { id: 'gas', label: 'Gas' }, { id: 'internet', label: 'Internet' }], faker: 'random.arrayElement' },
+  provider: { label: 'Provider', type: 'text', faker: 'company.name' },
+
+  account_number: { label: 'Account Number', type: 'text', faker: 'finance.account' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  billing_cycle: { label: 'Billing Cycle', type: 'text', faker: 'lorem.word' }, // Monthly
+  usage_metric: { label: 'Usage Metric', type: 'number', faker: 'datatype.number' },
+  last_bill_amount: { label: 'Last Bill Amount', type: 'number', faker: 'finance.amount' },
+  last_bill_date: { label: 'Last Bill Date', type: 'date', faker: 'date.recent' },
+  is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' }
+};
+
+export const entityName = 'Utility Management';
+export const collectionName = 'utility_management';

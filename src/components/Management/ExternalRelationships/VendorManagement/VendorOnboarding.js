@@ -1,35 +1,26 @@
+
 export const fieldsConfig = {
-    onboardingId: { label: 'Onboarding ID', type: 'text', faker: 'datatype.uuid' },
-    vendorName: { label: 'Vendor Name', type: 'text', faker: 'company.name' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    assignedTo: { label: 'Assigned To', type: 'text', faker: 'name.fullName' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'in-progress', label: 'In Progress' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'on-hold', label: 'On Hold' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
+  onboarding_id: { label: 'Onboarding ID', type: 'text', faker: 'datatype.uuid' },
+  vendor_id: { label: 'Vendor ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+  completion_date: { label: 'Completion Date', type: 'date', faker: 'date.future' },
+
+  status: { label: 'Status', type: 'select', options: [{ id: 'in_progress', label: 'In Progress' }, { id: 'pending_docs', label: 'Pending Docs' }, { id: 'completed', label: 'Completed' }, { id: 'rejected', label: 'Rejected' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  documents_submitted: { label: 'Documents Submitted', type: 'checkbox', faker: 'datatype.boolean' },
+  bank_details_verified: { label: 'Bank Details Verified', type: 'checkbox', faker: 'datatype.boolean' },
+  nda_signed: { label: 'NDA Signed', type: 'checkbox', faker: 'datatype.boolean' },
+  compliance_check_passed: { label: 'Compliance Check Passed', type: 'checkbox', faker: 'datatype.boolean' },
+  onboarding_manager: { label: 'Onboarding Manager', type: 'text', faker: 'name.fullName' },
+  portal_access_granted: { label: 'Portal Access Granted', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Vendor Onboarding';
-export const collectionName = 'vendor-onboarding';
+export const collectionName = 'vendor_onboarding';

@@ -1,45 +1,27 @@
+
 export const fieldsConfig = {
-    ticketId: { label: 'Ticket ID', type: 'text', faker: 'datatype.uuid' },
-    customerId: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
-    priority: {
-        label: 'Priority',
-        type: 'select',
-        options: [
-            { id: 'low', label: 'Low' },
-            { id: 'medium', label: 'Medium' },
-            { id: 'high', label: 'High' },
-            { id: 'urgent', label: 'Urgent' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    issueType: { label: 'Issue Type', type: 'text', faker: 'lorem.word' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'open', label: 'Open' },
-            { id: 'in-progress', label: 'In Progress' },
-            { id: 'resolved', label: 'Resolved' },
-            { id: 'closed', label: 'Closed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    assignedTo: { label: 'Assigned To', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    resolvedDate: { label: 'Resolved Date', type: 'date', faker: 'date.future' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
+    rule_id: { label: 'Rule ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    rule_name: { label: 'Rule Name', type: 'text', faker: 'commerce.productAdjective' },
+    criteria_field: { label: 'Criteria Field', type: 'text', faker: 'database.column' },
+    criteria_value: { label: 'Criteria Value', type: 'text', faker: 'lorem.word' },
+
+    resulting_priority: { label: 'Resulting Priority', type: 'select', options: [{ id: 'critical', label: 'Critical' }, { id: 'high', label: 'High' }, { id: 'medium', label: 'Medium' }, { id: 'low', label: 'Low' }], faker: 'random.arrayElement' },
+
+    weight: { label: 'Weight', type: 'number', faker: 'datatype.number' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' },
+    description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
+    last_updated_by: { label: 'Last Updated By', type: 'text', faker: 'name.fullName' },
+    last_updated_date: { label: 'Last Updated Date', type: 'date', faker: 'date.recent' },
+    auto_assign_agent_id: { label: 'Auto Assign Agent ID', type: 'text', faker: 'datatype.uuid' }
 };
+
+export const entityName = 'Ticket Prioritization';
+export const collectionName = 'ticket_prioritization';

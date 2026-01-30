@@ -112,13 +112,14 @@ export const fetchDocumentById = async (subcollectionName, documentId) => {
 
 // Convenience wrapper for tables
 export const helpersWrapper = (collectionName) => {
-  const tableName = collectionName.replace("-", "_");
+  const tableName = collectionName.replaceAll("-", "_");
 
   const fetchItems = () => fetchDocuments(tableName);
   const addItem = (item) => createDocument(tableName, item);
   const updateItem = (id, item) => updateDocument(tableName, id, item);
   const deleteItem = (id) => deleteDocument(tableName, id);
   const fetchItemById = (id) => fetchDocumentById(tableName, id);
+  const fetchItemsByKeyByValue = (key, value) => fetchDocumentsByFieldValue(tableName, key, value);
 
   return {
     fetchItems,
@@ -126,5 +127,6 @@ export const helpersWrapper = (collectionName) => {
     updateItem,
     deleteItem,
     fetchItemById,
+    fetchItemsByKeyByValue
   };
 };

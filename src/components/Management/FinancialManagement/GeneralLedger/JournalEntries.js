@@ -1,41 +1,25 @@
+
 export const fieldsConfig = {
-    entryId: { label: 'Entry ID', type: 'text', faker: 'datatype.uuid' },
-    accountId: { label: 'Account ID', type: 'text', faker: 'datatype.uuid' },
-    date: { label: 'Date', type: 'date', faker: 'date.past' },
-    debit: { label: 'Debit', type: 'number', faker: 'finance.amount' },
-    credit: { label: 'Credit', type: 'number', faker: 'finance.amount' },
-    currency: {
-        label: 'Currency',
-        type: 'select',
-        options: [
-            { id: 'USD', label: 'USD' },
-            { id: 'EUR', label: 'EUR' },
-            { id: 'GBP', label: 'GBP' },
-            { id: 'JPY', label: 'JPY' },
-            { id: 'AUD', label: 'AUD' },
-        ],
-        faker: 'finance.currencyCode',
-    },
-    ecoContribution: { label: 'Eco Contribution', type: 'number', faker: 'finance.amount' },  // Eco-tax contribution (French-specific)
-    description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  journal_id: { label: 'Journal ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  entry_date: { label: 'Entry Date', type: 'date', faker: 'date.recent' },
+  description: { label: 'Description', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+
+  total_debit: { label: 'Total Debit', type: 'number', faker: 'finance.amount' },
+  total_credit: { label: 'Total Credit', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  reference_number: { label: 'Reference Number', type: 'text', faker: 'finance.account' },
+  created_by: { label: 'Created By', type: 'text', faker: 'name.fullName' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'draft', label: 'Draft' }, { id: 'posted', label: 'Posted' }, { id: 'reversed', label: 'Reversed' }], faker: 'random.arrayElement' },
+  period_id: { label: 'Period ID', type: 'text', faker: 'datatype.uuid' },
+  is_recurring: { label: 'Is Recurring', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Journal Entries';
-export const collectionName = 'journal-entries';
+export const collectionName = 'journal_entries';

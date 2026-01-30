@@ -1,43 +1,28 @@
+
 export const fieldsConfig = {
-    feedbackId: { label: 'Feedback ID', type: 'text', faker: 'datatype.uuid' },
-    customerId: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
-    feedbackDate: { label: 'Feedback Date', type: 'date', faker: 'date.past' },
-    feedbackType: {
-        label: 'Feedback Type',
-        type: 'select',
-        options: [
-            { id: 'positive', label: 'Positive' },
-            { id: 'neutral', label: 'Neutral' },
-            { id: 'negative', label: 'Negative' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    comments: { label: 'Comments', type: 'text', faker: 'lorem.sentences' },
-    resolutionStatus: {
-        label: 'Resolution Status',
-        type: 'select',
-        options: [
-            { id: 'resolved', label: 'Resolved' },
-            { id: 'unresolved', label: 'Unresolved' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    analysis_id: { label: 'Analysis ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    period: { label: 'Period', type: 'text', faker: 'date.month' },
+    total_feedback_count: { label: 'Total Feedback Count', type: 'number', faker: 'datatype.number' },
+    average_score: { label: 'Average Score', type: 'number', faker: 'datatype.float' },
+
+    top_keywords: { label: 'Top Keywords', type: 'text', faker: 'lorem.words' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    positive_count: { label: 'Positive Count', type: 'number', faker: 'datatype.number' },
+    negative_count: { label: 'Negative Count', type: 'number', faker: 'datatype.number' },
+    neutral_count: { label: 'Neutral Count', type: 'number', faker: 'datatype.number' },
+    trend_description: { label: 'Trend Description', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
+    generated_date: { label: 'Generated Date', type: 'date', faker: 'date.recent' },
+    product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' }, // Specific to a product
+    region: { label: 'Region', type: 'text', faker: 'address.country' },
+    action_plan: { label: 'Action Plan', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Feedback Analysis';
-export const collectionName = 'feedback-analysis';
+export const collectionName = 'feedback_analysis';

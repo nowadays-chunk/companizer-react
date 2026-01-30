@@ -1,35 +1,23 @@
+
 export const fieldsConfig = {
-    releaseId: { label: 'Release ID', type: 'text', faker: 'datatype.uuid' },
-    title: { label: 'Title', type: 'text', faker: 'lorem.sentence' },
-    content: { label: 'Content', type: 'text', faker: 'lorem.paragraphs' },
-    releaseDate: { label: 'Release Date', type: 'date', faker: 'date.past' },
-    mediaContact: { label: 'Media Contact', type: 'text', faker: 'name.fullName' },
-    distributionChannels: {
-        label: 'Distribution Channels',
-        type: 'select',
-        options: [
-            { id: 'website', label: 'Website' },
-            { id: 'email', label: 'Email' },
-            { id: 'social-media', label: 'Social Media' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    release_id: { label: 'Release ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    headline: { label: 'Headline', type: 'text', faker: 'lorem.sentence' },
+    pub_date: { label: 'Publish Date', type: 'date', faker: 'date.future' },
+
+    content: { label: 'Content', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    status: { label: 'Status', type: 'select', options: [{ id: 'draft', label: 'Draft' }, { id: 'published', label: 'Published' }, { id: 'scheduled', label: 'Scheduled' }], faker: 'random.arrayElement' },
+    author: { label: 'Author', type: 'text', faker: 'name.fullName' },
+    media_kit_url: { label: 'Media Kit', type: 'text', faker: 'internet.url' },
+    distribution_channels: { label: 'Channels', type: 'text', faker: 'lorem.words' }
 };
 
 export const entityName = 'Press Releases';
-export const collectionName = 'press-releases';
+export const collectionName = 'press_releases';

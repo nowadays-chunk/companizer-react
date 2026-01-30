@@ -1,35 +1,26 @@
+
 export const fieldsConfig = {
-    deadlineId: { label: 'Deadline ID', type: 'text', faker: 'datatype.uuid' },
-    taskId: { label: 'Task ID', type: 'text', faker: 'datatype.uuid' },
-    deadlineDate: { label: 'Deadline Date', type: 'date', faker: 'date.future' },
-    extensionRequest: { label: 'Extension Request', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-    extensionApprovalStatus: {
-      label: 'Extension Approval Status',
-      type: 'select',
-      options: [
-        { id: 'approved', label: 'Approved' },
-        { id: 'denied', label: 'Denied' },
-        { id: 'pending', label: 'Pending' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'important', label: 'Important' },
-        { id: 'pending', label: 'Pending' },
-        { id: 'completed', label: 'Completed' },
-        { id: 'follow-up', label: 'Follow-Up' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Task Deadlines';
-  export const collectionName = 'tasks-deadlines';
-  
+  deadline_id: { label: 'Deadline ID', type: 'text', faker: 'datatype.uuid' },
+  task_id: { label: 'Task ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  original_deadline: { label: 'Original Deadline', type: 'date', faker: 'date.future' },
+  current_deadline: { label: 'Current Deadline', type: 'date', faker: 'date.future' },
+
+  extension_count: { label: 'Extension Count', type: 'number', faker: 'datatype.number' },
+  reason_for_change: { label: 'Reason For Change', type: 'text', faker: 'lorem.sentence' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  approved_by: { label: 'Approved By', type: 'text', faker: 'name.fullName' },
+  date_changed: { label: 'Date Changed', type: 'date', faker: 'date.recent' },
+  impact_assessment: { label: 'Impact Assessment', type: 'text', faker: 'lorem.sentence' },
+  is_hard_deadline: { label: 'Is Hard Deadline', type: 'checkbox', faker: 'datatype.boolean' },
+  reminder_set: { label: 'Reminder Set', type: 'checkbox', faker: 'datatype.boolean' }
+};
+
+export const entityName = 'Task Deadlines';
+export const collectionName = 'task_deadlines';

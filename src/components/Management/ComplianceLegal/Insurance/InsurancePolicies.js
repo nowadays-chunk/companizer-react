@@ -1,38 +1,26 @@
+
 export const fieldsConfig = {
-    policyId: { label: 'Policy ID', type: 'text', faker: 'datatype.uuid' },
-    policyName: { label: 'Policy Name', type: 'text', faker: 'company.catchPhrase' },
+    policy_id: { label: 'Policy ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
     provider: { label: 'Provider', type: 'text', faker: 'company.name' },
-    effectiveDate: { label: 'Effective Date', type: 'date', faker: 'date.past' },
-    expiryDate: { label: 'Expiry Date', type: 'date', faker: 'date.future' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'expired', label: 'Expired' },
-            { id: 'pending', label: 'Pending' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    coverageAmount: { label: 'Coverage Amount', type: 'number', faker: 'finance.amount' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+    policy_number: { label: 'Policy Number', type: 'text', faker: 'finance.account' },
+
+    type: { label: 'Type', type: 'select', options: [{ id: 'liability', label: 'Liability' }, { id: 'property', label: 'Property' }, { id: 'workers_comp', label: 'Workers Comp' }, { id: 'cyber', label: 'Cyber' }], faker: 'random.arrayElement' },
+
+    start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+    end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Annual Premium', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    coverage_limit: { label: 'Coverage Limit', type: 'number', faker: 'finance.amount' },
+    deductible: { label: 'Deductible', type: 'number', faker: 'finance.amount' },
+    broker_contact: { label: 'Broker Contact', type: 'text', faker: 'name.fullName' },
+    status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'expired', label: 'Expired' }, { id: 'cancelled', label: 'Cancelled' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Insurance Policies';
-export const collectionName = 'insurance-policies';
+export const collectionName = 'insurance_policies';

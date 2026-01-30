@@ -1,44 +1,26 @@
+
 export const fieldsConfig = {
-    auditId: { label: 'Audit ID', type: 'text', faker: 'datatype.uuid' },
-    auditDate: { label: 'Audit Date', type: 'date', faker: 'date.past' },
-    auditorName: { label: 'Auditor Name', type: 'text', faker: 'name.fullName' },
-    findings: { label: 'Findings', type: 'text', faker: 'lorem.paragraph' },
-    severityLevel: {
-        label: 'Severity Level',
-        type: 'select',
-        options: [
-            { id: 'low', label: 'Low' },
-            { id: 'medium', label: 'Medium' },
-            { id: 'high', label: 'High' },
-            { id: 'critical', label: 'Critical' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    remediationStatus: {
-        label: 'Remediation Status',
-        type: 'select',
-        options: [
-            { id: 'not-started', label: 'Not Started' },
-            { id: 'in-progress', label: 'In Progress' },
-            { id: 'completed', label: 'Completed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'security', label: 'Security' },
-            { id: 'compliance', label: 'Compliance' },
-            { id: 'audit', label: 'Audit' },
-            { id: 'remediation', label: 'Remediation' },
-        ],
-        multiple: true,
-        faker: 'lorem.words',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  audit_id: { label: 'Audit ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  audit_type: { label: 'Audit Type', type: 'select', options: [{ id: 'penetration_test', label: 'Penetration Test' }, { id: 'vulnerability_scan', label: 'Vulnerability Scan' }], faker: 'random.arrayElement' },
+  audit_date: { label: 'Audit Date', type: 'date', faker: 'date.recent' },
+
+  auditor: { label: 'Auditor', type: 'text', faker: 'company.name' },
+
+  vulnerabilities_found_count: { label: 'Vulnerabilities', type: 'number', faker: 'datatype.number' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  critical_issues: { label: 'Critical Issues', type: 'number', faker: 'datatype.number' },
+  remediation_plan: { label: 'Remediation Plan', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'open', label: 'Open' }, { id: 'remediated', label: 'Remediated' }, { id: 'closed', label: 'Closed' }], faker: 'random.arrayElement' },
+  report_url: { label: 'Report URL', type: 'text', faker: 'internet.url' },
+  signoff_by: { label: 'Signoff By', type: 'text', faker: 'name.fullName' }
 };
 
 export const entityName = 'Security Audits';
-export const collectionName = 'security-audits';
+export const collectionName = 'security_audits';

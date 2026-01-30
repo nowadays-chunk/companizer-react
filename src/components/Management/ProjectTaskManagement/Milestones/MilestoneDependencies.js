@@ -1,22 +1,25 @@
+
 export const fieldsConfig = {
-    dependencyId: { label: 'Dependency ID', type: 'text', faker: 'datatype.uuid' },
-    milestoneId: { label: 'Milestone ID', type: 'text', faker: 'datatype.uuid' },
-    dependentMilestoneId: { label: 'Dependent Milestone ID', type: 'text', faker: 'datatype.uuid' },
-    relationshipType: {
-      label: 'Relationship Type',
-      type: 'select',
-      options: [
-        { id: 'finish-to-start', label: 'Finish to Start' },
-        { id: 'start-to-start', label: 'Start to Start' },
-        { id: 'finish-to-finish', label: 'Finish to Finish' },
-        { id: 'start-to-finish', label: 'Start to Finish' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-      
+  dependency_id: { label: 'Dependency ID', type: 'text', faker: 'datatype.uuid' },
+  predecessor_id: { label: 'Predecessor Milestone ID', type: 'text', faker: 'datatype.uuid' },
+  successor_id: { label: 'Successor Milestone ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  dependency_type: { label: 'Dependency Type', type: 'select', options: [{ id: 'finish_to_start', label: 'Finish to Start' }, { id: 'start_to_start', label: 'Start to Start' }, { id: 'finish_to_finish', label: 'Finish to Finish' }], faker: 'random.arrayElement' },
+  lag_days: { label: 'Lag Days', type: 'number', faker: 'datatype.number' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  is_critical_path: { label: 'Is Critical Path', type: 'checkbox', faker: 'datatype.boolean' },
+  lead_days: { label: 'Lead Days', type: 'number', faker: 'datatype.number' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' },
+  project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
+  created_date: { label: 'Created Date', type: 'date', faker: 'date.recent' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'met', label: 'Met' }, { id: 'broken', label: 'Broken' }], faker: 'random.arrayElement' }
+};
+
 export const entityName = 'Milestone Dependencies';
-export const collectionName = 'milestone-dependencies';
+export const collectionName = 'milestone_dependencies';

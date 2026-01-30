@@ -1,21 +1,23 @@
+
 export const fieldsConfig = {
-    dependencyId: { label: 'Dependency ID', type: 'text', faker: 'datatype.uuid' },
-    taskId: { label: 'Task ID', type: 'text', faker: 'datatype.uuid' },
-    dependentTaskId: { label: 'Dependent Task ID', type: 'text', faker: 'datatype.uuid' },
-    relationshipType: {
-        label: 'Relationship Type',
-        type: 'select',
-        options: [
-            { id: 'finish-to-start', label: 'Finish to Start' },
-            { id: 'start-to-start', label: 'Start to Start' },
-            { id: 'finish-to-finish', label: 'Finish to Finish' },
-            { id: 'start-to-finish', label: 'Start to Finish' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    dependency_id: { label: 'Dependency ID', type: 'text', faker: 'datatype.uuid' },
+    predecessor_task_id: { label: 'Predecessor Task ID', type: 'text', faker: 'datatype.uuid' },
+    successor_task_id: { label: 'Successor Task ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    dependency_type: { label: 'Dependency Type', type: 'select', options: [{ id: 'fs', label: 'Finish to Start' }, { id: 'ss', label: 'Start to Start' }], faker: 'random.arrayElement' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    lag_hours: { label: 'Lag Hours', type: 'number', faker: 'datatype.number' },
+    created_by: { label: 'Created By', type: 'text', faker: 'name.fullName' },
+    project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
+    is_critical: { label: 'Is Critical', type: 'checkbox', faker: 'datatype.boolean' },
+    status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'resolved', label: 'Resolved' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Task Dependencies';
-export const collectionName = 'task-dependencies';
+export const collectionName = 'task_dependencies';

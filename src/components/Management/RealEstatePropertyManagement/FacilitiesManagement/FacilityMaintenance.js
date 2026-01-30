@@ -1,24 +1,25 @@
+
 export const fieldsConfig = {
-    maintenanceId: { label: 'Maintenance ID', type: 'text', faker: 'datatype.uuid' },
-    propertyId: { label: 'Property ID', type: 'text', faker: 'datatype.uuid' },
-    maintenanceType: {
-      label: 'Maintenance Type',
-      type: 'select',
-      options: [
-        { id: 'preventive', label: 'Preventive' },
-        { id: 'corrective', label: 'Corrective' },
-        { id: 'emergency', label: 'Emergency' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    scheduledDate: { label: 'Scheduled Date', type: 'date', faker: 'date.future' },
-    completionDate: { label: 'Completion Date', type: 'date', faker: 'date.future' },
-    cost: { label: 'Cost', type: 'number', faker: 'finance.amount' },
-    maintenanceDetails: { label: 'Maintenance Details', type: 'text', faker: 'lorem.paragraph' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Facility Maintenance';
-  export const collectionName = 'facility-maintenance';
-  
+  maintenance_id: { label: 'Maintenance ID', type: 'text', faker: 'datatype.uuid' },
+  facility_id: { label: 'Facility ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  task_name: { label: 'Task Name', type: 'text', faker: 'hacker.verb' },
+  scheduled_date: { label: 'Scheduled Date', type: 'date', faker: 'date.future' },
+
+  assigned_vendor: { label: 'Assigned Vendor', type: 'text', faker: 'company.name' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  status: { label: 'Status', type: 'select', options: [{ id: 'scheduled', label: 'Scheduled' }, { id: 'in_progress', label: 'In Progress' }, { id: 'completed', label: 'Completed' }, { id: 'overdue', label: 'Overdue' }], faker: 'random.arrayElement' },
+  priority: { label: 'Priority', type: 'select', options: [{ id: 'high', label: 'High' }, { id: 'medium', label: 'Medium' }, { id: 'low', label: 'Low' }], faker: 'random.arrayElement' },
+  cost_estimate: { label: 'Cost Estimate', type: 'number', faker: 'finance.amount' },
+  actual_cost: { label: 'Actual Cost', type: 'number', faker: 'finance.amount' },
+  completion_notes: { label: 'Completion Notes', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' }
+};
+
+export const entityName = 'Facility Maintenance';
+export const collectionName = 'facility_maintenance';

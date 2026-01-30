@@ -1,36 +1,30 @@
+
 export const fieldsConfig = {
-    renewalId: { label: 'Renewal ID', type: 'text', faker: 'datatype.uuid' },
-    serviceId: { label: 'Service ID', type: 'text', faker: 'datatype.uuid' },
-    customerId: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
-    renewalDate: { label: 'Renewal Date', type: 'date', faker: 'date.past' },
-    newEndDate: { label: 'New End Date', type: 'date', faker: 'date.future' },
-    terms: { label: 'Terms', type: 'text', faker: 'lorem.paragraph' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'pending', label: 'Pending' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'failed', label: 'Failed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    renewal_id: { label: 'Renewal ID', type: 'text', faker: 'datatype.uuid' },
+    contract_id: { label: 'Contract ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    current_expiry_date: { label: 'Current Expiry Date', type: 'date', faker: 'date.future' },
+    renewal_date: { label: 'Renewal Date', type: 'date', faker: 'date.future' },
+
+    renewal_cost: { label: 'Renewal Cost', type: 'number', faker: 'finance.amount' },
+    currency: { label: 'Currency', type: 'text', faker: 'finance.currencyCode' },
+
+    status: { label: 'Status', type: 'select', options: [{ id: 'upcoming', label: 'Upcoming' }, { id: 'processed', label: 'Processed' }, { id: 'cancelled', label: 'Cancelled' }], faker: 'random.arrayElement' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    customer_contact_id: { label: 'Customer Contact ID', type: 'text', faker: 'datatype.uuid' },
+    reminder_sent: { label: 'Reminder Sent', type: 'checkbox', faker: 'datatype.boolean' },
+    auto_renew: { label: 'Auto Renew', type: 'checkbox', faker: 'datatype.boolean' },
+    term_extension_months: { label: 'Term Extension (Months)', type: 'number', faker: 'datatype.number' },
+    discount_applied: { label: 'Discount Applied', type: 'number', faker: 'finance.amount' },
+    sales_rep_id: { label: 'Sales Rep ID', type: 'text', faker: 'datatype.uuid' },
+    notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Service Renewals';
-export const collectionName = 'service-renewals';
+export const collectionName = 'service_renewals';

@@ -1,48 +1,27 @@
+
 export const fieldsConfig = {
-    ventureId: { label: 'Venture ID', type: 'text', faker: 'datatype.uuid' },
-    ventureName: { label: 'Venture Name', type: 'text', faker: 'company.name' },
-    partnerName: { label: 'Partner Name', type: 'text', faker: 'company.name' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    ventureType: {
-        label: 'Venture Type',
-        type: 'select',
-        options: [
-            { id: 'equity', label: 'Equity' },
-            { id: 'contractual', label: 'Contractual' },
-            { id: 'partnership', label: 'Partnership' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    capitalInvested: { label: 'Capital Invested', type: 'number', faker: 'finance.amount' },
-    revenueShare: { label: 'Revenue Share (%)', type: 'number', faker: 'finance.amount' },
-    outcomes: { label: 'Outcomes', type: 'text', faker: 'lorem.paragraph' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'closed', label: 'Closed' },
-            { id: 'dissolved', label: 'Dissolved' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
+  jv_id: { label: 'JV ID', type: 'text', faker: 'datatype.uuid' },
+  partner_id: { label: 'Partner ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  venture_name: { label: 'Venture Name', type: 'text', faker: 'company.name' },
+  formation_date: { label: 'Formation Date', type: 'date', faker: 'date.past' },
+  dissolution_date: { label: 'Dissolution Date', type: 'date', faker: 'date.future' },
+
+  equity_split: { label: 'Equity Split (%)', type: 'number', faker: 'datatype.number' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  capital_contribution: { label: 'Capital Contribution', type: 'number', faker: 'finance.amount' },
+  primary_contact: { label: 'Primary Contact', type: 'text', faker: 'name.fullName' },
+  governing_law: { label: 'Governing Law', type: 'text', faker: 'address.country' },
+  operating_agreement_url: { label: 'Operating Agreement URL', type: 'text', faker: 'internet.url' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'inactive', label: 'Inactive' }, { id: 'dissolved', label: 'Dissolved' }], faker: 'random.arrayElement' },
+  revenue_share: { label: 'Revenue Share', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Joint Ventures';
-export const collectionName = 'joint-ventures';
+export const collectionName = 'joint_ventures';

@@ -1,27 +1,27 @@
+
 export const fieldsConfig = {
-    assessmentId: { label: 'Assessment ID', type: 'text', faker: 'datatype.uuid' },
-    vendorName: { label: 'Vendor Name', type: 'text', faker: 'company.name' },
-    assessmentDate: { label: 'Assessment Date', type: 'date', faker: 'date.past' },
-    criteria: { label: 'Criteria', type: 'text', faker: 'lorem.sentence' },
-    score: { label: 'Score', type: 'number', faker: 'finance.amount' },
-    outcome: { label: 'Outcome', type: 'text', faker: 'lorem.paragraph' },
-    reviewer: { label: 'Reviewer', type: 'text', faker: 'name.fullName' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
+  assessment_id: { label: 'Assessment ID', type: 'text', faker: 'datatype.uuid' },
+  vendor_id: { label: 'Vendor ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  assessment_date: { label: 'Assessment Date', type: 'date', faker: 'date.recent' },
+  assessor: { label: 'Assessor', type: 'text', faker: 'name.fullName' },
+
+  overall_score: { label: 'Overall Score', type: 'number', faker: 'datatype.number' }, // 0-100
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  criteria_quality: { label: 'Quality Score', type: 'number', faker: 'datatype.number' },
+  criteria_delivery: { label: 'Delivery Score', type: 'number', faker: 'datatype.number' },
+  criteria_cost: { label: 'Cost Score', type: 'number', faker: 'datatype.number' },
+  risk_level: { label: 'Risk Level', type: 'text', faker: 'lorem.word' },
+  recommendation: { label: 'Recommendation', type: 'select', options: [{ id: 'approve', label: 'Approve' }, { id: 'reject', label: 'Reject' }, { id: 'monitor', label: 'Monitor' }], faker: 'random.arrayElement' },
+  notes: { label: 'Notes', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  report_url: { label: 'Report URL', type: 'text', faker: 'internet.url' }
 };
 
 export const entityName = 'Vendor Assessments';
-export const collectionName = 'vendor-assessments';
+export const collectionName = 'vendor_assessments';

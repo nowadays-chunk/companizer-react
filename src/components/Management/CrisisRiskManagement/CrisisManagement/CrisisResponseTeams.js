@@ -1,35 +1,26 @@
+
 export const fieldsConfig = {
-    teamId: { label: 'Team ID', type: 'text', faker: 'datatype.uuid' },
-    teamName: { label: 'Team Name', type: 'text', faker: 'company.catchPhrase' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    teamLeader: { label: 'Team Leader', type: 'text', faker: 'name.fullName' },
-    members: { label: 'Members', type: 'text', faker: 'name.fullName' },
-    responsibilities: { label: 'Responsibilities', type: 'text', faker: 'lorem.sentences' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'inactive', label: 'Inactive' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    team_id: { label: 'Team ID', type: 'text', faker: 'datatype.uuid' },
+    incident_id: { label: 'Incident ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    member_name: { label: 'Member Name', type: 'text', faker: 'name.fullName' },
+    role: { label: 'Role', type: 'text', faker: 'name.jobTitle' },
+
+    contact_number: { label: 'Contact Number', type: 'tel', faker: 'phone.number' },
+    email: { label: 'Email', type: 'email', faker: 'internet.email' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    is_lead: { label: 'Is Lead', type: 'checkbox', faker: 'datatype.boolean' },
+    department: { label: 'Department', type: 'text', faker: 'commerce.department' },
+    availability_status: { label: 'Availability Status', type: 'select', options: [{ id: 'available', label: 'Available' }, { id: 'unavailable', label: 'Unavailable' }, { id: 'on_standby', label: 'On Standby' }], faker: 'random.arrayElement' },
+    location: { label: 'Location', type: 'text', faker: 'address.city' },
+    special_skills: { label: 'Special Skills', type: 'text', faker: 'lorem.words' }
 };
 
 export const entityName = 'Crisis Response Teams';
-export const collectionName = 'crisis-response-teams';
+export const collectionName = 'crisis_response_teams';

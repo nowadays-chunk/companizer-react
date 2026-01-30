@@ -1,35 +1,25 @@
+
 export const fieldsConfig = {
-    actionId: { label: 'Action ID', type: 'text', faker: 'datatype.uuid' },
-    reportId: { label: 'Report ID', type: 'text', faker: 'datatype.uuid' },
-    correctiveAction: { label: 'Corrective Action', type: 'text', multiline: true, rows: 4, faker: 'lorem.sentence' },
-    responsiblePerson: { label: 'Responsible Person', type: 'text', faker: 'name.fullName' },
-    deadline: { label: 'Deadline', type: 'date', faker: 'date.future' },
-    completionStatus: {
-      label: 'Completion Status',
-      type: 'select',
-      options: [
-        { id: 'not_started', label: 'Not Started' },
-        { id: 'in_progress', label: 'In Progress' },
-        { id: 'completed', label: 'Completed' }
-      ],
-      faker: 'random.arrayElement',
-    },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'high_priority', label: 'High Priority' },
-        { id: 'low_priority', label: 'Low Priority' },
-        { id: 'time_sensitive', label: 'Time Sensitive' }
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  action_id: { label: 'Action ID', type: 'text', faker: 'datatype.uuid' },
+  ncr_id: { label: 'NCR ID', type: 'text', faker: 'datatype.uuid' }, // Non-Conformance Report
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  description: { label: 'Description', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  assigned_to: { label: 'Assigned To', type: 'text', faker: 'name.fullName' },
+
+  due_date: { label: 'Due Date', type: 'date', faker: 'date.future' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  status: { label: 'Status', type: 'select', options: [{ id: 'open', label: 'Open' }, { id: 'in_progress', label: 'In Progress' }, { id: 'closed', label: 'Closed' }, { id: 'verified', label: 'Verified' }], faker: 'random.arrayElement' },
+  completion_date: { label: 'Completion Date', type: 'date', faker: 'date.recent' },
+  verification_date: { label: 'Verification Date', type: 'date', faker: 'date.future' },
+  verified_by: { label: 'Verified By', type: 'text', faker: 'name.fullName' },
+  effectiveness: { label: 'Effectiveness', type: 'select', options: [{ id: 'effective', label: 'Effective' }, { id: 'ineffective', label: 'Ineffective' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Corrective Actions';
-export const collectionName = 'corrective-actions';
+export const collectionName = 'corrective_actions';

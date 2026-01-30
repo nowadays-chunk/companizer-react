@@ -1,37 +1,27 @@
+
 export const fieldsConfig = {
-    recordId: { label: 'Record ID', type: 'text', faker: 'datatype.uuid' },
-    year: { label: 'Year', type: 'text', faker: 'date.past' },
-    wasteType: {
-        label: 'Waste Type',
-        type: 'select',
-        options: [
-            { id: 'hazardous', label: 'Hazardous' },
-            { id: 'non-hazardous', label: 'Non-Hazardous' },
-            { id: 'recyclable', label: 'Recyclable' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    totalWasteGenerated: { label: 'Total Waste Generated (tons)', type: 'number', faker: 'finance.amount' },
-    wasteDisposed: { label: 'Waste Disposed (tons)', type: 'number', faker: 'finance.amount' },
-    wasteRecycled: { label: 'Waste Recycled (tons)', type: 'number', faker: 'finance.amount' },
-    reductionTarget: { label: 'Reduction Target (%)', type: 'number', faker: 'finance.amount' },
-    achievedReduction: { label: 'Achieved Reduction (%)', type: 'number', faker: 'finance.amount' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
+  record_id: { label: 'Record ID', type: 'text', faker: 'datatype.uuid' },
+  facility_id: { label: 'Facility ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  waste_type: { label: 'Waste Type', type: 'select', options: [{ id: 'recyclable', label: 'Recyclable' }, { id: 'hazardous', label: 'Hazardous' }, { id: 'general', label: 'General' }, { id: 'compost', label: 'Compost' }], faker: 'random.arrayElement' },
+
+  weight_kg: { label: 'Weight (kg)', type: 'number', faker: 'datatype.float' },
+  collection_date: { label: 'Collection Date', type: 'date', faker: 'date.recent' },
+
+  disposal_method: { label: 'Disposal Method', type: 'select', options: [{ id: 'landfill', label: 'Landfill' }, { id: 'recycle_center', label: 'Recycle Center' }, { id: 'incineration', label: 'Incineration' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' }, // Cost per kg?
+
+  // Extras
+  vendor: { label: 'Vendor', type: 'text', faker: 'company.name' },
+  cost: { label: 'Cost', type: 'number', faker: 'finance.amount' },
+  manifest_number: { label: 'Manifest Number', type: 'text', faker: 'finance.account' },
+  diversion_rate: { label: 'Diversion Rate', type: 'number', faker: 'datatype.float' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Waste Management';
-export const collectionName = 'waste-management';
+export const collectionName = 'waste_management';

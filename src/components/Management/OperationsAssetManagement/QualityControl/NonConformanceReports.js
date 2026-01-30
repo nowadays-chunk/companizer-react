@@ -1,43 +1,24 @@
+
 export const fieldsConfig = {
-    reportId: { label: 'Report ID', type: 'text', faker: 'datatype.uuid' },
-    productName: { label: 'Product Name', type: 'text', faker: 'commerce.productName' },
-    issueDescription: { label: 'Issue Description', type: 'text', multiline: true, rows: 4, faker: 'lorem.sentence' },
-    severity: {
-      label: 'Severity',
-      type: 'select',
-      options: [
-        { id: 'minor', label: 'Minor' },
-        { id: 'major', label: 'Major' },
-        { id: 'critical', label: 'Critical' }
-      ],
-      faker: 'random.arrayElement',
-    },
-    resolutionStatus: {
-      label: 'Resolution Status',
-      type: 'select',
-      options: [
-        { id: 'open', label: 'Open' },
-        { id: 'in_progress', label: 'In Progress' },
-        { id: 'closed', label: 'Closed' }
-      ],
-      faker: 'random.arrayElement',
-    },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'non_urgent', label: 'Non-Urgent' },
-        { id: 'follow_up', label: 'Follow-Up' }
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  ncr_id: { label: 'NCR ID', type: 'text', faker: 'datatype.uuid' },
+  item_id: { label: 'Item ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  description: { label: 'Description', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+  detected_by: { label: 'Detected By', type: 'text', faker: 'name.fullName' },
+  date_detected: { label: 'Date Detected', type: 'date', faker: 'date.recent' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  severity: { label: 'Severity', type: 'select', options: [{ id: 'critical', label: 'Critical' }, { id: 'major', label: 'Major' }, { id: 'minor', label: 'Minor' }], faker: 'random.arrayElement' },
+  disposition: { label: 'Disposition', type: 'select', options: [{ id: 'scrap', label: 'Scrap' }, { id: 'rework', label: 'Rework' }, { id: 'use_as_is', label: 'Use As Is' }, { id: 'return_to_vendor', label: 'Return to Vendor' }], faker: 'random.arrayElement' },
+  root_cause: { label: 'Root Cause', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'open', label: 'Open' }, { id: 'closed', label: 'Closed' }], faker: 'random.arrayElement' },
+  approval_signature: { label: 'Approval Signature', type: 'text', faker: 'name.fullName' }
 };
 
-export const entityName = 'Non-conformance Reports';
-export const collectionName = 'non-conformance-reports';
+export const entityName = 'Non-Conformance Reports';
+export const collectionName = 'non_conformance_reports';

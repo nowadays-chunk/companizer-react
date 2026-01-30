@@ -1,36 +1,22 @@
+
 export const fieldsConfig = {
-    arbitrationId: { label: 'Arbitration ID', type: 'text', faker: 'datatype.uuid' },
-    caseName: { label: 'Case Name', type: 'text', faker: 'company.catchPhrase' },
-    arbitrationDate: { label: 'Arbitration Date', type: 'date', faker: 'date.past' },
-    outcome: { label: 'Outcome', type: 'text', faker: 'lorem.sentence' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'open', label: 'Open' },
-            { id: 'closed', label: 'Closed' },
-            { id: 'ongoing', label: 'Ongoing' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  arbitration_id: { label: 'Arbitration ID', type: 'text', faker: 'datatype.uuid' },
+  dispute_id: { label: 'Dispute ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  arbitrator: { label: 'Arbitrator', type: 'text', faker: 'name.fullName' },
+  hearing_date: { label: 'Hearing Date', type: 'date', faker: 'date.future' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  institution: { label: 'Institution', type: 'text', faker: 'company.name' }, // AAA, ICC
+  outcome: { label: 'Outcome', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'scheduled', label: 'Scheduled' }, { id: 'ongoing', label: 'Ongoing' }, { id: 'concluded', label: 'Concluded' }], faker: 'random.arrayElement' },
+  award_amount: { label: 'Award Amount', type: 'number', faker: 'finance.amount' }
 };
 
 export const entityName = 'Arbitration Records';
-export const collectionName = 'arbitration-records';
+export const collectionName = 'arbitration_records';

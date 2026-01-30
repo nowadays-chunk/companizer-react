@@ -1,36 +1,25 @@
+
 export const fieldsConfig = {
-  cashFlowId: { label: 'Cash Flow ID', type: 'text', faker: 'datatype.uuid' },
-  inflows: { label: 'Inflows', type: 'number', faker: 'finance.amount' },
-  outflows: { label: 'Outflows', type: 'number', faker: 'finance.amount' },
-  netCashFlow: { label: 'Net Cash Flow', type: 'number', faker: 'finance.amount' },
-  fiscalPeriod: { label: 'Fiscal Period', type: 'text', faker: 'date.month' },
-  tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-          { id: 'urgent', label: 'Urgent' },
-          { id: 'review', label: 'Review' },
-          { id: 'important', label: 'Important' },
-          { id: 'completed', label: 'Completed' },
-          { id: 'follow-up', label: 'Follow-Up' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-  },
-  status: {
-      label: 'Status',
-      type: 'select',
-      options: [
-          { id: 'positive', label: 'Positive' },
-          { id: 'negative', label: 'Negative' },
-      ],
-      faker: 'random.arrayElement',
-  },
-  createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-  lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-  createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  forecast_id: { label: 'Forecast ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  date: { label: 'Date', type: 'date', faker: 'date.future' },
+
+  opening_balance: { label: 'Opening Balance', type: 'number', faker: 'finance.amount' },
+  projected_inflow: { label: 'Projected Inflow', type: 'number', faker: 'finance.amount' },
+  projected_outflow: { label: 'Projected Outflow', type: 'number', faker: 'finance.amount' },
+
+  closing_balance: { label: 'Closing Balance', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  confidence_level: { label: 'Confidence', type: 'datatype.number', faker: 'datatype.number' }, // %
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' },
+  scenario: { label: 'Scenario', type: 'select', options: [{ id: 'base', label: 'Base Case' }, { id: 'best', label: 'Best Case' }, { id: 'worst', label: 'Worst Case' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Cash Flow Forecasts';
-export const collectionName = 'cash-flow-forecasts';
+export const collectionName = 'cash_flow_forecasts';

@@ -1,36 +1,22 @@
+
 export const fieldsConfig = {
-    agreementId: { label: 'Agreement ID', type: 'text', faker: 'datatype.uuid' },
-    caseName: { label: 'Case Name', type: 'text', faker: 'company.catchPhrase' },
-    settlementAmount: { label: 'Settlement Amount', type: 'number', faker: 'finance.amount' },
-    settlementDate: { label: 'Settlement Date', type: 'date', faker: 'date.past' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'pending', label: 'Pending' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'cancelled', label: 'Cancelled' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  settlement_id: { label: 'Settlement ID', type: 'text', faker: 'datatype.uuid' },
+  dispute_id: { label: 'Dispute ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  settlement_date: { label: 'Settlement Date', type: 'date', faker: 'date.recent' },
+  amount: { label: 'Amount', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  terms: { label: 'Terms', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
+  signed_by_plaintiff: { label: 'Signed By Plaintiff', type: 'checkbox', faker: 'datatype.boolean' },
+  signed_by_defendant: { label: 'Signed By Defendant', type: 'checkbox', faker: 'datatype.boolean' },
+  payment_status: { label: 'Payment Status', type: 'select', options: [{ id: 'pending', label: 'Pending' }, { id: 'paid', label: 'Paid' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Settlement Agreements';
-export const collectionName = 'settlement-agreements';
+export const collectionName = 'settlement_agreements';

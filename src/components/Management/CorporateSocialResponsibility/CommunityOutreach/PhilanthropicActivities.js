@@ -1,39 +1,23 @@
+
 export const fieldsConfig = {
-    activityId: { label: 'Activity ID', type: 'text', faker: 'datatype.uuid' },
-    activityTitle: { label: 'Activity Title', type: 'text', faker: 'lorem.sentence' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    beneficiary: { label: 'Beneficiary', type: 'text', faker: 'name.fullName' },
-    amountDonated: { label: 'Amount Donated', type: 'number', faker: 'finance.amount' },
-    impact: { label: 'Impact', type: 'text', faker: 'lorem.paragraph' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'planned', label: 'Planned' },
-            { id: 'ongoing', label: 'Ongoing' },
-            { id: 'completed', label: 'Completed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    coordinator: { label: 'Coordinator', type: 'text', faker: 'name.fullName' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    activity_id: { label: 'Activity ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    activity_name: { label: 'Activity', type: 'text', faker: 'lorem.words' },
+    type: { label: 'Type', type: 'select', options: [{ id: 'donation', label: 'Donation' }, { id: 'fundraiser', label: 'Fundraiser' }, { id: 'sponsorship', label: 'Sponsorship' }], faker: 'random.arrayElement' },
+
+    amount_raised: { label: 'Amount Raised', type: 'number', faker: 'finance.amount' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    beneficiary: { label: 'Beneficiary', type: 'text', faker: 'company.name' },
+    date: { label: 'Date', type: 'date', faker: 'date.recent' },
+    notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' },
+    organized_by: { label: 'Organized By', type: 'text', faker: 'name.fullName' }
 };
 
 export const entityName = 'Philanthropic Activities';
-export const collectionName = 'philanthropic-activities';
+export const collectionName = 'philanthropic_activities';

@@ -1,26 +1,26 @@
+
 export const fieldsConfig = {
-    locationId: { label: 'Location ID', type: 'text', faker: 'datatype.uuid' },
-    productName: { label: 'Product Name', type: 'text', faker: 'commerce.productName' },
-    aisle: { label: 'Aisle', type: 'text', faker: 'datatype.number' },
-    shelf: { label: 'Shelf', type: 'text', faker: 'datatype.number' },
-    bin: { label: 'Bin', type: 'text', faker: 'datatype.number' },
-    quantityInLocation: { label: 'Quantity in Location', type: 'number', faker: 'datatype.number' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'critical_stock', label: 'Critical Stock' },
-        { id: 'bulk_stock', label: 'Bulk Stock' },
-        { id: 'seasonal_stock', label: 'Seasonal Stock' }
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  location_id: { label: 'Location ID', type: 'text', faker: 'datatype.uuid' },
+  warehouse_id: { label: 'Warehouse ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  zone: { label: 'Zone', type: 'text', faker: 'random.alpha' },
+  aisle: { label: 'Aisle', type: 'number', faker: 'datatype.number' },
+  rack: { label: 'Rack', type: 'number', faker: 'datatype.number' },
+  shelf: { label: 'Shelf', type: 'number', faker: 'datatype.number' },
+  bin: { label: 'Bin', type: 'number', faker: 'datatype.number' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  capacity_volume: { label: 'Capacity Volume', type: 'number', faker: 'datatype.float' },
+  capacity_weight: { label: 'Capacity Weight', type: 'number', faker: 'datatype.float' },
+  is_occupied: { label: 'Is Occupied', type: 'checkbox', faker: 'datatype.boolean' },
+  is_refrigerated: { label: 'Is Refrigerated', type: 'checkbox', faker: 'datatype.boolean' },
+  barcode: { label: 'Barcode', type: 'text', faker: 'random.alphaNumeric' }
 };
 
 export const entityName = 'Inventory Locations';
-export const collectionName = 'inventory-locations';
+export const collectionName = 'inventory_locations';

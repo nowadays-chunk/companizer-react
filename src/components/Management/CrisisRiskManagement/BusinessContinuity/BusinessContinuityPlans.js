@@ -1,38 +1,27 @@
+
 export const fieldsConfig = {
-    planId: { label: 'Plan ID', type: 'text', faker: 'datatype.uuid' },
-    planTitle: { label: 'Plan Title', type: 'text', faker: 'lorem.sentence' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    criticalProcesses: { label: 'Critical Processes', type: 'text', faker: 'lorem.sentences' },
-    responsibleTeam: { label: 'Responsible Team', type: 'text', faker: 'company.name' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    reviewDate: { label: 'Review Date', type: 'date', faker: 'date.future' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'draft', label: 'Draft' },
-            { id: 'active', label: 'Active' },
-            { id: 'archived', label: 'Archived' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    approvedBy: { label: 'Approved By', type: 'text', faker: 'name.fullName' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    plan_id: { label: 'Plan ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    plan_name: { label: 'Plan Name', type: 'text', faker: 'lorem.words' },
+    scope: { label: 'Scope', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+
+    critical_functions: { label: 'Critical Functions', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+    rto_hours: { label: 'RTO (Hours)', type: 'number', faker: 'datatype.number' }, // Recovery Time Objective
+    rpo_hours: { label: 'RPO (Hours)', type: 'number', faker: 'datatype.number' }, // Recovery Point Objective
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    owner: { label: 'Owner', type: 'text', faker: 'name.fullName' },
+    last_tested_date: { label: 'Last Tested Date', type: 'date', faker: 'date.past' },
+    test_result: { label: 'Test Result', type: 'select', options: [{ id: 'pass', label: 'Pass' }, { id: 'fail', label: 'Fail' }, { id: 'partial', label: 'Partial' }], faker: 'random.arrayElement' },
+    next_review_date: { label: 'Next Review Date', type: 'date', faker: 'date.future' },
+    activation_procedures_url: { label: 'Activation Procedures URL', type: 'text', faker: 'internet.url' },
+    status: { label: 'Status', type: 'select', options: [{ id: 'draft', label: 'Draft' }, { id: 'approved', label: 'Approved' }, { id: 'archived', label: 'Archived' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Business Continuity Plans';
-export const collectionName = 'business-continuity-plans';
+export const collectionName = 'business_continuity_plans';

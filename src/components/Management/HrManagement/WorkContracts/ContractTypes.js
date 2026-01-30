@@ -1,35 +1,20 @@
+
 export const fieldsConfig = {
-    contractTypeId: { label: 'Contract Type ID', type: 'text', faker: 'datatype.uuid' },
-    contractTypeName: { label: 'Contract Type Name', type: 'text', faker: 'company.bsNoun' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
-    validFrom: { label: 'Valid From', type: 'date', faker: 'date.past' },
-    validTo: { label: 'Valid To', type: 'date', faker: 'date.future' },
-    contractStatus: {
-        label: 'Contract Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'expired', label: 'Expired' },
-            { id: 'terminated', label: 'Terminated' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'important', label: 'Important' },
-            { id: 'review', label: 'Review' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  type_id: { label: 'Type ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  type_name: { label: 'Type Name', type: 'text', faker: 'lorem.words' }, // e.g. Permanent Full Time
+  description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  duration_months: { label: 'Duration (Months)', type: 'number', faker: 'datatype.number' },
+  benefits_included: { label: 'Benefits Included', type: 'text', faker: 'lorem.sentence' },
+  is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Contract Types';
-export const collectionName = 'contract-types';
+export const collectionName = 'contract_types';

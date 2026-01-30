@@ -1,39 +1,25 @@
+
 export const fieldsConfig = {
-    inventoryId: { label: 'Inventory ID', type: 'text', faker: 'datatype.uuid' },
-    productId: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
-    productName: { label: 'Product Name', type: 'text', faker: 'commerce.productName' },
-    warehouseId: { label: 'Warehouse ID', type: 'text', faker: 'datatype.uuid' },
-    warehouseLocation: { label: 'Warehouse Location', type: 'text', faker: 'address.city' },
-    quantity: { label: 'Quantity', type: 'number', faker: 'datatype.number' },
-    reorderLevel: { label: 'Reorder Level', type: 'number', faker: 'datatype.number' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'in_stock', label: 'In Stock' },
-            { id: 'out_of_stock', label: 'Out of Stock' },
-            { id: 'on_order', label: 'On Order' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+    stock_id: { label: 'Stock ID', type: 'text', faker: 'datatype.uuid' },
+    product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
+    location_id: { label: 'Location ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    quantity_available: { label: 'Quantity Available', type: 'number', faker: 'datatype.number' },
+    quantity_reserved: { label: 'Quantity Reserved', type: 'number', faker: 'datatype.number' },
+    quantity_total: { label: 'Quantity Total', type: 'number', faker: 'datatype.number' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    aisle: { label: 'Aisle', type: 'text', faker: 'random.alphaNumeric' },
+    bin: { label: 'Bin', type: 'text', faker: 'random.alphaNumeric' },
+    last_counted_date: { label: 'Last Counted', type: 'date', faker: 'date.recent' },
+    discrepancy_flag: { label: 'Discrepancy Flag', type: 'checkbox', faker: 'datatype.boolean' },
+    notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Stock Levels';
-export const collectionName = 'stock-level';
+export const collectionName = 'stock_levels';

@@ -1,37 +1,22 @@
+
 export const fieldsConfig = {
-  shipmentId: { label: 'Shipment ID', type: 'text', faker: 'datatype.uuid' },
-  trackingNumber: { label: 'Tracking Number', type: 'text', faker: 'finance.account' },
-  carrier: { label: 'Carrier', type: 'text', faker: 'company.name' },
-  shipmentDate: { label: 'Shipment Date', type: 'date', faker: 'date.past' },
-  estimatedArrival: { label: 'Estimated Arrival', type: 'date', faker: 'date.future' },
-  currentStatus: {
-    label: 'Current Status',
-    type: 'select',
-    options: [
-      { id: 'in-transit', label: 'In Transit' },
-      { id: 'delivered', label: 'Delivered' },
-      { id: 'delayed', label: 'Delayed' },
-      { id: 'canceled', label: 'Canceled' },
-    ],
-    faker: 'random.arrayElement',
-  },
-  destination: { label: 'Destination', type: 'text', faker: 'address.city' },
-  origin: { label: 'Origin', type: 'text', faker: 'address.city' },
-  tags: {
-    label: 'Tags',
-    type: 'select',
-    options: [
-      { id: 'urgent', label: 'Urgent' },
-      { id: 'review', label: 'Review' },
-      { id: 'in-transit', label: 'In Transit' },
-      { id: 'delayed', label: 'Delayed' },
-    ],
-    multiple: true,
-    faker: 'random.arrayElement',
-  },
-  createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-  createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  tracking_id: { label: 'Tracking ID', type: 'text', faker: 'datatype.uuid' },
+  freight_id: { label: 'Freight ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  timestamp: { label: 'Timestamp', type: 'datetime', faker: 'date.recent' },
+  location: { label: 'Location', type: 'text', faker: 'address.city' },
+  status: { label: 'Status', type: 'text', faker: 'lorem.word' }, // "In Transit"
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  coordinates: { label: 'Coordinates', type: 'text', faker: 'address.latitude' }, // lat, long
+  updated_by: { label: 'Updated By', type: 'text', faker: 'name.fullName' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Shipment Tracking';
-export const collectionName = 'shipment-tracking';
+export const collectionName = 'shipment_tracking';

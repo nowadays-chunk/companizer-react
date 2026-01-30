@@ -1,23 +1,25 @@
+
 export const fieldsConfig = {
-    assessmentId: { label: 'Assessment ID', type: 'text', faker: 'datatype.uuid' },
-    employeeId: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
-    skillName: { label: 'Skill Name', type: 'text', faker: 'lorem.word' },
-    assessmentDate: { label: 'Assessment Date', type: 'date', faker: 'date.past' },
-    score: { label: 'Score', type: 'number', faker: 'finance.amount' },
-    proficiencyLevel: {
-        label: 'Proficiency Level',
-        type: 'select',
-        options: [
-            { id: 'beginner', label: 'Beginner' },
-            { id: 'intermediate', label: 'Intermediate' },
-            { id: 'advanced', label: 'Advanced' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    assessor: { label: 'Assessor', type: 'text', faker: 'name.fullName' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    assessment_id: { label: 'Assessment ID', type: 'text', faker: 'datatype.uuid' },
+    employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    skill_name: { label: 'Skill Name', type: 'text', faker: 'hacker.noun' },
+    proficiency_level: { label: 'Proficiency Level', type: 'select', options: [{ id: 'novice', label: 'Novice' }, { id: 'intermediate', label: 'Intermediate' }, { id: 'expert', label: 'Expert' }], faker: 'random.arrayElement' },
+
+    assessment_date: { label: 'Assessment Date', type: 'date', faker: 'date.recent' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    assessed_by: { label: 'Assessed By', type: 'text', faker: 'name.fullName' }, // Self, Manager, Peer
+    score: { label: 'Score', type: 'number', faker: 'datatype.number' }, // 1-10
+    target_level: { label: 'Target Level', type: 'select', options: [{ id: 'novice', label: 'Novice' }, { id: 'intermediate', label: 'Intermediate' }, { id: 'expert', label: 'Expert' }], faker: 'random.arrayElement' },
+    gap_analysis: { label: 'Gap Analysis', type: 'text', faker: 'lorem.sentence' },
+    notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Skill Assessments';
-export const collectionName = 'skill-assessments';
+export const collectionName = 'skill_assessments';

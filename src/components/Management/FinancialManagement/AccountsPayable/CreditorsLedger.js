@@ -1,60 +1,25 @@
+
 export const fieldsConfig = {
-    ledgerId: { label: 'Ledger ID', type: 'text', faker: 'datatype.uuid' },
-    vendorName: { label: 'Vendor Name', type: 'text', faker: 'company.name' },
-    vendorId: { label: 'Vendor ID', type: 'text', faker: 'datatype.uuid' },
-    transactionDate: { label: 'Transaction Date', type: 'date', faker: 'date.past' },
-    amount: { label: 'Amount', type: 'number', faker: 'finance.amount' },
-    balance: { label: 'Balance', type: 'number', faker: 'finance.amount' },
-    currency: {
-        label: 'Currency',
-        type: 'select',
-        options: [
-            { id: 'USD', label: 'USD' },
-            { id: 'EUR', label: 'EUR' },
-            { id: 'GBP', label: 'GBP' },
-            { id: 'JPY', label: 'JPY' },
-            { id: 'AUD', label: 'AUD' },
-        ],
-        faker: 'finance.currencyCode',
-    },
-    transactionType: {
-        label: 'Transaction Type',
-        type: 'select',
-        options: [
-            { id: 'invoice', label: 'Invoice' },
-            { id: 'payment', label: 'Payment' },
-            { id: 'credit', label: 'Credit' },
-        ],
-        faker: 'random.arrayElement',
-    }, // Additional field for transaction classification
-    dueDate: { label: 'Due Date', type: 'date', faker: 'date.future' }, // Due date for payments
-    overdueStatus: { 
-        label: 'Overdue Status', 
-        type: 'select', 
-        options: [
-            { id: 'yes', label: 'Overdue' },
-            { id: 'no', label: 'Not Overdue' },
-        ], 
-        faker: 'random.arrayElement' 
-    },  // Overdue status for the ledger item
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  creditor_id: { label: 'Creditor ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  creditor_name: { label: 'Creditor Name', type: 'text', faker: 'company.name' },
+  contact_number: { label: 'Contact Number', type: 'tel', faker: 'phone.number' },
+
+  balance: { label: 'Balance', type: 'number', faker: 'finance.amount' },
+  credit_limit: { label: 'Credit Limit', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  last_payment_date: { label: 'Last Payment Date', type: 'date', faker: 'date.past' },
+  last_payment_amount: { label: 'Last Payment Amount', type: 'number', faker: 'finance.amount' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'blocked', label: 'Blocked' }, { id: 'inactive', label: 'Inactive' }], faker: 'random.arrayElement' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' },
+  tax_id: { label: 'Tax ID', type: 'text', faker: 'random.alphaNumeric' }
 };
 
 export const entityName = 'Creditors Ledger';
-export const collectionName = 'creditors-ledger';
+export const collectionName = 'creditors_ledger';

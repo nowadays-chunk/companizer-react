@@ -1,44 +1,24 @@
+
 export const fieldsConfig = {
-  productId: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
-  productName: { label: 'Product Name', type: 'text', faker: 'commerce.productName' },
-  category: {
-    label: 'Category',
-    type: 'select',
-    options: [],  // Populate with actual categories
-    faker: 'commerce.department',
-  },
-  price: { label: 'Price', type: 'number', faker: 'commerce.price' },
-  currency: {
-    label: 'Currency',
-    type: 'select',
-    options: [],  // Populate with actual currency options
-    faker: 'finance.currencyCode',
-  },
-  ecoContribution: { label: 'Eco Contribution', type: 'number', faker: 'finance.amount' },  // Eco-tax contribution (French-specific)
-  stockQuantity: { label: 'Stock Quantity', type: 'number', faker: 'datatype.number' },
-  description: { label: 'Description', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-  tags: {
-    label: 'Tags',
-    type: 'select',
-    options: [],  // Populate with actual tags
-    multiple: true,
-    faker: 'lorem.words',
-  },
-  status: {
-    label: 'Status',
-    type: 'select',
-    options: [
-      { id: 'available', label: 'Available' },
-      { id: 'out_of_stock', label: 'Out of Stock' },
-      { id: 'discontinued', label: 'Discontinued' },
-    ],
-    faker: 'random.arrayElement',
-  },
-  createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-  lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-  createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  detail_id: { label: 'Detail ID', type: 'text', faker: 'datatype.uuid' },
+  product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  long_description: { label: 'Long Description', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
+  technical_specs: { label: 'Technical Specs', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  warranty_info: { label: 'Warranty Info', type: 'text', faker: 'lorem.sentence' },
+  dimensions: { label: 'Dimensions', type: 'text', faker: 'lorem.word' }, // e.g. 10x20x5 cm
+  weight: { label: 'Weight', type: 'text', faker: 'lorem.word' }, // e.g. 1.5 kg
+  material: { label: 'Material', type: 'text', faker: 'commerce.productMaterial' },
+  country_of_origin: { label: 'Country of Origin', type: 'text', faker: 'address.country' },
+  release_date: { label: 'Release Date', type: 'date', faker: 'date.past' }
 };
 
 export const entityName = 'Product Details';
-export const collectionName = 'product-details';
+export const collectionName = 'product_details';

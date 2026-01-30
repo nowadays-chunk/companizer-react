@@ -1,38 +1,23 @@
-export const fieldsConfig = {
-    warehouseId: { label: 'Warehouse ID', type: 'text', faker: 'datatype.uuid' },
-    warehouseName: { label: 'Warehouse Name', type: 'text', faker: 'company.name' },
-    location: { label: 'Location', type: 'text', faker: 'address.city' },
-    capacity: { label: 'Capacity', type: 'number', faker: 'datatype.number' },
-    currentInventory: { label: 'Current Inventory', type: 'number', faker: 'datatype.number' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'operational', label: 'Operational' },
-            { id: 'under_maintenance', label: 'Under Maintenance' },
-            { id: 'closed', label: 'Closed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-tags: {
-    label: 'Tags',
-    type: 'select',
-    options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'review', label: 'Review' },
-        { id: 'important', label: 'Important' },
-        { id: 'completed', label: 'Completed' },
-        { id: 'follow-up', label: 'Follow-Up' },
-    ],
-    multiple: true,
-    faker: 'random.arrayElement',
-},
 
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+export const fieldsConfig = {
+  layout_id: { label: 'Layout ID', type: 'text', faker: 'datatype.uuid' },
+  warehouse_id: { label: 'Warehouse ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  layout_name: { label: 'Layout Name', type: 'text', faker: 'lorem.words' },
+  description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  blueprint_url: { label: 'Blueprint URL', type: 'text', faker: 'internet.url' },
+  zones_count: { label: 'Zones Count', type: 'number', faker: 'datatype.number' },
+  total_area_sqm: { label: 'Total Area (sqm)', type: 'number', faker: 'datatype.number' },
+  last_updated: { label: 'Last Updated', type: 'date', faker: 'date.recent' },
+  is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
-export const entityName = 'Warehouses Layouts';
-export const collectionName = 'warehouses-layouts';
+export const entityName = 'Warehouse Layouts';
+export const collectionName = 'warehouse_layouts';

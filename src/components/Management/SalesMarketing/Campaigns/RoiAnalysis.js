@@ -1,29 +1,28 @@
+
 export const fieldsConfig = {
-    analysisId: { label: 'Analysis ID', type: 'text', faker: 'datatype.uuid' },
-    campaignId: { label: 'Campaign ID', type: 'text', faker: 'datatype.uuid' },
-    roiValue: { label: 'ROI Value', type: 'number', faker: 'finance.amount' },
-    description: { label: 'Description', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'roi', label: 'ROI' },
-        { id: 'performance', label: 'Performance' },
-        { id: 'conversion-rate', label: 'Conversion Rate' },
-        { id: 'cost-analysis', label: 'Cost Analysis' },
-        { id: 'campaign-effectiveness', label: 'Campaign Effectiveness' },
-        { id: 'profitability', label: 'Profitability' },
-        { id: 'engagement', label: 'Engagement' },
-        { id: 'reach', label: 'Reach' },
-      ],
-      multiple: true,
-      faker: 'lorem.words',
-    },
-    recordedDate: { label: 'Recorded Date', type: 'date', faker: 'date.past' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'ROI Analysis';
-  export const collectionName = 'roi-analysis';
-  
+  analysis_id: { label: 'Analysis ID', type: 'text', faker: 'datatype.uuid' },
+  campaign_id: { label: 'Campaign ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  total_revenue: { label: 'Total Revenue', type: 'number', faker: 'finance.amount' },
+  total_cost: { label: 'Total Cost', type: 'number', faker: 'finance.amount' },
+
+  roi_percentage: { label: 'ROI (%)', type: 'number', faker: 'datatype.float' },
+  net_profit: { label: 'Net Profit', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  analysis_date: { label: 'Analysis Date', type: 'date', faker: 'date.recent' },
+  customer_acquisition_cost: { label: 'CAC', type: 'number', faker: 'finance.amount' },
+  lifetime_value_projection: { label: 'LTV Projection', type: 'number', faker: 'finance.amount' },
+  conversion_rate: { label: 'Conversion Rate', type: 'number', faker: 'datatype.float' },
+  analyst_notes: { label: 'Analyst Notes', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
+  benchmark_roi: { label: 'Benchmark ROI', type: 'number', faker: 'datatype.float' },
+  is_above_target: { label: 'Is Above Target', type: 'checkbox', faker: 'datatype.boolean' }
+};
+
+export const entityName = 'ROI Analysis';
+export const collectionName = 'roi_analysis';

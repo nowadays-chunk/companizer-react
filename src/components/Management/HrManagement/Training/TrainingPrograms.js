@@ -1,45 +1,24 @@
+
 export const fieldsConfig = {
-    programId: { label: 'Program ID', type: 'text', faker: 'datatype.uuid' },
-    programName: { label: 'Program Name', type: 'text', faker: 'company.bsNoun' },
-    programType: {
-        label: 'Program Type',
-        type: 'select',
-        options: [
-            { id: 'technical', label: 'Technical' },
-            { id: 'leadership', label: 'Leadership' },
-            { id: 'compliance', label: 'Compliance' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    participants: { label: 'Number of Participants', type: 'number', faker: 'datatype.number' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'ongoing', label: 'Ongoing' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'cancelled', label: 'Cancelled' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'important', label: 'Important' },
-            { id: 'review', label: 'Review' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  program_id: { label: 'Program ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  program_name: { label: 'Program Name', type: 'text', faker: 'lorem.words' },
+  description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
+
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.future' },
+  end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  trainer: { label: 'Trainer', type: 'text', faker: 'name.fullName' },
+  capacity: { label: 'Capacity', type: 'number', faker: 'datatype.number' },
+  location: { label: 'Location', type: 'text', faker: 'address.city' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'scheduled', label: 'Scheduled' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' }
 };
 
-export const entityName = 'Training Programs';
-export const collectionName = 'training-programs';
+export const entityName = 'HR Training Programs';
+export const collectionName = 'hr_training_programs';

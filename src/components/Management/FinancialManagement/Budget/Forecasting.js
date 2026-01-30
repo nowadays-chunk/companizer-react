@@ -1,26 +1,25 @@
+
 export const fieldsConfig = {
-    forecastId: { label: 'Forecast ID', type: 'text', faker: 'datatype.uuid' },
-    department: { label: 'Department', type: 'text', faker: 'commerce.department' },
-    forecastAmount: { label: 'Forecast Amount', type: 'number', faker: 'finance.amount' },
-    actualAmount: { label: 'Actual Amount', type: 'number', faker: 'finance.amount' },
-    fiscalYear: { label: 'Fiscal Year', type: 'number', faker: 'date.past' },
-    accuracyPercentage: { label: 'Accuracy Percentage', type: 'number', faker: 'datatype.float' },
-    ecoContribution: { label: 'Eco Contribution', type: 'number', faker: 'finance.amount' },  // Eco-tax contribution (French-specific)
-    variance: { label: 'Variance', type: 'number', faker: 'finance.amount' },  // Forecast vs actual variance
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'accurate', label: 'Accurate' },
-            { id: 'inaccurate', label: 'Inaccurate' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  forecast_id: { label: 'Forecast ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  period_start: { label: 'Period Start', type: 'date', faker: 'date.recent' },
+  period_end: { label: 'Period End', type: 'date', faker: 'date.future' },
+
+  forecasted_revenue: { label: 'Forecasted Revenue', type: 'number', faker: 'finance.amount' },
+  forecasted_expenses: { label: 'Forecasted Expenses', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  forecasted_profit: { label: 'Forecasted Profit', type: 'number', faker: 'finance.amount' },
+  methodology: { label: 'Methodology', type: 'select', options: [{ id: 'historical', label: 'Historical' }, { id: 'trend_analysis', label: 'Trend Analysis' }, { id: 'bottom_up', label: 'Bottom Up' }], faker: 'random.arrayElement' },
+  created_by: { label: 'Created By', type: 'text', faker: 'name.fullName' },
+  confidence_level: { label: 'Confidence Level', type: 'select', options: [{ id: 'high', label: 'High' }, { id: 'medium', label: 'Medium' }, { id: 'low', label: 'Low' }], faker: 'random.arrayElement' },
+  notes: { label: 'Notes', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' }
 };
 
-export const entityName = 'Forecasting';
-export const collectionName = 'forecasting';
+export const entityName = 'Financial Forecasting';
+export const collectionName = 'financial_forecasting';

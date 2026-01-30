@@ -1,28 +1,28 @@
+
 export const fieldsConfig = {
-    allocationId: { label: 'Allocation ID', type: 'text', faker: 'datatype.uuid' },
-    projectId: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
-    resourceId: { label: 'Resource ID', type: 'text', faker: 'datatype.uuid' },
-    allocatedHours: { label: 'Allocated Hours', type: 'number', faker: 'datatype.number' },
-    role: { label: 'Role', type: 'text', faker: 'name.jobTitle' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'high-priority', label: 'High Priority' },
-        { id: 'on-hold', label: 'On Hold' },
-        { id: 'completed', label: 'Completed' },
-        { id: 'review', label: 'Review' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Resource Allocations';
-  export const collectionName = 'resource-allocations';
-  
+  allocation_id: { label: 'Allocation ID', type: 'text', faker: 'datatype.uuid' },
+  project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
+  resource_id: { label: 'Resource ID', type: 'text', faker: 'datatype.uuid' }, // Employee or Equipment
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  role: { label: 'Role', type: 'text', faker: 'name.jobTitle' },
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.future' },
+  end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
+
+  hours_allocated: { label: 'Hours Allocated', type: 'number', faker: 'datatype.number' },
+  utilization_percentage: { label: 'Utilization (%)', type: 'number', faker: 'datatype.number' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' }, // Hourly cost
+
+  // Extras
+  status: { label: 'Status', type: 'select', options: [{ id: 'requested', label: 'Requested' }, { id: 'approved', label: 'Approved' }, { id: 'active', label: 'Active' }, { id: 'released', label: 'Released' }], faker: 'random.arrayElement' },
+  cost_center_id: { label: 'Cost Center ID', type: 'text', faker: 'datatype.uuid' },
+  manager_id: { label: 'Manager ID', type: 'text', faker: 'datatype.uuid' },
+  skill_required: { label: 'Skill Required', type: 'text', faker: 'lorem.word' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+};
+
+export const entityName = 'Resource Allocation';
+export const collectionName = 'resource_allocation';

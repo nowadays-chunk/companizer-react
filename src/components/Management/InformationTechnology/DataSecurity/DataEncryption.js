@@ -1,44 +1,25 @@
+
 export const fieldsConfig = {
-    encryptionId: { label: 'Encryption ID', type: 'text', faker: 'datatype.uuid' },
-    dataType: {
-        label: 'Data Type',
-        type: 'select',
-        options: [
-            { id: 'personal', label: 'Personal' },
-            { id: 'financial', label: 'Financial' },
-            { id: 'health', label: 'Health' },
-            { id: 'confidential', label: 'Confidential' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    encryptionMethod: {
-        label: 'Encryption Method',
-        type: 'select',
-        options: [
-            { id: 'aes-256', label: 'AES-256' },
-            { id: 'rsa-2048', label: 'RSA-2048' },
-            { id: 'sha-256', label: 'SHA-256' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    encryptionDate: { label: 'Encryption Date', type: 'date', faker: 'date.past' },
-    encryptedBy: { label: 'Encrypted By', type: 'text', faker: 'name.fullName' },
-    decryptionKey: { label: 'Decryption Key', type: 'text', faker: 'datatype.uuid' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'sensitive', label: 'Sensitive' },
-            { id: 'high-priority', label: 'High Priority' },
-            { id: 'secure', label: 'Secure' },
-            { id: 'urgent', label: 'Urgent' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  encryption_id: { label: 'Encryption ID', type: 'text', faker: 'datatype.uuid' },
+  data_set_id: { label: 'Data Set ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  algorithm: { label: 'Algorithm', type: 'select', options: [{ id: 'aes256', label: 'AES-256' }, { id: 'rsa', label: 'RSA' }], faker: 'random.arrayElement' },
+  key_rotation_date: { label: 'Key Rotation Date', type: 'date', faker: 'date.future' },
+
+  status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'deprecated', label: 'Deprecated' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  encryption_level: { label: 'Encryption Level', type: 'select', options: [{ id: 'field', label: 'Field' }, { id: 'database', label: 'Database' }, { id: 'disk', label: 'Disk' }], faker: 'random.arrayElement' },
+  compliance_standard: { label: 'Compliance Standard', type: 'text', faker: 'lorem.word' },
+  managed_by: { label: 'Managed By', type: 'text', faker: 'name.fullName' },
+  last_audit_date: { label: 'Last Audit Date', type: 'date', faker: 'date.past' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Data Encryption';
-export const collectionName = 'data-encryption';
+export const collectionName = 'data_encryption';

@@ -1,34 +1,26 @@
+
 export const fieldsConfig = {
-    licenseId: { label: 'License ID', type: 'text', faker: 'datatype.uuid' },
-    ipType: {
-        label: 'IP Type',
-        type: 'select',
-        options: [
-            { id: 'patent', label: 'Patent' },
-            { id: 'trademark', label: 'Trademark' },
-            { id: 'copyright', label: 'Copyright' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    assetName: { label: 'Asset Name', type: 'text', faker: 'company.bs' },
-    licenseeName: { label: 'Licensee Name', type: 'text', faker: 'name.fullName' },
-    licenseStartDate: { label: 'License Start Date', type: 'date', faker: 'date.past' },
-    licenseEndDate: { label: 'License End Date', type: 'date', faker: 'date.future' },
-    terms: { label: 'Terms', type: 'text', faker: 'lorem.paragraph' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'expired', label: 'Expired' },
-            { id: 'terminated', label: 'Terminated' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  license_id: { label: 'License ID', type: 'text', faker: 'datatype.uuid' },
+  ip_asset_id: { label: 'IP Asset ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  licensee: { label: 'Licensee', type: 'text', faker: 'company.name' },
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+  end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
+
+  royalty_rate: { label: 'Royalty Rate (%)', type: 'number', faker: 'datatype.float' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  territory: { label: 'Territory', type: 'text', faker: 'address.country' },
+  exclusivity: { label: 'Exclusivity', type: 'checkbox', faker: 'datatype.boolean' },
+  payment_terms: { label: 'Payment Terms', type: 'text', faker: 'lorem.sentence' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'expired', label: 'Expired' }, { id: 'terminated', label: 'Terminated' }], faker: 'random.arrayElement' },
+  agreement_url: { label: 'Agreement URL', type: 'text', faker: 'internet.url' }
 };
 
 export const entityName = 'IP Licensing';
-export const collectionName = 'ip-licensing';
-    
+export const collectionName = 'ip_licensing';

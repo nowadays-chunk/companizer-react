@@ -1,34 +1,29 @@
+
 export const fieldsConfig = {
-  approvalId: { label: 'Approval ID', type: 'text', faker: 'datatype.uuid' },
-  timesheetId: { label: 'Timesheet ID', type: 'text', faker: 'datatype.uuid' },
-  approverId: { label: 'Approver ID', type: 'text', faker: 'datatype.uuid' },
-  approvalDate: { label: 'Approval Date', type: 'date', faker: 'date.past' },
-  approvalStatus: {
-    label: 'Approval Status',
-    type: 'select',
-    options: [
-      { id: 'approved', label: 'Approved' },
-      { id: 'rejected', label: 'Rejected' },
-      { id: 'pending', label: 'Pending' },
-    ],
-    faker: 'random.arrayElement',
-  },
-  remarks: { label: 'Remarks', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-  tags: {
-    label: 'Tags',
-    type: 'select',
-    options: [
-      { id: 'urgent', label: 'Urgent' },
-      { id: 'pending-review', label: 'Pending Review' },
-      { id: 'approved', label: 'Approved' },
-      { id: 'rejected', label: 'Rejected' },
-    ],
-    multiple: true,
-    faker: 'random.arrayElement',
-  },
-  createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-  createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  approval_id: { label: 'Approval ID', type: 'text', faker: 'datatype.uuid' },
+  employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
+  approver_id: { label: 'Approver ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  period_start_date: { label: 'Period Start Date', type: 'date', faker: 'date.past' },
+  period_end_date: { label: 'Period End Date', type: 'date', faker: 'date.recent' },
+
+  status: { label: 'Status', type: 'select', options: [{ id: 'approved', label: 'Approved' }, { id: 'rejected', label: 'Rejected' }, { id: 'submitted', label: 'Submitted' }], faker: 'random.arrayElement' },
+
+  total_hours: { label: 'Total Hours', type: 'number', faker: 'datatype.float' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  submitted_date: { label: 'Submitted Date', type: 'date', faker: 'date.recent' },
+  approval_date: { label: 'Approval Date', type: 'date', faker: 'date.recent' },
+  comments: { label: 'Comments', type: 'text', faker: 'lorem.sentence' },
+  rejection_reason: { label: 'Rejection Reason', type: 'text', faker: 'lorem.sentence' },
+  project_breakdown: { label: 'Project Breakdown', type: 'text', faker: 'lorem.sentence' },
+  is_locked: { label: 'Is Locked', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
-export const entityName = 'Timesheets Approvals';
-export const collectionName = 'timesheets-approval';
+export const entityName = 'Project Timesheet Approvals';
+export const collectionName = 'project_timesheet_approvals';

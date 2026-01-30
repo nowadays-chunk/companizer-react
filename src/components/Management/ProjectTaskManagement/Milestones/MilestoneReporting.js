@@ -1,24 +1,27 @@
+
 export const fieldsConfig = {
-  reportId: { label: 'Report ID', type: 'text', faker: 'datatype.uuid' },
-  milestoneId: { label: 'Milestone ID', type: 'text', faker: 'datatype.uuid' },
-  reportContent: { label: 'Report Content', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-  reportingDate: { label: 'Reporting Date', type: 'date', faker: 'date.past' },
-  tags: {
-    label: 'Tags',
-    type: 'select',
-    options: [
-      { id: 'urgent', label: 'Urgent' },
-      { id: 'review', label: 'Review' },
-      { id: 'completed', label: 'Completed' },
-      { id: 'follow-up', label: 'Follow-Up' },
-      { id: 'important', label: 'Important' },
-    ],
-    multiple: true,
-    faker: 'random.arrayElement',
-  },
-  reportedBy: { label: 'Reported By', type: 'text', faker: 'name.fullName' },
-  createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  report_id: { label: 'Report ID', type: 'text', faker: 'datatype.uuid' },
+  milestone_id: { label: 'Milestone ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  report_date: { label: 'Report Date', type: 'date', faker: 'date.recent' },
+  progress_percentage: { label: 'Progress (%)', type: 'number', faker: 'datatype.number' },
+
+  status_indicator: { label: 'Status Indicator', type: 'select', options: [{ id: 'green', label: 'Green' }, { id: 'yellow', label: 'Yellow' }, { id: 'red', label: 'Red' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  reported_by: { label: 'Reported By', type: 'text', faker: 'name.fullName' },
+  risks_identified: { label: 'Risks Identified', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  mitigation_plan: { label: 'Mitigation Plan', type: 'text', faker: 'lorem.sentence' },
+  estimated_completion: { label: 'Estimated Completion', type: 'date', faker: 'date.future' },
+  blockers: { label: 'Blockers', type: 'text', faker: 'lorem.sentence' },
+  budget_consumed: { label: 'Budget Consumed', type: 'number', faker: 'finance.amount' },
+  files_attached: { label: 'Files Attached', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Milestone Reporting';
-export const collectionName = 'milestone-reporting';
+export const collectionName = 'milestone_reporting';

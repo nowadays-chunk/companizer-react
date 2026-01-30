@@ -1,40 +1,24 @@
+
 export const fieldsConfig = {
-    volunteeringId: { label: 'Volunteering ID', type: 'text', faker: 'datatype.uuid' },
-    activityTitle: { label: 'Activity Title', type: 'text', faker: 'lorem.sentence' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    participants: { label: 'Participants', type: 'text', faker: 'name.fullName' },
-    hoursContributed: { label: 'Hours Contributed', type: 'number', faker: 'finance.amount' },
-    communityBenefited: { label: 'Community Benefited', type: 'text', faker: 'address.city' },
-    impactAssessment: { label: 'Impact Assessment', type: 'text', faker: 'lorem.paragraph' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'planned', label: 'Planned' },
-            { id: 'ongoing', label: 'Ongoing' },
-            { id: 'completed', label: 'Completed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    coordinator: { label: 'Coordinator', type: 'text', faker: 'name.fullName' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    event_id: { label: 'Event ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    event_name: { label: 'Event Name', type: 'text', faker: 'lorem.words' },
+    date: { label: 'Date', type: 'date', faker: 'date.future' },
+
+    volunteers_count: { label: 'Volunteers', type: 'number', faker: 'datatype.number' },
+    hours_contributed: { label: 'Hours', type: 'number', faker: 'datatype.number' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    organization: { label: 'Organization', type: 'text', faker: 'company.name' },
+    location: { label: 'Location', type: 'text', faker: 'address.city' },
+    outcome: { label: 'Outcome', type: 'text', faker: 'lorem.sentence' },
+    coordinator: { label: 'Coordinator', type: 'text', faker: 'name.fullName' }
 };
 
 export const entityName = 'Employee Volunteering';
-export const collectionName = 'employee-volunteering';
+export const collectionName = 'employee_volunteering';

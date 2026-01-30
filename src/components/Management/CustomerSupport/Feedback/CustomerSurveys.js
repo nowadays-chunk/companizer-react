@@ -1,36 +1,22 @@
+
 export const fieldsConfig = {
-    surveyId: { label: 'Survey ID', type: 'text', faker: 'datatype.uuid' },
-    customerId: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
-    surveyDate: { label: 'Survey Date', type: 'date', faker: 'date.past' },
-    satisfactionScore: {
-        label: 'Satisfaction Score',
-        type: 'select',
-        options: [
-            { id: '1', label: '1' },
-            { id: '2', label: '2' },
-            { id: '3', label: '3' },
-            { id: '4', label: '4' },
-            { id: '5', label: '5' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    comments: { label: 'Comments', type: 'text', faker: 'lorem.sentences' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    survey_id: { label: 'Survey ID', type: 'text', faker: 'datatype.uuid' },
+    customer_id: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    survey_date: { label: 'Survey Date', type: 'date', faker: 'date.recent' },
+    satisfaction_score: { label: 'Satisfaction Score', type: 'number', faker: 'datatype.float' }, // 0-10
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    nps_score: { label: 'NPS Score', type: 'number', faker: 'datatype.number' }, // 0-10
+    comments: { label: 'Comments', type: 'text', multiline: true, rows: 3, faker: 'lorem.sentence' },
+    survey_channel: { label: 'Channel', type: 'select', options: [{ id: 'email', label: 'Email' }, { id: 'sms', label: 'SMS' }, { id: 'web', label: 'Web' }], faker: 'random.arrayElement' },
+    follow_up_required: { label: 'Follow-up Required', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Customer Surveys';
-export const collectionName = 'customer-surveys';
+export const collectionName = 'customer_surveys';

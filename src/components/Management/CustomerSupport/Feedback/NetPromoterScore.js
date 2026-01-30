@@ -1,42 +1,25 @@
+
 export const fieldsConfig = {
-    npsId: { label: 'NPS ID', type: 'text', faker: 'datatype.uuid' },
-    customerId: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
-    surveyDate: { label: 'Survey Date', type: 'date', faker: 'date.past' },
-    score: {
-        label: 'Score',
-        type: 'select',
-        options: [
-            { id: '0', label: '0' },
-            { id: '1', label: '1' },
-            { id: '2', label: '2' },
-            { id: '3', label: '3' },
-            { id: '4', label: '4' },
-            { id: '5', label: '5' },
-            { id: '6', label: '6' },
-            { id: '7', label: '7' },
-            { id: '8', label: '8' },
-            { id: '9', label: '9' },
-            { id: '10', label: '10' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    comments: { label: 'Comments', type: 'text', faker: 'lorem.sentences' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    nps_id: { label: 'NPS ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    score_value: { label: 'Score Value', type: 'number', faker: 'datatype.number' }, // -100 to 100 or raw 0-10
+    nps_category: { label: 'NPS Category', type: 'select', options: [{ id: 'promoter', label: 'Promoter' }, { id: 'passive', label: 'Passive' }, { id: 'detractor', label: 'Detractor' }], faker: 'random.arrayElement' },
+
+    survey_date: { label: 'Survey Date', type: 'date', faker: 'date.recent' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    customer_segment: { label: 'Customer Segment', type: 'text', faker: 'commerce.department' },
+    campaign_id: { label: 'Campaign ID', type: 'text', faker: 'datatype.uuid' },
+    comment: { label: 'Comment', type: 'text', faker: 'lorem.sentence' },
+    response_time_sec: { label: 'Response Time (sec)', type: 'number', faker: 'datatype.number' },
+    device_type: { label: 'Device Type', type: 'text', faker: 'lorem.word' }, // Mobile/Desktop
+    customer_tenure_months: { label: 'Customer Tenure (Months)', type: 'number', faker: 'datatype.number' }
 };
 
 export const entityName = 'Net Promoter Score';
-export const collectionName = 'net-promoter-score';
+export const collectionName = 'net_promoter_score';

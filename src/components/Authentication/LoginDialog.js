@@ -11,10 +11,9 @@ const LoginDialog = ({ open, onClose }) => {
   const handleLogin = async () => {
     try {
       const isDone = await login(email, password);
-      if(isDone){
+      if (isDone) {
         navigate('/summary');
       }
-      onClose(); // Close the dialog after successful login
     } catch (error) {
       console.error('Login failed:', error);
       // Optionally, show an error message to the user

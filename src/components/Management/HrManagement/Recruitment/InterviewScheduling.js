@@ -1,44 +1,24 @@
+
 export const fieldsConfig = {
-    interviewId: { label: 'Interview ID', type: 'text', faker: 'datatype.uuid' },
-    applicantName: { label: 'Applicant Name', type: 'text', faker: 'name.fullName' },
-    interviewDate: { label: 'Interview Date', type: 'date', faker: 'date.future' },
-    interviewerName: { label: 'Interviewer Name', type: 'text', faker: 'name.fullName' },
-    interviewType: {
-        label: 'Interview Type',
-        type: 'select',
-        options: [
-            { id: 'phone', label: 'Phone' },
-            { id: 'in_person', label: 'In-Person' },
-            { id: 'video_call', label: 'Video Call' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'scheduled', label: 'Scheduled' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'cancelled', label: 'Cancelled' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'rescheduled', label: 'Rescheduled' },
-            { id: 'confirmed', label: 'Confirmed' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  interview_id: { label: 'Interview ID', type: 'text', faker: 'datatype.uuid' },
+  applicant_id: { label: 'Applicant ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  interview_type: { label: 'Type', type: 'select', options: [{ id: 'phone', label: 'Phone' }, { id: 'video', label: 'Video' }, { id: 'onsite', label: 'On-site' }], faker: 'random.arrayElement' },
+  scheduled_date: { label: 'Scheduled Date', type: 'datetime', faker: 'date.future' },
+
+  interviewers: { label: 'Interviewers', type: 'text', faker: 'name.fullName' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  location: { label: 'Location', type: 'text', faker: 'address.city' }, // or meeting link
+  duration_minutes: { label: 'Duration (Min)', type: 'number', faker: 'datatype.number' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'scheduled', label: 'Scheduled' }, { id: 'completed', label: 'Completed' }, { id: 'cancelled', label: 'Cancelled' }], faker: 'random.arrayElement' },
+  feedback_link: { label: 'Feedback Link', type: 'text', faker: 'internet.url' }
 };
 
 export const entityName = 'Interview Scheduling';
-export const collectionName = 'interview-scheduling';
+export const collectionName = 'interview_scheduling';

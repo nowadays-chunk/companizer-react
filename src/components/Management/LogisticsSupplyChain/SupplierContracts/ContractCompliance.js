@@ -1,33 +1,22 @@
+
 export const fieldsConfig = {
-    complianceId: { label: 'Compliance ID', type: 'text', faker: 'datatype.uuid' },
-    supplierId: { label: 'Supplier ID', type: 'text', faker: 'datatype.uuid' },
-    complianceDate: { label: 'Compliance Date', type: 'date', faker: 'date.past' },
-    complianceStatus: {
-      label: 'Compliance Status',
-      type: 'select',
-      options: [
-        { id: 'compliant', label: 'Compliant' },
-        { id: 'non-compliant', label: 'Non-Compliant' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    complianceDetails: { label: 'Compliance Details', type: 'text', faker: 'lorem.paragraph' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'review', label: 'Review' },
-        { id: 'compliant', label: 'Compliant' },
-        { id: 'non-compliant', label: 'Non-Compliant' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Contract Compliance';
-  export const collectionName = 'contract-compliance';
-  
+  compliance_id: { label: 'Compliance ID', type: 'text', faker: 'datatype.uuid' },
+  contract_id: { label: 'Contract ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  audit_date: { label: 'Audit Date', type: 'date', faker: 'date.recent' },
+  is_compliant: { label: 'Is Compliant', type: 'checkbox', faker: 'datatype.boolean' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  violation_details: { label: 'Violation Details', type: 'text', faker: 'lorem.sentence' },
+  auditor: { label: 'Auditor', type: 'text', faker: 'name.fullName' },
+  penalty_assessed: { label: 'Penalty', type: 'number', faker: 'finance.amount' },
+  remediation_plan: { label: 'Remediation', type: 'text', faker: 'lorem.sentence' }
+};
+
+export const entityName = 'Contract Compliance';
+export const collectionName = 'contract_compliance';

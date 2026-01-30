@@ -1,35 +1,29 @@
+
 export const fieldsConfig = {
-    bugId: { label: 'Bug ID', type: 'text', faker: 'datatype.uuid' },
-    projectName: { label: 'Project Name', type: 'text', faker: 'company.name' },
-    reporter: { label: 'Reporter', type: 'text', faker: 'name.fullName' },
-    assignedTo: { label: 'Assigned To', type: 'text', faker: 'name.fullName' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'open', label: 'Open' },
-            { id: 'in-progress', label: 'In Progress' },
-            { id: 'resolved', label: 'Resolved' },
-            { id: 'closed', label: 'Closed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    severity: {
-        label: 'Severity',
-        type: 'select',
-        options: [
-            { id: 'low', label: 'Low' },
-            { id: 'medium', label: 'Medium' },
-            { id: 'high', label: 'High' },
-            { id: 'critical', label: 'Critical' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    updatedDate: { label: 'Updated Date', type: 'date', faker: 'date.recent' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
+  bug_id: { label: 'Bug ID', type: 'text', faker: 'datatype.uuid' },
+  project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  title: { label: 'Title', type: 'text', faker: 'lorem.sentence' },
+  severity: { label: 'Severity', type: 'select', options: [{ id: 'critical', label: 'Critical' }, { id: 'major', label: 'Major' }, { id: 'minor', label: 'Minor' }], faker: 'random.arrayElement' },
+
+  status: { label: 'Status', type: 'select', options: [{ id: 'new', label: 'New' }, { id: 'triaged', label: 'Triaged' }, { id: 'fixed', label: 'Fixed' }, { id: 'closed', label: 'Closed' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  tags: { label: 'Tags', type: 'select', options: [{ id: 'ui', label: 'UI' }, { id: 'backend', label: 'Backend' }], multiple: true, faker: 'random.arrayElement' },
+
+  // Extras
+  reported_by: { label: 'Reported By', type: 'text', faker: 'name.fullName' },
+  assigned_to: { label: 'Assigned To', type: 'text', faker: 'name.fullName' },
+  created_date: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  reproduction_steps: { label: 'Reproduction Steps', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+  environment: { label: 'Environment', type: 'text', faker: 'lorem.word' }, // Prod/Dev
+  version_found: { label: 'Version Found', type: 'text', faker: 'system.semver' },
+  target_fix_date: { label: 'Target Fix Date', type: 'date', faker: 'date.future' }
 };
 
 export const entityName = 'Bug Tracking';
-export const collectionName = 'bug-tracking';
+export const collectionName = 'bug_tracking';

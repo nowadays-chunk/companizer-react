@@ -1,36 +1,23 @@
+
 export const fieldsConfig = {
-    bidId: { label: 'Bid ID', type: 'text', faker: 'datatype.uuid' },
-    supplierId: { label: 'Supplier ID', type: 'text', faker: 'datatype.uuid' },
-    submissionDate: { label: 'Submission Date', type: 'date', faker: 'date.past' },
-    bidAmount: { label: 'Bid Amount', type: 'number', faker: 'finance.amount' },
-    bidDetails: { label: 'Bid Details', type: 'text', faker: 'lorem.paragraph' },
-    status: {
-      label: 'Status',
-      type: 'select',
-      options: [
-        { id: 'submitted', label: 'Submitted' },
-        { id: 'under-review', label: 'Under Review' },
-        { id: 'approved', label: 'Approved' },
-        { id: 'rejected', label: 'Rejected' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'high-priority', label: 'High Priority' },
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'under-review', label: 'Under Review' },
-        { id: 'completed', label: 'Completed' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Supplier Bids';
-  export const collectionName = 'supplier-bids';
-  
+  bid_id: { label: 'Bid ID', type: 'text', faker: 'datatype.uuid' },
+  rfp_id: { label: 'RFP ID', type: 'text', faker: 'datatype.uuid' }, // Request for Proposal
+  supplier_id: { label: 'Supplier ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  bid_amount: { label: 'Bid Amount', type: 'number', faker: 'finance.amount' },
+  submission_date: { label: 'Submission Date', type: 'date', faker: 'date.recent' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  delivery_time_days: { label: 'Delivery Time (Days)', type: 'number', faker: 'datatype.number' },
+  proposal_url: { label: 'Proposal URL', type: 'text', faker: 'internet.url' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'received', label: 'Received' }, { id: 'shortlisted', label: 'Shortlisted' }, { id: 'selected', label: 'Selected' }, { id: 'rejected', label: 'Rejected' }], faker: 'random.arrayElement' },
+  score: { label: 'Score', type: 'number', faker: 'datatype.number' } // Evaluation score
+};
+
+export const entityName = 'Supplier Bids';
+export const collectionName = 'supplier_bids';

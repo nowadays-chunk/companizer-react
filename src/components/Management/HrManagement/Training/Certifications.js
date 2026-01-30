@@ -1,34 +1,24 @@
+
 export const fieldsConfig = {
-    certificationId: { label: 'Certification ID', type: 'text', faker: 'datatype.uuid' },
-    certificationName: { label: 'Certification Name', type: 'text', faker: 'company.catchPhrase' },
-    employeeId: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
-    issueDate: { label: 'Issue Date', type: 'date', faker: 'date.past' },
-    expiryDate: { label: 'Expiry Date', type: 'date', faker: 'date.future' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'valid', label: 'Valid' },
-            { id: 'expired', label: 'Expired' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'important', label: 'Important' },
-            { id: 'review', label: 'Review' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  cert_id: { label: 'Cert ID', type: 'text', faker: 'datatype.uuid' },
+  employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  cert_name: { label: 'Certificate', type: 'text', faker: 'lorem.words' },
+  issuing_body: { label: 'Issuing Body', type: 'text', faker: 'company.name' },
+
+  issue_date: { label: 'Issue Date', type: 'date', faker: 'date.past' },
+  expiry_date: { label: 'Expiry Date', type: 'date', faker: 'date.future' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  credential_number: { label: 'Credential Number', type: 'text', faker: 'random.alphaNumeric' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'expired', label: 'Expired' }], faker: 'random.arrayElement' },
+  verification_url: { label: 'Verification URL', type: 'text', faker: 'internet.url' }
 };
 
-export const entityName = 'Certifications';
-export const collectionName = 'certifications';
+export const entityName = 'HR Certifications';
+export const collectionName = 'hr_certifications';

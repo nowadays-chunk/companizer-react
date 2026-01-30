@@ -1,36 +1,26 @@
+
 export const fieldsConfig = {
-    applicationId: { label: 'Application ID', type: 'text', faker: 'datatype.uuid' },
-    jobTitle: { label: 'Job Title', type: 'text', faker: 'name.jobTitle' },
-    applicantName: { label: 'Applicant Name', type: 'text', faker: 'name.fullName' },
-    applicationDate: { label: 'Application Date', type: 'date', faker: 'date.past' },
-    status: {
-        label: 'Application Status',
-        type: 'select',
-        options: [
-            { id: 'applied', label: 'Applied' },
-            { id: 'interview_scheduled', label: 'Interview Scheduled' },
-            { id: 'rejected', label: 'Rejected' },
-            { id: 'hired', label: 'Hired' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'qualified', label: 'Qualified' },
-            { id: 'rejected', label: 'Rejected' },
-            { id: 'under_review', label: 'Under Review' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  applicant_id: { label: 'Applicant ID', type: 'text', faker: 'datatype.uuid' },
+  job_id: { label: 'Job ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  first_name: { label: 'First Name', type: 'text', faker: 'name.firstName' },
+  last_name: { label: 'Last Name', type: 'text', faker: 'name.lastName' },
+  email: { label: 'Email', type: 'email', faker: 'internet.email' },
+
+  stage: { label: 'Stage', type: 'select', options: [{ id: 'applied', label: 'Applied' }, { id: 'screening', label: 'Screening' }, { id: 'interview', label: 'Interview' }, { id: 'offer', label: 'Offer' }, { id: 'hired', label: 'Hired' }, { id: 'rejected', label: 'Rejected' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  source: { label: 'Source', type: 'text', faker: 'lorem.word' }, // LinkedIn, Referral
+  application_date: { label: 'Application Date', type: 'date', faker: 'date.past' },
+  resume_url: { label: 'Resume URL', type: 'text', faker: 'internet.url' },
+  phone: { label: 'Phone', type: 'tel', faker: 'phone.number' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Applicant Tracking';
-export const collectionName = 'applicant-tracking';
+export const collectionName = 'applicant_tracking';

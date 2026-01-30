@@ -1,27 +1,28 @@
+
 export const fieldsConfig = {
-    scopeId: { label: 'Scope ID', type: 'text', faker: 'datatype.uuid' },
-    projectId: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
-    scopeDescription: { label: 'Scope Description', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-    deliverables: { label: 'Deliverables', type: 'text', multiline: true, rows: 4, faker: 'lorem.sentence' },
-    constraints: { label: 'Constraints', type: 'text', multiline: true, rows: 4, faker: 'lorem.sentence' },
-    assumptions: { label: 'Assumptions', type: 'text', multiline: true, rows: 4, faker: 'lorem.sentence' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'high-priority', label: 'High Priority' },
-        { id: 'low-priority', label: 'Low Priority' },
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'pending', label: 'Pending' },
-        { id: 'completed', label: 'Completed' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Project Scopes';
-  export const collectionName = 'project-scopes';
-  
+  scope_id: { label: 'Scope ID', type: 'text', faker: 'datatype.uuid' },
+  project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  description: { label: 'Description', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraphs' },
+  in_scope: { label: 'In Scope', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
+  out_of_scope: { label: 'Out Of Scope', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
+
+  approved_date: { label: 'Approved Date', type: 'date', faker: 'date.past' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  version_number: { label: 'Version Number', type: 'text', faker: 'system.semver' },
+  approved_by: { label: 'Approved By', type: 'text', faker: 'name.fullName' },
+  change_log: { label: 'Change Log', type: 'text', faker: 'lorem.sentence' },
+  assumptions: { label: 'Assumptions', type: 'text', faker: 'lorem.sentence' },
+  constraints: { label: 'Constraints', type: 'text', faker: 'lorem.sentence' },
+  document_url: { label: 'Document URL', type: 'text', faker: 'internet.url' },
+  last_review_date: { label: 'Last Review Date', type: 'date', faker: 'date.recent' }
+};
+
+export const entityName = 'Project Scope';
+export const collectionName = 'project_scope';

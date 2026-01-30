@@ -1,36 +1,26 @@
+
 export const fieldsConfig = {
-    planId: { label: 'Plan ID', type: 'text', faker: 'datatype.uuid' },
-    riskId: { label: 'Risk ID', type: 'text', faker: 'datatype.uuid' },
-    mitigationStrategy: { label: 'Mitigation Strategy', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-    responsibleParty: { label: 'Responsible Party', type: 'text', faker: 'name.fullName' },
-    implementationDate: { label: 'Implementation Date', type: 'date', faker: 'date.future' },
-    status: {
-      label: 'Status',
-      type: 'select',
-      options: [
-        { id: 'not-started', label: 'Not Started' },
-        { id: 'in-progress', label: 'In Progress' },
-        { id: 'completed', label: 'Completed' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-          { id: 'urgent', label: 'Urgent' },
-          { id: 'review', label: 'Review' },
-          { id: 'important', label: 'Important' },
-          { id: 'completed', label: 'Completed' },
-          { id: 'follow-up', label: 'Follow-Up' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-  },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-    
+  plan_id: { label: 'Plan ID', type: 'text', faker: 'datatype.uuid' },
+  risk_id: { label: 'Risk ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  action_plan: { label: 'Action Plan', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+  owner: { label: 'Owner', type: 'text', faker: 'name.fullName' },
+
+  due_date: { label: 'Due Date', type: 'date', faker: 'date.future' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'not_started', label: 'Not Started' }, { id: 'in_progress', label: 'In Progress' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  resources_needed: { label: 'Resources Needed', type: 'text', faker: 'lorem.sentence' },
+  budget: { label: 'Budget', type: 'number', faker: 'finance.amount' },
+  progress: { label: 'Progress (%)', type: 'number', faker: 'datatype.number' },
+  review_date: { label: 'Review Date', type: 'date', faker: 'date.recent' },
+  effectiveness_rating: { label: 'Effectiveness Rating', type: 'number', faker: 'datatype.float' }
+};
+
 export const entityName = 'Risk Mitigation Plans';
-export const collectionName = 'risk-mitigation-plans'
-  
+export const collectionName = 'risk_mitigation_plans';

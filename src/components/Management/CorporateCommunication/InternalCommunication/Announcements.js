@@ -1,34 +1,23 @@
+
 export const fieldsConfig = {
-    announcementId: { label: 'Announcement ID', type: 'text', faker: 'datatype.uuid' },
+    announcement_id: { label: 'Announcement ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
     title: { label: 'Title', type: 'text', faker: 'lorem.sentence' },
-    content: { label: 'Content', type: 'text', faker: 'lorem.paragraphs' },
-    announcementDate: { label: 'Announcement Date', type: 'date', faker: 'date.past' },
-    audience: {
-        label: 'Audience',
-        type: 'select',
-        options: [
-            { id: 'all-employees', label: 'All Employees' },
-            { id: 'management', label: 'Management' },
-            { id: 'department-specific', label: 'Department Specific' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    message: { label: 'Message', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+
+    priority: { label: 'Priority', type: 'select', options: [{ id: 'normal', label: 'Normal' }, { id: 'high', label: 'High' }, { id: 'urgent', label: 'Urgent' }], faker: 'random.arrayElement' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    date_posted: { label: 'Date Posted', type: 'date', faker: 'date.recent' },
+    target_audience: { label: 'Target Audience', type: 'text', faker: 'lorem.words' }, // All, HR, Sales
+    posted_by: { label: 'Posted By', type: 'text', faker: 'name.fullName' },
+    read_confirmation_required: { label: 'Read Confirm', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
-export const entityName = 'Announcements';
-export const collectionName = 'announcements';
+export const entityName = 'Internal Announcements';
+export const collectionName = 'internal_announcements';

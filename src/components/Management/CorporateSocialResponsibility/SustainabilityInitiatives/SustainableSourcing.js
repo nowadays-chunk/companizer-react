@@ -1,40 +1,23 @@
+
 export const fieldsConfig = {
-    sourcingId: { label: 'Sourcing ID', type: 'text', faker: 'datatype.uuid' },
-    sourcingTitle: { label: 'Sourcing Title', type: 'text', faker: 'lorem.sentence' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    supplierName: { label: 'Supplier Name', type: 'text', faker: 'company.name' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    certification: { label: 'Certification', type: 'text', faker: 'company.catchPhrase' },
-    auditResults: { label: 'Audit Results', type: 'text', faker: 'lorem.paragraph' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'approved', label: 'Approved' },
-            { id: 'pending', label: 'Pending' },
-            { id: 'rejected', label: 'Rejected' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    responsiblePerson: { label: 'Responsible Person', type: 'text', faker: 'name.fullName' },
-    budget: { label: 'Budget', type: 'number', faker: 'finance.amount' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    sourcing_id: { label: 'Sourcing ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    material: { label: 'Material', type: 'text', faker: 'commerce.productMaterial' },
+    supplier: { label: 'Supplier', type: 'text', faker: 'company.name' },
+
+    percentage_sustainable: { label: 'Sustainable (%)', type: 'number', faker: 'datatype.number' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    certification_type: { label: 'Certification', type: 'text', faker: 'lorem.word' }, // Fair Trade, FSC
+    volume_purchased: { label: 'Volume', type: 'number', faker: 'datatype.float' },
+    cost_premium: { label: 'Cost Premium (%)', type: 'number', faker: 'datatype.float' },
+    audit_status: { label: 'Audit Status', type: 'select', options: [{ id: 'passed', label: 'Passed' }, { id: 'pending', label: 'Pending' }, { id: 'failed', label: 'Failed' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Sustainable Sourcing';
-export const collectionName = 'sustainable-sourcing';
+export const collectionName = 'sustainable_sourcing';

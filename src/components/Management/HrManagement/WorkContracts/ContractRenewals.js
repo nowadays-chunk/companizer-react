@@ -1,34 +1,22 @@
+
 export const fieldsConfig = {
-    renewalId: { label: 'Renewal ID', type: 'text', faker: 'datatype.uuid' },
-    contractId: { label: 'Contract ID', type: 'text', faker: 'datatype.uuid' },
-    renewalDate: { label: 'Renewal Date', type: 'date', faker: 'date.future' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'pending', label: 'Pending' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'cancelled', label: 'Cancelled' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    reason: { label: 'Reason for Renewal', type: 'text', faker: 'lorem.sentence' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'important', label: 'Important' },
-            { id: 'review', label: 'Review' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  renewal_id: { label: 'Renewal ID', type: 'text', faker: 'datatype.uuid' },
+  employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  old_contract_end: { label: 'Old Contract End', type: 'date', faker: 'date.past' },
+  new_contract_start: { label: 'New Contract Start', type: 'date', faker: 'date.future' },
+  new_contract_end: { label: 'New Contract End', type: 'date', faker: 'date.future' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  salary_revision: { label: 'Salary Revision', type: 'number', faker: 'finance.amount' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'signed', label: 'Signed' }, { id: 'negotiating', label: 'Negotiating' }, { id: 'declined', label: 'Declined' }], faker: 'random.arrayElement' },
+  document_url: { label: 'Document URL', type: 'text', faker: 'internet.url' }
 };
 
-export const entityName = 'Contract Renewals';
-export const collectionName = 'contract-renewals';
+export const entityName = 'Contract Renewals (HR)';
+export const collectionName = 'contract_renewals_hr';

@@ -1,67 +1,27 @@
+
 export const fieldsConfig = {
-    riskId: { label: 'Risk ID', type: 'text', faker: 'datatype.uuid' },
-    riskTitle: { label: 'Risk Title', type: 'text', faker: 'lorem.sentence' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    riskCategory: {
-        label: 'Risk Category',
-        type: 'select',
-        options: [
-            { id: 'financial', label: 'Financial' },
-            { id: 'operational', label: 'Operational' },
-            { id: 'strategic', label: 'Strategic' },
-            { id: 'compliance', label: 'Compliance' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    likelihood: {
-        label: 'Likelihood',
-        type: 'select',
-        options: [
-            { id: 'high', label: 'High' },
-            { id: 'medium', label: 'Medium' },
-            { id: 'low', label: 'Low' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    impact: {
-        label: 'Impact',
-        type: 'select',
-        options: [
-            { id: 'high', label: 'High' },
-            { id: 'medium', label: 'Medium' },
-            { id: 'low', label: 'Low' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    mitigationStrategy: { label: 'Mitigation Strategy', type: 'text', faker: 'lorem.paragraph' },
-    responsiblePerson: { label: 'Responsible Person', type: 'text', faker: 'name.fullName' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'identified', label: 'Identified' },
-            { id: 'mitigated', label: 'Mitigated' },
-            { id: 'ongoing', label: 'Ongoing' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    identificationDate: { label: 'Identification Date', type: 'date', faker: 'date.past' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    risk_id: { label: 'Risk ID', type: 'text', faker: 'datatype.uuid' },
+    project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' }, // Optional link
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    risk_name: { label: 'Risk Name', type: 'text', faker: 'lorem.words' },
+    category: { label: 'Category', type: 'select', options: [{ id: 'financial', label: 'Financial' }, { id: 'strategic', label: 'Strategic' }, { id: 'operational', label: 'Operational' }, { id: 'compliance', label: 'Compliance' }], faker: 'random.arrayElement' },
+
+    risk_owner: { label: 'Risk Owner', type: 'text', faker: 'name.fullName' },
+    date_identified: { label: 'Date Identified', type: 'date', faker: 'date.past' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    identified_by: { label: 'Identified By', type: 'text', faker: 'name.fullName' },
+    description: { label: 'Description', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+    root_cause: { label: 'Root Cause', type: 'text', faker: 'lorem.sentence' },
+    potential_impact: { label: 'Potential Impact', type: 'text', faker: 'lorem.sentence' },
+    status: { label: 'Status', type: 'select', options: [{ id: 'open', label: 'Open' }, { id: 'mitigated', label: 'Mitigated' }, { id: 'closed', label: 'Closed' }, { id: 'accepted', label: 'Accepted' }], faker: 'random.arrayElement' },
+    visibility: { label: 'Visibility', type: 'select', options: [{ id: 'internal', label: 'Internal' }, { id: 'public', label: 'Public' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Risk Identification';
-export const collectionName = 'risk-identification';
+export const collectionName = 'risk_identification';

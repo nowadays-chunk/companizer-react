@@ -1,36 +1,21 @@
+
 export const fieldsConfig = {
-    portalId: { label: 'Portal ID', type: 'text', faker: 'datatype.uuid' },
-    portalName: { label: 'Portal Name', type: 'text', faker: 'internet.domainWord' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
+    portal_id: { label: 'Portal ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    portal_name: { label: 'Portal Name', type: 'text', faker: 'lorem.words' },
     url: { label: 'URL', type: 'text', faker: 'internet.url' },
-    launchDate: { label: 'Launch Date', type: 'date', faker: 'date.past' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'maintenance', label: 'Under Maintenance' },
-            { id: 'decommissioned', label: 'Decommissioned' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    administrator: { label: 'Administrator', type: 'text', faker: 'name.fullName' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
+    access_level: { label: 'Access Level', type: 'text', faker: 'random.alphaNumeric' },
+    admin_contact: { label: 'Admin Contact', type: 'email', faker: 'internet.email' },
+    is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Employee Portals';
-export const collectionName = 'employee-portals';
+export const collectionName = 'employee_portals';

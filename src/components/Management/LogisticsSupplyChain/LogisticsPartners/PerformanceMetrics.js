@@ -1,25 +1,23 @@
+
 export const fieldsConfig = {
-    metricId: { label: 'Metric ID', type: 'text', faker: 'datatype.uuid' },
-    partnerId: { label: 'Partner ID', type: 'text', faker: 'datatype.uuid' },
-    metricName: { label: 'Metric Name', type: 'text', faker: 'lorem.words' },
-    metricValue: { label: 'Metric Value', type: 'number', faker: 'finance.amount' },
-    evaluationDate: { label: 'Evaluation Date', type: 'date', faker: 'date.past' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'performance', label: 'Performance' },
-        { id: 'high-priority', label: 'High Priority' },
-        { id: 'evaluation', label: 'Evaluation' },
-        { id: 'completed', label: 'Completed' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Performance Metrics';
-  export const collectionName = 'performance-metrics';
-  
+  metric_id: { label: 'Metric ID', type: 'text', faker: 'datatype.uuid' },
+  partner_id: { label: 'Partner ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  delivery_timeliness: { label: 'On-Time Delivery (%)', type: 'number', faker: 'datatype.float' },
+  damage_rate: { label: 'Damage Rate (%)', type: 'number', faker: 'datatype.float' },
+
+  cost_efficiency: { label: 'Cost Efficiency', type: 'number', faker: 'datatype.float' }, // Index score
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  period: { label: 'Period', type: 'text', faker: 'lorem.word' }, // Q1
+  rating: { label: 'Overall Rating', type: 'number', faker: 'datatype.float' }, // 1-5
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+};
+
+export const entityName = 'Logistics Performance Metrics';
+export const collectionName = 'logistics_performance_metrics';

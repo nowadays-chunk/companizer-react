@@ -1,31 +1,25 @@
+
 export const fieldsConfig = {
-    obligationId: { label: 'Obligation ID', type: 'text', faker: 'datatype.uuid' },
-    obligationType: {
-        label: 'Obligation Type',
-        type: 'select',
-        options: [
-            { id: 'regulatory', label: 'Regulatory' },
-            { id: 'contractual', label: 'Contractual' },
-            { id: 'legal', label: 'Legal' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    dueDate: { label: 'Due Date', type: 'date', faker: 'date.future' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'pending', label: 'Pending' },
-            { id: 'fulfilled', label: 'Fulfilled' },
-            { id: 'overdue', label: 'Overdue' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    responsibleParty: { label: 'Responsible Party', type: 'text', faker: 'name.fullName' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+  obligation_id: { label: 'Obligation ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  title: { label: 'Title', type: 'text', faker: 'lorem.sentence' },
+  source: { label: 'Source', type: 'text', faker: 'lorem.words' }, // e.g. "GDPR Article 32"
+
+  category: { label: 'Category', type: 'select', options: [{ id: 'regulatory', label: 'Regulatory' }, { id: 'contractual', label: 'Contractual' }, { id: 'internal', label: 'InternalPolicy' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  risk_level: { label: 'Risk Level', type: 'select', options: [{ id: 'high', label: 'High' }, { id: 'medium', label: 'Medium' }, { id: 'low', label: 'Low' }], faker: 'random.arrayElement' },
+  description: { label: 'Description', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
+  owner: { label: 'Owner', type: 'text', faker: 'name.fullName' },
+  is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' },
+  frequency: { label: 'Frequency', type: 'text', faker: 'lorem.word' }, // Annual, Quarterly
+  last_review: { label: 'Last Review', type: 'date', faker: 'date.recent' }
 };
 
 export const entityName = 'Obligation Tracking';
-export const collectionName = 'obligation-tracking';
+export const collectionName = 'obligation_tracking';

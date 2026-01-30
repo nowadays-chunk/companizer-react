@@ -1,45 +1,25 @@
+
 export const fieldsConfig = {
-    scenarioId: { label: 'Scenario ID', type: 'text', faker: 'datatype.uuid' },
-    scenarioTitle: { label: 'Scenario Title', type: 'text', faker: 'lorem.sentence' },
-    description: { label: 'Description', type: 'text', faker: 'lorem.paragraph' },
-    potentialImpact: { label: 'Potential Impact', type: 'text', faker: 'lorem.paragraph' },
-    likelihood: {
-        label: 'Likelihood',
-        type: 'select',
-        options: [
-            { id: 'high', label: 'High' },
-            { id: 'medium', label: 'Medium' },
-            { id: 'low', label: 'Low' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    mitigationStrategy: { label: 'Mitigation Strategy', type: 'text', faker: 'lorem.paragraph' },
-    responsiblePerson: { label: 'Responsible Person', type: 'text', faker: 'name.fullName' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'archived', label: 'Archived' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    scenario_id: { label: 'Scenario ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    scenario_title: { label: 'Scenario Title', type: 'text', faker: 'lorem.sentence' },
+    risk_level: { label: 'Risk Level', type: 'select', options: [{ id: 'high', label: 'High' }, { id: 'critical', label: 'Critical' }, { id: 'catastrophic', label: 'Catastrophic' }], faker: 'random.arrayElement' },
+
+    description: { label: 'Description', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    probability: { label: 'Probability', type: 'select', options: [{ id: 'likely', label: 'Likely' }, { id: 'possible', label: 'Possible' }, { id: 'unlikely', label: 'Unlikely' }], faker: 'random.arrayElement' },
+    impact_description: { label: 'Impact Description', type: 'text', faker: 'lorem.sentence' },
+    mitigation_measures: { label: 'Mitigation Measures', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+    trigger_events: { label: 'Trigger Events', type: 'text', faker: 'lorem.sentence' },
+    simulation_date: { label: 'Simulation Date', type: 'date', faker: 'date.future' },
+    preparedness_score: { label: 'Preparedness Score', type: 'number', faker: 'datatype.number' } // 0-100
 };
 
 export const entityName = 'Crisis Scenarios';
-export const collectionName = 'crisis-scenarios';
+export const collectionName = 'crisis_scenarios';

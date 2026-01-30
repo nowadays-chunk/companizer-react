@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 
 import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import DetailsVisualizer from './DetailsVisualizer';
 
 const pathify = (urlParam) => {
   return urlParam
@@ -109,6 +110,11 @@ const Visualizer = ({ mode = 'view' }) => {
 
   const [itemData, setItemData] = useState(null);
   const [config, setConfig] = useState(null);
+
+  // New state for Detail config
+  const [detailConfig, setDetailConfig] = useState(null);
+  const [detailEntityName, setDetailEntityName] = useState(null);
+
   const [formData, setFormData] = useState({});
   const [formInitialized, setFormInitialized] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -127,7 +133,7 @@ const Visualizer = ({ mode = 'view' }) => {
   );
   const { fetchItemById, addItem, updateItem, deleteItem } = queryHelpers;
 
-  // Load config
+  // Load config & detail config
   useEffect(() => {
     const loadConfig = async () => {
       try {
@@ -135,6 +141,22 @@ const Visualizer = ({ mode = 'view' }) => {
           `../components/Management/${holdingFolder}/${subFolder}/${componentName}`
         );
         setConfig(configModule.default || configModule);
+
+        // Try to load Detail config
+        // Convention: Details/ComponentNameDetails.js in the same folder
+        try {
+          const detailName = `${componentName}Details`;
+          const detailModule = await import(
+            `../components/Management/${holdingFolder}/${subFolder}/Details/${detailName}`
+          );
+          setDetailConfig(detailModule.default || detailModule);
+          setDetailEntityName(detailModule.entityName || detailModule.default?.entityName);
+        } catch (detailErr) {
+          // No detail config found, which is fine
+          console.log("No detail configuration found for", componentName);
+          setDetailConfig(null);
+        }
+
       } catch (err) {
         console.error('Error loading configuration:', err);
         setError('Configuration file not found for this entity.');
@@ -456,6 +478,16 @@ const Visualizer = ({ mode = 'view' }) => {
           )}
         </CardContent>
       </Card>
+
+      {/* Detail Visualizer Sub-Component */}
+      {isView && detailConfig && itemData && (
+        <DetailsVisualizer
+          parentId={id}
+          detailConfig={detailConfig}
+          detailEntityName={detailEntityName || `${entity}_details`}
+          fkFieldName={`${entity.replace(/s$/, '')}_id`} // Simple heuristic: plural 'clients' -> 'client_id'
+        />
+      )}
     </Container>
   );
 };

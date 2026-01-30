@@ -1,35 +1,25 @@
+
 export const fieldsConfig = {
-    recommendationId: { label: 'Recommendation ID', type: 'text', faker: 'datatype.uuid' },
-    employeeId: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
-    promotionTitle: { label: 'Promotion Title', type: 'text', faker: 'name.jobTitle' },
-    promotionDate: { label: 'Promotion Date', type: 'date', faker: 'date.future' },
-    reviewerName: { label: 'Reviewer Name', type: 'text', faker: 'name.fullName' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'recommended', label: 'Recommended' },
-            { id: 'approved', label: 'Approved' },
-            { id: 'declined', label: 'Declined' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'priority', label: 'Priority' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  recommendation_id: { label: 'Recommendation ID', type: 'text', faker: 'datatype.uuid' },
+  employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  current_role: { label: 'Current Role', type: 'text', faker: 'name.jobTitle' },
+  recommended_role: { label: 'Recommended Role', type: 'text', faker: 'name.jobTitle' },
+
+  reason: { label: 'Reason', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  submitted_by: { label: 'Submitted By', type: 'text', faker: 'name.fullName' },
+  date_submitted: { label: 'Date Submitted', type: 'date', faker: 'date.recent' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'pending', label: 'Pending' }, { id: 'approved', label: 'Approved' }, { id: 'rejected', label: 'Rejected' }], faker: 'random.arrayElement' },
+  approval_date: { label: 'Approval Date', type: 'date', faker: 'date.future' },
+  salary_increase_proposed: { label: 'Salary Increase', type: 'number', faker: 'finance.amount' }
 };
 
 export const entityName = 'Promotion Recommendations';
-export const collectionName = 'promotion-recommendations';
+export const collectionName = 'promotion_recommendations';

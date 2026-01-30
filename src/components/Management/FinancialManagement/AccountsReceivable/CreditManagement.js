@@ -1,50 +1,25 @@
+
 export const fieldsConfig = {
-    creditId: { label: 'Credit ID', type: 'text', faker: 'datatype.uuid' },
-    customerId: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
-    creditLimit: { label: 'Credit Limit', type: 'number', faker: 'finance.amount' },
-    outstandingBalance: { label: 'Outstanding Balance', type: 'number', faker: 'finance.amount' },
-    currency: {
-        label: 'Currency',
-        type: 'select',
-        options: [
-            { id: 'USD', label: 'USD' },
-            { id: 'EUR', label: 'EUR' },
-            { id: 'GBP', label: 'GBP' },
-            { id: 'JPY', label: 'JPY' },
-            { id: 'AUD', label: 'AUD' },
-        ],
-        faker: 'finance.currencyCode',
-    },
-    riskLevel: {
-        label: 'Risk Level',
-        type: 'select',
-        options: [
-            { id: 'low', label: 'Low' },
-            { id: 'medium', label: 'Medium' },
-            { id: 'high', label: 'High' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    latePaymentFee: { label: 'Late Payment Fee', type: 'number', faker: 'finance.amount' },  // Penalty for late payments
-    ecoContribution: { label: 'Eco Contribution', type: 'number', faker: 'finance.amount' },  // Eco-tax contribution (French-specific)
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  cms_id: { label: 'CMS ID', type: 'text', faker: 'datatype.uuid' },
+  customer_id: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  credit_limit: { label: 'Credit Limit', type: 'number', faker: 'finance.amount' },
+  current_balance: { label: 'Current Balance', type: 'number', faker: 'finance.amount' },
+
+  risk_score: { label: 'Risk Score', type: 'number', faker: 'datatype.number' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  risk_category: { label: 'Risk Category', type: 'select', options: [{ id: 'low', label: 'Low' }, { id: 'medium', label: 'Medium' }, { id: 'high', label: 'High' }], faker: 'random.arrayElement' },
+  last_review_date: { label: 'Last Review', type: 'date', faker: 'date.past' },
+  next_review_date: { label: 'Next Review', type: 'date', faker: 'date.future' },
+  payment_history_rating: { label: 'Payment History', type: 'select', options: [{ id: 'excellent', label: 'Excellent' }, { id: 'good', label: 'Good' }, { id: 'poor', label: 'Poor' }], faker: 'random.arrayElement' },
+  notes: { label: 'Notes', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Credit Management';
-export const collectionName = 'credit-management';
+export const collectionName = 'credit_management';

@@ -1,47 +1,26 @@
+
 export const fieldsConfig = {
-    communicationId: { label: 'Communication ID', type: 'text', faker: 'datatype.uuid' },
-    crisisId: { label: 'Crisis ID', type: 'text', faker: 'datatype.uuid' },
-    communicationMethod: {
-        label: 'Communication Method',
-        type: 'select',
-        options: [
-            { id: 'email', label: 'Email' },
-            { id: 'sms', label: 'SMS' },
-            { id: 'phone-call', label: 'Phone Call' },
-            { id: 'press-conference', label: 'Press Conference' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    messageContent: { label: 'Message Content', type: 'text', faker: 'lorem.paragraph' },
-    sender: { label: 'Sender', type: 'text', faker: 'name.fullName' },
-    recipients: { label: 'Recipients', type: 'text', faker: 'name.fullName' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'sent', label: 'Sent' },
-            { id: 'pending', label: 'Pending' },
-            { id: 'failed', label: 'Failed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    sentDate: { label: 'Sent Date', type: 'date', faker: 'date.past' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
+    comm_id: { label: 'Comm ID', type: 'text', faker: 'datatype.uuid' },
+    incident_id: { label: 'Incident ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    message_title: { label: 'Message Title', type: 'text', faker: 'lorem.sentence' },
+    sent_date: { label: 'Sent Date', type: 'date', faker: 'date.recent' },
+
+    recipient_group: { label: 'Recipient Group', type: 'select', options: [{ id: 'all_employees', label: 'All Employees' }, { id: 'execs', label: 'Execs' }, { id: 'safety_team', label: 'Safety Team' }], faker: 'random.arrayElement' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    message_body: { label: 'Message Body', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
+    delivery_method: { label: 'Delivery Method', type: 'select', options: [{ id: 'sms', label: 'SMS' }, { id: 'email', label: 'Email' }, { id: 'pa_system', label: 'PA System' }], faker: 'random.arrayElement' },
+    success_rate: { label: 'Success Rate (%)', type: 'number', faker: 'datatype.float' },
+    sender_name: { label: 'Sender Name', type: 'text', faker: 'name.fullName' },
+    acknowledgement_required: { label: 'Acknowledgement Required', type: 'checkbox', faker: 'datatype.boolean' },
+    follow_up_needed: { label: 'Follow Up Needed', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Emergency Communication';
-export const collectionName = 'emergency-communication';
+export const collectionName = 'emergency_communication';

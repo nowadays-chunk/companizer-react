@@ -1,32 +1,25 @@
+
 export const fieldsConfig = {
-    inspectionId: { label: 'Inspection ID', type: 'text', faker: 'datatype.uuid' },
-    productId: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
-    productName: { label: 'Product Name', type: 'text', faker: 'commerce.productName' },
-    inspectionDate: { label: 'Inspection Date', type: 'date', faker: 'date.past' },
-    inspectionResult: {
-      label: 'Inspection Result',
-      type: 'select',
-      options: [
-        { id: 'pass', label: 'Pass' },
-        { id: 'fail', label: 'Fail' },
-        { id: 'rework_required', label: 'Rework Required' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    inspectorName: { label: 'Inspector Name', type: 'text', faker: 'name.fullName' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [],  // Populate with actual tags
-      multiple: true,
-      faker: 'lorem.words',
-    },
-    comments: { label: 'Comments', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
-  };
-  
+  inspection_id: { label: 'Inspection ID', type: 'text', faker: 'datatype.uuid' },
+  item_id: { label: 'Item ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  inspection_date: { label: 'Inspection Date', type: 'date', faker: 'date.recent' },
+  inspector: { label: 'Inspector', type: 'text', faker: 'name.fullName' },
+
+  result: { label: 'Result', type: 'select', options: [{ id: 'pass', label: 'Pass' }, { id: 'fail', label: 'Fail' }, { id: 'conditional_pass', label: 'Conditional Pass' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  sample_size: { label: 'Sample Size', type: 'number', faker: 'datatype.number' },
+  defects_found: { label: 'Defects Found', type: 'number', faker: 'datatype.number' },
+  severity: { label: 'Severity', type: 'select', options: [{ id: 'critical', label: 'Critical' }, { id: 'major', label: 'Major' }, { id: 'minor', label: 'Minor' }, { id: 'none', label: 'None' }], faker: 'random.arrayElement' },
+  comments: { label: 'Comments', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  batch_number: { label: 'Batch Number', type: 'text', faker: 'random.alphaNumeric' }
+};
+
 export const entityName = 'Inspection Records';
-export const collectionName = 'inspection-records';
+export const collectionName = 'inspection_records';

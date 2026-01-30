@@ -1,27 +1,26 @@
+
 export const fieldsConfig = {
-    partnershipId: { label: 'Partnership ID', type: 'text', faker: 'datatype.uuid' },
-    ngoName: { label: 'NGO Name', type: 'text', faker: 'company.name' },
-    startDate: { label: 'Start Date', type: 'date', faker: 'date.past' },
-    endDate: { label: 'End Date', type: 'date', faker: 'date.future' },
-    partnershipScope: { label: 'Partnership Scope', type: 'text', faker: 'lorem.paragraph' },
-    budget: { label: 'Budget', type: 'number', faker: 'finance.amount' },
-    outcome: { label: 'Outcome', type: 'text', faker: 'lorem.paragraph' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
+  partnership_id: { label: 'Partnership ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  ngo_name: { label: 'NGO Name', type: 'text', faker: 'company.name' },
+  contact_person: { label: 'Contact Person', type: 'text', faker: 'name.fullName' },
+
+  partnership_type: { label: 'Partnership Type', type: 'select', options: [{ id: 'strategic', label: 'Strategic' }, { id: 'transactional', label: 'Transactional' }, { id: 'philanthropic', label: 'Philanthropic' }], faker: 'random.arrayElement' },
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' }, // Contribution amount?
+
+  // Extras
+  annual_contribution: { label: 'Annual Contribution', type: 'number', faker: 'finance.amount' },
+  objectives: { label: 'Objectives', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  impact_report_received: { label: 'Impact Report Received', type: 'checkbox', faker: 'datatype.boolean' },
+  renewal_date: { label: 'Renewal Date', type: 'date', faker: 'date.future' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'paused', label: 'Paused' }, { id: 'ended', label: 'Ended' }], faker: 'random.arrayElement' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
-export const entityName = 'Partnerships with NGOs';
-export const collectionName = 'ngo-partnerships';
+export const entityName = 'NGO Partnerships';
+export const collectionName = 'ngo_partnerships';

@@ -1,35 +1,29 @@
+
 export const fieldsConfig = {
-    registrationId: { label: 'Registration ID', type: 'text', faker: 'datatype.uuid' },
-    trademarkName: { label: 'Trademark Name', type: 'text', faker: 'company.catchPhrase' },
-    registrationDate: { label: 'Registration Date', type: 'date', faker: 'date.past' },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'submitted', label: 'Submitted' },
-            { id: 'approved', label: 'Approved' },
-            { id: 'rejected', label: 'Rejected' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+    registration_id: { label: 'Registration ID', type: 'text', faker: 'datatype.uuid' },
+    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+    trademark_name: { label: 'Trademark Name', type: 'text', faker: 'commerce.productName' },
+    registration_number: { label: 'Registration Number', type: 'text', faker: 'random.alphaNumeric' },
+
+    class_codes: { label: 'Class Codes', type: 'text', faker: 'random.alphaNumeric' }, // e.g. 9, 35, 42
+
+    filing_date: { label: 'Filing Date', type: 'date', faker: 'date.past' },
+    registration_date: { label: 'Registration Date', type: 'date', faker: 'date.recent' },
+
+    // Mandated
+    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+    // Extras
+    owner: { label: 'Owner', type: 'text', faker: 'company.name' },
+    jurisdiction: { label: 'Jurisdiction', type: 'text', faker: 'address.country' },
+    status: { label: 'Status', type: 'select', options: [{ id: 'registered', label: 'Registered' }, { id: 'pending', label: 'Pending' }, { id: 'expired', label: 'Expired' }], faker: 'random.arrayElement' },
+    renewal_due_date: { label: 'Renewal Due Date', type: 'date', faker: 'date.future' },
+    image_url: { label: 'Image URL', type: 'text', faker: 'internet.url' },
+    attorney_name: { label: 'Attorney Name', type: 'text', faker: 'name.fullName' },
+    description: { label: 'Description', type: 'text', faker: 'lorem.sentence' }
 };
 
-export const entityName = 'Trademark Registrations';
-export const collectionName = 'trademark-registrations';
+export const entityName = 'Trademark Registration';
+export const collectionName = 'trademark_registration';

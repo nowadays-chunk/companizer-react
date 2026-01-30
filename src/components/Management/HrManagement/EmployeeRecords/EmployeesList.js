@@ -1,50 +1,26 @@
-export const fieldsConfig = {
-    employeeId: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
-    firstName: { label: 'First Name', type: 'text', faker: 'name.firstName' },
-    lastName: { label: 'Last Name', type: 'text', faker: 'name.lastName' },
-    email: { label: 'Email', type: 'email', faker: 'internet.email' },
-    phone: { label: 'Phone', type: 'text', faker: 'phone.imei' },
-    position: { label: 'Position', type: 'text', faker: 'name.jobTitle' },
-    department: {
-        label: 'Department',
-        type: 'select',
-        options: [],  // Populate with actual departments
-        faker: 'commerce.department',
-    },
-    hireDate: { label: 'Hire Date', type: 'date', faker: 'date.past' },
-    employmentStatus: {
-        label: 'Employment Status',
-        type: 'select',
-        options: [
-            { id: 'active', label: 'Active' },
-            { id: 'inactive', label: 'Inactive' },
-            { id: 'terminated', label: 'Terminated' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    salary: { label: 'Salary', type: 'number', faker: 'finance.amount' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
 
-    notes: { label: 'Notes', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+export const fieldsConfig = {
+  employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  first_name: { label: 'First Name', type: 'text', faker: 'name.firstName' },
+  last_name: { label: 'Last Name', type: 'text', faker: 'name.lastName' },
+
+  email: { label: 'Email', type: 'email', faker: 'internet.email' },
+  job_title: { label: 'Job Title', type: 'text', faker: 'name.jobTitle' },
+  department: { label: 'Department', type: 'text', faker: 'commerce.department' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Hourly Rate', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+  manager_id: { label: 'Manager ID', type: 'text', faker: 'datatype.uuid' },
+  employment_type: { label: 'Employment Type', type: 'select', options: [{ id: 'full_time', label: 'Full Time' }, { id: 'part_time', label: 'Part Time' }, { id: 'contract', label: 'Contract' }], faker: 'random.arrayElement' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'terminated', label: 'Terminated' }, { id: 'leave', label: 'On Leave' }], faker: 'random.arrayElement' },
+  phone: { label: 'Phone', type: 'tel', faker: 'phone.number' }
 };
 
-export const entityName = 'Employees List';
-
-export const collectionName = 'employees-list';
-
+export const entityName = 'Detailed Employee Records';
+export const collectionName = 'detailed_employee_records';

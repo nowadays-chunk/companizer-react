@@ -1,28 +1,25 @@
+
 export const fieldsConfig = {
-    liquidityId: { label: 'Liquidity ID', type: 'text', faker: 'datatype.uuid' },
-    availableCash: { label: 'Available Cash', type: 'number', faker: 'finance.amount' },
-    shortTermInvestments: { label: 'Short-Term Investments', type: 'number', faker: 'finance.amount' },
-    cashEquivalents: { label: 'Cash Equivalents', type: 'number', faker: 'finance.amount' },
-    liquidityRatio: { label: 'Liquidity Ratio', type: 'number', faker: 'datatype.float' },
-    fiscalPeriod: { label: 'Fiscal Period', type: 'text', faker: 'date.month' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  liquidity_id: { label: 'Liquidity ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  report_date: { label: 'Report Date', type: 'date', faker: 'date.recent' },
+
+  current_ratio: { label: 'Current Ratio', type: 'number', faker: 'datatype.float' },
+  quick_ratio: { label: 'Quick Ratio', type: 'number', faker: 'datatype.float' },
+
+  cash_on_hand: { label: 'Cash on Hand', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  net_working_capital: { label: 'Net Working Capital', type: 'number', faker: 'finance.amount' },
+  days_sales_outstanding: { label: 'DSO', type: 'number', faker: 'datatype.float' },
+  days_payable_outstanding: { label: 'DPO', type: 'number', faker: 'datatype.float' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'healthy', label: 'Healthy' }, { id: 'warning', label: 'Warning' }, { id: 'critical', label: 'Critical' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Liquidity Management';
-export const collectionName = 'liquidity-management';
+export const collectionName = 'liquidity_management';

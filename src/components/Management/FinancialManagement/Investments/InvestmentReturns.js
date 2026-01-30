@@ -1,48 +1,25 @@
+
 export const fieldsConfig = {
-    returnId: { label: 'Return ID', type: 'text', faker: 'datatype.uuid' },
-    investmentId: { label: 'Investment ID', type: 'text', faker: 'datatype.uuid' },
-    investmentType: {
-        label: 'Investment Type',
-        type: 'select',
-        options: [
-            { id: 'equity', label: 'Equity' },
-            { id: 'fixed-income', label: 'Fixed Income' },
-            { id: 'real-estate', label: 'Real Estate' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    returnAmount: { label: 'Return Amount', type: 'number', faker: 'finance.amount' },
-    returnDate: { label: 'Return Date', type: 'date', faker: 'date.past' },
-    roi: { label: 'ROI (%)', type: 'number', faker: 'finance.amount' },
-    ecoContribution: { label: 'Eco Contribution', type: 'number', faker: 'finance.amount' },  // Eco-tax contribution (French-specific)
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'received', label: 'Received' },
-            { id: 'pending', label: 'Pending' },
-            { id: 'missed', label: 'Missed' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  return_id: { label: 'Return ID', type: 'text', faker: 'datatype.uuid' },
+  investment_id: { label: 'Investment ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  period_start: { label: 'Period Start', type: 'date', faker: 'date.past' },
+  period_end: { label: 'Period End', type: 'date', faker: 'date.past' },
+
+  amount: { label: 'Amount', type: 'number', faker: 'finance.amount' },
+  type: { label: 'Type', type: 'select', options: [{ id: 'dividend', label: 'Dividend' }, { id: 'interest', label: 'Interest' }, { id: 'capital_gain', label: 'Capital Gain' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  roi_percentage: { label: 'ROI (%)', type: 'number', faker: 'datatype.float' },
+  date_received: { label: 'Date Received', type: 'date', faker: 'date.recent' },
+  tax_withheld: { label: 'Tax Withheld', type: 'number', faker: 'finance.amount' },
+  reinvested: { label: 'Reinvested', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Investment Returns';
-export const collectionName = 'investment-returns';
+export const collectionName = 'investment_returns';

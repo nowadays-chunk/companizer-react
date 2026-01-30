@@ -1,35 +1,22 @@
+
 export const fieldsConfig = {
-    orderId: { label: 'Order ID', type: 'text', faker: 'datatype.uuid' },
-    status: {
-      label: 'Status',
-      type: 'select',
-      options: [
-        { id: 'ordered', label: 'Ordered' },
-        { id: 'shipped', label: 'Shipped' },
-        { id: 'in-transit', label: 'In Transit' },
-        { id: 'delivered', label: 'Delivered' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    trackingNumber: { label: 'Tracking Number', type: 'text', faker: 'datatype.uuid' },
-    estimatedDeliveryDate: { label: 'Estimated Delivery Date', type: 'date', faker: 'date.future' },
-    actualDeliveryDate: { label: 'Actual Delivery Date', type: 'date', faker: 'date.future' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'urgent', label: 'Urgent' },
-        { id: 'pending', label: 'Pending' },
-        { id: 'delivered', label: 'Delivered' },
-        { id: 'in-transit', label: 'In Transit' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Order Tracking';
-  export const collectionName = 'order-tracking';
-  
+  tracking_id: { label: 'Tracking ID', type: 'text', faker: 'datatype.uuid' },
+  order_id: { label: 'Order ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  current_location: { label: 'Current Location', type: 'text', faker: 'address.city' },
+  status_update: { label: 'Status Update', type: 'text', faker: 'lorem.sentence' }, // "Arrived at sorting facility"
+
+  update_time: { label: 'Update Time', type: 'datetime', faker: 'date.recent' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  carrier: { label: 'Carrier', type: 'text', faker: 'company.name' },
+  estimated_delivery: { label: 'Estimated Delivery', type: 'datetime', faker: 'date.future' }
+};
+
+export const entityName = 'Order Tracking';
+export const collectionName = 'order_tracking';

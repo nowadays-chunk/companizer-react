@@ -297,6 +297,7 @@ export const keyToLinkMap = {
     "joint-ventures": "/external-relationships/partners/joint-ventures",
     "revenue-sharing-agreements": "/external-relationships/partners/revenue-sharing-agreements",
     "vendor-management": "/external-relationships/vendor-management",
+    "vendors-list": "/external-relationships/vendor-management/vendors-list",
     "vendor-assessments": "/external-relationships/vendor-management/vendor-assessments",
     "vendor-onboarding": "/external-relationships/vendor-management/vendor-onboarding",
     "vendor-scorecards": "/external-relationships/vendor-management/vendor-scorecards",

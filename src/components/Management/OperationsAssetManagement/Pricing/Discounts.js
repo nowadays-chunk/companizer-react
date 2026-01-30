@@ -1,26 +1,27 @@
+
 export const fieldsConfig = {
-    discountId: { label: 'Discount ID', type: 'text', faker: 'datatype.uuid' },
-    discountName: { label: 'Discount Name', type: 'text', faker: 'commerce.productName' },
-    discountRate: { label: 'Discount Rate', type: 'number', faker: 'datatype.float' },
-    validFrom: { label: 'Valid From', type: 'date', faker: 'date.past' },
-    validTo: { label: 'Valid To', type: 'date', faker: 'date.future' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'seasonal', label: 'Seasonal' },
-        { id: 'limited_time', label: 'Limited Time' },
-        { id: 'bulk', label: 'Bulk' },
-        { id: 'clearance', label: 'Clearance' }
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  discount_id: { label: 'Discount ID', type: 'text', faker: 'datatype.uuid' },
+  product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' }, // Can apply to category too, simplified here
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  discount_code: { label: 'Discount Code', type: 'text', faker: 'random.alphaNumeric' },
+  description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
+
+  discount_type: { label: 'Discount Type', type: 'select', options: [{ id: 'percentage', label: 'Percentage' }, { id: 'fixed', label: 'Fixed Amount' }], faker: 'random.arrayElement' },
+  value: { label: 'Value', type: 'number', faker: 'datatype.float' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
+  end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
+  min_purchase_amount: { label: 'Min Purchase Amount', type: 'number', faker: 'finance.amount' },
+  max_usage: { label: 'Max Usage', type: 'number', faker: 'datatype.number' },
+  usage_count: { label: 'Usage Count', type: 'number', faker: 'datatype.number' },
+  is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' }
 };
 
 export const entityName = 'Discounts';
-export const collectionName = 'discounts';
+export const collectionName = 'discounts_ops';

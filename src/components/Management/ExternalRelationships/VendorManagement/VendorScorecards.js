@@ -1,38 +1,27 @@
+
 export const fieldsConfig = {
-    scorecardId: { label: 'Scorecard ID', type: 'text', faker: 'datatype.uuid' },
-    vendorName: { label: 'Vendor Name', type: 'text', faker: 'company.name' },
-    assessmentDate: { label: 'Assessment Date', type: 'date', faker: 'date.past' },
-    criteria: { label: 'Criteria', type: 'text', faker: 'lorem.sentence' },
-    score: { label: 'Score', type: 'number', faker: 'finance.amount' },
-    overallRating: {
-        label: 'Overall Rating',
-        type: 'select',
-        options: [
-            { id: 'excellent', label: 'Excellent' },
-            { id: 'good', label: 'Good' },
-            { id: 'average', label: 'Average' },
-            { id: 'poor', label: 'Poor' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    recommendations: { label: 'Recommendations', type: 'text', faker: 'lorem.paragraph' },
-    reviewer: { label: 'Reviewer', type: 'text', faker: 'name.fullName' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
+  scorecard_id: { label: 'Scorecard ID', type: 'text', faker: 'datatype.uuid' },
+  vendor_id: { label: 'Vendor ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  period: { label: 'Period', type: 'text', faker: 'lorem.word' }, // Q1 2024
+  average_score: { label: 'Average Score', type: 'number', faker: 'datatype.float' },
+
+  grade: { label: 'Grade', type: 'select', options: [{ id: 'A', label: 'A' }, { id: 'B', label: 'B' }, { id: 'C', label: 'C' }, { id: 'D', label: 'D' }], faker: 'random.arrayElement' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  quality_rating: { label: 'Quality Rating', type: 'number', faker: 'datatype.number' },
+  timeliness_rating: { label: 'Timeliness Rating', type: 'number', faker: 'datatype.number' },
+  cost_rating: { label: 'Cost Rating', type: 'number', faker: 'datatype.number' },
+  innovation_rating: { label: 'Innovation Rating', type: 'number', faker: 'datatype.number' },
+  generated_date: { label: 'Generated Date', type: 'date', faker: 'date.recent' },
+  review_meeting_date: { label: 'Review Meeting Date', type: 'date', faker: 'date.future' },
+  comments: { label: 'Comments', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Vendor Scorecards';
-export const collectionName = 'vendor-scorecards';
+export const collectionName = 'vendor_scorecards';

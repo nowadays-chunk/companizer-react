@@ -1,25 +1,26 @@
+
 export const fieldsConfig = {
-  disposalId: { label: 'Disposal ID', type: 'text', faker: 'datatype.uuid' },
-  assetName: { label: 'Asset Name', type: 'text', faker: 'commerce.productName' },
-  disposalDate: { label: 'Disposal Date', type: 'date', faker: 'date.past' },
-  disposalReason: { label: 'Disposal Reason', type: 'text', faker: 'lorem.sentence' },
-  ecoContribution: { label: 'Eco Contribution', type: 'number', faker: 'finance.amount' },  // Eco-tax contribution (French-specific)
-  tags: {
-    label: 'Tags',
-    type: 'select',
-    options: [
-      { id: 'obsolete', label: 'Obsolete' },
-      { id: 'end_of_life', label: 'End of Life' },
-      { id: 'replacement', label: 'Replacement' }
-    ],
-    multiple: true,
-    faker: 'random.arrayElement',
-  },
-  createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-  lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-  createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  disposal_id: { label: 'Disposal ID', type: 'text', faker: 'datatype.uuid' },
+  asset_id: { label: 'Asset ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  disposal_date: { label: 'Disposal Date', type: 'date', faker: 'date.recent' },
+  method: { label: 'Method', type: 'select', options: [{ id: 'sale', label: 'Sale' }, { id: 'scrape', label: 'Scrap' }, { id: 'donation', label: 'Donation' }], faker: 'random.arrayElement' },
+
+  sale_price: { label: 'Sale Price', type: 'number', faker: 'finance.amount' },
+  book_value_at_disposal: { label: 'Book Value', type: 'number', faker: 'finance.amount' },
+  gain_loss: { label: 'Gain/Loss', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  buyer: { label: 'Buyer', type: 'text', faker: 'company.name' },
+  authorized_by: { label: 'Authorized By', type: 'text', faker: 'name.fullName' },
+  reason: { label: 'Reason', type: 'text', faker: 'lorem.sentence' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
 export const entityName = 'Asset Disposal';
-export const collectionName = 'asset-disposal';
+export const collectionName = 'asset_disposal_ops';

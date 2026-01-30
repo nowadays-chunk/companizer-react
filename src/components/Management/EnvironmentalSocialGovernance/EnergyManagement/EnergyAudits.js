@@ -1,26 +1,26 @@
+
 export const fieldsConfig = {
-    auditId: { label: 'Audit ID', type: 'text', faker: 'datatype.uuid' },
-    auditDate: { label: 'Audit Date', type: 'date', faker: 'date.past' },
-    auditorName: { label: 'Auditor Name', type: 'text', faker: 'name.fullName' },
-    auditScope: { label: 'Audit Scope', type: 'text', faker: 'lorem.paragraph' },
-    findings: { label: 'Findings', type: 'text', faker: 'lorem.paragraph' },
-    recommendations: { label: 'Recommendations', type: 'text', faker: 'lorem.paragraph' },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
+  audit_id: { label: 'Audit ID', type: 'text', faker: 'datatype.uuid' },
+  facility_id: { label: 'Facility ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  audit_date: { label: 'Audit Date', type: 'date', faker: 'date.recent' },
+  auditor: { label: 'Auditor', type: 'text', faker: 'company.name' },
+
+  efficiency_rating: { label: 'Efficiency Rating', type: 'text', faker: 'random.alphaNumeric' }, // A, B, C...
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' }, // Audit cost
+
+  // Extras
+  findings: { label: 'Findings', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+  recommendations: { label: 'Recommendations', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+  potential_savings: { label: 'Potential Savings', type: 'number', faker: 'finance.amount' },
+  compliance_status: { label: 'Compliance Status', type: 'text', faker: 'lorem.word' },
+  report_document: { label: 'Report Document', type: 'text', faker: 'system.fileName' },
+  next_audit_date: { label: 'Next Audit Date', type: 'date', faker: 'date.future' }
 };
 
 export const entityName = 'Energy Audits';
-export const collectionName = 'energy-audits';
+export const collectionName = 'energy_audits';

@@ -1,38 +1,24 @@
+
 export const fieldsConfig = {
-    documentId: { label: 'Document ID', type: 'text', faker: 'datatype.uuid' },
-    documentTitle: { label: 'Document Title', type: 'text', faker: 'lorem.sentence' },
-    documentType: {
-      label: 'Document Type',
-      type: 'select',
-      options: [
-        { id: 'policy', label: 'Policy' },
-        { id: 'procedure', label: 'Procedure' },
-        { id: 'manual', label: 'Manual' },
-        { id: 'guideline', label: 'Guideline' },
-      ],
-      faker: 'random.arrayElement',
-    },
-    author: { label: 'Author', type: 'text', faker: 'name.fullName' },
-    creationDate: { label: 'Creation Date', type: 'date', faker: 'date.past' },
-    lastUpdated: { label: 'Last Updated', type: 'date', faker: 'date.recent' },
-    version: { label: 'Version', type: 'text', faker: 'finance.amount' },
-    fileLocation: { label: 'File Location', type: 'text', faker: 'internet.url' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'compliance', label: 'Compliance' },
-        { id: 'standard', label: 'Standard' },
-        { id: 'procedure', label: 'Procedure' },
-        { id: 'guideline', label: 'Guideline' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-  };
-  
-  export const entityName = 'Documentation Management';
-  export const collectionName = 'documentation-management';
-  
+  doc_id: { label: 'Doc ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  doc_name: { label: 'Document Name', type: 'text', faker: 'system.fileName' },
+  version: { label: 'Version', type: 'text', faker: 'system.semver' },
+
+  location: { label: 'Location', type: 'text', faker: 'system.directoryPath' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  owner: { label: 'Owner', type: 'text', faker: 'name.fullName' },
+  last_modified: { label: 'Last Modified', type: 'date', faker: 'date.recent' },
+  file_type: { label: 'File Type', type: 'text', faker: 'system.fileExt' },
+  size_kb: { label: 'Size (KB)', type: 'number', faker: 'datatype.number' },
+  access_level: { label: 'Access Level', type: 'select', options: [{ id: 'public', label: 'Public' }, { id: 'internal', label: 'Internal' }, { id: 'confidential', label: 'Confidential' }], faker: 'random.arrayElement' }
+};
+
+export const entityName = 'Documentation Management';
+export const collectionName = 'documentation_management';

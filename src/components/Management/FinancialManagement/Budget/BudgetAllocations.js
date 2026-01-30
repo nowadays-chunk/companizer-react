@@ -1,41 +1,25 @@
+
 export const fieldsConfig = {
-    allocationId: { label: 'Allocation ID', type: 'text', faker: 'datatype.uuid' },
-    department: { label: 'Department', type: 'text', faker: 'commerce.department' },
-    budgetedAmount: { label: 'Budgeted Amount', type: 'number', faker: 'finance.amount' },
-    actualAmount: { label: 'Actual Amount', type: 'number', faker: 'finance.amount' },
-    fiscalYear: { label: 'Fiscal Year', type: 'number', faker: 'date.past' },
-    ecoContribution: { label: 'Eco Contribution', type: 'number', faker: 'finance.amount' },  // Eco-tax contribution (French-specific)
-    variance: { label: 'Variance', type: 'number', faker: 'finance.amount' },  // Budget vs actual variance
-    latePaymentFee: { label: 'Late Payment Fee', type: 'number', faker: 'finance.amount' },  // Penalty for late payments
-    tags: {
-        label: 'Tags',
-        type: 'select',
-        options: [
-            { id: 'urgent', label: 'Urgent' },
-            { id: 'review', label: 'Review' },
-            { id: 'important', label: 'Important' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'follow-up', label: 'Follow-Up' },
-        ],
-        multiple: true,
-        faker: 'random.arrayElement',
-    },
-    status: {
-        label: 'Status',
-        type: 'select',
-        options: [
-            { id: 'on_track', label: 'On Track' },
-            { id: 'over_budget', label: 'Over Budget' },
-            { id: 'under_budget', label: 'Under Budget' },
-        ],
-        faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  allocation_id: { label: 'Allocation ID', type: 'text', faker: 'datatype.uuid' },
+  department_id: { label: 'Department ID', type: 'text', faker: 'datatype.uuid' }, // or cost center
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  fiscal_year: { label: 'Fiscal Year', type: 'number', faker: 'date.past' },
+  category: { label: 'Category', type: 'text', faker: 'commerce.department' },
+
+  allocated_amount: { label: 'Allocated Amount', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  spent_amount: { label: 'Spent Amount', type: 'number', faker: 'finance.amount' },
+  remaining_amount: { label: 'Remaining Amount', type: 'number', faker: 'finance.amount' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'frozen', label: 'Frozen' }, { id: 'closed', label: 'Closed' }], faker: 'random.arrayElement' },
+  approved_by: { label: 'Approved By', type: 'text', faker: 'name.fullName' },
+  approval_date: { label: 'Approval Date', type: 'date', faker: 'date.recent' }
 };
 
 export const entityName = 'Budget Allocations';
-export const collectionName = 'budget-allocations';
-
+export const collectionName = 'budget_allocations';

@@ -1,34 +1,24 @@
+
 export const fieldsConfig = {
-    routeId: { label: 'Route ID', type: 'text', faker: 'datatype.uuid' },
-    origin: { label: 'Origin', type: 'text', faker: 'address.city' },
-    destination: { label: 'Destination', type: 'text', faker: 'address.city' },
-    transportMode: {
-      label: 'Transport Mode',
-      type: 'select',
-      options: [
-        { id: 'air', label: 'Air' },
-        { id: 'sea', label: 'Sea' },
-        { id: 'road', label: 'Road' }
-      ],
-      faker: 'random.arrayElement',
-    },
-    estimatedDeliveryTime: { label: 'Estimated Delivery Time', type: 'number', faker: 'datatype.number' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'critical', label: 'Critical' },
-        { id: 'standard', label: 'Standard' },
-        { id: 'priority', label: 'Priority' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  route_id: { label: 'Route ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  route_name: { label: 'Route Name', type: 'text', faker: 'address.city' }, // e.g. "NY to Boston"
+  start_point: { label: 'Start Point', type: 'text', faker: 'address.city' },
+  end_point: { label: 'End Point', type: 'text', faker: 'address.city' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  estimated_distance_km: { label: 'Distance (km)', type: 'number', faker: 'datatype.number' },
+  estimated_time_hours: { label: 'Time (hours)', type: 'number', faker: 'datatype.float' },
+  carrier: { label: 'Carrier', type: 'text', faker: 'company.name' },
+  vehicle_type: { label: 'Vehicle Type', type: 'select', options: [{ id: 'truck', label: 'Truck' }, { id: 'van', label: 'Van' }, { id: 'sea', label: 'Sea' }, { id: 'air', label: 'Air' }], faker: 'random.arrayElement' },
+  cost_per_trip: { label: 'Cost Per Trip', type: 'number', faker: 'finance.amount' },
+  frequency: { label: 'Frequency', type: 'text', faker: 'lorem.word' }
 };
 
 export const entityName = 'Logistics Routes';
-export const collectionName = 'logistics-routes';
+export const collectionName = 'logistics_routes';

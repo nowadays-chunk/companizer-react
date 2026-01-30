@@ -1,36 +1,23 @@
+
 export const fieldsConfig = {
-    priceListId: { label: 'Price List ID', type: 'text', faker: 'datatype.uuid' },
-    priceListName: { label: 'Price List Name', type: 'text', faker: 'commerce.productName' },
-    currency: {
-      label: 'Currency',
-      type: 'select',
-      options: [
-        { id: 'USD', label: 'USD' },
-        { id: 'EUR', label: 'EUR' },
-        { id: 'GBP', label: 'GBP' },
-        { id: 'JPY', label: 'JPY' }
-      ],
-      faker: 'random.arrayElement',
-    },
-    validFrom: { label: 'Valid From', type: 'date', faker: 'date.past' },
-    validTo: { label: 'Valid To', type: 'date', faker: 'date.future' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'global', label: 'Global' },
-        { id: 'regional', label: 'Regional' },
-        { id: 'discounted', label: 'Discounted' },
-        { id: 'promotional', label: 'Promotional' }
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  list_id: { label: 'List ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  list_name: { label: 'List Name', type: 'text', faker: 'commerce.productName' },
+  currency: { label: 'Currency', type: 'text', faker: 'finance.currencyCode' },
+
+  effective_date: { label: 'Effective Date', type: 'date', faker: 'date.past' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'unit_price', type: 'number', faker: 'finance.amount' }, // Just a placeholder, main pricing is usually per item
+
+  // Extras
+  customer_segment: { label: 'Customer Segment', type: 'select', options: [{ id: 'retail', label: 'Retail' }, { id: 'wholesale', label: 'Wholesale' }, { id: 'distributor', label: 'Distributor' }], faker: 'random.arrayElement' },
+  is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' },
+  region: { label: 'Region', type: 'text', faker: 'address.country' },
+  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
 };
 
-export const entityName = 'Price Lists';
-export const collectionName = 'price-lists';
+export const entityName = 'Price Lists (Ops)';
+export const collectionName = 'price_lists_ops';

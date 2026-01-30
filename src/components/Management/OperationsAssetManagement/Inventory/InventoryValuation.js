@@ -1,25 +1,25 @@
+
 export const fieldsConfig = {
-    valuationId: { label: 'Valuation ID', type: 'text', faker: 'datatype.uuid' },
-    productName: { label: 'Product Name', type: 'text', faker: 'commerce.productName' },
-    unitCost: { label: 'Unit Cost', type: 'number', faker: 'finance.amount' },
-    totalStock: { label: 'Total Stock', type: 'number', faker: 'datatype.number' },
-    totalValuation: { label: 'Total Valuation', type: 'number', faker: 'finance.amount' },
-    tags: {
-      label: 'Tags',
-      type: 'select',
-      options: [
-        { id: 'raw_material', label: 'Raw Material' },
-        { id: 'finished_goods', label: 'Finished Goods' },
-        { id: 'work_in_progress', label: 'Work in Progress' },
-      ],
-      multiple: true,
-      faker: 'random.arrayElement',
-    },
-    createdBy: { label: 'Created By', type: 'text', faker: 'name.fullName' },
-    lastModifiedBy: { label: 'Last Modified By', type: 'text', faker: 'name.fullName' },
-    createdDate: { label: 'Created Date', type: 'date', faker: 'date.past' },
-    lastModifiedDate: { label: 'Last Modified Date', type: 'date', faker: 'date.recent' },
+  valuation_id: { label: 'Valuation ID', type: 'text', faker: 'datatype.uuid' },
+  product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+
+  valuation_date: { label: 'Valuation Date', type: 'date', faker: 'date.recent' },
+  method: { label: 'Method', type: 'select', options: [{ id: 'fifo', label: 'FIFO' }, { id: 'lifo', label: 'LIFO' }, { id: 'weighted_avg', label: 'Weighted Avg' }], faker: 'random.arrayElement' },
+
+  quantity_on_hand: { label: 'Quantity', type: 'number', faker: 'datatype.number' },
+  total_value: { label: 'Total Value', type: 'number', faker: 'finance.amount' },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+  unit_price: { label: 'Unit Value', type: 'number', faker: 'finance.amount' },
+
+  // Extras
+  currency: { label: 'Currency', type: 'text', faker: 'finance.currencyCode' },
+  adjusted_value: { label: 'Adjusted Value', type: 'number', faker: 'finance.amount' },
+  adjustment_reason: { label: 'Adjustment Reason', type: 'text', faker: 'lorem.sentence' },
+  approved_by: { label: 'Approved By', type: 'text', faker: 'name.fullName' }
 };
 
 export const entityName = 'Inventory Valuation';
-export const collectionName = 'inventory-valuation';
+export const collectionName = 'inventory_valuation';
