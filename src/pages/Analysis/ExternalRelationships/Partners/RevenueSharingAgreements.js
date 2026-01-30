@@ -1,115 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Card, Grid, Typography, Chip } from '@mui/material';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/ExternalRelationships/Partners/RevenueSharingAgreements';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const RevenueSharingAgreementsAnalytics = ({ fetchItems }) => {
+const RevenueSharingAgreementsAnalytics = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetchItems();
-      setData(response || []); // Ensure data is an array
-      setLoading(false);
-    }
-    fetchData();
-  }, [fetchItems]);
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-  if (loading) return <Typography>Loading...</Typography>;
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  // KPIs
-  const totalAgreements = data.length;
-  const avgRevenueShare = totalAgreements > 0
-    ? data.reduce((sum, record) => sum + (Number(record.revenueShare) || 0), 0) / totalAgreements
-    : 0;
-  const avgDuration = totalAgreements > 0
-    ? data.reduce((sum, record) => sum + (Number(record.duration) || 0), 0) / totalAgreements
-    : 0;
-
-  // Count agreements by status
-  const statusCounts = data.reduce((acc, record) => {
-    acc[record.status] = (acc[record.status] || 0) + 1;
-    return acc;
-  }, {});
-
-  const statusDistribution = Object.keys(statusCounts).map(status => ({
-    name: status.charAt(0).toUpperCase() + status.slice(1),
-    y: statusCounts[status],
-  }));
-
-  // Highcharts options for status distribution
-  const statusDistributionChartOptions = {
-    chart: { type: 'pie' },
-    title: { text: 'Status Distribution of Agreements' },
-    series: [{
-      name: 'Statuses',
-      colorByPoint: true,
-      data: statusDistribution,
-    }]
-  };
-
-  // Highcharts options for revenue share tracking
-  const revenueShareChartOptions = {
-    chart: { type: 'bar' },
-    title: { text: 'Revenue Share by Partner' },
-    xAxis: { categories: data.map(record => record.partnerName || 'Unknown') },
-    yAxis: { title: { text: 'Revenue Share (%)' } },
-    series: [{
-      name: 'Revenue Share (%)',
-      data: data.map(record => Number(record.revenueShare) || 0),
-    }]
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Grid container spacing={4}>
-      {/* KPI Cards */}
-      <Grid item xs={12} md={4}>
-        <Card>
-          <Typography variant="h6" gutterBottom>Total Agreements</Typography>
-          <Typography variant="h4">{totalAgreements}</Typography>
-        </Card>
-      </Grid>
-      <Grid item xs={12} md={4}>
-        <Card>
-          <Typography variant="h6" gutterBottom>Average Revenue Share (%)</Typography>
-          <Typography variant="h4">{avgRevenueShare.toFixed(2)}%</Typography>
-        </Card>
-      </Grid>
-      <Grid item xs={12} md={4}>
-        <Card>
-          <Typography variant="h6" gutterBottom>Average Duration (years)</Typography>
-          <Typography variant="h4">{avgDuration.toFixed(2)}</Typography>
-        </Card>
-      </Grid>
-
-      {/* Highcharts */}
-      <Grid item xs={12} md={6}>
-        <Card>
-          <HighchartsReact highcharts={Highcharts} options={statusDistributionChartOptions} />
-        </Card>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Card>
-          <HighchartsReact highcharts={Highcharts} options={revenueShareChartOptions} />
-        </Card>
-      </Grid>
-
-      {/* Tags */}
-      <Grid item xs={12}>
-        <Card>
-          <Typography variant="h6" gutterBottom>Tags</Typography>
-          {data.map((record, index) => (
-            <div key={index}>
-              <Typography variant="subtitle1">{record.partnerName}:</Typography>
-              {Array.isArray(record.tags) ? record.tags.map((tag, tagIndex) => (
-                <Chip key={tagIndex} label={tag.label} style={{ margin: '5px' }} />
-              )) : 'No Tags'}
-            </div>
-          ))}
-        </Card>
-      </Grid>
-    </Grid>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 

@@ -1,87 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Box, Typography, Grid, Card, CardContent, Container } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import Backdrop from '@mui/material/Backdrop';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/HrManagement/EmployeeRecords/EmploymentHistory';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-export default function EmploymentHistoryAnalytics({ fetchItems }) {
+const EmploymentHistoryAnalytics = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [totalRecords, setTotalRecords] = useState(0);
-  const [positionDistribution, setPositionDistribution] = useState([]);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const fetchedData = await fetchItems();
-      setData(fetchedData);
-      calculateKPIs(fetchedData);
-      generateCharts(fetchedData);
-      setLoading(false);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    fetchData();
-  }, [fetchItems]);
-
-  const calculateKPIs = (data) => {
-    setTotalRecords(data.length);
-  };
-
-  const generateCharts = (data) => {
-    const positionCounts = data.reduce((acc, record) => {
-      acc[record.position] = (acc[record.position] || 0) + 1;
-      return acc;
-    }, {});
-    setPositionDistribution(
-      Object.keys(positionCounts).map((key) => ({
-        name: key,
-        y: positionCounts[key],
-      }))
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
     );
-  };
+  }
 
-  const positionDistributionChart = {
-    chart: { type: 'pie' },
-    title: { text: 'Position Distribution' },
-    series: [
-      {
-        name: 'Position',
-        colorByPoint: true,
-        data: positionDistribution,
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Box sx={{ padding: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Employment History Analytics
-        </Typography>
-        <Grid container spacing={4}>
-          {/* KPIs */}
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Total Employment Records</Typography>
-                <Typography variant="h4" color="blue" sx={{ fontWeight: 'bold' }}>
-                  {totalRecords}
-                </Typography>
-                <Typography variant="body2">Total number of employment history records.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Charts */}
-          <Grid item xs={12} md={12}>
-            <HighchartsReact highcharts={Highcharts} options={positionDistributionChart} />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
-}
+};
+
+export default EmploymentHistoryAnalytics;

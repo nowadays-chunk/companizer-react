@@ -1,141 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/LegalCompliance/IntellectualProperty/IpLitigation';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const IPLitigationAnalytics = ({ fetchItems }) => {
+const IpLitigationAnalytics = () => {
   const [data, setData] = useState([]);
-  const [kpis, setKpis] = useState({
-    totalLitigations: 0,
-    pendingLitigations: 0,
-    inProgressLitigations: 0,
-    resolvedLitigations: 0,
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const loadData = async () => {
-      const litigations = await fetchItems();
-      setData(litigations);
-      calculateKPIs(litigations);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    loadData();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const calculateKPIs = (items) => {
-    const totalLitigations = items.length;
-    const pendingLitigations = items.filter((item) => item.status === 'pending').length;
-    const inProgressLitigations = items.filter((item) => item.status === 'in-progress').length;
-    const resolvedLitigations = items.filter((item) => item.status === 'resolved').length;
-
-    setKpis({
-      totalLitigations,
-      pendingLitigations,
-      inProgressLitigations,
-      resolvedLitigations,
-    });
-  };
-
-  const statusChart = {
-    chart: {
-      type: 'pie',
-    },
-    title: {
-      text: 'Litigation Status Distribution',
-    },
-    series: [
-      {
-        name: 'Litigations',
-        colorByPoint: true,
-        data: [
-          { name: 'Pending', y: kpis.pendingLitigations },
-          { name: 'In Progress', y: kpis.inProgressLitigations },
-          { name: 'Resolved', y: kpis.resolvedLitigations },
-        ],
-      },
-    ],
-  };
-
-  const ipTypeChart = {
-    chart: {
-      type: 'column',
-    },
-    title: {
-      text: 'Litigations by IP Type',
-    },
-    xAxis: {
-      categories: ['Patent', 'Trademark', 'Copyright'],
-    },
-    yAxis: {
-      title: {
-        text: 'Number of Litigations',
-      },
-    },
-    series: [
-      {
-        name: 'Litigations',
-        data: [
-          data.filter((item) => item.ipType === 'patent').length,
-          data.filter((item) => item.ipType === 'trademark').length,
-          data.filter((item) => item.ipType === 'copyright').length,
-        ],
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        IP Litigation Analytics
-      </Typography>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Total Litigations</Typography>
-              <Typography variant="h4">{kpis.totalLitigations}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Pending Litigations</Typography>
-              <Typography variant="h4">{kpis.pendingLitigations}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">In Progress Litigations</Typography>
-              <Typography variant="h4">{kpis.inProgressLitigations}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Resolved Litigations</Typography>
-              <Typography variant="h4">{kpis.resolvedLitigations}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={statusChart} />
-      </Box>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={ipTypeChart} />
-      </Box>
-    </Box>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 
-export default IPLitigationAnalytics;
+export default IpLitigationAnalytics;

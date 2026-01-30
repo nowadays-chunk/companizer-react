@@ -1,87 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Box, Typography, Grid, Card, CardContent, Container, CircularProgress, Backdrop } from '@mui/material';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/HrManagement/Recruitment/ApplicantTracking';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-export default function ApplicationTrackingDashboard({ fetchItems }) {
-  const [applicantData, setApplicantData] = useState([]);
-  const [totalApplications, setTotalApplications] = useState(0);
-  const [statusDistribution, setStatusDistribution] = useState([]);
+const ApplicantTrackingAnalytics = () => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const data = await fetchItems();
-      setApplicantData(data);
-      processApplicantData(data);
-      setLoading(false);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    fetchData();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const processApplicantData = (data) => {
-    setTotalApplications(data.length);
-
-    // Calculate interview status distribution
-    const statusMap = {};
-    data.forEach((item) => {
-      const status = item.interviewStatus;
-      statusMap[status] = (statusMap[status] || 0) + 1;
-    });
-
-    const statusArray = Object.entries(statusMap).map(([status, count]) => ({
-      name: status,
-      y: count,
-    }));
-    setStatusDistribution(statusArray);
-  };
-
-  // Highcharts options for Interview Status Distribution
-  const statusChartOptions = {
-    chart: { type: 'pie' },
-    title: { text: 'Interview Status Distribution' },
-    series: [
-      {
-        name: 'Applications',
-        colorByPoint: true,
-        data: statusDistribution,
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Box sx={{ padding: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Application Tracking Dashboard
-        </Typography>
-
-        <Grid container spacing={4}>
-          {/* KPIs Section */}
-          <Grid item xs={12} md={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Total Applications</Typography>
-                <Typography variant="h4" color="green" sx={{ fontWeight: 'bold' }}>
-                  {totalApplications}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={4} sx={{ marginTop: 4 }}>
-          {/* Interview Status Distribution Chart */}
-          <Grid item xs={12} md={6}>
-            <HighchartsReact highcharts={Highcharts} options={statusChartOptions} />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
-}
+};
+
+export default ApplicantTrackingAnalytics;

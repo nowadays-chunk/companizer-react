@@ -1,110 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/CorporateCommunication/InternalCommunication/EmployeePortals';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const EmployeePortalAnalytics = ({ fetchItems }) => {
+const EmployeePortalsAnalytics = () => {
   const [data, setData] = useState([]);
-  const [kpis, setKpis] = useState({
-    totalPortals: 0,
-    activePortals: 0,
-    maintenancePortals: 0,
-    decommissionedPortals: 0,
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const loadData = async () => {
-      const portals = await fetchItems();
-      setData(portals);
-      calculateKPIs(portals);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    loadData();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const calculateKPIs = (portals) => {
-    const totalPortals = portals.length;
-    const activePortals = portals.filter((p) => p.status === 'active').length;
-    const maintenancePortals = portals.filter((p) => p.status === 'maintenance').length;
-    const decommissionedPortals = portals.filter((p) => p.status === 'decommissioned').length;
-
-    setKpis({
-      totalPortals,
-      activePortals,
-      maintenancePortals,
-      decommissionedPortals,
-    });
-  };
-
-  const portalStatusChart = {
-    chart: {
-      type: 'pie',
-    },
-    title: {
-      text: 'Portal Status Distribution',
-    },
-    series: [
-      {
-        name: 'Portals',
-        colorByPoint: true,
-        data: [
-          { name: 'Active', y: kpis.activePortals },
-          { name: 'Under Maintenance', y: kpis.maintenancePortals },
-          { name: 'Decommissioned', y: kpis.decommissionedPortals },
-        ],
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        Employee Portals Analytics
-      </Typography>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Total Portals</Typography>
-              <Typography variant="h4">{kpis.totalPortals}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Active Portals</Typography>
-              <Typography variant="h4">{kpis.activePortals}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Under Maintenance</Typography>
-              <Typography variant="h4">{kpis.maintenancePortals}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Decommissioned Portals</Typography>
-              <Typography variant="h4">{kpis.decommissionedPortals}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={portalStatusChart} />
-      </Box>
-    </Box>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 
-export default EmployeePortalAnalytics;
+export default EmployeePortalsAnalytics;

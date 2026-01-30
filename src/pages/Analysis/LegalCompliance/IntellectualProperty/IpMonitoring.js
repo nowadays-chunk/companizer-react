@@ -1,128 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/LegalCompliance/IntellectualProperty/IpMonitoring';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const IPMonitoringAnalytics = ({ fetchItems }) => {
+const IpMonitoringAnalytics = () => {
   const [data, setData] = useState([]);
-  const [kpis, setKpis] = useState({
-    totalAssets: 0,
-    activeMonitoring: 0,
-    inactiveMonitoring: 0,
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const loadData = async () => {
-      const monitoringItems = await fetchItems();
-      setData(monitoringItems);
-      calculateKPIs(monitoringItems);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    loadData();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const calculateKPIs = (items) => {
-    const totalAssets = items.length;
-    const activeMonitoring = items.filter((item) => item.status === 'active').length;
-    const inactiveMonitoring = items.filter((item) => item.status === 'inactive').length;
-
-    setKpis({
-      totalAssets,
-      activeMonitoring,
-      inactiveMonitoring,
-    });
-  };
-
-  const statusChart = {
-    chart: {
-      type: 'pie',
-    },
-    title: {
-      text: 'Monitoring Status Distribution',
-    },
-    series: [
-      {
-        name: 'Status',
-        colorByPoint: true,
-        data: [
-          { name: 'Active', y: kpis.activeMonitoring },
-          { name: 'Inactive', y: kpis.inactiveMonitoring },
-        ],
-      },
-    ],
-  };
-
-  const ipTypeChart = {
-    chart: {
-      type: 'column',
-    },
-    title: {
-      text: 'IP Assets by Type',
-    },
-    xAxis: {
-      categories: ['Patent', 'Trademark', 'Copyright'],
-    },
-    yAxis: {
-      title: {
-        text: 'Number of Assets',
-      },
-    },
-    series: [
-      {
-        name: 'Assets',
-        data: [
-          data.filter((item) => item.ipType === 'patent').length,
-          data.filter((item) => item.ipType === 'trademark').length,
-          data.filter((item) => item.ipType === 'copyright').length,
-        ],
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        IP Monitoring Analytics
-      </Typography>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Total Assets</Typography>
-              <Typography variant="h4">{kpis.totalAssets}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Active Monitoring</Typography>
-              <Typography variant="h4">{kpis.activeMonitoring}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Inactive Monitoring</Typography>
-              <Typography variant="h4">{kpis.inactiveMonitoring}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={statusChart} />
-      </Box>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={ipTypeChart} />
-      </Box>
-    </Box>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 
-export default IPMonitoringAnalytics;
+export default IpMonitoringAnalytics;

@@ -1,110 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/CorporateCommunication/InternalCommunication/Newsletters';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const NewsletterAnalytics = ({ fetchItems }) => {
+const NewslettersAnalytics = () => {
   const [data, setData] = useState([]);
-  const [kpis, setKpis] = useState({
-    totalNewsletters: 0,
-    audienceAllEmployees: 0,
-    audienceManagement: 0,
-    audienceDepartmentSpecific: 0,
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const loadData = async () => {
-      const newsletters = await fetchItems();
-      setData(newsletters);
-      calculateKPIs(newsletters);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    loadData();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const calculateKPIs = (newsletters) => {
-    const totalNewsletters = newsletters.length;
-    const audienceAllEmployees = newsletters.filter((n) => n.audience === 'all-employees').length;
-    const audienceManagement = newsletters.filter((n) => n.audience === 'management').length;
-    const audienceDepartmentSpecific = newsletters.filter((n) => n.audience === 'department-specific').length;
-
-    setKpis({
-      totalNewsletters,
-      audienceAllEmployees,
-      audienceManagement,
-      audienceDepartmentSpecific,
-    });
-  };
-
-  const audienceDistributionChart = {
-    chart: {
-      type: 'pie',
-    },
-    title: {
-      text: 'Audience Distribution',
-    },
-    series: [
-      {
-        name: 'Newsletters',
-        colorByPoint: true,
-        data: [
-          { name: 'All Employees', y: kpis.audienceAllEmployees },
-          { name: 'Management', y: kpis.audienceManagement },
-          { name: 'Department Specific', y: kpis.audienceDepartmentSpecific },
-        ],
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        Newsletter Analytics
-      </Typography>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Total Newsletters</Typography>
-              <Typography variant="h4">{kpis.totalNewsletters}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">All Employees</Typography>
-              <Typography variant="h4">{kpis.audienceAllEmployees}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Management</Typography>
-              <Typography variant="h4">{kpis.audienceManagement}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Department Specific</Typography>
-              <Typography variant="h4">{kpis.audienceDepartmentSpecific}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={audienceDistributionChart} />
-      </Box>
-    </Box>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 
-export default NewsletterAnalytics;
+export default NewslettersAnalytics;

@@ -1,103 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Box, Typography, Grid, Card, CardContent, Container } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import Backdrop from '@mui/material/Backdrop';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/OperationsAssetManagement/SupplyChain/OrderFulfillment';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-export default function OrderFulfillmentAnalytics({ fetchItems }) {
+const OrderFulfillmentAnalytics = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [totalOrders, setTotalOrders] = useState(0);
-  const [rushOrders, setRushOrders] = useState([]);
-  const [orderStatusDistribution, setOrderStatusDistribution] = useState([]);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const fetchedData = await fetchItems();
-      setData(fetchedData);
-      calculateKpis(fetchedData);
-      generateCharts(fetchedData);
-      setLoading(false);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    fetchData();
-  }, [fetchItems]);
-
-  const calculateKpis = (data) => {
-    setTotalOrders(data.length);
-
-    const rush = data.filter((item) => item.tags.includes('rush_order'));
-    setRushOrders(rush);
-  };
-
-  const generateCharts = (data) => {
-    const statuses = data.reduce((acc, item) => {
-      acc[item.status] = (acc[item.status] || 0) + 1;
-      return acc;
-    }, {});
-
-    setOrderStatusDistribution(
-      Object.keys(statuses).map((key) => ({
-        name: key,
-        y: statuses[key],
-      }))
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
     );
-  };
+  }
 
-  const orderStatusDistributionChart = {
-    chart: { type: 'pie' },
-    title: { text: 'Order Status Distribution' },
-    series: [
-      {
-        name: 'Statuses',
-        colorByPoint: true,
-        data: orderStatusDistribution,
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Box sx={{ padding: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Order Fulfillment Analytics
-        </Typography>
-        <Grid container spacing={4}>
-          {/* KPIs */}
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Total Orders</Typography>
-                <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-                  {totalOrders}
-                </Typography>
-                <Typography variant="body2">Total number of orders processed.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Rush Orders</Typography>
-                <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-                  {rushOrders.length}
-                </Typography>
-                <Typography variant="body2">Orders tagged as 'Rush Orders'.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Charts */}
-          <Grid item xs={12} md={6}>
-            <HighchartsReact highcharts={Highcharts} options={orderStatusDistributionChart} />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
-}
+};
+
+export default OrderFulfillmentAnalytics;

@@ -1,140 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Box, Typography, Grid, Card, CardContent, Container, CircularProgress, Backdrop } from '@mui/material';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/SalesMarketing/SalesOrders/Backorders';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-export default function BackorderDashboard({ fetchItems }) {
-  const [backorderData, setBackorderData] = useState([]);
-  const [totalBackorders, setTotalBackorders] = useState(0);
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [urgentBackorders, setUrgentBackorders] = useState(0);
-  const [backorderTrends, setBackorderTrends] = useState([]);
-  const [restockTimeline, setRestockTimeline] = useState([]);
+const BackordersAnalytics = () => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const fetchDataAsync = async () => {
-      setLoading(true);
-      const data = await fetchItems();
-      setBackorderData(data);
-      processBackorderData(data);
-      setLoading(false);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    fetchDataAsync();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const processBackorderData = (data) => {
-    // Total Backorders
-    setTotalBackorders(data.length);
-  
-    // Total Quantity Backordered
-    const totalQty = data.reduce((acc, backorder) => acc + Number(backorder.quantity), 0);
-    setTotalQuantity(totalQty);
-  
-    // Count Urgent Backorders
-    const urgent = data.filter(backorder => backorder.tags.includes('urgent')).length;
-    setUrgentBackorders(urgent);
-  
-    // Backorder Trends for Column Chart
-    const trendData = data.map(backorder => ({
-      name: `Backorder ${backorder.backorderId.slice(-4)}`,
-      y: Number(backorder.quantity),
-    }));
-    setBackorderTrends(trendData);
-  
-    // Restock Timeline Over Time
-    const timeline = data.map((backorder, index) => ({
-      date: new Date(backorder.expectedRestockDate).getTime(),
-      id: `Backorder ${backorder.backorderId.slice(-4)}`, // Backorder ID as label
-      y: index + 1, // Use index as y-axis value
-    })).sort((a, b) => a.date - b.date);
-    setRestockTimeline(timeline);
-  };
-  
-  // Highcharts options for Backorder Trends
-  const backorderTrendsChartOptions = {
-    chart: { type: 'column' },
-    title: { text: 'Backorder Quantity Trends' },
-    series: [{
-      name: 'Quantity',
-      data: backorderTrends,
-    }],
-  };
-  
-  // Highcharts options for Restock Timeline
-  const restockTimelineChartOptions = {
-    chart: { type: 'line' },
-    title: { text: 'Expected Restock Timeline' },
-    xAxis: { type: 'datetime', title: { text: 'Date' } },
-    yAxis: {
-      title: { text: 'Backorders' },
-      categories: restockTimeline.map(item => item.id), // Map numeric y-values to backorder IDs
-    },
-    series: [{
-      name: 'Expected Restock',
-      data: restockTimeline.map(item => [item.date, item.y]), // Numeric values for the y-axis
-    }],
-  };
-  
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
+
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Box sx={{ padding: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Backorder Dashboard
-        </Typography>
-  
-        <Grid container spacing={4}>
-          {/* KPIs Section */}
-          <Grid item xs={12} md={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Total Backorders</Typography>
-                <Typography variant="h4" color="green" sx={{ fontWeight: 'bold' }}>
-                  {totalBackorders}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-  
-          <Grid item xs={12} md={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Total Quantity Backordered</Typography>
-                <Typography variant="h4" color="blue" sx={{ fontWeight: 'bold' }}>
-                  {totalQuantity}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-  
-          <Grid item xs={12} md={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Urgent Backorders</Typography>
-                <Typography variant="h4" color="red" sx={{ fontWeight: 'bold' }}>
-                  {urgentBackorders}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-  
-        <Grid container spacing={4} sx={{ marginTop: 4 }}>
-          {/* Backorder Trends Chart */}
-          <Grid item xs={12} md={6}>
-            <HighchartsReact highcharts={Highcharts} options={backorderTrendsChartOptions} />
-          </Grid>
-  
-          {/* Restock Timeline Chart */}
-          <Grid item xs={12} md={6}>
-            <HighchartsReact highcharts={Highcharts} options={restockTimelineChartOptions} />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
-}  
+};
+
+export default BackordersAnalytics;

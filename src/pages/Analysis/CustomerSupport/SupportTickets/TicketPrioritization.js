@@ -1,97 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Grid, Typography, Paper } from '@mui/material';
-import HighchartsReact from 'highcharts-react-official';
-import Highcharts from 'highcharts';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/CustomerSupport/SupportTickets/TicketPrioritization';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const TicketPrioritizationAnalytics = ({ fetchItems }) => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
+const TicketPrioritizationAnalytics = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        async function fetchData() {
-            const items = await fetchItems(); // Fetching data using the function passed as prop
-            setData(items);
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
+
+  useEffect(() => {
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
             setLoading(false);
         }
-        fetchData();
-    }, [fetchItems]);
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    if (loading) {
-        return <Typography>Loading...</Typography>;
-    }
-
-    const ticketCount = data.length;
-    const resolvedTickets = data.filter(ticket => ticket.status === 'resolved').length;
-    const highPriorityTickets = data.filter(ticket => ticket.priority === 'high' || ticket.priority === 'urgent').length;
-    const resolutionTimeAvg = data.reduce((acc, ticket) => acc + ticket.resolutionTime, 0) / data.length;
-
-    const chartOptions = {
-        title: { text: 'Ticket Status Distribution' },
-        chart: { type: 'pie' },
-        series: [
-            {
-                name: 'Tickets',
-                colorByPoint: true,
-                data: [
-                    { name: 'Open', y: data.filter(ticket => ticket.status === 'open').length },
-                    { name: 'In Progress', y: data.filter(ticket => ticket.status === 'in-progress').length },
-                    { name: 'Resolved', y: resolvedTickets },
-                    { name: 'Closed', y: data.filter(ticket => ticket.status === 'closed').length },
-                ],
-            },
-        ],
-    };
-
-    const priorityChartOptions = {
-        title: { text: 'Ticket Priority Levels' },
-        chart: { type: 'bar' },
-        series: [
-            {
-                name: 'Tickets',
-                data: [
-                    { name: 'Low', y: data.filter(ticket => ticket.priority === 'low').length },
-                    { name: 'Medium', y: data.filter(ticket => ticket.priority === 'medium').length },
-                    { name: 'High/Urgent', y: highPriorityTickets },
-                ],
-            },
-        ],
-    };
-
+  if (loading) {
     return (
-        <Box sx={{ padding: 3 }}>
-            <Typography variant="h4" gutterBottom>
-                Ticket Prioritization Analytics
-            </Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={4}>
-                    <Paper elevation={3} sx={{ padding: 2 }}>
-                        <Typography variant="h6">Total Tickets</Typography>
-                        <Typography variant="h4">{ticketCount}</Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper elevation={3} sx={{ padding: 2 }}>
-                        <Typography variant="h6">Resolved Tickets</Typography>
-                        <Typography variant="h4">{resolvedTickets}</Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper elevation={3} sx={{ padding: 2 }}>
-                        <Typography variant="h6">Avg. Resolution Time (hours)</Typography>
-                        <Typography variant="h4">{resolutionTimeAvg.toFixed(2)}</Typography>
-                    </Paper>
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} sx={{ marginTop: 3 }}>
-                <Grid item xs={12} md={6}>
-                    <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <HighchartsReact highcharts={Highcharts} options={priorityChartOptions} />
-                </Grid>
-            </Grid>
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
         </Box>
     );
+  }
+
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
+
+  return (
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
+  );
 };
 
 export default TicketPrioritizationAnalytics;

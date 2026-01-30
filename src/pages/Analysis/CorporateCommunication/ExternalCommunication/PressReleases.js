@@ -1,106 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Card, Grid, Typography, Chip } from '@mui/material';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/CorporateCommunication/ExternalCommunication/PressReleases';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const PressReleasesAnalytics = ({ fetchItems }) => {
+const PressReleasesAnalytics = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetchItems();
-      setData(response || []); // Ensure data is an array
-      setLoading(false);
-    }
-    fetchData();
-  }, [fetchItems]);
-
-  if (loading) return <Typography>Loading...</Typography>;
-
-  // KPIs
-  const totalPressReleases = data.length;
-
-  // Distribution Channels Analysis
-  const channelsCount = data.reduce((acc, record) => {
-    if (Array.isArray(record.distributionChannels)) {
-      record.distributionChannels.forEach(channel => {
-        acc[channel] = (acc[channel] || 0) + 1;
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
       });
-    } else {
-      acc[record.distributionChannels] = (acc[record.distributionChannels] || 0) + 1;
-    }
-    return acc;
-  }, {});
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-  const channelsDistribution = Object.keys(channelsCount).map(channel => ({
-    name: channel.charAt(0).toUpperCase() + channel.slice(1).replace(/-/g, ' '),
-    y: channelsCount[channel],
-  }));
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  // Highcharts options for Distribution Channels
-  const distributionChannelsChartOptions = {
-    chart: { type: 'pie' },
-    title: { text: 'Distribution Channels' },
-    series: [{
-      name: 'Channels',
-      colorByPoint: true,
-      data: channelsDistribution,
-    }],
-  };
-
-  // Highcharts options for press release trends over time
-  const pressReleasesChartOptions = {
-    chart: { type: 'line' },
-    title: { text: 'Press Releases Over Time' },
-    xAxis: {
-      categories: data.map(record => new Date(record.releaseDate).toLocaleDateString()),
-      title: { text: 'Release Date' },
-    },
-    yAxis: { title: { text: 'Number of Releases' } },
-    series: [{
-      name: 'Releases',
-      data: data.map(() => 1), // Each release counts as one
-    }],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Grid container spacing={4}>
-      {/* KPI Cards */}
-      <Grid item xs={12} md={6}>
-        <Card>
-          <Typography variant="h6" gutterBottom>Total Press Releases</Typography>
-          <Typography variant="h4">{totalPressReleases}</Typography>
-        </Card>
-      </Grid>
-
-      {/* Highcharts */}
-      <Grid item xs={12} md={6}>
-        <Card>
-          <HighchartsReact highcharts={Highcharts} options={distributionChannelsChartOptions} />
-        </Card>
-      </Grid>
-      <Grid item xs={12}>
-        <Card>
-          <HighchartsReact highcharts={Highcharts} options={pressReleasesChartOptions} />
-        </Card>
-      </Grid>
-
-      {/* Tags */}
-      <Grid item xs={12}>
-        <Card>
-          <Typography variant="h6" gutterBottom>Tags</Typography>
-          {data.map((record, index) => (
-            <div key={index}>
-              <Typography variant="subtitle1">{record.title}:</Typography>
-              {Array.isArray(record.tags) ? record.tags.map((tag, tagIndex) => (
-                <Chip key={tagIndex} label={tag.label} style={{ margin: '5px' }} />
-              )) : 'No Tags'}
-            </div>
-          ))}
-        </Card>
-      </Grid>
-    </Grid>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 

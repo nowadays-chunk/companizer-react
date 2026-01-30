@@ -1,90 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Card, CardContent, Typography, Box } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/CrisisRiskManagement/CrisisManagement/CrisisResponseTeams';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const CrisisResponseTeamAnalytics = ({ fetchItems }) => {
+const CrisisResponseTeamsAnalytics = () => {
   const [data, setData] = useState([]);
-  const [kpis, setKpis] = useState({
-    totalTeams: 0,
-    activeTeams: 0,
-    inactiveTeams: 0,
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetchItems();
-      setData(result);
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-      // Calculate KPIs
-      const totalTeams = result.length;
-      const activeTeams = result.filter(team => team.status === 'active').length;
-      const inactiveTeams = result.filter(team => team.status === 'inactive').length;
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-      setKpis({ totalTeams, activeTeams, inactiveTeams });
-    };
-
-    fetchData();
-  }, [fetchItems]);
-
-  // Highcharts configuration for Team Status Distribution
-  const statusDistributionOptions = {
-    chart: { type: 'pie' },
-    title: { text: 'Team Status Distribution' },
-    series: [
-      {
-        name: 'Teams',
-        data: [
-          { name: 'Active', y: kpis.activeTeams },
-          { name: 'Inactive', y: kpis.inactiveTeams },
-        ],
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={3}>
-        {/* KPIs */}
-        <Grid item xs={12} md={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5">Total Teams</Typography>
-              <Typography variant="h4">{kpis.totalTeams}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5">Active Teams</Typography>
-              <Typography variant="h4">{kpis.activeTeams}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5">Inactive Teams</Typography>
-              <Typography variant="h4">{kpis.inactiveTeams}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Highcharts for Team Status Distribution */}
-        <Grid item xs={12}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Team Status Distribution</Typography>
-              <HighchartsReact highcharts={Highcharts} options={statusDistributionOptions} />
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </Box>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 
-export default CrisisResponseTeamAnalytics;
+export default CrisisResponseTeamsAnalytics;

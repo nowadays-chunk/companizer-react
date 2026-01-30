@@ -1,140 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/LegalCompliance/ComplianceObligations/ObligationTracking';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const ObligationTrackingAnalytics = ({ fetchItems }) => {
+const ObligationTrackingAnalytics = () => {
   const [data, setData] = useState([]);
-  const [kpis, setKpis] = useState({
-    totalObligations: 0,
-    pendingObligations: 0,
-    fulfilledObligations: 0,
-    overdueObligations: 0,
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const loadData = async () => {
-      const obligations = await fetchItems();
-      setData(obligations);
-      calculateKPIs(obligations);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    loadData();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const calculateKPIs = (items) => {
-    const totalObligations = items.length;
-    const pendingObligations = items.filter((item) => item.status === 'pending').length;
-    const fulfilledObligations = items.filter((item) => item.status === 'fulfilled').length;
-    const overdueObligations = items.filter((item) => item.status === 'overdue').length;
-
-    setKpis({
-      totalObligations,
-      pendingObligations,
-      fulfilledObligations,
-      overdueObligations,
-    });
-  };
-
-  const statusChart = {
-    chart: {
-      type: 'pie',
-    },
-    title: {
-      text: 'Obligation Status Distribution',
-    },
-    series: [
-      {
-        name: 'Obligations',
-        colorByPoint: true,
-        data: [
-          { name: 'Pending', y: kpis.pendingObligations },
-          { name: 'Fulfilled', y: kpis.fulfilledObligations },
-          { name: 'Overdue', y: kpis.overdueObligations },
-        ],
-      },
-    ],
-  };
-
-  const obligationTypeChart = {
-    chart: {
-      type: 'column',
-    },
-    title: {
-      text: 'Obligations by Type',
-    },
-    xAxis: {
-      categories: ['Regulatory', 'Contractual', 'Legal'],
-    },
-    yAxis: {
-      title: {
-        text: 'Number of Obligations',
-      },
-    },
-    series: [
-      {
-        name: 'Obligations',
-        data: [
-          data.filter((item) => item.obligationType === 'regulatory').length,
-          data.filter((item) => item.obligationType === 'contractual').length,
-          data.filter((item) => item.obligationType === 'legal').length,
-        ],
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        Obligation Tracking Analytics
-      </Typography>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Total Obligations</Typography>
-              <Typography variant="h4">{kpis.totalObligations}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Pending Obligations</Typography>
-              <Typography variant="h4">{kpis.pendingObligations}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Fulfilled Obligations</Typography>
-              <Typography variant="h4">{kpis.fulfilledObligations}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Overdue Obligations</Typography>
-              <Typography variant="h4">{kpis.overdueObligations}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={statusChart} />
-      </Box>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={obligationTypeChart} />
-      </Box>
-    </Box>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 

@@ -1,144 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Box, Typography, Grid, Card, CardContent, Container, CircularProgress, Backdrop } from '@mui/material';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/SalesMarketing/ClientsCustomers/CustomerHistory';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-export default function CustomerHistoryDashboard({ fetchItems }) {
-  const [historyData, setHistoryData] = useState([]);
-  const [interactionTypeDistribution, setInteractionTypeDistribution] = useState([]);
-  const [statusDistribution, setStatusDistribution] = useState([]);
-  const [totalInteractions, setTotalInteractions] = useState(0);
-  const [pendingFollowUps, setPendingFollowUps] = useState(0);
-  const [resolvedCases, setResolvedCases] = useState(0);
+const CustomerHistoryAnalytics = () => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const fetchDataAsync = async () => {
-      setLoading(true);
-      const data = await fetchItems();
-      setHistoryData(data);
-      processHistoryData(data);
-      setLoading(false);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    fetchDataAsync();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const processHistoryData = (data) => {
-    // Total Interactions
-    setTotalInteractions(data.length);
-
-    // Count Pending Follow-Ups
-    const followUps = data.filter(history => history.tags.includes('follow-up') && !history.tags.includes('resolved'));
-    setPendingFollowUps(followUps.length);
-
-    // Count Resolved Cases
-    const resolved = data.filter(history => history.tags.includes('resolved'));
-    setResolvedCases(resolved.length);
-
-    // Interaction Type Distribution
-    const interactionTypeCounts = data.reduce((acc, history) => {
-      acc[history.interactionType] = (acc[history.interactionType] || 0) + 1;
-      return acc;
-    }, {});
-
-    setInteractionTypeDistribution(Object.keys(interactionTypeCounts).map(key => ({
-      name: key,
-      y: interactionTypeCounts[key],
-    })));
-
-    // Status Distribution (resolved, pending, etc.)
-    const statusCounts = {
-      resolved: resolved.length,
-      pending: followUps.length,
-      others: data.length - resolved.length - followUps.length,
-    };
-
-    setStatusDistribution(Object.keys(statusCounts).map(key => ({
-      name: key.charAt(0).toUpperCase() + key.slice(1),
-      y: statusCounts[key],
-    })));
-  };
-
-  // Highcharts Options
-  const interactionTypeChartOptions = {
-    chart: { type: 'pie' },
-    title: { text: 'Interaction Type Distribution' },
-    series: [{
-      name: 'Interaction Types',
-      colorByPoint: true,
-      data: interactionTypeDistribution,
-    }],
-  };
-
-  const statusChartOptions = {
-    chart: { type: 'pie' },
-    title: { text: 'Status Distribution' },
-    series: [{
-      name: 'Status',
-      colorByPoint: true,
-      data: statusDistribution,
-    }],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Box sx={{ padding: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Customer History Dashboard
-        </Typography>
-
-        <Grid container spacing={4}>
-          {/* KPIs Section */}
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Total Interactions</Typography>
-                <Typography variant="h4" color="green" sx={{ fontWeight: 'bold' }}>
-                  {totalInteractions}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Pending Follow-Ups</Typography>
-                <Typography variant="h4" color="orange" sx={{ fontWeight: 'bold' }}>
-                  {pendingFollowUps}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Resolved Cases</Typography>
-                <Typography variant="h4" color="blue" sx={{ fontWeight: 'bold' }}>
-                  {resolvedCases}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={4} sx={{ marginTop: 4 }}>
-          {/* Interaction Type Chart */}
-          <Grid item xs={12} md={6}>
-            <HighchartsReact highcharts={Highcharts} options={interactionTypeChartOptions} />
-          </Grid>
-
-          {/* Status Distribution Chart */}
-          <Grid item xs={12} md={6}>
-            <HighchartsReact highcharts={Highcharts} options={statusChartOptions} />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
-}
+};
+
+export default CustomerHistoryAnalytics;

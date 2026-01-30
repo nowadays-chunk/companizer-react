@@ -1,101 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Box, Typography, Grid, Card, CardContent, Container } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import Backdrop from '@mui/material/Backdrop';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/HrManagement/Payroll/BonusesIncentives';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-export default function BonusesIncentivesAnalytics({ fetchItems }) {
+const BonusesIncentivesAnalytics = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [totalBonuses, setTotalBonuses] = useState(0);
-  const [paidBonuses, setPaidBonuses] = useState([]);
-  const [bonusTypeDistribution, setBonusTypeDistribution] = useState([]);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const fetchedData = await fetchItems();
-      setData(fetchedData);
-      calculateKPIs(fetchedData);
-      generateCharts(fetchedData);
-      setLoading(false);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    fetchData();
-  }, [fetchItems]);
-
-  const calculateKPIs = (data) => {
-    setTotalBonuses(data.length);
-    const paid = data.filter((bonus) => bonus.status === 'paid');
-    setPaidBonuses(paid);
-  };
-
-  const generateCharts = (data) => {
-    const typeCounts = data.reduce((acc, bonus) => {
-      acc[bonus.bonusType] = (acc[bonus.bonusType] || 0) + 1;
-      return acc;
-    }, {});
-    setBonusTypeDistribution(
-      Object.keys(typeCounts).map((key) => ({
-        name: key,
-        y: typeCounts[key],
-      }))
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
     );
-  };
+  }
 
-  const bonusTypeChart = {
-    chart: { type: 'pie' },
-    title: { text: 'Bonus Type Distribution' },
-    series: [
-      {
-        name: 'Bonus Type',
-        colorByPoint: true,
-        data: bonusTypeDistribution,
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Box sx={{ padding: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Bonuses and Incentives Analytics
-        </Typography>
-        <Grid container spacing={4}>
-          {/* KPIs */}
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Total Bonuses</Typography>
-                <Typography variant="h4" color="blue" sx={{ fontWeight: 'bold' }}>
-                  {totalBonuses}
-                </Typography>
-                <Typography variant="body2">Total number of bonuses awarded.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Paid Bonuses</Typography>
-                <Typography variant="h4" color="green" sx={{ fontWeight: 'bold' }}>
-                  {paidBonuses.length}
-                </Typography>
-                <Typography variant="body2">Bonuses that have been paid.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Charts */}
-          <Grid item xs={12} md={12}>
-            <HighchartsReact highcharts={Highcharts} options={bonusTypeChart} />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
-}
+};
+
+export default BonusesIncentivesAnalytics;

@@ -1,94 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Grid, Typography, Paper } from '@mui/material';
-import HighchartsReact from 'highcharts-react-official';
-import Highcharts from 'highcharts';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/CrisisRiskManagement/BusinessContinuity/BusinessContinuityPlans';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const BusinessContinuityPlansAnalytics = ({ fetchItems }) => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
+const BusinessContinuityPlansAnalytics = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        async function fetchData() {
-            const items = await fetchItems(); // Fetching data using the function passed as prop
-            setData(items);
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
+
+  useEffect(() => {
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
             setLoading(false);
         }
-        fetchData();
-    }, [fetchItems]);
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    if (loading) {
-        return <Typography>Loading...</Typography>;
-    }
-
-    const totalPlans = data.length;
-    const activePlans = data.filter(plan => plan.status === 'active').length;
-    const archivedPlans = data.filter(plan => plan.status === 'archived').length;
-
-    const statusChartOptions = {
-        title: { text: 'Plan Status Distribution' },
-        chart: { type: 'pie' },
-        series: [
-            {
-                name: 'Plans',
-                colorByPoint: true,
-                data: [
-                    { name: 'Draft', y: data.filter(plan => plan.status === 'draft').length },
-                    { name: 'Active', y: activePlans },
-                    { name: 'Archived', y: archivedPlans },
-                ],
-            },
-        ],
-    };
-
-    const reviewDateChartOptions = {
-        title: { text: 'Plans by Review Date' },
-        chart: { type: 'line' },
-        xAxis: {
-            categories: data.map(plan => new Date(plan.reviewDate).getFullYear()),
-        },
-        series: [
-            {
-                name: 'Plans',
-                data: data.map(plan => new Date(plan.reviewDate).getTime()),
-            },
-        ],
-    };
-
+  if (loading) {
     return (
-        <Box sx={{ padding: 3 }}>
-            <Typography variant="h4" gutterBottom>
-                Business Continuity Plans Analytics
-            </Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={4}>
-                    <Paper elevation={3} sx={{ padding: 2 }}>
-                        <Typography variant="h6">Total Plans</Typography>
-                        <Typography variant="h4">{totalPlans}</Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper elevation={3} sx={{ padding: 2 }}>
-                        <Typography variant="h6">Active Plans</Typography>
-                        <Typography variant="h4">{activePlans}</Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper elevation={3} sx={{ padding: 2 }}>
-                        <Typography variant="h6">Archived Plans</Typography>
-                        <Typography variant="h4">{archivedPlans}</Typography>
-                    </Paper>
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} sx={{ marginTop: 3 }}>
-                <Grid item xs={12} md={6}>
-                    <HighchartsReact highcharts={Highcharts} options={statusChartOptions} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <HighchartsReact highcharts={Highcharts} options={reviewDateChartOptions} />
-                </Grid>
-            </Grid>
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
         </Box>
     );
+  }
+
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
+
+  return (
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
+  );
 };
 
 export default BusinessContinuityPlansAnalytics;

@@ -1,103 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Box, Typography, Grid, Card, CardContent, Container } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import Backdrop from '@mui/material/Backdrop';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/OperationsAssetManagement/QualityControl/NonConformanceReports';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-export default function NonConformanceReportsAnalytics({ fetchItems }) {
+const NonConformanceReportsAnalytics = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [totalReports, setTotalReports] = useState(0);
-  const [highSeverityReports, setHighSeverityReports] = useState([]);
-  const [nonConformanceDistribution, setNonConformanceDistribution] = useState([]);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const fetchedData = await fetchItems();
-      setData(fetchedData);
-      calculateKpis(fetchedData);
-      generateCharts(fetchedData);
-      setLoading(false);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    fetchData();
-  }, [fetchItems]);
-
-  const calculateKpis = (data) => {
-    setTotalReports(data.length);
-
-    const highSeverity = data.filter((item) => item.tags.includes('high_severity'));
-    setHighSeverityReports(highSeverity);
-  };
-
-  const generateCharts = (data) => {
-    const nonConformanceTypes = data.reduce((acc, item) => {
-      acc[item.nonConformanceType] = (acc[item.nonConformanceType] || 0) + 1;
-      return acc;
-    }, {});
-
-    setNonConformanceDistribution(
-      Object.keys(nonConformanceTypes).map((key) => ({
-        name: key,
-        y: nonConformanceTypes[key],
-      }))
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
     );
-  };
+  }
 
-  const nonConformanceDistributionChart = {
-    chart: { type: 'pie' },
-    title: { text: 'Non-conformance Types Distribution' },
-    series: [
-      {
-        name: 'Types',
-        colorByPoint: true,
-        data: nonConformanceDistribution,
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Box sx={{ padding: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Non-conformance Reports Analytics
-        </Typography>
-        <Grid container spacing={4}>
-          {/* KPIs */}
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Total Reports</Typography>
-                <Typography variant="h4" color="blue" sx={{ fontWeight: 'bold' }}>
-                  {totalReports}
-                </Typography>
-                <Typography variant="body2">Total number of non-conformance reports.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">High Severity Reports</Typography>
-                <Typography variant="h4" color="green" sx={{ fontWeight: 'bold' }}>
-                  {highSeverityReports.length}
-                </Typography>
-                <Typography variant="body2">Reports tagged as 'High Severity'.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Charts */}
-          <Grid item xs={12} md={12}>
-            <HighchartsReact highcharts={Highcharts} options={nonConformanceDistributionChart} />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
-}
+};
+
+export default NonConformanceReportsAnalytics;

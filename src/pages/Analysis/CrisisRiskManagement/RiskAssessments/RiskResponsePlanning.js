@@ -1,104 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Typography, Card, CardContent, CircularProgress } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/CrisisRiskManagement/RiskAssessments/RiskResponsePlanning';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const RiskResponsePlanningAnalytics = ({ fetchItems }) => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
+const RiskResponsePlanningAnalytics = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        async function fetchData() {
-            const result = await fetchItems();
-            setData(result);
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
+
+  useEffect(() => {
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
             setLoading(false);
         }
-        fetchData();
-    }, [fetchItems]);
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    if (loading) {
-        return <CircularProgress />;
-    }
-
-    const notStartedCount = data.filter(item => item.status === 'not-started').length;
-    const inProgressCount = data.filter(item => item.status === 'in-progress').length;
-    const completedCount = data.filter(item => item.status === 'completed').length;
-
-    const responsiblePeopleCounts = data.reduce((acc, item) => {
-        acc[item.responsiblePerson] = (acc[item.responsiblePerson] || 0) + 1;
-        return acc;
-    }, {});
-
-    const statusOptions = {
-        chart: { type: 'pie' },
-        title: { text: 'Risk Response Status Distribution' },
-        series: [
-            {
-                name: 'Status',
-                colorByPoint: true,
-                data: [
-                    { name: 'Not Started', y: notStartedCount },
-                    { name: 'In Progress', y: inProgressCount },
-                    { name: 'Completed', y: completedCount },
-                ],
-            },
-        ],
-    };
-
-    const responsiblePersonOptions = {
-        chart: { type: 'bar' },
-        title: { text: 'Actions by Responsible Person' },
-        xAxis: { categories: Object.keys(responsiblePeopleCounts) },
-        series: [
-            {
-                name: 'Tasks',
-                data: Object.values(responsiblePeopleCounts),
-            },
-        ],
-    };
-
+  if (loading) {
     return (
-        <Grid container spacing={3}>
-            <Grid item xs={12}>
-                <Typography variant="h4">Risk Response Planning Analytics</Typography>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <Card>
-                    <CardContent>
-                        <Typography variant="h6">Total Response Plans</Typography>
-                        <Typography variant="h4">{data.length}</Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <Card>
-                    <CardContent>
-                        <Typography variant="h6">Completed Response Plans</Typography>
-                        <Typography variant="h4">{completedCount}</Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <Card>
-                    <CardContent>
-                        <Typography variant="h6">In Progress Response Plans</Typography>
-                        <Typography variant="h4">{inProgressCount}</Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-                <HighchartsReact highcharts={Highcharts} options={statusOptions} />
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-                <HighchartsReact highcharts={Highcharts} options={responsiblePersonOptions} />
-            </Grid>
-        </Grid>
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
     );
+  }
+
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
+
+  return (
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
+  );
 };
 
 export default RiskResponsePlanningAnalytics;

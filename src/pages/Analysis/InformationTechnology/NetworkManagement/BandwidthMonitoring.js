@@ -1,126 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Box, Typography, Grid, Card, CardContent, Container, CircularProgress, Backdrop } from '@mui/material';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/InformationTechnology/NetworkManagement/BandwidthMonitoring';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-export default function BandwidthMonitoringAnalytics({ fetchItems }) {
-  const [monitoringData, setMonitoringData] = useState([]);
-  const [totalMonitoredNetworks, setTotalMonitoredNetworks] = useState(0);
-  const [criticalNetworks, setCriticalNetworks] = useState(0);
-  const [averageUsageTrends, setAverageUsageTrends] = useState([]);
-  const [peakUsageDistribution, setPeakUsageDistribution] = useState([]);
+const BandwidthMonitoringAnalytics = () => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const data = await fetchItems();
-      setMonitoringData(data);
-      processMonitoringData(data);
-      setLoading(false);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    fetchData();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const processMonitoringData = (data) => {
-    // Total Monitored Networks
-    setTotalMonitoredNetworks(data.length);
-
-    // Count Critical Networks (ensure tags exists and is an array)
-    const critical = data.filter(network => Array.isArray(network.tags) && network.tags.includes('critical')).length;
-    setCriticalNetworks(critical);
-
-    // Average Usage Trends for Line Chart
-    const usageTrends = data.map(network => ({
-      date: new Date(network.monitoredDate).getTime(),
-      usage: Number(network.averageUsage),
-    }));
-    setAverageUsageTrends(usageTrends);
-
-    // Peak Usage Distribution for Pie Chart
-    const peakUsageCounts = data.reduce((acc, network) => {
-      const range = network.peakUsage < 50 ? '<50 Mbps' :
-                    network.peakUsage < 100 ? '50-100 Mbps' : '>100 Mbps';
-      acc[range] = (acc[range] || 0) + 1;
-      return acc;
-    }, {});
-    setPeakUsageDistribution(Object.keys(peakUsageCounts).map(key => ({
-      name: key,
-      y: peakUsageCounts[key],
-    })));
-  };
-
-  // Highcharts options for Average Usage Trends
-  const averageUsageChartOptions = {
-    chart: { type: 'line' },
-    title: { text: 'Average Bandwidth Usage Trends' },
-    xAxis: { type: 'datetime', title: { text: 'Monitored Date' } },
-    yAxis: { title: { text: 'Average Usage (Mbps)' } },
-    series: [{
-      name: 'Average Usage',
-      data: averageUsageTrends.map(item => [item.date, item.usage]),
-    }],
-  };
-
-  // Highcharts options for Peak Usage Distribution
-  const peakUsageChartOptions = {
-    chart: { type: 'pie' },
-    title: { text: 'Peak Bandwidth Usage Distribution' },
-    series: [{
-      name: 'Peak Usage',
-      colorByPoint: true,
-      data: peakUsageDistribution,
-    }],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Box sx={{ padding: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Bandwidth Monitoring Analytics
-        </Typography>
-
-        <Grid container spacing={4}>
-          {/* KPIs Section */}
-          <Grid item xs={12} md={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Total Monitored Networks</Typography>
-                <Typography variant="h4" color="green" sx={{ fontWeight: 'bold' }}>
-                  {totalMonitoredNetworks}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} md={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Critical Networks</Typography>
-                <Typography variant="h4" color="red" sx={{ fontWeight: 'bold' }}>
-                  {criticalNetworks}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={4} sx={{ marginTop: 4 }}>
-          {/* Average Usage Trends Chart */}
-          <Grid item xs={12} md={6}>
-            <HighchartsReact highcharts={Highcharts} options={averageUsageChartOptions} />
-          </Grid>
-
-          {/* Peak Usage Distribution Chart */}
-          <Grid item xs={12} md={6}>
-            <HighchartsReact highcharts={Highcharts} options={peakUsageChartOptions} />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
-}
+};
+
+export default BandwidthMonitoringAnalytics;

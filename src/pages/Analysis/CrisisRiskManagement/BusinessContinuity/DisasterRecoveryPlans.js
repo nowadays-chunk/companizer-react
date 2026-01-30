@@ -1,102 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Card, CardContent, Typography, Box } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/CrisisRiskManagement/BusinessContinuity/DisasterRecoveryPlans';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const DisasterRecoveryAnalytics = ({ fetchItems }) => {
+const DisasterRecoveryPlansAnalytics = () => {
   const [data, setData] = useState([]);
-  const [kpis, setKpis] = useState({
-    totalPlans: 0,
-    activePlans: 0,
-    archivedPlans: 0,
-    draftPlans: 0,
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetchItems();
-      setData(result);
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-      // Calculate KPIs
-      const totalPlans = result.length;
-      const activePlans = result.filter(plan => plan.status === 'active').length;
-      const archivedPlans = result.filter(plan => plan.status === 'archived').length;
-      const draftPlans = result.filter(plan => plan.status === 'draft').length;
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-      setKpis({ totalPlans, activePlans, archivedPlans, draftPlans });
-    };
-
-    fetchData();
-  }, [fetchItems]);
-
-  // Highcharts configuration for Plans Status Distribution
-  const statusDistributionOptions = {
-    chart: { type: 'pie' },
-    title: { text: 'Plan Status Distribution' },
-    series: [
-      {
-        name: 'Plans',
-        data: [
-          { name: 'Active', y: kpis.activePlans },
-          { name: 'Archived', y: kpis.archivedPlans },
-          { name: 'Draft', y: kpis.draftPlans },
-        ],
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={3}>
-        {/* KPIs */}
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5">Total Plans</Typography>
-              <Typography variant="h4">{kpis.totalPlans}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5">Active Plans</Typography>
-              <Typography variant="h4">{kpis.activePlans}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5">Archived Plans</Typography>
-              <Typography variant="h4">{kpis.archivedPlans}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5">Draft Plans</Typography>
-              <Typography variant="h4">{kpis.draftPlans}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Highcharts for Plan Status Distribution */}
-        <Grid item xs={12}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Plan Status Distribution</Typography>
-              <HighchartsReact highcharts={Highcharts} options={statusDistributionOptions} />
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </Box>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 
-export default DisasterRecoveryAnalytics;
+export default DisasterRecoveryPlansAnalytics;

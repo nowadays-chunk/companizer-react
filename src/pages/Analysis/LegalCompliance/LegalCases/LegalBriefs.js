@@ -1,152 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/LegalCompliance/LegalCases/LegalBriefs';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const LegalBriefsAnalytics = ({ fetchItems }) => {
+const LegalBriefsAnalytics = () => {
   const [data, setData] = useState([]);
-  const [kpis, setKpis] = useState({
-    totalBriefs: 0,
-    submittedBriefs: 0,
-    underReviewBriefs: 0,
-    approvedBriefs: 0,
-    rejectedBriefs: 0,
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const loadData = async () => {
-      const briefs = await fetchItems();
-      setData(briefs);
-      calculateKPIs(briefs);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    loadData();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const calculateKPIs = (items) => {
-    const totalBriefs = items.length;
-    const submittedBriefs = items.filter((item) => item.status === 'submitted').length;
-    const underReviewBriefs = items.filter((item) => item.status === 'under-review').length;
-    const approvedBriefs = items.filter((item) => item.status === 'approved').length;
-    const rejectedBriefs = items.filter((item) => item.status === 'rejected').length;
-
-    setKpis({
-      totalBriefs,
-      submittedBriefs,
-      underReviewBriefs,
-      approvedBriefs,
-      rejectedBriefs,
-    });
-  };
-
-  const statusChart = {
-    chart: {
-      type: 'pie',
-    },
-    title: {
-      text: 'Brief Status Distribution',
-    },
-    series: [
-      {
-        name: 'Briefs',
-        colorByPoint: true,
-        data: [
-          { name: 'Submitted', y: kpis.submittedBriefs },
-          { name: 'Under Review', y: kpis.underReviewBriefs },
-          { name: 'Approved', y: kpis.approvedBriefs },
-          { name: 'Rejected', y: kpis.rejectedBriefs },
-        ],
-      },
-    ],
-  };
-
-  const courtChart = {
-    chart: {
-      type: 'column',
-    },
-    title: {
-      text: 'Briefs by Court',
-    },
-    xAxis: {
-      categories: data.map((item) => item.court),
-    },
-    yAxis: {
-      title: {
-        text: 'Number of Briefs',
-      },
-    },
-    series: [
-      {
-        name: 'Briefs',
-        data: data.reduce((acc, curr) => {
-          acc[curr.court] = (acc[curr.court] || 0) + 1;
-          return acc;
-        }, {}),
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        Legal Briefs Analytics
-      </Typography>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Total Briefs</Typography>
-              <Typography variant="h4">{kpis.totalBriefs}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Submitted Briefs</Typography>
-              <Typography variant="h4">{kpis.submittedBriefs}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Under Review Briefs</Typography>
-              <Typography variant="h4">{kpis.underReviewBriefs}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Approved Briefs</Typography>
-              <Typography variant="h4">{kpis.approvedBriefs}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Rejected Briefs</Typography>
-              <Typography variant="h4">{kpis.rejectedBriefs}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={statusChart} />
-      </Box>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={courtChart} />
-      </Box>
-    </Box>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 

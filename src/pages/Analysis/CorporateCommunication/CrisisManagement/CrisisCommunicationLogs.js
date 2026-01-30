@@ -1,104 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Typography, Card, CardContent, CircularProgress } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/CorporateCommunication/CrisisManagement/CrisisCommunicationLogs';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const CrisisCommunicationLogsAnalytics = ({ fetchItems }) => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
+const CrisisCommunicationLogsAnalytics = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        async function fetchData() {
-            const result = await fetchItems();
-            setData(result);
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
+
+  useEffect(() => {
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
             setLoading(false);
         }
-        fetchData();
-    }, [fetchItems]);
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    if (loading) {
-        return <CircularProgress />;
-    }
-
-    const emailLogs = data.filter(item => item.communicationMethod === 'email').length;
-    const phoneCallLogs = data.filter(item => item.communicationMethod === 'phone-call').length;
-    const pressConferenceLogs = data.filter(item => item.communicationMethod === 'press-conference').length;
-
-    const communicationStatusOptions = {
-        chart: { type: 'pie' },
-        title: { text: 'Communication Method Distribution' },
-        series: [
-            {
-                name: 'Communications',
-                colorByPoint: true,
-                data: [
-                    { name: 'Email', y: emailLogs },
-                    { name: 'Phone Call', y: phoneCallLogs },
-                    { name: 'Press Conference', y: pressConferenceLogs },
-                ],
-            },
-        ],
-    };
-
-    const statusCounts = data.reduce((acc, item) => {
-        acc[item.status] = (acc[item.status] || 0) + 1;
-        return acc;
-    }, {});
-
-    const statusOptions = {
-        chart: { type: 'column' },
-        title: { text: 'Communication Status Breakdown' },
-        xAxis: { categories: Object.keys(statusCounts) },
-        series: [
-            {
-                name: 'Communications',
-                data: Object.values(statusCounts),
-            },
-        ],
-    };
-
+  if (loading) {
     return (
-        <Grid container spacing={3}>
-            <Grid item xs={12}>
-                <Typography variant="h4">Crisis Communication Logs Analytics</Typography>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <Card>
-                    <CardContent>
-                        <Typography variant="h6">Total Logs</Typography>
-                        <Typography variant="h4">{data.length}</Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <Card>
-                    <CardContent>
-                        <Typography variant="h6">Emails Sent</Typography>
-                        <Typography variant="h4">{emailLogs}</Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <Card>
-                    <CardContent>
-                        <Typography variant="h6">Phone Calls</Typography>
-                        <Typography variant="h4">{phoneCallLogs}</Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-                <HighchartsReact highcharts={Highcharts} options={communicationStatusOptions} />
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-                <HighchartsReact highcharts={Highcharts} options={statusOptions} />
-            </Grid>
-        </Grid>
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
     );
+  }
+
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
+
+  return (
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
+  );
 };
 
 export default CrisisCommunicationLogsAnalytics;

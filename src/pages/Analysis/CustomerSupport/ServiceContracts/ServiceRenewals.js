@@ -1,108 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Paper } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/CustomerSupport/ServiceContracts/ServiceRenewals';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const ServiceRenewalsAnalytics = ({ fetchItems }) => {
+const ServiceRenewalsAnalytics = () => {
   const [data, setData] = useState([]);
-  const [kpiData, setKpiData] = useState({
-    totalRenewals: 0,
-    pending: 0,
-    completed: 0,
-    failed: 0,
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    fetchItems('service-renewals').then((response) => {
-      setData(response);
-      calculateKPIs(response);
-    });
-  }, []);
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-  const calculateKPIs = (data) => {
-    const totalRenewals = data.length;
-    const pending = data.filter((item) => item.status === 'pending').length;
-    const completed = data.filter((item) => item.status === 'completed').length;
-    const failed = data.filter((item) => item.status === 'failed').length;
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-    setKpiData({
-      totalRenewals,
-      pending,
-      completed,
-      failed,
-    });
-  };
-
-  const chartOptions = {
-    chart: {
-      type: 'pie',
-    },
-    title: {
-      text: 'Service Renewal Status Distribution',
-    },
-    series: [
-      {
-        name: 'Status',
-        colorByPoint: true,
-        data: [
-          {
-            name: 'Pending',
-            y: kpiData.pending,
-          },
-          {
-            name: 'Completed',
-            y: kpiData.completed,
-          },
-          {
-            name: 'Failed',
-            y: kpiData.failed,
-          },
-        ],
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Box p={3}>
-      <Typography variant="h4" gutterBottom>
-        Service Renewals Analytics
-      </Typography>
-
-      <Grid container spacing={3}>
-        {/* KPIs */}
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper elevation={3} sx={{ p: 2 }}>
-            <Typography variant="h6">Total Renewals</Typography>
-            <Typography variant="h4">{kpiData.totalRenewals}</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper elevation={3} sx={{ p: 2 }}>
-            <Typography variant="h6">Pending</Typography>
-            <Typography variant="h4">{kpiData.pending}</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper elevation={3} sx={{ p: 2 }}>
-            <Typography variant="h6">Completed</Typography>
-            <Typography variant="h4">{kpiData.completed}</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper elevation={3} sx={{ p: 2 }}>
-            <Typography variant="h6">Failed</Typography>
-            <Typography variant="h4">{kpiData.failed}</Typography>
-          </Paper>
-        </Grid>
-
-        {/* Highcharts Graph */}
-        <Grid item xs={12}>
-          <Paper elevation={3} sx={{ p: 3 }}>
-            <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-          </Paper>
-        </Grid>
-      </Grid>
-    </Box>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 

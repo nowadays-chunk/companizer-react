@@ -1,122 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
+import { fieldsConfig, collectionName } from '../../../../components/Management/ExternalRelationships/StakeholderManagement/StakeholderCommunication';
+import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
 
-const StakeholderCommunicationAnalytics = ({ fetchItems }) => {
+const StakeholderCommunicationAnalytics = () => {
   const [data, setData] = useState([]);
-  const [kpis, setKpis] = useState({
-    totalCommunications: 0,
-    emailCount: 0,
-    meetingCount: 0,
-    phoneCallCount: 0,
-    presentationCount: 0,
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const helpers = useMemo(() => helpersWrapper(collectionName), []);
 
   useEffect(() => {
-    const loadData = async () => {
-      const communications = await fetchItems();
-      setData(communications);
-      calculateKPIs(communications);
-    };
+    let isMounted = true;
+    helpers.fetchItems()
+      .then(items => {
+        if (isMounted) {
+          setData(items || []);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading analysis data:", err);
+        if (isMounted) {
+            setError("Failed to load data.");
+            setLoading(false);
+        }
+      });
+      
+    return () => { isMounted = false; };
+  }, [helpers]);
 
-    loadData();
-  }, [fetchItems]);
+  if (loading) {
+    return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+            <CircularProgress />
+        </Box>
+    );
+  }
 
-  const calculateKPIs = (items) => {
-    const totalCommunications = items.length;
-    const emailCount = items.filter((item) => item.communicationMethod === 'email').length;
-    const meetingCount = items.filter((item) => item.communicationMethod === 'meeting').length;
-    const phoneCallCount = items.filter((item) => item.communicationMethod === 'phone-call').length;
-    const presentationCount = items.filter((item) => item.communicationMethod === 'presentation').length;
-
-    setKpis({
-      totalCommunications,
-      emailCount,
-      meetingCount,
-      phoneCallCount,
-      presentationCount,
-    });
-  };
-
-  const methodChart = {
-    chart: {
-      type: 'pie',
-    },
-    title: {
-      text: 'Communication Method Distribution',
-    },
-    series: [
-      {
-        name: 'Communications',
-        colorByPoint: true,
-        data: [
-          { name: 'Email', y: kpis.emailCount },
-          { name: 'Meeting', y: kpis.meetingCount },
-          { name: 'Phone Call', y: kpis.phoneCallCount },
-          { name: 'Presentation', y: kpis.presentationCount },
-        ],
-      },
-    ],
-  };
+  if (error) {
+     return <Typography color="error" variant="h6" p={3}>{error}</Typography>;
+  }
 
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        Stakeholder Communication Analytics
-      </Typography>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Total Communications</Typography>
-              <Typography variant="h4">{kpis.totalCommunications}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Email Communications</Typography>
-              <Typography variant="h4">{kpis.emailCount}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Meetings</Typography>
-              <Typography variant="h4">{kpis.meetingCount}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Phone Calls</Typography>
-              <Typography variant="h4">{kpis.phoneCallCount}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Presentations</Typography>
-              <Typography variant="h4">{kpis.presentationCount}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      <Box mt={4}>
-        <HighchartsReact highcharts={Highcharts} options={methodChart} />
-      </Box>
-    </Box>
+    <GenericAnalyticsDashboard 
+        data={data} 
+        fieldsConfig={fieldsConfig} 
+        collectionName={collectionName} 
+    />
   );
 };
 
