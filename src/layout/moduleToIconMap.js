@@ -12,7 +12,7 @@ import DevicesIcon from '@mui/icons-material/Devices';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import PublicIcon from '@mui/icons-material/Public';
 import SchoolIcon from '@mui/icons-material/School';
-import GroupWorkIcon from '@mui/icons-material/GroupWork';
+
 import BalanceIcon from '@mui/icons-material/Balance';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';

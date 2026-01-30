@@ -14,7 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import Collapse from '@mui/material/Collapse';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
@@ -92,7 +92,7 @@ export default function DashboardDrawer({ open, onToggleDrawer }) {
             bgcolor: 'background.paper',
           }}
         >
-         
+
           {/* Drawer header with logo (Companizer) */}
           <Box
             sx={{

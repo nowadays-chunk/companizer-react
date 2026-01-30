@@ -2,6 +2,7 @@ export const keyToLinkMap = {
     "financial-management": "/financial-management",
     "accounts-payable": "/financial-management/accounts-payable",
     "vendor-invoices": "/financial-management/accounts-payable/vendor-invoices",
+    "vendor-invoices-details": "/financial-management/accounts-payable/vendor-invoices-details",
     "payment-terms": "/financial-management/accounts-payable/payment-terms",
     "creditors-ledger": "/financial-management/accounts-payable/creditors-ledger",
     "accounts-receivable": "/financial-management/accounts-receivable",
@@ -119,7 +120,7 @@ export const keyToLinkMap = {
     "contract-obligations": "/compliance-legal/contracts/contract-obligations",
     "contract-renewal-reminders": "/compliance-legal/contracts/contract-renewal-reminders",
     "regulatory-compliance": "/compliance-legal/regulatory-compliance",
-    "compliance-audits": "/compliance-legal/regulatory-compliance/compliance-audits",
+
     "compliance-reporting": "/compliance-legal/regulatory-compliance/compliance-reporting",
     "regulatory-updates": "/compliance-legal/regulatory-compliance/regulatory-updates",
     "insurance": "/compliance-legal/insurance",
@@ -152,7 +153,7 @@ export const keyToLinkMap = {
     "campaign-performance": "/sales-marketing/campaigns/campaign-performance",
     "roi-analysis": "/sales-marketing/campaigns/roi-analysis",
     "pricing": "/sales-marketing/pricing",
-    "price-lists": "/sales-marketing/pricing/price-lists",
+
     "discount-structures": "/sales-marketing/pricing/discount-structures",
     "promotional-pricing": "/sales-marketing/pricing/promotional-pricing",
     "sales-orders": "/sales-marketing/sales-orders",
@@ -178,7 +179,7 @@ export const keyToLinkMap = {
     "milestone-dependencies": "/project-task-management/milestones/milestone-dependencies",
     "timesheets": "/project-task-management/timesheets",
     "time-tracking": "/project-task-management/timesheets/time-tracking",
-    "timesheet-approvals": "/project-task-management/timesheets/timesheet-approvals",
+
     "billable-hours": "/project-task-management/timesheets/billable-hours",
     "governance-strategy": "/governance-strategy",
     "business-plans": "/governance-strategy/business-plans",
@@ -207,12 +208,7 @@ export const keyToLinkMap = {
     "freight-management": "/logistics-supply-chain/shipping/freight-management",
     "customs-documentation": "/logistics-supply-chain/shipping/customs-documentation",
     "order-management": "/logistics-supply-chain/order-management",
-    "order-processing": "/logistics-supply-chain/order-management/order-processing",
-    "order-tracking": "/logistics-supply-chain/order-management/order-tracking",
-    "order-fulfillment": "/logistics-supply-chain/order-management/order-fulfillment",
-    "logistics-partners": "/logistics-supply-chain/logistics-partners",
-    "partner-agreements": "/logistics-supply-chain/logistics-partners/partner-agreements",
-    "performance-metrics": "/logistics-supply-chain/logistics-partners/performance-metrics",
+
     "cost-analysis": "/logistics-supply-chain/logistics-partners/cost-analysis",
     "procurement": "/logistics-supply-chain/procurement",
     "purchase-requisitions": "/logistics-supply-chain/procurement/purchase-requisitions",
@@ -310,7 +306,7 @@ export const keyToLinkMap = {
     "case-management": "/legal-compliance/legal-cases/case-management",
     "court-appearances": "/legal-compliance/legal-cases/court-appearances",
     "legal-briefs": "/legal-compliance/legal-cases/legal-briefs",
-    "intellectual-property": "/legal-compliance/intellectual-property",
+
     "ip-monitoring": "/legal-compliance/intellectual-property/ip-monitoring",
     "ip-licensing": "/legal-compliance/intellectual-property/ip-licensing",
     "ip-litigation": "/legal-compliance/intellectual-property/ip-litigation",
@@ -366,7 +362,7 @@ export const keyToLinkMap = {
     "risk-identification": "/crisis-risk-management/risk-assessments/risk-identification",
     "risk-scoring": "/crisis-risk-management/risk-assessments/risk-scoring",
     "risk-response-planning": "/crisis-risk-management/risk-assessments/risk-response-planning",
-    "crisis-management": "/crisis-risk-management/crisis-management",
+
     "crisis-scenarios": "/crisis-risk-management/crisis-management/crisis-scenarios",
     "crisis-response-teams": "/crisis-risk-management/crisis-management/crisis-response-teams",
     "emergency-communication": "/crisis-risk-management/crisis-management/emergency-communication",

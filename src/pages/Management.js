@@ -19,7 +19,7 @@ function ManagementComponent({ showAnalytics }) {
     useEffect(() => {
         const loadConfig = async () => {
             try {
-                const { fieldsConfig, entityName, collectionName} = await import(`../components/Management/${capitalizedModuleName}/${capitalizedSubModuleName}/${capitalizedComponentName}`);
+                const { fieldsConfig, entityName, collectionName } = await import(`../components/Management/${capitalizedModuleName}/${capitalizedSubModuleName}/${capitalizedComponentName}`);
                 const analysisModule = await import(`./Analysis/${capitalizedModuleName}/${capitalizedSubModuleName}/${capitalizedComponentName}`);
                 const operations = helpersWrapper(collectionName);
 
@@ -27,7 +27,7 @@ function ManagementComponent({ showAnalytics }) {
                     id: key,
                     label: fieldsConfig[key].label,
                 }));
-                
+
                 setConfig({
                     fieldsConfig: fieldsConfig,
                     entityName: entityName,
@@ -45,7 +45,7 @@ function ManagementComponent({ showAnalytics }) {
         };
 
         loadConfig();
-    }, [capitalizedComponentName]);
+    }, [capitalizedComponentName, capitalizedModuleName, capitalizedSubModuleName]);
 
     // if (!config || !AnalysisComponent) {
     if (!config) {

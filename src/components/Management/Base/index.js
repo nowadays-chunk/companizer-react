@@ -80,8 +80,11 @@ export default function BaseTableComponent({
   deleteItem,
   fieldConfig,
   entityName,
+  onViewItem: onViewItemProp,
+  onEditItem: onEditItemProp
 }) {
   const [refreshedFieldsConfig, setRefreshedFieldsConfig] = useState(fieldConfig);
+
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState(Object.keys(fieldConfig)[0]);
   const [selected, setSelected] = useState([]);
@@ -124,7 +127,7 @@ export default function BaseTableComponent({
   }, [filters, items]);
 
   const getBaseSlashedURL = () => {
-    return keyToLinkMap[entityName.toLowerCase().replace(/ /g, '-')];
+    return keyToLinkMap[entityName.toLowerCase().replace(/ /g, '-').replace(/_/g, '-')];
   };
 
   const openTabsForSelected = (mode) => {
@@ -149,12 +152,20 @@ export default function BaseTableComponent({
   // EDIT -> open edit tab for each selected item
   const handleEditItem = () => {
     if (selected.length === 0) return;
+    if (onEditItemProp) {
+      selected.forEach(id => onEditItemProp(id));
+      return;
+    }
     openTabsForSelected('edit');
   };
 
   // VIEW -> open view tab for each selected item
   const handleViewItem = () => {
     if (selected.length === 0) return;
+    if (onViewItemProp) {
+      selected.forEach(id => onViewItemProp(id));
+      return;
+    }
     openTabsForSelected('view');
   };
 

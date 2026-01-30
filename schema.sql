@@ -1144,6 +1144,22 @@ CREATE TABLE IF NOT EXISTS `entities` (
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE IF NOT EXISTS `entity_comments_history` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `organization_id` VARCHAR(255) NOT NULL,
+  `comment_id` CHAR(36),
+  `entity_type` VARCHAR(255),
+  `entity_id` CHAR(36),
+  `user_id` CHAR(36),
+  `author_name` VARCHAR(255),
+  `comment_text` VARCHAR(255),
+  `processing_step` VARCHAR(255),
+  `unit_price` DECIMAL(15,2),
+  `accountable_id` CHAR(36),
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS `environmental_social_governance_csr` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `organization_id` VARCHAR(255) NOT NULL,
@@ -1547,6 +1563,17 @@ CREATE TABLE IF NOT EXISTS `vendors_list` (
   `preferred_vendor` TINYINT(1) DEFAULT 0,
   `website` VARCHAR(255),
   `is_active` TINYINT(1) DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `vendor_invoices_config` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `organization_id` VARCHAR(255) NOT NULL,
+  `default_currency` VARCHAR(100),
+  `auto_validate_threshold` DECIMAL(15,2),
+  `require_po_match` TINYINT(1) DEFAULT 0,
+  `notification_email` VARCHAR(255),
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

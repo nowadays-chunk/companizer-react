@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Box, Table, TableBody,Checkbox, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
+import React from 'react';
+import { Box, Table, TableBody, Checkbox, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
 
 import BaseTableHead from './BaseTableHead';
 
@@ -28,13 +28,6 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
-
-const truncateText = (text) => {
-  if(text.length > 200){
-    return text.slice(0, 200);
-  }
-  return text;
-};
 
 function BaseTable({
   items,
