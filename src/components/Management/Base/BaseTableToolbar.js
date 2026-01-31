@@ -18,6 +18,7 @@ export default function BaseTableToolbar({
   onEdit,
   onGenerateRandomRow,
   onViewItem,
+  onConfigure,
   entityName,
 }) {
   return (
@@ -78,6 +79,18 @@ export default function BaseTableToolbar({
         >
           View Selected
         </Button>
+
+        {/* Configure Workflow Rules */}
+        {onConfigure && (
+          <Button
+            onClick={onConfigure}
+            variant="outlined"
+            color="secondary"
+            sx={{ ml: 1 }}
+          >
+            Configure
+          </Button>
+        )}
       </Box>
     </Toolbar>
   );

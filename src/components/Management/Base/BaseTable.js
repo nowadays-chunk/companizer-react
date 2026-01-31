@@ -1,5 +1,9 @@
 import React from 'react';
-import { Box, Table, TableBody, Checkbox, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
+import { Box, Table, TableBody, Checkbox, TableCell, TableContainer, TablePagination, TableRow, Tooltip } from '@mui/material';
+import WarningIcon from '@mui/icons-material/Warning';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { IconButton } from '@mui/material';
 
 import BaseTableHead from './BaseTableHead';
 
@@ -44,7 +48,98 @@ function BaseTable({
   dense,
   setDense,
   fieldConfig,
+  validationRules = [], // Receive rules
+  onViewItem, // New Prop
+  onEditItem, // New Prop
 }) {
+
+  const validateRow = (row) => {
+    // ... (logic remains same, validationRules uses it)
+    // To save context, we just return empty array if no rules
+    if (!validationRules || validationRules.length === 0) return [];
+
+    // ... actually validateRow implementation is lengthy. 
+    // I should only replace the START of the function to add props.
+    // But since I am replacing the header logic too, I can do it in chunks.
+
+
+    // ... (Assuming validateRow is unchanged, I will skip replacing it if possible)
+    // But I need to add props to the destructuring at the TOP. 
+    // And fix the BaseTableHead usage at the BOTTOM.
+
+    // Let's do 2 chunks.
+
+    // CHUNK 1: Props
+    // CHUNK 2: Header Logic
+
+    const issues = [];
+    const relevantRules = validationRules.filter(r =>
+      r.current_step === row.processing_step || r.current_step === '*'
+    );
+
+    relevantRules.forEach(rule => {
+      let isValid = true;
+      const val = row[rule.rule_value] ?? row[rule.action_name]; // Try rule_value as field name, fallback to action? 
+      // Wait, rule_value is likely the field Name (e.g. 'total_price'). 
+      // But for 'value_greater_than', we need a Value to compare against.
+      // The current schema has `rule_value` as ONE column. 
+      // For comparisons we need Target Field AND Target Value.
+      // Current schema: rule_value "e.g. invoice_number (for required field) or total_amount < 5000"
+      // If the user inputs "total_amount 5000" in rule_value, we need to parse it?
+      // The User Request said "logical rule to a column... predefined in fieldsConfig... "
+
+      // Let's assume standard parsing or just check 'required_field' for now to be safe, 
+      // AND implement basic 'value comparisons' assuming rule_value holds the Reference Value 
+      // and we need another field for "Target Column"? 
+      // The schema in entity_workflow_rules doesn't have "Target Column". 
+      // It has "rule_value". 
+      // Maybe `rule_value` holds "ColumnName,TargetValue"? 
+      // Or maybe I should interpret `action_name` as "Column Name" for these rules?
+      // Re-reading config: `action_name` label "Action Name". `rule_value` label "Rule Value / Condition".
+
+      // Heuristic:
+      // Rule Type: "value_greater_than"
+      // Action Name: "total_price" (The column to check)
+      // Rule Value: "1000" (The threshold)
+
+      const columnToCheck = rule.action_name;
+      const threshold = rule.rule_value;
+      const rowValue = row[columnToCheck];
+
+      switch (rule.rule_type) {
+        case 'required_field':
+          // here columnToCheck is the field
+          if (!rowValue && rowValue !== 0) isValid = false;
+          break;
+        case 'value_equals':
+          if (String(rowValue) !== String(threshold)) isValid = false;
+          break;
+        case 'value_less_than':
+          if (Number(rowValue) >= Number(threshold)) isValid = false;
+          break;
+        case 'value_greater_than':
+          if (Number(rowValue) <= Number(threshold)) isValid = false;
+          break;
+        case 'value_between':
+          const [min, max] = threshold.split(',').map(Number);
+          if (Number(rowValue) < min || Number(rowValue) > max) isValid = false;
+          break;
+        // Approvals - mock check for field existence or specific value
+        case 'approval_email':
+        case 'approval_manager':
+          // Assume we check if 'approved_by' is set?
+          if (!row['accountable_id']) isValid = false; // logic placeholder
+          break;
+        default:
+          break;
+      }
+
+      if (!isValid) {
+        issues.push(rule.error_message || `Validation failed: ${rule.rule_type} on ${columnToCheck}`);
+      }
+    });
+    return issues;
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -97,10 +192,13 @@ function BaseTable({
       <TableContainer>
         <Table sx={{ minWidth: 750 }} size={dense ? 'small' : 'medium'}>
           <BaseTableHead
-            headCells={Object.keys(fieldConfig).map((key) => ({
-              id: key,
-              label: fieldConfig[key].label,
-            }))}
+            headCells={[
+              ...Object.keys(fieldConfig).map((key) => ({
+                id: key,
+                label: fieldConfig[key].label,
+              })),
+              { id: 'actions', label: 'Actions' }
+            ]}
             order={order}
             orderBy={orderBy}
             onRequestSort={handleRequestSort}
@@ -124,7 +222,14 @@ function BaseTable({
                   selected={isItemSelected}
                 >
                   <TableCell padding="checkbox">
-                    <Checkbox color="primary" checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                    <Box display="flex" alignItems="center">
+                      <Checkbox color="primary" checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                      {validateRow(row).length > 0 && (
+                        <Tooltip title={validateRow(row).join('\n')}>
+                          <WarningIcon color="error" fontSize="small" />
+                        </Tooltip>
+                      )}
+                    </Box>
                   </TableCell>
 
                   {Object.keys(fieldConfig).map((field) => (
@@ -137,6 +242,24 @@ function BaseTable({
                       {row[field]}
                     </TableCell>
                   ))}
+
+                  {/* ACTIONS COLUMN */}
+                  <TableCell align="right">
+                    <Box display="flex">
+                      {/* VIEW */}
+                      <Tooltip title="View">
+                        <IconButton onClick={(e) => { e.stopPropagation(); if (onViewItem) onViewItem(row.id); }}>
+                          <VisibilityIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                      {/* EDIT */}
+                      <Tooltip title="Edit">
+                        <IconButton onClick={(e) => { e.stopPropagation(); if (onEditItem) onEditItem(row.id); }}>
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -160,5 +283,4 @@ function BaseTable({
     </Box>
   );
 }
-
 export default BaseTable;

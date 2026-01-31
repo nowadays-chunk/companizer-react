@@ -13,10 +13,6 @@ import * as AssetTrackingConfig from './OperationsAssetManagement/Assets/Config/
 import * as BackordersConfig from './SalesMarketing/SalesOrders/Config/BackordersConfig.js';
 import * as BandwidthMonitoringConfig from './InformationTechnology/NetworkManagement/Config/BandwidthMonitoringConfig.js';
 import * as BankTransfersConfig from './FinancialManagement/BankAccounts/Config/BankTransfersConfig.js';
-import * as BaseModalConfig from './Base/Config/BaseModalConfig.js';
-import * as BaseTableConfig from './Base/Config/BaseTableConfig.js';
-import * as BaseTableHeadConfig from './Base/Config/BaseTableHeadConfig.js';
-import * as BaseTableToolbarConfig from './Base/Config/BaseTableToolbarConfig.js';
 import * as BenchmarkingConfig from './GovernanceStrategy/KpisAnalytics/Config/BenchmarkingConfig.js';
 import * as BestPracticesConfig from './IntellectualHumanCapital/KnowledgeBase/Config/BestPracticesConfig.js';
 import * as BillableHoursConfig from './ProjectTaskManagement/Timesheets/Config/BillableHoursConfig.js';
@@ -92,7 +88,6 @@ import * as ExecutiveTrainingConfig from './TrainingDevelopment/LeadershipProgra
 import * as FacilityBookingConfig from './RealEstatePropertyManagement/FacilitiesManagement/Config/FacilityBookingConfig.js';
 import * as FacilityMaintenanceConfig from './RealEstatePropertyManagement/FacilitiesManagement/Config/FacilityMaintenanceConfig.js';
 import * as FeedbackAnalysisConfig from './CustomerSupport/Feedback/Config/FeedbackAnalysisConfig.js';
-import * as FilterManagerConfig from './Base/Config/FilterManagerConfig.js';
 import * as FirewallConfigurationsConfig from './InformationTechnology/NetworkManagement/Config/FirewallConfigurationsConfig.js';
 import * as FiscalPeriodsConfig from './FinancialManagement/GeneralLedger/Config/FiscalPeriodsConfig.js';
 import * as FixedIncomeInvestmentsConfig from './FinancialManagement/Investments/Config/FixedIncomeInvestmentsConfig.js';
@@ -290,10 +285,6 @@ export const configRegistry = {
     'Backorders': BackordersConfig,
     'BandwidthMonitoring': BandwidthMonitoringConfig,
     'BankTransfers': BankTransfersConfig,
-    'BaseModal': BaseModalConfig,
-    'BaseTable': BaseTableConfig,
-    'BaseTableHead': BaseTableHeadConfig,
-    'BaseTableToolbar': BaseTableToolbarConfig,
     'Benchmarking': BenchmarkingConfig,
     'BestPractices': BestPracticesConfig,
     'BillableHours': BillableHoursConfig,
@@ -369,7 +360,6 @@ export const configRegistry = {
     'FacilityBooking': FacilityBookingConfig,
     'FacilityMaintenance': FacilityMaintenanceConfig,
     'FeedbackAnalysis': FeedbackAnalysisConfig,
-    'FilterManager': FilterManagerConfig,
     'FirewallConfigurations': FirewallConfigurationsConfig,
     'FiscalPeriods': FiscalPeriodsConfig,
     'FixedIncomeInvestments': FixedIncomeInvestmentsConfig,

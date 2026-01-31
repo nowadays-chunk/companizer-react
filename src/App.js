@@ -19,6 +19,7 @@ import Treasury from './pages/Treasury';
 import Management from './pages/Management';
 import Visualizer from './pages/UnitVisualizer';
 import BilanComptable from './pages/BilanComptable';
+import WorkflowRulesManager from './pages/WorkflowRulesManager';
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -97,6 +98,49 @@ const App = () => {
           }
         />
 
+        <Route
+          path="/:module/:subModule/:targetEntity/configuration"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <WorkflowRulesManager />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/:module/:subModule/:component/configuration/view/:id"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Visualizer mode="view" />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/:module/:subModule/:component/configuration/edit/:id"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Visualizer mode="edit" />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/:module/:subModule/:component/configuration/create"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Visualizer mode="create" />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
         {/* Blog and documentation */}
         <Route
           path="/blog"

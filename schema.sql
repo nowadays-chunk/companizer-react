@@ -991,6 +991,20 @@ CREATE TABLE IF NOT EXISTS `ticket_resolution` (
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE IF NOT EXISTS `entity_workflow_rules` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `organization_id` VARCHAR(255) NOT NULL,
+  `entity_type` VARCHAR(255),
+  `current_step` VARCHAR(255),
+  `action_name` VARCHAR(255),
+  `rule_type` VARCHAR(100),
+  `rule_value` VARCHAR(255),
+  `error_message` VARCHAR(255),
+  `is_active` TINYINT(1) DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS `environmental_social_governance_csr` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `organization_id` VARCHAR(255) NOT NULL,

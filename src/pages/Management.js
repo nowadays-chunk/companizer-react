@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import BaseManagementComponent from '../components/Management/Base';
 import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import * as WorkflowRulesConfig from '../components/Management/entity_workflow_rules.js';
+import { Dialog, DialogContent, DialogTitle, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 const getPath = (path) => {
@@ -15,6 +17,8 @@ function ManagementComponent({ showAnalytics }) {
 
     const [config, setConfig] = useState(null);
     const [AnalysisComponent, setAnalysisComponent] = useState(null);
+    const [showConfigDialog, setShowConfigDialog] = useState(false);
+    const rulesHelpers = React.useMemo(() => helpersWrapper('entity_workflow_rules'), []);
 
     useEffect(() => {
         const loadConfig = async () => {
@@ -31,6 +35,7 @@ function ManagementComponent({ showAnalytics }) {
                 setConfig({
                     fieldsConfig: fieldsConfig,
                     entityName: entityName,
+                    collectionName: collectionName,
                     fetchItems: operations.fetchItems,
                     addItem: operations.addItem,
                     updateItem: operations.updateItem,
@@ -65,6 +70,9 @@ function ManagementComponent({ showAnalytics }) {
                     updateItem={config.updateItem}
                     deleteItem={config.deleteItem}
                     headCells={config.headCells}
+                    onConfigure={() => {
+                        window.open(`/#/${module}/${subModule}/${component}/configuration`, '_blank');
+                    }}
                 />
             )}
         </>

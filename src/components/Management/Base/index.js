@@ -14,6 +14,7 @@ import BaseTableToolbar from './BaseTableToolbar';
 import BaseTable from './BaseTable.js';
 import { keyToLinkMap } from '../../../layout/keyToLinkMap';
 import { faker } from '@faker-js/faker';
+import { helpersWrapper } from '../../../utils/firebaseCrudHelpers';
 
 const getRandomElementId = (options) => {
   if (!options || options.length === 0) return null;
@@ -81,7 +82,9 @@ export default function BaseTableComponent({
   fieldConfig,
   entityName,
   onViewItem: onViewItemProp,
-  onEditItem: onEditItemProp
+  onEditItem: onEditItemProp,
+  onConfigure: onConfigureProp,
+  onAdd: onAddProp, // Allow override of Add action
 }) {
   const [refreshedFieldsConfig, setRefreshedFieldsConfig] = useState(fieldConfig);
 
@@ -95,22 +98,36 @@ export default function BaseTableComponent({
   const [filteredItems, setFilteredItems] = useState([]);
   const [filters, setFilters] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [validationRules, setValidationRules] = useState([]);
 
   useEffect(() => {
     setRefreshedFieldsConfig(fieldConfig);
   }, [fieldConfig]);
 
+  // Fetch items AND validation rules
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await fetchItems();
-      setItems(data);
+      try {
+        const [data, rules] = await Promise.all([
+          fetchItems(),
+          helpersWrapper('entity_workflow_rules').fetchItems()
+        ]);
+        setItems(data);
+
+        if (rules) {
+          const relevantRules = rules.filter(r => r.entity_type === entityName && r.is_active);
+          setValidationRules(relevantRules);
+        }
+      } catch (e) {
+        console.error("Error fetching data or rules", e);
+      }
       setLoading(false);
     };
 
     fetchData();
     setSelected([]);
-  }, [fetchItems]);
+  }, [fetchItems, entityName]);
 
   useEffect(() => {
     let filteredData = items;
@@ -142,6 +159,10 @@ export default function BaseTableComponent({
 
   // CREATE -> open single "create" page (no need for selection)
   const handleAddItem = () => {
+    if (onAddProp) {
+      onAddProp();
+      return;
+    }
     const baseSlashedURL = getBaseSlashedURL();
     if (!baseSlashedURL) return;
 
@@ -150,24 +171,49 @@ export default function BaseTableComponent({
   };
 
   // EDIT -> open edit tab for each selected item
-  const handleEditItem = () => {
-    if (selected.length === 0) return;
+  const handleEditItem = (id) => {
+    // Handling direct ID call (row action) or selected items (toolbar action)
+    const itemsToEdit = id && typeof id === 'string' ? [id] : selected;
+
+    if (itemsToEdit.length === 0) return;
+
     if (onEditItemProp) {
-      selected.forEach(id => onEditItemProp(id));
+      itemsToEdit.forEach(itemId => onEditItemProp(itemId));
       return;
     }
-    openTabsForSelected('edit');
+
+    // Default behavior
+    const baseSlashedURL = getBaseSlashedURL();
+    if (!baseSlashedURL) return;
+
+    itemsToEdit.forEach((itemId) => {
+      const url = `/#${baseSlashedURL}/edit/${itemId}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
   };
 
   // VIEW -> open view tab for each selected item
-  const handleViewItem = () => {
-    if (selected.length === 0) return;
+  const handleViewItem = (id) => {
+    // Handling direct ID call (row action) or selected items (toolbar action)
+    const itemsToView = id && typeof id === 'string' ? [id] : selected;
+
+    if (itemsToView.length === 0) return;
+
     if (onViewItemProp) {
-      selected.forEach(id => onViewItemProp(id));
+      itemsToView.forEach(itemId => onViewItemProp(itemId));
       return;
     }
-    openTabsForSelected('view');
+
+    // Default behavior
+    const baseSlashedURL = getBaseSlashedURL();
+    if (!baseSlashedURL) return;
+
+    itemsToView.forEach((itemId) => {
+      const url = `/#${baseSlashedURL}/view/${itemId}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
   };
+
 
   const handleDeleteItems = async () => {
     if (!selected.length) return;
@@ -198,6 +244,10 @@ export default function BaseTableComponent({
             } else {
               value = getRandomElementId(field.options);
             }
+          }
+          // 1.5) CHECKBOX fields -> 0 or 1
+          else if (field.type === 'checkbox') {
+            value = Math.random() > 0.5 ? 1 : 0;
           }
           // 2) DATE fields -> MySQL DATETIME string (past or future)
           else if (field.type === 'date') {
@@ -290,6 +340,7 @@ export default function BaseTableComponent({
             onEdit={handleEditItem}
             onGenerateRandomRow={generateRandomRow}
             onViewItem={handleViewItem}
+            onConfigure={onConfigureProp}
             entityName={entityName}
           />
 
@@ -308,6 +359,7 @@ export default function BaseTableComponent({
             dense={dense}
             setDense={setDense}
             fieldConfig={fieldConfig}
+            validationRules={validationRules}
           />
         </Paper>
         <FormControlLabel
