@@ -41,6 +41,7 @@ import {
 } from '@mui/icons-material';
 
 import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { keyToLinkMap } from '../layout/keyToLinkMap';
 // User requested using BaseManagementComponent for details
 import BaseManagementComponent from '../components/Management/Base';
 // Import Comments Config
@@ -111,10 +112,14 @@ const Visualizer = (props) => {
 
   const main = props.main || params.main;
   const sub = props.sub || params.sub;
-  const entity = props.entity || params.entity;
+  const rawEntity = props.entity || params.entity;
+  const isDetail = props.isDetail || false;
+
+  // If isDetail is true, append -details to load the correct config/data
+  const entity = isDetail ? `${rawEntity}-details` : rawEntity;
+
   const idValue = props.id || params.id;
 
-  // If passed as prop, use that mode, else URL param, default to view
   const mode = props.mode || (window.location.hash.includes('/edit/') ? 'edit' : window.location.hash.includes('/create') ? 'create' : 'view');
 
   const holdingFolder = pathify(main);
@@ -591,10 +596,14 @@ const Visualizer = (props) => {
 
             // Enable navigation to detail entity view
             onViewItem={(itemId) => {
-              window.open(`/#/Management/Details/${detailEntityName}/view/${itemId}`, '_blank');
+              // Construct parent base URL from rawEntity (e.g. vendor-invoices)
+              // keyToLinkMap uses keys like 'vendor-invoices' to return '/financial-management/accounts-payable/vendor-invoices'
+              const parentBaseUrl = keyToLinkMap[rawEntity] || `/${main}/${sub}/${rawEntity}`;
+              window.open(`/#${parentBaseUrl}/details/view/${itemId}`, '_blank');
             }}
             onEditItem={(itemId) => {
-              window.open(`/#/Management/Details/${detailEntityName}/edit/${itemId}`, '_blank');
+              const parentBaseUrl = keyToLinkMap[rawEntity] || `/${main}/${sub}/${rawEntity}`;
+              window.open(`/#${parentBaseUrl}/details/edit/${itemId}`, '_blank');
             }}
           />
         </Box>

@@ -137,38 +137,70 @@ const App = () => {
           }
         />
 
-       <Route
-        path="/:main/:sub/:entity/view/:id"
-        element={
-          <ProtectedRoute user={user}>
-            <Dashboard>
-              <Visualizer mode="view"/>
-            </Dashboard>
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/:main/:sub/:entity/view/:id"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Visualizer mode="view" />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path="/:main/:sub/:entity/edit/:id"
-        element={
-          <ProtectedRoute user={user}>
-            <Dashboard>
-              <Visualizer mode="edit"/>
-            </Dashboard>
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/:main/:sub/:entity/edit/:id"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Visualizer mode="edit" />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path="/:main/:sub/:entity/create"
-        element={
-          <ProtectedRoute user={user}>
-            <Dashboard>
-              <Visualizer mode="create"/>
-            </Dashboard>
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/:main/:sub/:entity/create"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Visualizer mode="create" />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* DETAILS ROUTES (Nested URL structure) */}
+        <Route
+          path="/:main/:sub/:entity/details/view/:id"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Visualizer mode="view" isDetail={true} />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/:main/:sub/:entity/details/edit/:id"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Visualizer mode="edit" isDetail={true} />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/:main/:sub/:entity/details/create"
+          element={
+            <ProtectedRoute user={user}>
+              <Dashboard>
+                <Visualizer mode="create" isDetail={true} />
+              </Dashboard>
+            </ProtectedRoute>
+          }
+        />
 
       </Routes>
     </TranslationProvider>
