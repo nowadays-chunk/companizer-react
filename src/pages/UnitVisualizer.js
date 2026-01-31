@@ -400,6 +400,12 @@ const Visualizer = (props) => {
   const handleDelete = async () => {
     if (!window.confirm('Delete this item?')) return;
     await queryHelpers.deleteItem(idValue);
+
+    if (isDetail) {
+      window.close();
+      return;
+    }
+
     if (props.onClose) props.onClose();
     else navigate(-1);
   };
