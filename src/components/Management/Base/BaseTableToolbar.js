@@ -69,7 +69,7 @@ export default function BaseTableToolbar({
           color="primary"
           sx={{ ml: 1 }}
         >
-          Generate Random Row
+          Generate
         </Button>
 
         <Button
@@ -78,7 +78,7 @@ export default function BaseTableToolbar({
           color="primary"
           sx={{ ml: 1 }}
         >
-          View Selected
+          View
         </Button>
 
         {/* Configure Workflow Rules */}

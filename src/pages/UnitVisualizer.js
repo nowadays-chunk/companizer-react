@@ -614,7 +614,7 @@ const Visualizer = (props) => {
             </Box>
           ) : (
             // EDIT/CREATE FORM
-            <Card sx={{ maxWidth: 800, mx: 'auto' }}>
+            <Card>
               <CardContent sx={{ p: 5 }}>
                 <Typography variant="h5" sx={{ mb: 4, fontWeight: 700 }}>
                   {isCreate ? t('Create New Item') : t('Edit Item')}
