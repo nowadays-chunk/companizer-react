@@ -15,7 +15,6 @@ export const fieldsConfig = {
   is_default: { label: 'Is Default', type: 'checkbox', faker: 'datatype.boolean' },
   description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
   penalty_percentage: { label: 'Penalty (%)', type: 'number', faker: 'datatype.float' },
-  ype: 'checkbox', faker: 'datatype.boolean',
   processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
   total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };

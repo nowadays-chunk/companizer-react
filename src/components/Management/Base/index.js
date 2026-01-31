@@ -270,7 +270,12 @@ export default function BaseTableComponent({
   };
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
+    <Container maxWidth="lg" sx={{
+      paddingTop: 3,
+      paddingBottom: 7,
+      width: '100%',
+      overflowX: 'hidden'
+    }}>
       <Box sx={{ maxWidth: '100%', position: 'relative' }}>
         <FilterManager
           filters={filters}

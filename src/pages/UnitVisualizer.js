@@ -278,7 +278,16 @@ const Visualizer = (props) => {
 
           // Import the registry
           const { getConfig } = await import('../components/Management/configRegistry.js');
-          const logicModule = getConfig(componentName);
+          let logicModule = getConfig(componentName);
+
+          // If simple name lookup fails, try disambiguated name using subFolder (for handled duplicates)
+          if (!logicModule && subFolder) {
+            const disambiguatedName = `${subFolder.replace(/[^a-zA-Z0-9]/g, '')}_${componentName}`;
+            logicModule = getConfig(disambiguatedName);
+            if (logicModule) {
+              console.log(`✅ Loaded config using disambiguated key: ${disambiguatedName}`);
+            }
+          }
 
           if (logicModule) {
             console.log('✅ Config loaded successfully:', logicModule);
@@ -470,7 +479,12 @@ const Visualizer = (props) => {
   if (!config) return <Typography>Config not found.</Typography>;
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3, paddingBottom: 7 }}>
+    <Container maxWidth="lg" sx={{
+      paddingTop: 3,
+      paddingBottom: 7,
+      width: '100%',
+      overflowX: 'hidden' // Prevent horizontal scroll
+    }}>
       {/* HEADER & ACTIONS */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <Typography variant="h4">{componentName} {isView ? 'Details' : isEdit ? 'Edit' : 'Create'}</Typography>
