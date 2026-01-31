@@ -24,10 +24,32 @@ import WorkflowRulesManager from './pages/WorkflowRulesManager';
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
 
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import getTheme from './theme'; // Changed import
+
 const App = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [language, setLanguage] = useState('en'); // Default language
+
+  // Theme Mode State
+  const [mode, setMode] = useState(() => localStorage.getItem('themeMode') || 'light');
+
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => {
+          const newMode = prevMode === 'light' ? 'dark' : 'light';
+          localStorage.setItem('themeMode', newMode);
+          return newMode;
+        });
+      },
+      mode,
+    }),
+    [mode],
+  );
+
+  const theme = React.useMemo(() => getTheme(mode), [mode]);
 
   // ✅ New auth bootstrap: read from localStorage (set by axios login / registration)
   useEffect(() => {
@@ -58,196 +80,199 @@ const App = () => {
   };
 
   return (
-    <TranslationProvider>
-      <Routes>
-        <Route
-          path="/"
-          element={<HomePage />}
-        />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <TranslationProvider>
+        <Routes>
+          <Route
+            path="/"
+            element={<HomePage />}
+          />
 
-        <Route
-          path="/summary"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Treasury />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/summary"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Treasury />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/bilan-comptable"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <BilanComptable />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/bilan-comptable"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <BilanComptable />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/:module/:subModule/:component"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Management />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/:module/:subModule/:component"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Management />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/:module/:subModule/:targetEntity/configuration"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <WorkflowRulesManager />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/:module/:subModule/:targetEntity/configuration"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <WorkflowRulesManager />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/:module/:subModule/:component/configuration/view/:id"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Visualizer mode="view" />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/:module/:subModule/:component/configuration/view/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Visualizer mode="view" />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/:module/:subModule/:component/configuration/edit/:id"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Visualizer mode="edit" />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/:module/:subModule/:component/configuration/edit/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Visualizer mode="edit" />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/:module/:subModule/:component/configuration/create"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Visualizer mode="create" />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
-        {/* Blog and documentation */}
-        <Route
-          path="/blog"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Blog language={language} switchLanguage={switchLanguage} />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/:module/:subModule/:component/configuration/create"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Visualizer mode="create" />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
+          {/* Blog and documentation */}
+          <Route
+            path="/blog"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Blog language={language} switchLanguage={switchLanguage} />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/article/:slug"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Article language={language} switchLanguage={switchLanguage} />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/article/:slug"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Article language={language} switchLanguage={switchLanguage} />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Authentication */}
-        <Route
-          path="/registration"
-          element={<OrganizationRegistration />}
-        />
+          {/* Authentication */}
+          <Route
+            path="/registration"
+            element={<OrganizationRegistration />}
+          />
 
-        <Route
-          path="/gantt-chart"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <GanttChart />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/gantt-chart"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <GanttChart />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/:main/:sub/:entity/view/:id"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Visualizer mode="view" />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/:main/:sub/:entity/view/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Visualizer mode="view" />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/:main/:sub/:entity/edit/:id"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Visualizer mode="edit" />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/:main/:sub/:entity/edit/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Visualizer mode="edit" />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/:main/:sub/:entity/create"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Visualizer mode="create" />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/:main/:sub/:entity/create"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Visualizer mode="create" />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-        {/* DETAILS ROUTES (Nested URL structure) */}
-        <Route
-          path="/:main/:sub/:entity/details/view/:id"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Visualizer mode="view" isDetail={true} />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/:main/:sub/:entity/details/edit/:id"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Visualizer mode="edit" isDetail={true} />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/:main/:sub/:entity/details/create"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard>
-                <Visualizer mode="create" isDetail={true} />
-              </Dashboard>
-            </ProtectedRoute>
-          }
-        />
+          {/* DETAILS ROUTES (Nested URL structure) */}
+          <Route
+            path="/:main/:sub/:entity/details/view/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Visualizer mode="view" isDetail={true} />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/:main/:sub/:entity/details/edit/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Visualizer mode="edit" isDetail={true} />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/:main/:sub/:entity/details/create"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <Visualizer mode="create" isDetail={true} />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
 
-      </Routes>
-    </TranslationProvider>
+        </Routes>
+      </TranslationProvider>
+    </ThemeProvider>
   );
 };
 

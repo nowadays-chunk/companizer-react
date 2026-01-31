@@ -10,6 +10,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import { useTranslation } from '../../../contexts/TranslationProvider';
 
 export default function BaseTableToolbar({
   numSelected,
@@ -32,7 +33,7 @@ export default function BaseTableToolbar({
         {entityName}
       </Typography>
 
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2 }}>{/* Added mt: 2 for separation */}
         {/* Edit / Delete / Add */}
         {numSelected > 0 && (
           <>

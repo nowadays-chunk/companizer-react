@@ -196,8 +196,7 @@ function BaseTable({
               ...Object.keys(fieldConfig).map((key) => ({
                 id: key,
                 label: fieldConfig[key].label,
-              })),
-              { id: 'actions', label: 'Actions' }
+              }))
             ]}
             order={order}
             orderBy={orderBy}
@@ -243,23 +242,6 @@ function BaseTable({
                     </TableCell>
                   ))}
 
-                  {/* ACTIONS COLUMN */}
-                  <TableCell align="right">
-                    <Box display="flex">
-                      {/* VIEW */}
-                      <Tooltip title="View">
-                        <IconButton onClick={(e) => { e.stopPropagation(); if (onViewItem) onViewItem(row.id); }}>
-                          <VisibilityIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                      {/* EDIT */}
-                      <Tooltip title="Edit">
-                        <IconButton onClick={(e) => { e.stopPropagation(); if (onEditItem) onEditItem(row.id); }}>
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  </TableCell>
                 </TableRow>
               );
             })}

@@ -1,7 +1,9 @@
 import React from 'react';
 import { TableHead, TableRow, TableCell, TableSortLabel, Checkbox } from '@mui/material';
+import { useTranslation } from '../../../contexts/TranslationProvider';
 
 export default function BaseTableHead({ headCells, order, orderBy, onRequestSort, onSelectAllClick, numSelected, rowCount }) {
+  const { t } = useTranslation();
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -24,7 +26,7 @@ export default function BaseTableHead({ headCells, order, orderBy, onRequestSort
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              {t(headCell.label)}
             </TableSortLabel>
           </TableCell>
         ))}

@@ -15,6 +15,7 @@ import BaseTable from './BaseTable.js';
 import { keyToLinkMap } from '../../../layout/keyToLinkMap';
 import { faker } from '@faker-js/faker';
 import { helpersWrapper } from '../../../utils/firebaseCrudHelpers';
+import { useTranslation } from '../../../contexts/TranslationProvider';
 
 const getRandomElementId = (options) => {
   if (!options || options.length === 0) return null;
@@ -86,6 +87,7 @@ export default function BaseTableComponent({
   onConfigure: onConfigureProp,
   onAdd: onAddProp, // Allow override of Add action
 }) {
+  const { t } = useTranslation();
   const [refreshedFieldsConfig, setRefreshedFieldsConfig] = useState(fieldConfig);
 
   const [order, setOrder] = useState('asc');
@@ -218,7 +220,7 @@ export default function BaseTableComponent({
   const handleDeleteItems = async () => {
     if (!selected.length) return;
 
-    if (window.confirm('Are you sure you want to delete the selected items?')) {
+    if (window.confirm(t('Are you sure you want to delete the selected items?'))) {
       setLoading(true);
       for (const id of selected) {
         await deleteItem(id);
@@ -360,6 +362,8 @@ export default function BaseTableComponent({
             setDense={setDense}
             fieldConfig={fieldConfig}
             validationRules={validationRules}
+            onViewItem={handleViewItem}
+            onEditItem={handleEditItem}
           />
         </Paper>
         <FormControlLabel

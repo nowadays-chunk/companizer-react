@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 import { drawerItems } from './drawerItems';
 import { keyToLinkMap } from './keyToLinkMap';
 import { moduleToIconMap } from './moduleToIconMap';
+import { useTranslation } from '../contexts/TranslationProvider';
 
 const expandedDrawerWidth = 300;
 const collapsedDrawerWidth = 70; // icons + padding
@@ -69,6 +70,7 @@ const theme = createTheme({
 
 export default function DashboardDrawer({ open, onToggleDrawer }) {
   const [openItems, setOpenItems] = useState({});
+  const { t } = useTranslation(); // Use translation hook
 
   const handleClick = (key) => {
     setOpenItems((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -227,7 +229,7 @@ export default function DashboardDrawer({ open, onToggleDrawer }) {
                     targetPath !== '#' ? Link : 'button';
 
                   return (
-                    <Tooltip key={key} title={label} placement="right">
+                    <Tooltip key={key} title={t(label)} placement="right">
                       <ListItemButton
                         component={ButtonComponent}
                         {...(ButtonComponent === Link ? { to: targetPath } : {})}
@@ -265,7 +267,7 @@ export default function DashboardDrawer({ open, onToggleDrawer }) {
                             {TopIcon ? <TopIcon /> : <ChevronRightIcon />}
                           </ListItemIcon>
                           <ListItemText
-                            primary={label}
+                            primary={t(label)}
                             primaryTypographyProps={{
                               fontSize: 15,
                               fontWeight: 'medium',
@@ -296,7 +298,7 @@ export default function DashboardDrawer({ open, onToggleDrawer }) {
                                     >
                                       <ListItemText
                                         sx={{ pl: 4 }}
-                                        primary={`• ${subLabel}`}
+                                        primary={`• ${t(subLabel)}`}
                                       />
                                       {subChildren ? (
                                         openItems[subKey] ? (
@@ -339,15 +341,15 @@ export default function DashboardDrawer({ open, onToggleDrawer }) {
                                                 <ListItemButton>
                                                   <Tooltip
                                                     title={
-                                                      subDesc ||
-                                                      description ||
-                                                      ''
+                                                      t(subDesc ||
+                                                        description ||
+                                                        '')
                                                     }
                                                     placement="right"
                                                   >
                                                     <ListItemText
                                                       sx={{ pl: 6 }}
-                                                      primary={`• ${subSubLabel}`}
+                                                      primary={`• ${t(subSubLabel)}`}
                                                     />
                                                   </Tooltip>
                                                 </ListItemButton>

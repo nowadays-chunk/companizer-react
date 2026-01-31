@@ -63,9 +63,9 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Dashboard = ({ children }) => {
+const Dashboard = ({ children, colorMode }) => {
   const theme = useTheme();
-  const { language, toggleLanguage } = useTranslation();
+  const { language, toggleLanguage, t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -204,6 +204,16 @@ const Dashboard = ({ children }) => {
               onClick={toggleLanguage}
             >
               {translate('Switch Language', language)}
+            </Button>
+
+            <Button
+              variant="outlined"
+              color="inherit"
+              size="small"
+              sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
+              onClick={colorMode.toggleColorMode}
+            >
+              {colorMode.mode === 'dark' ? 'Light' : 'Dark'}
             </Button>
 
             <Button

@@ -22,6 +22,7 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
+  Tooltip,
   Paper
 } from '@mui/material';
 import {
@@ -35,6 +36,7 @@ import {
   PictureAsPdf,
   Email,
   Delete,
+  Edit, // Added Edit icon
   History,
   Archive,
   Send
@@ -50,6 +52,7 @@ import { collectionName as commentsCollectionName } from '../components/Manageme
 // Import Action Timeline and Logs Config
 import ActionTimeline from '../components/ActionTimeline';
 import { collectionName as logsCollectionName } from '../components/Management/manager_action_logs';
+import { useTranslation } from '../contexts/TranslationProvider'; // Added useTranslation
 
 // Icon mapping for dynamic actions
 const ICON_MAP = {
@@ -110,6 +113,7 @@ const Visualizer = (props) => {
   // Support both URL params and explicit props (for recursion)
   const params = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation(); // Added hook destructuring
 
   const main = props.main || params.main || params.module;
   const sub = props.sub || params.sub || params.subModule;
@@ -567,12 +571,21 @@ const Visualizer = (props) => {
     }}>
       {/* HEADER & ACTIONS */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-        <Typography variant="h4">{componentName} {isView ? 'Details' : isEdit ? 'Edit' : 'Create'}</Typography>
+        <Typography variant="h4">{componentName} {isView ? t('Details') : isEdit ? t('Edit') : t('Create')}</Typography>
         <Box gap={1} display="flex">
-          {configEntityConfig && (
-            <Button startIcon={<Settings />} variant="outlined" onClick={() => setShowConfigDialog(true)}>
-              Configure
-            </Button>
+          {isView && (
+            <Tooltip title={t('Edit')}>
+              <IconButton onClick={() => navigate(`/${main}/${sub}/${entity}/edit/${idValue}`)}>
+                <Edit />
+              </IconButton>
+            </Tooltip>
+          )}
+          {(isView || isEdit) && (
+            <Tooltip title={t('Delete')}>
+              <IconButton onClick={handleDelete} color="error">
+                <Delete />
+              </IconButton>
+            </Tooltip>
           )}
           {props.onClose && (
             <IconButton onClick={props.onClose}><Close /></IconButton>
@@ -604,7 +617,7 @@ const Visualizer = (props) => {
                   onClick={() => handleAction(actionName)}
                   sx={{ minWidth: '140px' }}
                 >
-                  {def.label}
+                  {t(def.label)}
                 </Button>
               );
             })}
@@ -624,14 +637,14 @@ const Visualizer = (props) => {
                 <Grid item xs={12} sm={6} key={key}>
                   {isView ? (
                     <Box>
-                      <Typography variant="caption" color="textSecondary">{field.label}</Typography>
+                      <Typography variant="caption" color="textSecondary">{t(field.label)}</Typography>
                       <Typography variant="body1">{String(itemData?.[key] || '-')}</Typography>
                     </Box>
                   ) : (
                     // Simplified Form Input rendering for brevity (reuses logic from original)
                     <TextField
                       fullWidth
-                      label={field.label}
+                      label={t(field.label)}
                       type={field.type === 'number' ? 'number' : field.type === 'date' ? 'datetime-local' : 'text'}
                       select={field.type === 'select'}
                       value={field.type === 'checkbox' ? undefined : (formData[key] ?? '')}

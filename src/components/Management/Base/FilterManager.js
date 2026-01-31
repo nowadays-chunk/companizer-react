@@ -2,8 +2,11 @@ import React from 'react';
 import { Box, Button, IconButton, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from '../../../contexts/TranslationProvider';
 
 export default function FilterManager({ filters, setFilters, fieldConfig }) {
+  const { t } = useTranslation();
+
   const handleAddFilter = () => {
     setFilters([...filters, { column: '', value: '', active: true }]);
   };
@@ -25,17 +28,17 @@ export default function FilterManager({ filters, setFilters, fieldConfig }) {
       {filters.map((filter, index) => (
         <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
           <FormControl sx={{ minWidth: 120 }}>
-            <InputLabel>Column</InputLabel>
+            <InputLabel>{t('Column')}</InputLabel>
             <Select value={filter.column} onChange={(e) => handleFilterChange(index, 'column', e.target.value)}>
               {Object.keys(fieldConfig).map((key) => (
                 <MenuItem key={key} value={key}>
-                  {fieldConfig[key].label}
+                  {t(fieldConfig[key].label)}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
           <TextField
-            label="Value"
+            label={t('Value')}
             value={filter.value}
             onChange={(e) => handleFilterChange(index, 'value', e.target.value)}
             sx={{ ml: 2 }}
@@ -46,7 +49,7 @@ export default function FilterManager({ filters, setFilters, fieldConfig }) {
         </Box>
       ))}
       <Button variant="contained" onClick={handleAddFilter} startIcon={<AddIcon />}>
-        Add Filter
+        {t('Filter')}
       </Button>
     </Box>
   );
