@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   rate_id: { label: 'Rate ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -11,9 +12,6 @@ export const fieldsConfig = {
   conversion_rate_percentage: { label: 'Conversion Rate (%)', type: 'number', faker: 'datatype.float' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   tags: { label: 'Tags', type: 'select', options: [{ id: 'improving', label: 'Improving' }, { id: 'declining', label: 'Declining' }], multiple: true, faker: 'random.arrayElement' },
 
   // Extras
@@ -22,8 +20,10 @@ export const fieldsConfig = {
   cost_per_acquisition: { label: 'CPA', type: 'number', faker: 'finance.amount' },
   industry_segment: { label: 'Industry Segment', type: 'text', faker: 'commerce.department' },
   region: { label: 'Region', type: 'text', faker: 'address.country' },
-  analyst_comments: { label: 'Analyst Comments', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Lead Conversion Rates';
 export const collectionName = 'lead_conversion_rates';

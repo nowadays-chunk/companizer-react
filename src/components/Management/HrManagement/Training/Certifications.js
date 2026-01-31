@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   cert_id: { label: 'Cert ID', type: 'text', faker: 'datatype.uuid' },
   employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,14 +12,13 @@ export const fieldsConfig = {
   expiry_date: { label: 'Expiry Date', type: 'date', faker: 'date.future' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   credential_number: { label: 'Credential Number', type: 'text', faker: 'random.alphaNumeric' },
   status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'expired', label: 'Expired' }], faker: 'random.arrayElement' },
-  verification_url: { label: 'Verification URL', type: 'text', faker: 'internet.url' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'HR Certifications';
 export const collectionName = 'hr_certifications';

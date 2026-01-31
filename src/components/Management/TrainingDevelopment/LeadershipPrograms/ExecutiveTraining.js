@@ -1,26 +1,26 @@
 
 export const fieldsConfig = {
-    training_id: { label: 'Training ID', type: 'text', faker: 'datatype.uuid' },
-    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
-    program_name: { label: 'Program Name', type: 'text', faker: 'lorem.words' },
-    institution: { label: 'Institution', type: 'text', faker: 'company.name' },
+  training_id: { label: 'Training ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
-    start_date: { label: 'Start Date', type: 'date', faker: 'date.recent' },
-    end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
+  program_name: { label: 'Program Name', type: 'text', faker: 'lorem.words' },
+  institution: { label: 'Institution', type: 'text', faker: 'company.name' },
 
-    cost: { label: 'Cost', type: 'number', faker: 'finance.amount' },
+  start_date: { label: 'Start Date', type: 'date', faker: 'date.recent' },
+  end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
 
-    // Mandated
-    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+  cost: { label: 'Cost', type: 'number', faker: 'finance.amount' },
 
-    // Extras
-    attendee_id: { label: 'Attendee ID', type: 'text', faker: 'datatype.uuid' }, // Executive
-    status: { label: 'Status', type: 'select', options: [{ id: 'enrolled', label: 'Enrolled' }, { id: 'completed', label: 'Completed' }, { id: 'withdrawn', label: 'Withdrawn' }], faker: 'random.arrayElement' },
-    certificate_received: { label: 'Certificate Received', type: 'checkbox', faker: 'datatype.boolean' },
-    notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  // Mandated
+  // Extras
+  attendee_id: { label: 'Attendee ID', type: 'text', faker: 'datatype.uuid' }, // Executive
+  status: { label: 'Status', type: 'select', options: [{ id: 'enrolled', label: 'Enrolled' }, { id: 'completed', label: 'Completed' }, { id: 'withdrawn', label: 'Withdrawn' }], faker: 'random.arrayElement' },
+  certificate_received: { label: 'Certificate Received', type: 'checkbox', faker: 'datatype.boolean' },
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Executive Training';
 export const collectionName = 'executive_training';

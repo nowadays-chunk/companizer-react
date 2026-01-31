@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   performance_id: { label: 'Performance ID', type: 'text', faker: 'datatype.uuid' },
   campaign_id: { label: 'Campaign ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -12,9 +13,6 @@ export const fieldsConfig = {
   cpc: { label: 'CPC', type: 'number', faker: 'finance.amount' }, // Cost per click
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   tags: { label: 'Tags', type: 'select', options: [{ id: 'high_performing', label: 'High Performing' }, { id: 'underperforming', label: 'Underperforming' }], multiple: true, faker: 'random.arrayElement' },
 
   // Extras
@@ -24,8 +22,10 @@ export const fieldsConfig = {
   roas: { label: 'ROAS', type: 'number', faker: 'datatype.float' }, // Return on Ad Spend
   bounce_rate: { label: 'Bounce Rate (%)', type: 'number', faker: 'datatype.float' },
   avg_session_duration: { label: 'Avg Session Duration', type: 'number', faker: 'datatype.float' },
-  device_breakdown: { label: 'Device Breakdown', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Campaign Performance';
 export const collectionName = 'campaign_performance';

@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   history_id: { label: 'History ID', type: 'text', faker: 'datatype.uuid' },
   customer_id: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -10,8 +11,7 @@ export const fieldsConfig = {
   description: { label: 'Description', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' }, // Transaction value?
+  // Transaction value?
 
   tags: { label: 'Tags', type: 'select', options: [{ id: 'positive', label: 'Positive' }, { id: 'negative', label: 'Negative' }], multiple: true, faker: 'random.arrayElement' },
 
@@ -22,8 +22,10 @@ export const fieldsConfig = {
   channel: { label: 'Channel', type: 'text', faker: 'internet.domainWord' },
   outcome: { label: 'Outcome', type: 'text', faker: 'lorem.word' },
   touchpoint_score: { label: 'Touchpoint Score', type: 'number', faker: 'datatype.number' },
-  follow_up_needed: { label: 'Follow Up Needed', type: 'checkbox', faker: 'datatype.boolean' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Customer History';
 export const collectionName = 'customer_history';

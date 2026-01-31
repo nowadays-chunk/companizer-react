@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   license_id: { label: 'License ID', type: 'text', faker: 'datatype.uuid' },
   ip_asset_id: { label: 'IP Asset ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,16 +12,15 @@ export const fieldsConfig = {
   royalty_rate: { label: 'Royalty Rate (%)', type: 'number', faker: 'datatype.float' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   territory: { label: 'Territory', type: 'text', faker: 'address.country' },
   exclusivity: { label: 'Exclusivity', type: 'checkbox', faker: 'datatype.boolean' },
   payment_terms: { label: 'Payment Terms', type: 'text', faker: 'lorem.sentence' },
   status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'expired', label: 'Expired' }, { id: 'terminated', label: 'Terminated' }], faker: 'random.arrayElement' },
-  agreement_url: { label: 'Agreement URL', type: 'text', faker: 'internet.url' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'IP Licensing';
 export const collectionName = 'ip_licensing';

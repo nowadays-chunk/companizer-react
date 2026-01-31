@@ -7,10 +7,8 @@ export const fieldsConfig = {
     entity_type: { label: 'Entity Type', type: 'text', faker: 'lorem.word' }, // e.g., Project, Employee
     entity_id: { label: 'Entity ID', type: 'text', faker: 'datatype.uuid' },
 
-    timestamp: { label: 'Timestamp', type: 'datetime', faker: 'date.recent' },
-
     // Mandated
-    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+    processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
     unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
 
     // Extras

@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   version_id: { label: 'Version ID', type: 'text', faker: 'datatype.uuid' },
   project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -10,17 +11,16 @@ export const fieldsConfig = {
   release_notes: { label: 'Release Notes', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   branch_name: { label: 'Branch Name', type: 'text', faker: 'hacker.noun' }, // git branch
   commit_hash: { label: 'Commit Hash', type: 'text', faker: 'git.commitSha' },
   author: { label: 'Author', type: 'text', faker: 'name.fullName' },
   is_stable: { label: 'Is Stable', type: 'checkbox', faker: 'datatype.boolean' },
   download_url: { label: 'Download URL', type: 'text', faker: 'internet.url' },
-  environment: { label: 'Environment', type: 'select', options: [{ id: 'prod', label: 'Production' }, { id: 'staging', label: 'Staging' }], faker: 'random.arrayElement' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Version Control';
 export const collectionName = 'version_control';

@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   evaluation_id: { label: 'Evaluation ID', type: 'text', faker: 'datatype.uuid' },
   supplier_id: { label: 'Supplier ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -12,14 +13,13 @@ export const fieldsConfig = {
   overall_score: { label: 'Overall Score', type: 'number', faker: 'datatype.number' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   evaluated_by: { label: 'Evaluated By', type: 'text', faker: 'name.fullName' },
   date_evaluated: { label: 'Date Evaluated', type: 'date', faker: 'date.recent' },
-  recommendation: { label: 'Recommendation', type: 'text', faker: 'lorem.sentence' } // Retain, Replace, Warn
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Supplier Performance Evaluation';
 export const collectionName = 'supplier_performance_evaluation';

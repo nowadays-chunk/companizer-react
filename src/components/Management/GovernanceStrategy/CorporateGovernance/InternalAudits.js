@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   audit_id: { label: 'Audit ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -10,16 +11,16 @@ export const fieldsConfig = {
   auditor_name: { label: 'Auditor Name', type: 'text', faker: 'name.fullName' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   scope: { label: 'Scope', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
   findings: { label: 'Findings', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
   risk_rating: { label: 'Risk Rating', type: 'select', options: [{ id: 'high', label: 'High' }, { id: 'medium', label: 'Medium' }, { id: 'low', label: 'Low' }], faker: 'random.arrayElement' },
   status: { label: 'Status', type: 'select', options: [{ id: 'open', label: 'Open' }, { id: 'closed', label: 'Closed' }, { id: 'follow_up', label: 'Follow Up' }], faker: 'random.arrayElement' },
-  report_url: { label: 'Report URL', type: 'text', faker: 'internet.url' }
+  type: 'text', faker: 'internet.url',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Internal Audits';
 export const collectionName = 'internal_audits';

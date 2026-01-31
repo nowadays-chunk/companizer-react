@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   csr_id: { label: 'CSR ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -9,9 +10,6 @@ export const fieldsConfig = {
   budget_allocated: { label: 'Budget Allocated', type: 'number', faker: 'finance.amount' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   start_year: { label: 'Start Year', type: 'number', faker: 'date.past' },
   program_manager: { label: 'Program Manager', type: 'text', faker: 'name.fullName' },
@@ -19,8 +17,11 @@ export const fieldsConfig = {
   goals: { label: 'Goals', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
   achievements: { label: 'Achievements', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
   website_url: { label: 'Website URL', type: 'text', faker: 'internet.url' },
-  is_active: { label: 'Is Active', type: 'checkbox', faker: 'datatype.boolean' }
+  ype: 'checkbox', faker: 'datatype.boolean',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Corporate Social Responsibility';
 export const collectionName = 'environmental_social_governance_csr';

@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   benchmark_id: { label: 'Benchmark ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -10,17 +11,16 @@ export const fieldsConfig = {
   unit: { label: 'Unit', type: 'text', faker: 'scientific.unit' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   date_recorded: { label: 'Date Recorded', type: 'date', faker: 'date.recent' },
   source: { label: 'Source', type: 'text', faker: 'lorem.words' }, // e.g. "Gartner Report"
   competitor_best: { label: 'Competitor Best', type: 'number', faker: 'datatype.float' },
   gap_analysis: { label: 'Gap Analysis', type: 'text', faker: 'lorem.sentence' },
   target_value: { label: 'Target Value', type: 'number', faker: 'datatype.float' },
-  owner: { label: 'Owner', type: 'text', faker: 'name.fullName' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Benchmarking';
 export const collectionName = 'benchmarking';

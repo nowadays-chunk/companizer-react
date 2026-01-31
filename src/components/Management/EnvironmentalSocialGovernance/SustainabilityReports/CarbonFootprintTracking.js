@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   tracking_id: { label: 'Tracking ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -11,17 +12,16 @@ export const fieldsConfig = {
   total_emissions: { label: 'Total Emissions', type: 'number', faker: 'datatype.float' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   unit: { label: 'Unit', type: 'text', defaultValue: 'MT CO2e', faker: 'scientific.unit' },
   calculation_method: { label: 'Calculation Method', type: 'text', faker: 'lorem.word' }, // GHG Protocol
   verified_by: { label: 'Verified By', type: 'text', faker: 'company.name' },
   offset_purchased: { label: 'Offset Purchased', type: 'number', faker: 'datatype.float' },
   net_emissions: { label: 'Net Emissions', type: 'number', faker: 'datatype.float' },
-  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Carbon Footprint Tracking';
 export const collectionName = 'carbon_footprint_tracking';

@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   allocation_id: { label: 'Allocation ID', type: 'text', faker: 'datatype.uuid' },
   project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
   resource_id: { label: 'Resource ID', type: 'text', faker: 'datatype.uuid' }, // Employee or Equipment
@@ -13,16 +14,17 @@ export const fieldsConfig = {
   utilization_percentage: { label: 'Utilization (%)', type: 'number', faker: 'datatype.number' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' }, // Hourly cost
+  // Hourly cost
 
   // Extras
   status: { label: 'Status', type: 'select', options: [{ id: 'requested', label: 'Requested' }, { id: 'approved', label: 'Approved' }, { id: 'active', label: 'Active' }, { id: 'released', label: 'Released' }], faker: 'random.arrayElement' },
   cost_center_id: { label: 'Cost Center ID', type: 'text', faker: 'datatype.uuid' },
   manager_id: { label: 'Manager ID', type: 'text', faker: 'datatype.uuid' },
   skill_required: { label: 'Skill Required', type: 'text', faker: 'lorem.word' },
-  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Resource Allocation';
 export const collectionName = 'resource_allocation';

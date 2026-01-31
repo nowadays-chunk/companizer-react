@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   order_id: { label: 'Order ID', type: 'text', faker: 'datatype.uuid' },
   asset_id: { label: 'Asset ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,16 +12,15 @@ export const fieldsConfig = {
   request_date: { label: 'Request Date', type: 'date', faker: 'date.recent' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   status: { label: 'Status', type: 'select', options: [{ id: 'open', label: 'Open' }, { id: 'in_progress', label: 'In Progress' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' },
   assigned_technician: { label: 'Assigned Technician', type: 'text', faker: 'name.fullName' },
   completion_date: { label: 'Completion Date', type: 'date', faker: 'date.future' },
   priority: { label: 'Priority', type: 'select', options: [{ id: 'urgent', label: 'Urgent' }, { id: 'normal', label: 'Normal' }, { id: 'low', label: 'Low' }], faker: 'random.arrayElement' },
-  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Work Orders';
 export const collectionName = 'work_orders_ops';

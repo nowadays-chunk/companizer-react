@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   aging_id: { label: 'Aging ID', type: 'text', faker: 'datatype.uuid' },
   customer_id: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -13,14 +14,14 @@ export const fieldsConfig = {
   total_due: { label: 'Total Due', type: 'number', faker: 'finance.amount' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   report_date: { label: 'Report Date', type: 'date', faker: 'date.recent' },
   customer_name: { label: 'Customer Name', type: 'text', faker: 'company.name' },
-  currency: { label: 'Currency', type: 'text', faker: 'finance.currencyCode' }
+  e: 'text', faker: 'finance.currencyCode',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Debtor Aging';
 export const collectionName = 'debtor_aging';

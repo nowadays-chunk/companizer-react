@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   prediction_id: { label: 'Prediction ID', type: 'text', faker: 'datatype.uuid' },
   model_id: { label: 'Model ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,16 +12,15 @@ export const fieldsConfig = {
   prediction_date: { label: 'Prediction Date', type: 'date', faker: 'date.recent' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   model_version: { label: 'Model Version', type: 'text', faker: 'system.semver' },
   input_parameters: { label: 'Input Parameters', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
   actual_value: { label: 'Actual Value', type: 'number', faker: 'datatype.float' }, // For backtesting
   accuracy: { label: 'Accuracy', type: 'number', faker: 'datatype.float' },
-  analyst_comments: { label: 'Analyst Comments', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Predictive Analytics';
 export const collectionName = 'predictive_analytics';

@@ -1,28 +1,28 @@
 
 export const fieldsConfig = {
-    tracking_id: { label: 'Tracking ID', type: 'text', faker: 'datatype.uuid' },
-    ticket_id: { label: 'Ticket ID', type: 'text', faker: 'datatype.uuid' },
-    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
-    start_time: { label: 'Start Time', type: 'date', faker: 'date.past' },
-    end_time: { label: 'End Time', type: 'date', faker: 'date.recent' },
+  tracking_id: { label: 'Tracking ID', type: 'text', faker: 'datatype.uuid' },
+  ticket_id: { label: 'Ticket ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
-    duration_minutes: { label: 'Duration (Min)', type: 'number', faker: 'datatype.number' },
+  start_time: { label: 'Start Time', type: 'date', faker: 'date.past' },
+  end_time: { label: 'End Time', type: 'date', faker: 'date.recent' },
 
-    status: { label: 'Status', type: 'select', options: [{ id: 'met', label: 'Met' }, { id: 'breached', label: 'Breached' }], faker: 'random.arrayElement' },
+  duration_minutes: { label: 'Duration (Min)', type: 'number', faker: 'datatype.number' },
 
-    // Mandated
-    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+  status: { label: 'Status', type: 'select', options: [{ id: 'met', label: 'Met' }, { id: 'breached', label: 'Breached' }], faker: 'random.arrayElement' },
 
-    // Extras
-    agent_id: { label: 'Agent ID', type: 'text', faker: 'datatype.uuid' },
-    sla_target_minutes: { label: 'SLA Target (Min)', type: 'number', faker: 'datatype.number' },
-    stage: { label: 'Stage', type: 'select', options: [{ id: 'first_response', label: 'First Response' }, { id: 'resolution', label: 'Resolution' }], faker: 'random.arrayElement' },
-    hold_duration_minutes: { label: 'Hold Duration (Min)', type: 'number', faker: 'datatype.number' },
-    business_hours_only: { label: 'Business Hours Only', type: 'checkbox', faker: 'datatype.boolean' },
-    impact_on_kpi: { label: 'Impact on KPI', type: 'checkbox', faker: 'datatype.boolean' }
+  // Mandated
+  // Extras
+  agent_id: { label: 'Agent ID', type: 'text', faker: 'datatype.uuid' },
+  sla_target_minutes: { label: 'SLA Target (Min)', type: 'number', faker: 'datatype.number' },
+  stage: { label: 'Stage', type: 'select', options: [{ id: 'first_response', label: 'First Response' }, { id: 'resolution', label: 'Resolution' }], faker: 'random.arrayElement' },
+  hold_duration_minutes: { label: 'Hold Duration (Min)', type: 'number', faker: 'datatype.number' },
+  business_hours_only: { label: 'Business Hours Only', type: 'checkbox', faker: 'datatype.boolean' },
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Resolution Time Tracking';
 export const collectionName = 'resolution_time_tracking';

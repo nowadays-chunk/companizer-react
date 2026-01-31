@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   booking_id: { label: 'Booking ID', type: 'text', faker: 'datatype.uuid' },
   facility_id: { label: 'Facility ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,16 +12,16 @@ export const fieldsConfig = {
   purpose: { label: 'Purpose', type: 'text', faker: 'lorem.sentence' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   attendee_count: { label: 'Attendee Count', type: 'number', faker: 'datatype.number' },
   resources_required: { label: 'Resources Required', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
   status: { label: 'Status', type: 'select', options: [{ id: 'confirmed', label: 'Confirmed' }, { id: 'cancelled', label: 'Cancelled' }, { id: 'pending', label: 'Pending' }], faker: 'random.arrayElement' },
   setup_instructions: { label: 'Setup Instructions', type: 'text', faker: 'lorem.sentence' },
-  cost_code: { label: 'Cost Code', type: 'text', faker: 'finance.account' }
+  ype: 'text', faker: 'finance.account',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Facility Booking';
 export const collectionName = 'facility_booking';

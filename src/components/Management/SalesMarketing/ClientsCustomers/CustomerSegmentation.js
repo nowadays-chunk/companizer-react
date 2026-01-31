@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   segment_id: { label: 'Segment ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -9,9 +10,6 @@ export const fieldsConfig = {
   customer_count: { label: 'Customer Count', type: 'number', faker: 'datatype.number' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   tags: { label: 'Tags', type: 'select', options: [{ id: 'b2b', label: 'B2B' }, { id: 'b2c', label: 'B2C' }], multiple: true, faker: 'random.arrayElement' },
 
   // Extras
@@ -21,8 +19,10 @@ export const fieldsConfig = {
   created_by: { label: 'Created By', type: 'text', faker: 'name.fullName' },
   is_dynamic: { label: 'Is Dynamic', type: 'checkbox', faker: 'datatype.boolean' },
   region_filter: { label: 'Region Filter', type: 'text', faker: 'address.country' },
-  industry_filter: { label: 'Industry Filter', type: 'text', faker: 'lorem.word' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Customer Segmentation';
 export const collectionName = 'customer_segmentation';

@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   cycle_id: { label: 'Cycle ID', type: 'text', faker: 'datatype.uuid' },
   project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -12,17 +13,16 @@ export const fieldsConfig = {
   status: { label: 'Status', type: 'select', options: [{ id: 'planned', label: 'Planned' }, { id: 'active', label: 'Active' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   owner: { label: 'Owner', type: 'text', faker: 'name.fullName' },
   team: { label: 'Team', type: 'text', faker: 'hacker.noun' },
   deliverables: { label: 'Deliverables', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
   risks: { label: 'Risks', type: 'text', faker: 'lorem.sentence' },
   budget_spent: { label: 'Budget Spent', type: 'number', faker: 'finance.amount' },
-  code_repository_url: { label: 'Repo URL', type: 'text', faker: 'internet.url' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Software Development Lifecycle';
 export const collectionName = 'sdlc_phases';

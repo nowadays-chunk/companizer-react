@@ -1,25 +1,25 @@
 
 export const fieldsConfig = {
-    assessment_id: { label: 'Assessment ID', type: 'text', faker: 'datatype.uuid' },
-    employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
-    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
-    skill_name: { label: 'Skill Name', type: 'text', faker: 'hacker.noun' },
-    proficiency_level: { label: 'Proficiency Level', type: 'select', options: [{ id: 'novice', label: 'Novice' }, { id: 'intermediate', label: 'Intermediate' }, { id: 'expert', label: 'Expert' }], faker: 'random.arrayElement' },
+  assessment_id: { label: 'Assessment ID', type: 'text', faker: 'datatype.uuid' },
+  employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
-    assessment_date: { label: 'Assessment Date', type: 'date', faker: 'date.recent' },
+  skill_name: { label: 'Skill Name', type: 'text', faker: 'hacker.noun' },
+  proficiency_level: { label: 'Proficiency Level', type: 'select', options: [{ id: 'novice', label: 'Novice' }, { id: 'intermediate', label: 'Intermediate' }, { id: 'expert', label: 'Expert' }], faker: 'random.arrayElement' },
 
-    // Mandated
-    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-    unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+  assessment_date: { label: 'Assessment Date', type: 'date', faker: 'date.recent' },
 
-    // Extras
-    assessed_by: { label: 'Assessed By', type: 'text', faker: 'name.fullName' }, // Self, Manager, Peer
-    score: { label: 'Score', type: 'number', faker: 'datatype.number' }, // 1-10
-    target_level: { label: 'Target Level', type: 'select', options: [{ id: 'novice', label: 'Novice' }, { id: 'intermediate', label: 'Intermediate' }, { id: 'expert', label: 'Expert' }], faker: 'random.arrayElement' },
-    gap_analysis: { label: 'Gap Analysis', type: 'text', faker: 'lorem.sentence' },
-    notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  // Mandated
+  // Extras
+  assessed_by: { label: 'Assessed By', type: 'text', faker: 'name.fullName' }, // Self, Manager, Peer
+  score: { label: 'Score', type: 'number', faker: 'datatype.number' }, // 1-10
+  target_level: { label: 'Target Level', type: 'select', options: [{ id: 'novice', label: 'Novice' }, { id: 'intermediate', label: 'Intermediate' }, { id: 'expert', label: 'Expert' }], faker: 'random.arrayElement' },
+  gap_analysis: { label: 'Gap Analysis', type: 'text', faker: 'lorem.sentence' },
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Skill Assessments';
 export const collectionName = 'skill_assessments';

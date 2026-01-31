@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   tracking_id: { label: 'Tracking ID', type: 'text', faker: 'datatype.uuid' },
   initiative_id: { label: 'Initiative ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,16 +12,16 @@ export const fieldsConfig = {
   cost_saved: { label: 'Cost Saved', type: 'number', faker: 'finance.amount' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   baseline_usage: { label: 'Baseline Usage', type: 'number', faker: 'datatype.number' },
   actual_usage: { label: 'Actual Usage', type: 'number', faker: 'datatype.number' },
   weather_adjustment: { label: 'Weather Adjustment', type: 'number', faker: 'datatype.float' },
   notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' },
-  verified: { label: 'Verified', type: 'checkbox', faker: 'datatype.boolean' }
+  e: 'checkbox', faker: 'datatype.boolean',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Energy Savings Tracking';
 export const collectionName = 'energy_savings_tracking';

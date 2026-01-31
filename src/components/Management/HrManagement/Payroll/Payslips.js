@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   payslip_id: { label: 'Payslip ID', type: 'text', faker: 'datatype.uuid' },
   employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -14,14 +15,13 @@ export const fieldsConfig = {
   taxes: { label: 'Taxes', type: 'number', faker: 'finance.amount' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   payment_date: { label: 'Payment Date', type: 'date', faker: 'date.recent' },
   status: { label: 'Status', type: 'select', options: [{ id: 'generated', label: 'Generated' }, { id: 'sent', label: 'Sent' }, { id: 'paid', label: 'Paid' }], faker: 'random.arrayElement' },
-  document_url: { label: 'Document URL', type: 'text', faker: 'internet.url' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Payslips';
 export const collectionName = 'payslips';

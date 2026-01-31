@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   forecast_id: { label: 'Forecast ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -9,9 +10,6 @@ export const fieldsConfig = {
   confidence_level: { label: 'Confidence Level', type: 'select', options: [{ id: 'optimistic', label: 'Optimistic' }, { id: 'realistic', label: 'Realistic' }, { id: 'pessimistic', label: 'Pessimistic' }], faker: 'random.arrayElement' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   sales_rep_id: { label: 'Sales Rep ID', type: 'text', faker: 'datatype.uuid' },
   region: { label: 'Region', type: 'text', faker: 'address.country' },
@@ -19,8 +17,10 @@ export const fieldsConfig = {
   gap_to_quota: { label: 'Gap to Quota', type: 'number', faker: 'finance.amount' },
   generated_date: { label: 'Generated Date', type: 'date', faker: 'date.recent' },
   notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' },
-  pipeline_coverage_ratio: { label: 'Pipeline Coverage Ratio', type: 'number', faker: 'datatype.float' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Sales Forecasting';
 export const collectionName = 'sales_forecasting';

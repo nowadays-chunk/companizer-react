@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   investment_id: { label: 'Investment ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -10,16 +11,15 @@ export const fieldsConfig = {
   maturity_date: { label: 'Maturity Date', type: 'date', faker: 'date.future' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   yield_to_maturity: { label: 'Yield to Maturity', type: 'number', faker: 'datatype.float' },
   credit_rating: { label: 'Credit Rating', type: 'text', faker: 'random.alphaNumeric' }, // AAA
   purchase_date: { label: 'Purchase Date', type: 'date', faker: 'date.past' },
   payment_frequency: { label: 'Payment Frequency', type: 'select', options: [{ id: 'annual', label: 'Annual' }, { id: 'semi_annual', label: 'Semi-Annual' }, { id: 'quarterly', label: 'Quarterly' }], faker: 'random.arrayElement' },
-  issuer: { label: 'Issuer', type: 'text', faker: 'company.name' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Fixed Income Investments';
 export const collectionName = 'fixed_income_investments';

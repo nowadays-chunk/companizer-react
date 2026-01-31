@@ -1,23 +1,19 @@
 
 export const fieldsConfig = {
-  detail_id: { label: 'Detail ID', type: 'text', faker: 'datatype.uuid' },
-  product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
+  // Standard Detail Fields
+  detail_id: { label: 'Detail ID', type: 'text', faker: 'datatype.uuid' },
+  parent_id: { label: 'Parent ID', type: 'text', faker: 'datatype.uuid' }, // Foreign key to parent entity
 
-  long_description: { label: 'Long Description', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraph' },
-  technical_specs: { label: 'Technical Specs', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+  item_name: { label: 'Item Name', type: 'text', faker: 'commerce.productName' },
+  description: { label: 'Description', type: 'text', multiline: true, rows: 2, faker: 'commerce.productDescription' },
+
+  quantity: { label: 'Quantity', type: 'number', faker: 'datatype.number' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount', decimals: 2 },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
-  // Extras
-  warranty_info: { label: 'Warranty Info', type: 'text', faker: 'lorem.sentence' },
-  dimensions: { label: 'Dimensions', type: 'text', faker: 'lorem.word' }, // e.g. 10x20x5 cm
-  weight: { label: 'Weight', type: 'text', faker: 'lorem.word' }, // e.g. 1.5 kg
-  material: { label: 'Material', type: 'text', faker: 'commerce.productMaterial' },
-  country_of_origin: { label: 'Country of Origin', type: 'text', faker: 'address.country' },
-  release_date: { label: 'Release Date', type: 'date', faker: 'date.past' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Product Details';

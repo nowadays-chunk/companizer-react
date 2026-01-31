@@ -40,7 +40,7 @@ export const stepsConfig = {
 };
 
 export const actionsConfig = {
-    validate: { label: 'Validate Invoice', type: 'primary', icon: 'CheckCircle', nextSteep: 'validated' },
+    validate: { label: 'Validate Invoice', type: 'primary', icon: 'CheckCircle', nextStep: 'validated' },
     approve_payment: { label: 'Approve Payment', type: 'primary', icon: 'ThumbUp', nextStep: 'approved' },
     reject: { label: 'Reject', type: 'error', icon: 'Cancel', nextStep: 'rejected' },
     mark_paid: { label: 'Mark as Paid', type: 'success', icon: 'Paid', nextStep: 'paid' },

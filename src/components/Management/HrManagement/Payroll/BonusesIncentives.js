@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   bonus_id: { label: 'Bonus ID', type: 'text', faker: 'datatype.uuid' },
   employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -10,15 +11,14 @@ export const fieldsConfig = {
   date_awarded: { label: 'Date Awarded', type: 'date', faker: 'date.recent' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   reason: { label: 'Reason', type: 'text', faker: 'lorem.sentence' },
   approved_by: { label: 'Approved By', type: 'text', faker: 'name.fullName' },
   status: { label: 'Status', type: 'select', options: [{ id: 'pending', label: 'Pending' }, { id: 'paid', label: 'Paid' }], faker: 'random.arrayElement' },
-  payout_date: { label: 'Payout Date', type: 'date', faker: 'date.future' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Bonuses & Incentives';
 export const collectionName = 'bonuses_incentives';

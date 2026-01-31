@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   scoring_id: { label: 'Scoring ID', type: 'text', faker: 'datatype.uuid' },
   lead_id: { label: 'Lead ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -10,9 +11,6 @@ export const fieldsConfig = {
   last_updated: { label: 'Last Updated', type: 'date', faker: 'date.recent' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   demographic_score: { label: 'Demographic Score', type: 'number', faker: 'datatype.number' },
   behavioral_score: { label: 'Behavioral Score', type: 'number', faker: 'datatype.number' },
@@ -20,8 +18,10 @@ export const fieldsConfig = {
   budget_score: { label: 'Budget Score', type: 'number', faker: 'datatype.number' },
   authority_score: { label: 'Authority Score', type: 'number', faker: 'datatype.number' },
   need_score: { label: 'Need Score', type: 'number', faker: 'datatype.number' },
-  timeline_score: { label: 'Timeline Score', type: 'number', faker: 'datatype.number' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Lead Scoring';
 export const collectionName = 'lead_scoring';

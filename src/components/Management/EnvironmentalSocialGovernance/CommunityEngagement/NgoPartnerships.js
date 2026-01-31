@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   partnership_id: { label: 'Partnership ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -10,8 +11,7 @@ export const fieldsConfig = {
   start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' }, // Contribution amount?
+  // Contribution amount?
 
   // Extras
   annual_contribution: { label: 'Annual Contribution', type: 'number', faker: 'finance.amount' },
@@ -19,8 +19,10 @@ export const fieldsConfig = {
   impact_report_received: { label: 'Impact Report Received', type: 'checkbox', faker: 'datatype.boolean' },
   renewal_date: { label: 'Renewal Date', type: 'date', faker: 'date.future' },
   status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'paused', label: 'Paused' }, { id: 'ended', label: 'Ended' }], faker: 'random.arrayElement' },
-  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'NGO Partnerships';
 export const collectionName = 'ngo_partnerships';

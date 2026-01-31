@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   contact_id: { label: 'Contact ID', type: 'text', faker: 'datatype.uuid' },
   employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,14 +12,13 @@ export const fieldsConfig = {
   email: { label: 'Email', type: 'email', faker: 'internet.email' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   address: { label: 'Address', type: 'text', faker: 'address.streetAddress' },
   is_primary: { label: 'Is Primary', type: 'checkbox', faker: 'datatype.boolean' },
-  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Emergency Contacts';
 export const collectionName = 'emergency_contacts';

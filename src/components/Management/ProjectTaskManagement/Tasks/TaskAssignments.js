@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   assignment_id: { label: 'Assignment ID', type: 'text', faker: 'datatype.uuid' },
   task_id: { label: 'Task ID', type: 'text', faker: 'datatype.uuid' },
   assignee_id: { label: 'Assignee ID', type: 'text', faker: 'datatype.uuid' },
@@ -12,9 +13,6 @@ export const fieldsConfig = {
   effort_actual: { label: 'Effort Actual (Hours)', type: 'number', faker: 'datatype.number' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   tags: { label: 'Tags', type: 'select', options: [{ id: 'primary', label: 'Primary' }, { id: 'support', label: 'Support' }], multiple: true, faker: 'random.arrayElement' },
 
   // Extras
@@ -22,8 +20,11 @@ export const fieldsConfig = {
   comments: { label: 'Comments', type: 'text', faker: 'lorem.sentence' },
   priority: { label: 'Priority', type: 'select', options: [{ id: 'high', label: 'High' }, { id: 'medium', label: 'Medium' }, { id: 'low', label: 'Low' }], faker: 'random.arrayElement' },
   completed_date: { label: 'Completed Date', type: 'date', faker: 'date.future' },
-  is_overdue: { label: 'Is Overdue', type: 'checkbox', faker: 'datatype.boolean' }
+  type: 'checkbox', faker: 'datatype.boolean',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Task Assignments';
 export const collectionName = 'task_assignments';

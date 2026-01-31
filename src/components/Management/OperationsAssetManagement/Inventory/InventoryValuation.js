@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   valuation_id: { label: 'Valuation ID', type: 'text', faker: 'datatype.uuid' },
   product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,15 +12,14 @@ export const fieldsConfig = {
   total_value: { label: 'Total Value', type: 'number', faker: 'finance.amount' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Value', type: 'number', faker: 'finance.amount' },
-
   // Extras
   currency: { label: 'Currency', type: 'text', faker: 'finance.currencyCode' },
   adjusted_value: { label: 'Adjusted Value', type: 'number', faker: 'finance.amount' },
   adjustment_reason: { label: 'Adjustment Reason', type: 'text', faker: 'lorem.sentence' },
-  approved_by: { label: 'Approved By', type: 'text', faker: 'name.fullName' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Inventory Valuation';
 export const collectionName = 'inventory_valuation';

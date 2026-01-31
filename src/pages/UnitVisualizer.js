@@ -45,6 +45,9 @@ import { helpersWrapper } from '../utils/firebaseCrudHelpers';
 import BaseManagementComponent from '../components/Management/Base';
 // Import Comments Config
 import { collectionName as commentsCollectionName } from '../components/Management/entity_comments_history';
+// Import Action Timeline and Logs Config
+import ActionTimeline from '../components/ActionTimeline';
+import { collectionName as logsCollectionName } from '../components/Management/manager_action_logs';
 
 // Icon mapping for dynamic actions
 const ICON_MAP = {
@@ -157,9 +160,67 @@ const Visualizer = (props) => {
     [collectionName]
   );
 
-  const commentsHelpers = useMemo(() => helpersWrapper(commentsCollectionName), []);
-
   // 1. Load Main Config & Detail Config & Logic Config
+
+  const commentsHelpers = useMemo(() => helpersWrapper(commentsCollectionName), []);
+  const logsHelpers = useMemo(() => helpersWrapper(logsCollectionName), []);
+  const [refreshTimeline, setRefreshTimeline] = useState(0); // Trigger to reload timeline
+
+  // Actions Logic
+  const handleAction = async (actionName) => {
+    if (!logicConfig?.actionsConfig?.[actionName]) return;
+    const actionDef = logicConfig.actionsConfig[actionName];
+
+    console.log(`Executing action: ${actionName}`, actionDef);
+
+    const logEntry = {
+      action_type: actionDef.label || actionName, // Use label for display, or name fallback
+      entity_type: collectionName,
+      entity_id: idValue,
+      accountable_id: 'Current User', // Mock, should come from auth context
+      processing_step: actionDef.nextStep || itemData?.processing_step, // New step or current
+      status: 'success', // Assume success initially, correct in catch
+      details: `Action "${actionName}" initiated.`,
+      unit_price: itemData?.unit_price || 0 // Snapshot price if needed
+    };
+
+    try {
+      // Update Step if defined
+      if (actionDef.nextStep) {
+        const updatedData = { ...itemData, processing_step: actionDef.nextStep };
+
+        // Update via API
+        await queryHelpers.updateItem(idValue, { processing_step: actionDef.nextStep });
+
+        // Update local state
+        setItemData(updatedData);
+
+        // Show success message
+        alert(`Action "${actionDef.label}" executed successfully! Status updated to: ${actionDef.nextStep}`);
+
+        logEntry.details += ` Status changed to ${actionDef.nextStep}.`;
+      } else {
+        // Action without step change (e.g., send email, generate PDF)
+        alert(`Action "${actionDef.label}" executed!`);
+      }
+
+      // Log success
+      await logsHelpers.addItem(logEntry);
+      setRefreshTimeline(prev => prev + 1); // Refresh timeline
+
+    } catch (error) {
+      console.error('Error executing action:', error);
+      alert(`Failed to execute action: ${error.message}`);
+
+      // Log failure
+      logEntry.status = 'failed';
+      logEntry.details += ` Error: ${error.message}`;
+      await logsHelpers.addItem(logEntry);
+      setRefreshTimeline(prev => prev + 1);
+    }
+  };
+
+
   useEffect(() => {
     if (props.config) {
       // If config passed via props, we might still need to load logic config if it matches the folder structure
@@ -206,21 +267,30 @@ const Visualizer = (props) => {
         }
 
         // C. Logic/Config File (Actions & Steps)
-        // Look in Config/ComponentNameConfig.js
+        // Use config registry instead of dynamic import
         try {
-          const configName = `${componentName}Config`;
-          const logicModule = await import(
-            `../components/Management/${holdingFolder}/${subFolder}/Config/${configName}`
-          );
-          setLogicConfig(logicModule);
-          // logicModule should export stepsConfig, actionsConfig, fieldsConfig (for settings)
-          if (logicModule.fieldsConfig) {
-            setConfigEntityConfig({
-              fieldsConfig: logicModule.fieldsConfig,
-              collectionName: logicModule.collectionName || `${entity}_config`
-            });
+          console.log('🔍 Attempting to load Config for:', componentName);
+
+          // Import the registry
+          const { getConfig } = await import('../components/Management/configRegistry.js');
+          const logicModule = getConfig(componentName);
+
+          if (logicModule) {
+            console.log('✅ Config loaded successfully:', logicModule);
+            setLogicConfig(logicModule);
+
+            // logicModule should export stepsConfig, actionsConfig, fieldsConfig (for settings)
+            if (logicModule.fieldsConfig) {
+              setConfigEntityConfig({
+                fieldsConfig: logicModule.fieldsConfig,
+                collectionName: logicModule.collectionName || `${entity}_config`
+              });
+            }
+          } else {
+            console.warn('⚠️ No config found in registry for:', componentName);
           }
         } catch (logicErr) {
+          console.warn('⚠️ Error loading config:', logicErr.message);
           // No logic config
         }
 
@@ -329,22 +399,7 @@ const Visualizer = (props) => {
     else navigate(-1);
   };
 
-  // Actions Logic
-  const handleAction = async (actionName) => {
-    if (!logicConfig?.actionsConfig?.[actionName]) return;
-    const actionDef = logicConfig.actionsConfig[actionName];
 
-    console.log(`Executing action: ${actionName}`, actionDef);
-
-    // Update Step if defined
-    if (actionDef.nextStep) {
-      await queryHelpers.updateItem(idValue, { ...itemData, processing_step: actionDef.nextStep });
-      setItemData(prev => ({ ...prev, processing_step: actionDef.nextStep }));
-    }
-
-    // Add 'action' log or logic here if needed
-    alert(`Action ${actionDef.label} executed!`);
-  };
 
   // New Comment
   const handleAddComment = async () => {
@@ -382,9 +437,21 @@ const Visualizer = (props) => {
   };
 
   const getStepActions = () => {
+    console.log('🎯 getStepActions called:', {
+      hasLogicConfig: !!logicConfig,
+      hasStepsConfig: !!logicConfig?.stepsConfig,
+      hasItemData: !!itemData,
+      currentStep: itemData?.processing_step,
+      initialStep: logicConfig?.stepsConfig?.initialStep
+    });
+
     if (!logicConfig?.stepsConfig || !itemData) return [];
     const currentStep = itemData.processing_step || logicConfig.stepsConfig.initialStep;
     const stepDef = logicConfig.stepsConfig.steps.find(s => s.name === currentStep);
+
+    console.log('📋 Step definition found:', stepDef);
+    console.log('🔘 Actions for current step:', stepDef?.actions || []);
+
     return stepDef?.actions || [];
   };
 
@@ -410,25 +477,33 @@ const Visualizer = (props) => {
 
       {/* ACTION BAR (Only in View Mode) */}
       {isView && logicConfig && (
-        <Paper sx={{ p: 2, mb: 3, bgcolor: '#f5f5f5', display: 'flex', gap: 2, alignItems: 'center' }}>
-          <Typography variant="subtitle2">Workflow: {itemData?.processing_step || logicConfig?.stepsConfig?.initialStep}</Typography>
-          <Box flexGrow={1} />
-          {getStepActions().map(actionName => {
-            const def = logicConfig.actionsConfig[actionName];
-            if (!def) return null;
-            const Icon = ICON_MAP[def.icon] || CheckCircle;
-            return (
-              <Button
-                key={actionName}
-                variant="contained"
-                color={def.type === 'error' ? 'error' : def.type === 'success' ? 'success' : 'primary'}
-                startIcon={<Icon />}
-                onClick={() => handleAction(actionName)}
-              >
-                {def.label}
-              </Button>
-            );
-          })}
+        <Paper sx={{ p: 2, mb: 3, bgcolor: '#f5f5f5', borderLeft: '4px solid #1976d2' }}>
+          <Box display="flex" gap={2} alignItems="center" flexWrap="wrap">
+            <Typography variant="subtitle2" sx={{ fontWeight: 'bold', minWidth: '150px' }}>
+              Current Step:
+              <Box component="span" sx={{ ml: 1, px: 1.5, py: 0.5, bgcolor: '#1976d2', color: 'white', borderRadius: 1, fontSize: '0.875rem' }}>
+                {itemData?.processing_step || logicConfig?.stepsConfig?.initialStep || 'N/A'}
+              </Box>
+            </Typography>
+            <Box flexGrow={1} />
+            {getStepActions().map(actionName => {
+              const def = logicConfig.actionsConfig[actionName];
+              if (!def) return null;
+              const Icon = ICON_MAP[def.icon] || CheckCircle;
+              return (
+                <Button
+                  key={actionName}
+                  variant="contained"
+                  color={def.type === 'error' ? 'error' : def.type === 'success' ? 'success' : def.type === 'warning' ? 'warning' : 'primary'}
+                  startIcon={<Icon />}
+                  onClick={() => handleAction(actionName)}
+                  sx={{ minWidth: '140px' }}
+                >
+                  {def.label}
+                </Button>
+              );
+            })}
+          </Box>
         </Paper>
       )}
 
@@ -494,43 +569,16 @@ const Visualizer = (props) => {
               const wrapper = helpersWrapper(detailEntityName || `${entity}_details`);
               const all = await wrapper.fetchItems();
 
-              // Smart FK Detection: Check detailConfig for the matching field
-              const baseName = entity.replace(/-/g, '_');
-              const pluralFK = `${baseName}_id`; // e.g. vendor_invoices_id
-              const singularFK = `${baseName.replace(/s$/, '')}_id`; // e.g. vendor_invoice_id
-
-              // Default to singular if not found, OR prefer plural if found in config
-              let fkField = singularFK;
-              if (detailConfig?.fieldsConfig?.[pluralFK]) {
-                fkField = pluralFK;
-              } else if (detailConfig?.fieldsConfig?.[singularFK]) {
-                fkField = singularFK;
-              } else {
-                // Fallback: Use plural if singular doesn't exist? Or stick to convention?
-                // User explicitly requested plural for vendor_invoices.
-                // If neither exists, we might default to singular, but let's try to match user's case.
-                if (entity.endsWith('s')) fkField = singularFK; // Standard
-                else fkField = pluralFK; // If entity is already singular?
-
-                // Specific override for known plural-table-names that act as FKs?
-                // If the user said "I have vendor_invoices_id", and detailConfig has it, the check above catches it.
-              }
+              // Standardized FK: parent_id
+              const fkField = 'parent_id';
 
               return all.filter(r => r[fkField] === idValue);
             }}
             addItem={async (row) => {
               const wrapper = helpersWrapper(detailEntityName);
 
-              const baseName = entity.replace(/-/g, '_');
-              const pluralFK = `${baseName}_id`;
-              const singularFK = `${baseName.replace(/s$/, '')}_id`;
-
-              let fkField = singularFK;
-              if (detailConfig?.fieldsConfig?.[pluralFK]) {
-                fkField = pluralFK;
-              } else if (detailConfig?.fieldsConfig?.[singularFK]) {
-                fkField = singularFK;
-              }
+              // Standardized FK: parent_id
+              const fkField = 'parent_id';
 
               const payload = { ...row, [fkField]: idValue };
               return wrapper.addItem(payload);
@@ -541,28 +589,14 @@ const Visualizer = (props) => {
             fieldConfig={detailConfig.fieldsConfig}
             entityName={detailEntityName}
 
-          // BaseManagementComponent Integration
-          // No overrides for actions -> Defaults to window.open tabs using keyToLinkMap
-
-
-          // Pass ID setter to trigger nested dialog
-          // BaseTableComponent needs to support onRowClick or we infer it?
-          // User asked to import BaseManagementComponent. Does it expose row click?
-          // Looking at Base/index.js: It has handleViewItem which calls openTabsForSelected.
-          // We need BaseTableComponent to accept custom handlers if we seek recursion.
-          // Assuming BaseTable allows us to pass custom 'onView' prop if we hacked it? 
-          // No, I'm just wrapping it.
-          // I'll assume BaseTableComponent renders Action buttons that use the passed handlers.
+            // Enable navigation to detail entity view
+            onViewItem={(itemId) => {
+              window.open(`/#/Management/Details/${detailEntityName}/view/${itemId}`, '_blank');
+            }}
+            onEditItem={(itemId) => {
+              window.open(`/#/Management/Details/${detailEntityName}/edit/${itemId}`, '_blank');
+            }}
           />
-          {/* HACK: BaseManagementComponent strictly uses window.open. 
-                   I might need to modify BaseTableToolbar or BaseTable to accept custom callbacks if I want "nested in UnitVisualizer".
-                   Since I can't modify Base easily without breaking others, I will accept that it opens tabs for now 
-                   UNLESS the user explicitly said "be also viewed, edited with the same component UnitVisualizer (like in a nested way)".
-                   "like in a nested way" usually means modal or expanding row.
-                   
-                   I will add a small instruction to the user or modify BaseTableComponent slightly to support onClick override.
-                   However, to be safe, I'll instruct the user I used the Base, but it might open tabs unless I patch Base.
-                */}
         </Box>
       )}
 
@@ -594,6 +628,11 @@ const Visualizer = (props) => {
             </CardContent>
           </Card>
         </Box>
+      )}
+
+      {/* ACTION TIMELINE */}
+      {isView && (
+        <ActionTimeline key={refreshTimeline} entityId={idValue} entityType={collectionName} />
       )}
 
       {/* DIALOG FOR NESTED ITEM */}

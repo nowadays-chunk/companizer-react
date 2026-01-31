@@ -8,7 +8,9 @@ export const fieldsConfig = {
     user_id: { label: 'User ID', type: 'text', faker: 'datatype.uuid' },
     author_name: { label: 'Author Name', type: 'text', faker: 'person.fullName' },
     comment_text: { label: 'Comment', type: 'textarea', multiline: true, faker: 'lorem.sentences' },
-    processing_step: { label: 'Step', type: 'text', faker: 'lorem.word' }, // Step when comment was made
+    processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' }, // Step when comment was made
     unit_price: { label: 'Unit Price', type: 'number', faker: 'commerce.price' }, // Standard field (unused?)
     accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' } // Standard field
 };
+
+export const entityName = 'Entity Comments History';

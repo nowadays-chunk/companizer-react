@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   communication_id: { label: 'Communication ID', type: 'text', faker: 'datatype.uuid' },
   stakeholder_id: { label: 'Stakeholder ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -10,16 +11,16 @@ export const fieldsConfig = {
   summary: { label: 'Summary', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   participants: { label: 'Participants', type: 'text', faker: 'name.fullName' },
   outcome: { label: 'Outcome', type: 'text', faker: 'lorem.sentence' },
   next_steps: { label: 'Next Steps', type: 'text', faker: 'lorem.sentence' },
   attachments_url: { label: 'Attachments URL', type: 'text', faker: 'internet.url' },
-  sentiment: { label: 'Sentiment', type: 'select', options: [{ id: 'positive', label: 'Positive' }, { id: 'neutral', label: 'Neutral' }, { id: 'negative', label: 'Negative' }], faker: 'random.arrayElement' }
+  ype: 'select', options: [{ id: 'positive', label: 'Positive' }, { id: 'neutral', label: 'Neutral' }, { id: 'negative', label: 'Negative' }], faker: 'random.arrayElement',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Stakeholder Communication';
 export const collectionName = 'stakeholder_communication';

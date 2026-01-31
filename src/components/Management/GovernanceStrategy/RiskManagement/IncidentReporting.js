@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   incident_id: { label: 'Incident ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -10,17 +11,16 @@ export const fieldsConfig = {
   reported_by: { label: 'Reported By', type: 'text', faker: 'name.fullName' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   description: { label: 'Description', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
   location: { label: 'Location', type: 'text', faker: 'address.city' },
   status: { label: 'Status', type: 'select', options: [{ id: 'open', label: 'Open' }, { id: 'investigating', label: 'Investigating' }, { id: 'resolved', label: 'Resolved' }, { id: 'closed', label: 'Closed' }], faker: 'random.arrayElement' },
   resolution_summary: { label: 'Resolution Summary', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
   root_cause_analysis: { label: 'Root Cause Analysis', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
-  time_to_resolve_hours: { label: 'Time To Resolve (Hours)', type: 'number', faker: 'datatype.float' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Incident Reporting';
 export const collectionName = 'incident_reporting';

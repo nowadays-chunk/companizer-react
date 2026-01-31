@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   tracking_id: { label: 'Tracking ID', type: 'text', faker: 'datatype.uuid' },
   invoice_id: { label: 'Invoice ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,9 +12,6 @@ export const fieldsConfig = {
   payment_method: { label: 'Payment Method', type: 'select', options: [{ id: 'credit_card', label: 'Credit Card' }, { id: 'bank_transfer', label: 'Bank Transfer' }, { id: 'check', label: 'Check' }, { id: 'paypal', label: 'PayPal' }], faker: 'random.arrayElement' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   transaction_reference: { label: 'Transaction Reference', type: 'text', faker: 'finance.bitcoinAddress' },
   status: { label: 'Status', type: 'select', options: [{ id: 'completed', label: 'Completed' }, { id: 'pending', label: 'Pending' }, { id: 'failed', label: 'Failed' }], faker: 'random.arrayElement' },
@@ -21,8 +19,10 @@ export const fieldsConfig = {
   bank_fees: { label: 'Bank Fees', type: 'number', faker: 'finance.amount' },
   net_amount: { label: 'Net Amount', type: 'number', faker: 'finance.amount' },
   notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' },
-  receipt_url: { label: 'Receipt URL', type: 'text', faker: 'internet.url' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Payment Tracking';
 export const collectionName = 'payment_tracking';

@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   agreement_id: { label: 'Agreement ID', type: 'text', faker: 'datatype.uuid' },
   partner_id: { label: 'Partner ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -9,14 +10,13 @@ export const fieldsConfig = {
   end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   rates_agreed: { label: 'Rates Agreed', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
   status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'expired', label: 'Expired' }, { id: 'terminated', label: 'Terminated' }], faker: 'random.arrayElement' },
-  document_url: { label: 'Document Update', type: 'text', faker: 'internet.url' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Partner Agreements';
 export const collectionName = 'partner_agreements';

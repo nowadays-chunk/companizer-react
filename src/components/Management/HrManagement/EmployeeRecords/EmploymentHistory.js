@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   history_id: { label: 'History ID', type: 'text', faker: 'datatype.uuid' },
   employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,15 +12,14 @@ export const fieldsConfig = {
   end_date: { label: 'End Date', type: 'date', faker: 'date.past' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   responsibilities: { label: 'Responsibilities', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
   reason_for_leaving: { label: 'Reason for Leaving', type: 'text', faker: 'lorem.sentence' },
   reference_name: { label: 'Reference Name', type: 'text', faker: 'name.fullName' },
-  reference_contact: { label: 'Reference Contact', type: 'text', faker: 'phone.number' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Employment History';
 export const collectionName = 'employment_history';

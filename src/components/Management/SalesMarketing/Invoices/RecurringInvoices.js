@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   recurring_id: { label: 'Recurring ID', type: 'text', faker: 'datatype.uuid' },
   customer_id: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -13,17 +14,16 @@ export const fieldsConfig = {
   status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'paused', label: 'Paused' }, { id: 'cancelled', label: 'Cancelled' }], faker: 'random.arrayElement' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   start_date: { label: 'Start Date', type: 'date', faker: 'date.past' },
   end_date: { label: 'End Date', type: 'date', faker: 'date.future' },
   last_generated_date: { label: 'Last Generated Date', type: 'date', faker: 'date.recent' },
   template_id: { label: 'Template ID', type: 'text', faker: 'datatype.uuid' },
   auto_send: { label: 'Auto Send', type: 'checkbox', faker: 'datatype.boolean' },
-  description: { label: 'Description', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Recurring Invoices';
 export const collectionName = 'recurring_invoices';

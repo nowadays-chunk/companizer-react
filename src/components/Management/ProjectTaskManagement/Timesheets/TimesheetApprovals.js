@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   approval_id: { label: 'Approval ID', type: 'text', faker: 'datatype.uuid' },
   employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
   approver_id: { label: 'Approver ID', type: 'text', faker: 'datatype.uuid' },
@@ -13,17 +14,17 @@ export const fieldsConfig = {
   total_hours: { label: 'Total Hours', type: 'number', faker: 'datatype.float' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   submitted_date: { label: 'Submitted Date', type: 'date', faker: 'date.recent' },
   approval_date: { label: 'Approval Date', type: 'date', faker: 'date.recent' },
   comments: { label: 'Comments', type: 'text', faker: 'lorem.sentence' },
   rejection_reason: { label: 'Rejection Reason', type: 'text', faker: 'lorem.sentence' },
   project_breakdown: { label: 'Project Breakdown', type: 'text', faker: 'lorem.sentence' },
-  is_locked: { label: 'Is Locked', type: 'checkbox', faker: 'datatype.boolean' }
+  ype: 'checkbox', faker: 'datatype.boolean',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Project Timesheet Approvals';
 export const collectionName = 'project_timesheet_approvals';

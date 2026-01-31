@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   phase_id: { label: 'Phase ID', type: 'text', faker: 'datatype.uuid' },
   project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,9 +12,6 @@ export const fieldsConfig = {
   status: { label: 'Status', type: 'select', options: [{ id: 'planned', label: 'Planned' }, { id: 'in_progress', label: 'In Progress' }, { id: 'completed', label: 'Completed' }], faker: 'random.arrayElement' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   tags: { label: 'Tags', type: 'select', options: [{ id: 'waterfall', label: 'Waterfall' }, { id: 'agile', label: 'Agile' }], multiple: true, faker: 'random.arrayElement' },
 
   // Extras
@@ -22,8 +20,10 @@ export const fieldsConfig = {
   manager_id: { label: 'Phase Manager ID', type: 'text', faker: 'datatype.uuid' },
   objectives: { label: 'Objectives', type: 'text', faker: 'lorem.paragraph' },
   order_sequence: { label: 'Order Sequence', type: 'number', faker: 'datatype.number' },
-  is_approved: { label: 'Is Approved', type: 'checkbox', faker: 'datatype.boolean' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Project Phases';
 export const collectionName = 'project_phases';

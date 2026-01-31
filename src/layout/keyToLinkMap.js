@@ -2,7 +2,6 @@ export const keyToLinkMap = {
     "financial-management": "/financial-management",
     "accounts-payable": "/financial-management/accounts-payable",
     "vendor-invoices": "/financial-management/accounts-payable/vendor-invoices",
-    "vendor-invoices-details": "/financial-management/accounts-payable/vendor-invoices-details",
     "payment-terms": "/financial-management/accounts-payable/payment-terms",
     "creditors-ledger": "/financial-management/accounts-payable/creditors-ledger",
     "accounts-receivable": "/financial-management/accounts-receivable",

@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   disposal_id: { label: 'Disposal ID', type: 'text', faker: 'datatype.uuid' },
   asset_id: { label: 'Asset ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -12,15 +13,14 @@ export const fieldsConfig = {
   gain_loss: { label: 'Gain/Loss', type: 'number', faker: 'finance.amount' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   buyer: { label: 'Buyer', type: 'text', faker: 'company.name' },
   authorized_by: { label: 'Authorized By', type: 'text', faker: 'name.fullName' },
   reason: { label: 'Reason', type: 'text', faker: 'lorem.sentence' },
-  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Asset Disposal';
 export const collectionName = 'asset_disposal_ops';

@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   bug_id: { label: 'Bug ID', type: 'text', faker: 'datatype.uuid' },
   project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -10,9 +11,6 @@ export const fieldsConfig = {
   status: { label: 'Status', type: 'select', options: [{ id: 'new', label: 'New' }, { id: 'triaged', label: 'Triaged' }, { id: 'fixed', label: 'Fixed' }, { id: 'closed', label: 'Closed' }], faker: 'random.arrayElement' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   tags: { label: 'Tags', type: 'select', options: [{ id: 'ui', label: 'UI' }, { id: 'backend', label: 'Backend' }], multiple: true, faker: 'random.arrayElement' },
 
   // Extras
@@ -22,8 +20,10 @@ export const fieldsConfig = {
   reproduction_steps: { label: 'Reproduction Steps', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
   environment: { label: 'Environment', type: 'text', faker: 'lorem.word' }, // Prod/Dev
   version_found: { label: 'Version Found', type: 'text', faker: 'system.semver' },
-  target_fix_date: { label: 'Target Fix Date', type: 'date', faker: 'date.future' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Bug Tracking';
 export const collectionName = 'bug_tracking';

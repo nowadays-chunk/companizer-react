@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   tracking_id: { label: 'Tracking ID', type: 'text', faker: 'datatype.uuid' },
   order_id: { label: 'Order ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -10,13 +11,12 @@ export const fieldsConfig = {
   update_time: { label: 'Update Time', type: 'datetime', faker: 'date.recent' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   carrier: { label: 'Carrier', type: 'text', faker: 'company.name' },
-  estimated_delivery: { label: 'Estimated Delivery', type: 'datetime', faker: 'date.future' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Order Tracking';
 export const collectionName = 'order_tracking';

@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   billable_id: { label: 'Billable ID', type: 'text', faker: 'datatype.uuid' },
   project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
   employee_id: { label: 'Employee ID', type: 'text', faker: 'datatype.uuid' },
@@ -14,16 +15,16 @@ export const fieldsConfig = {
   status: { label: 'Status', type: 'select', options: [{ id: 'billed', label: 'Billed' }, { id: 'unbilled', label: 'Unbilled' }, { id: 'approved', label: 'Approved' }], faker: 'random.arrayElement' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   task_id: { label: 'Task ID', type: 'text', faker: 'datatype.uuid' },
   invoice_id: { label: 'Invoice ID', type: 'text', faker: 'datatype.uuid' },
   description: { label: 'Description', type: 'text', faker: 'lorem.sentence' },
   approved_by: { label: 'Approved By', type: 'text', faker: 'name.fullName' },
-  currency: { label: 'Currency', type: 'text', faker: 'finance.currencyCode' }
+  e: 'text', faker: 'finance.currencyCode',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Billable Hours';
 export const collectionName = 'billable_hours';

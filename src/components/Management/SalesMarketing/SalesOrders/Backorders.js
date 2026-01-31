@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   backorder_id: { label: 'Backorder ID', type: 'text', faker: 'datatype.uuid' },
   order_id: { label: 'Order ID', type: 'text', faker: 'datatype.uuid' },
   product_id: { label: 'Product ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,9 +12,6 @@ export const fieldsConfig = {
   status: { label: 'Status', type: 'select', options: [{ id: 'pending', label: 'Pending' }, { id: 'fulfilled', label: 'Fulfilled' }, { id: 'cancelled', label: 'Cancelled' }], faker: 'random.arrayElement' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   customer_id: { label: 'Customer ID', type: 'text', faker: 'datatype.uuid' },
   priority: { label: 'Priority', type: 'select', options: [{ id: 'high', label: 'High' }, { id: 'normal', label: 'Normal' }], faker: 'random.arrayElement' },
@@ -21,8 +19,10 @@ export const fieldsConfig = {
   supplier_po_id: { label: 'Supplier PO ID', type: 'text', faker: 'datatype.uuid' },
   created_date: { label: 'Created Date', type: 'date', faker: 'date.recent' },
   reason: { label: 'Reason', type: 'text', faker: 'lorem.sentence' },
-  shipping_method: { label: 'Shipping Method', type: 'text', faker: 'lorem.word' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Backorders';
 export const collectionName = 'backorders';

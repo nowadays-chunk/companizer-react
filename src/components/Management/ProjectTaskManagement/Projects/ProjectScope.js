@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   scope_id: { label: 'Scope ID', type: 'text', faker: 'datatype.uuid' },
   project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -11,9 +12,6 @@ export const fieldsConfig = {
   approved_date: { label: 'Approved Date', type: 'date', faker: 'date.past' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   version_number: { label: 'Version Number', type: 'text', faker: 'system.semver' },
   approved_by: { label: 'Approved By', type: 'text', faker: 'name.fullName' },
@@ -21,8 +19,10 @@ export const fieldsConfig = {
   assumptions: { label: 'Assumptions', type: 'text', faker: 'lorem.sentence' },
   constraints: { label: 'Constraints', type: 'text', faker: 'lorem.sentence' },
   document_url: { label: 'Document URL', type: 'text', faker: 'internet.url' },
-  last_review_date: { label: 'Last Review Date', type: 'date', faker: 'date.recent' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Project Scope';
 export const collectionName = 'project_scope';

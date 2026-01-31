@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   forecast_id: { label: 'Forecast ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -12,14 +13,14 @@ export const fieldsConfig = {
   closing_balance: { label: 'Closing Balance', type: 'number', faker: 'finance.amount' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   confidence_level: { label: 'Confidence', type: 'datatype.number', faker: 'datatype.number' }, // %
   notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' },
-  scenario: { label: 'Scenario', type: 'select', options: [{ id: 'base', label: 'Base Case' }, { id: 'best', label: 'Best Case' }, { id: 'worst', label: 'Worst Case' }], faker: 'random.arrayElement' }
+  e: 'select', options: [{ id: 'base', label: 'Base Case' }, { id: 'best', label: 'Best Case' }, { id: 'worst', label: 'Worst Case' }], faker: 'random.arrayElement',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Cash Flow Forecasts';
 export const collectionName = 'cash_flow_forecasts';

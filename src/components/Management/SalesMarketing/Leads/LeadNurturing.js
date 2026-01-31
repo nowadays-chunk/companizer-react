@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   nurture_id: { label: 'Nurture ID', type: 'text', faker: 'datatype.uuid' },
   lead_id: { label: 'Lead ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -10,9 +11,6 @@ export const fieldsConfig = {
   engagement_score: { label: 'Engagement Score', type: 'number', faker: 'datatype.number' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   campaign_step: { label: 'Campaign Step', type: 'number', faker: 'datatype.number' },
   content_id: { label: 'Content ID', type: 'text', faker: 'datatype.uuid' }, // Whitepaper, video, etc.
@@ -21,8 +19,10 @@ export const fieldsConfig = {
   assigned_rep_id: { label: 'Assigned Rep ID', type: 'text', faker: 'datatype.uuid' },
   notes: { label: 'Notes', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
   email_opened: { label: 'Email Opened', type: 'checkbox', faker: 'datatype.boolean' },
-  link_clicked: { label: 'Link Clicked', type: 'checkbox', faker: 'datatype.boolean' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Lead Nurturing';
 export const collectionName = 'lead_nurturing';

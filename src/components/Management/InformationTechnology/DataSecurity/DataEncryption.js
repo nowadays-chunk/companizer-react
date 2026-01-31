@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   encryption_id: { label: 'Encryption ID', type: 'text', faker: 'datatype.uuid' },
   data_set_id: { label: 'Data Set ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -10,16 +11,15 @@ export const fieldsConfig = {
   status: { label: 'Status', type: 'select', options: [{ id: 'active', label: 'Active' }, { id: 'deprecated', label: 'Deprecated' }], faker: 'random.arrayElement' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   encryption_level: { label: 'Encryption Level', type: 'select', options: [{ id: 'field', label: 'Field' }, { id: 'database', label: 'Database' }, { id: 'disk', label: 'Disk' }], faker: 'random.arrayElement' },
   compliance_standard: { label: 'Compliance Standard', type: 'text', faker: 'lorem.word' },
   managed_by: { label: 'Managed By', type: 'text', faker: 'name.fullName' },
   last_audit_date: { label: 'Last Audit Date', type: 'date', faker: 'date.past' },
-  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Data Encryption';
 export const collectionName = 'data_encryption';

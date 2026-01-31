@@ -1,37 +1,48 @@
 
 export const fieldsConfig = {
-    detail_id: { label: 'Detail ID', type: 'text', faker: 'datatype.uuid' },
-    reconciliation_statements_id: { label: 'Reconciliation Statement ID', type: 'text', faker: 'datatype.uuid' }, // FK
 
-    transaction_date: { label: 'Transaction Date', type: 'date', faker: 'date.past' },
-    description: { label: 'Description', type: 'text', faker: 'finance.transactionDescription' },
-    reference_number: { label: 'Reference Number', type: 'text', faker: 'finance.routingNumber' },
+  // --- ENRICHED BUSINESS FIELDS (Auto-Injected) ---
 
-    // Amounts
-    credit_amount: { label: 'Credit Amount', type: 'number', faker: 'finance.amount', decimals: 2 },
-    debit_amount: { label: 'Debit Amount', type: 'number', faker: 'finance.amount', decimals: 2 },
-    balance_impact: { label: 'Balance Impact', type: 'number', faker: 'finance.amount', decimals: 2 },
+  // --- COMMON METADATA ---
+  notes: { label: 'Notes', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
+  description: { label: 'Description', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
+  priority: { label: 'Priority', type: 'select', options: [{id: 'low', label: 'Low'}, {id: 'medium', label: 'Medium'}, {id: 'high', label: 'High'}], faker: 'random.arrayElement' },
+  status_detail: { label: 'Detail Status', type: 'select', options: [{id: 'pending', label: 'Pending'}, {id: 'verified', label: 'Verified'}, {id: 'rejected', label: 'Rejected'}], faker: 'random.arrayElement' },
+  effective_date: { label: 'Effective Date', type: 'date', faker: 'date.recent' },
+  accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
-    // Matching
-    is_matched: { label: 'Is Matched', type: 'checkbox', faker: 'datatype.boolean' },
-    matched_transaction_id: { label: 'Matched Transaction ID', type: 'text', faker: 'datatype.uuid' }, // Link to internal ledger transaction
-    match_confidence_score: { label: 'Match Confidence Score', type: 'number', faker: 'datatype.float' },
 
-    // Status
-    status: { label: 'Status', type: 'select', options: [{ id: 'cleared', label: 'Cleared' }, { id: 'uncleared', label: 'Uncleared' }, { id: 'disputed', label: 'Disputed' }], faker: 'random.arrayElement' },
-    rejection_reason: { label: 'Rejection Reason', type: 'text', faker: 'lorem.sentence' },
+  // --- FINANCIAL FIELDS ---
+  transaction_date: { label: 'Transaction Date', type: 'date', faker: 'date.recent' },
+  due_date: { label: 'Due Date', type: 'date', faker: 'date.future' },
+  currency: { label: 'Currency', type: 'select', options: [{id: 'USD', label: 'USD'}, {id: 'EUR', label: 'EUR'}], faker: 'finance.currencyCode' },
+  exchange_rate: { label: 'Exchange Rate', type: 'number', faker: 'finance.amount' },
+  tax_amount: { label: 'Tax Amount', type: 'number', faker: 'finance.amount' },
+  net_amount: { label: 'Net Amount', type: 'number', faker: 'finance.amount' },
+  payment_method: { label: 'Payment Method', type: 'select', options: [{id: 'bank', label: 'Bank'}, {id: 'card', label: 'Card'}], faker: 'finance.transactionType' },
+  invoice_reference: { label: 'Invoice Ref', type: 'text', faker: 'finance.account' },
+  cost_center: { label: 'Cost Center', type: 'text', faker: 'finance.accountName' },
+  bank_account: { label: 'Bank Account', type: 'text', faker: 'finance.account' },
+  ledger_code: { label: 'Ledger Code', type: 'text', faker: 'finance.bic' },
+  approval_code: { label: 'Approval Code', type: 'text', faker: 'datatype.string' },
+  is_reimbursable: { label: 'Reimbursable', type: 'checkbox', faker: 'datatype.boolean' },
+  receipt_url: { label: 'Receipt URL', type: 'text', faker: 'internet.url' },
 
-    // Tracking
-    accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
-    processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
+// -------------------------------------------------
 
-    // Extras
-    value_date: { label: 'Value Date', type: 'date', faker: 'date.past' },
-    category: { label: 'Category', type: 'text', faker: 'commerce.department' },
-    payee_payer_name: { label: 'Payee/Payer Name', type: 'text', faker: 'name.fullName' },
-    check_number: { label: 'Check Number', type: 'text', faker: 'finance.account' },
-    batch_id: { label: 'Batch ID', type: 'text', faker: 'datatype.uuid' },
-    geo_location: { label: 'Geo Location', type: 'text', faker: 'address.city' }
+  // Standard Detail Fields
+  detail_id: { label: 'Detail ID', type: 'text', faker: 'datatype.uuid' },
+  parent_id: { label: 'Parent ID', type: 'text', faker: 'datatype.uuid' }, // Foreign key to parent entity
+
+  item_name: { label: 'Item Name', type: 'text', faker: 'commerce.productName' },
+  description: { label: 'Description', type: 'text', multiline: true, rows: 2, faker: 'commerce.productDescription' },
+
+  quantity: { label: 'Quantity', type: 'number', faker: 'datatype.number' },
+  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount', decimals: 2 },
+
+  // Mandated
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' }
 };
 
 export const entityName = 'Reconciliation Statements Details';

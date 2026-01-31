@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   list_id: { label: 'List ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -10,8 +11,7 @@ export const fieldsConfig = {
   expiry_date: { label: 'Expiry Date', type: 'date', faker: 'date.future' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' }, // Base price factor?
+  // Base price factor?
 
   tags: { label: 'Tags', type: 'select', options: [{ id: 'retail', label: 'Retail' }, { id: 'wholesale', label: 'Wholesale' }], multiple: true, faker: 'random.arrayElement' },
 
@@ -22,8 +22,11 @@ export const fieldsConfig = {
   created_by: { label: 'Created By', type: 'text', faker: 'name.fullName' },
   notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' },
   markup_percentage: { label: 'Markup (%)', type: 'number', faker: 'datatype.float' },
-  is_default: { label: 'Is Default', type: 'checkbox', faker: 'datatype.boolean' }
+  type: 'checkbox', faker: 'datatype.boolean',
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Price Lists';
 export const collectionName = 'price_lists';

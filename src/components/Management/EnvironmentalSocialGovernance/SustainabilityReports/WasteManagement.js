@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   record_id: { label: 'Record ID', type: 'text', faker: 'datatype.uuid' },
   facility_id: { label: 'Facility ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -12,16 +13,17 @@ export const fieldsConfig = {
   disposal_method: { label: 'Disposal Method', type: 'select', options: [{ id: 'landfill', label: 'Landfill' }, { id: 'recycle_center', label: 'Recycle Center' }, { id: 'incineration', label: 'Incineration' }], faker: 'random.arrayElement' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' }, // Cost per kg?
+  // Cost per kg?
 
   // Extras
   vendor: { label: 'Vendor', type: 'text', faker: 'company.name' },
   cost: { label: 'Cost', type: 'number', faker: 'finance.amount' },
   manifest_number: { label: 'Manifest Number', type: 'text', faker: 'finance.account' },
   diversion_rate: { label: 'Diversion Rate', type: 'number', faker: 'datatype.float' },
-  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Waste Management';
 export const collectionName = 'waste_management';

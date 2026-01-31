@@ -1,5 +1,6 @@
 
 export const fieldsConfig = {
+
   license_id: { label: 'License ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
@@ -12,9 +13,6 @@ export const fieldsConfig = {
   expiry_date: { label: 'Expiry Date', type: 'date', faker: 'date.future' },
 
   // Mandated
-  processing_step: { label: 'Processing Step', type: 'text', faker: 'hacker.verb' },
-  unit_price: { label: 'Unit Price', type: 'number', faker: 'finance.amount' },
-
   // Extras
   vendor: { label: 'Vendor', type: 'text', faker: 'company.name' },
   purchase_date: { label: 'Purchase Date', type: 'date', faker: 'date.past' },
@@ -22,8 +20,10 @@ export const fieldsConfig = {
   is_subscription: { label: 'Is Subscription', type: 'checkbox', faker: 'datatype.boolean' },
   auto_renew: { label: 'Auto Renew', type: 'checkbox', faker: 'datatype.boolean' },
   admin_email: { label: 'Admin Email', type: 'email', faker: 'internet.email' },
-  notes: { label: 'Notes', type: 'text', faker: 'lorem.sentence' }
+  processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
+  total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
+
 
 export const entityName = 'Software Licenses';
 export const collectionName = 'software_licenses';
