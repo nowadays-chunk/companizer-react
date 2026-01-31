@@ -5,7 +5,7 @@ export const fieldsConfig = {
   project_id: { label: 'Project ID', type: 'text', faker: 'datatype.uuid' },
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
 
-  description: { label: 'Description', type: 'text', multiline: true, rows: 4, faker: 'lorem.paragraphs' },
+  description: { label: 'Description', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
   in_scope: { label: 'In Scope', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
   out_of_scope: { label: 'Out Of Scope', type: 'text', multiline: true, rows: 2, faker: 'lorem.paragraph' },
 

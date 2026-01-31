@@ -12,7 +12,6 @@ export const fieldsConfig = {
   category: { label: 'Category', type: 'select', options: [{ id: 'nda', label: 'NDA' }, { id: 'saas', label: 'SaaS' }, { id: 'employment', label: 'Employment' }, { id: 'vendor', label: 'Vendor' }], faker: 'random.arrayElement' },
   file_url: { label: 'File URL', type: 'text', faker: 'internet.url' },
   version: { label: 'Version', type: 'text', faker: 'semver' },
-  ype: 'checkbox', faker: 'datatype.boolean',
   processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
   total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
