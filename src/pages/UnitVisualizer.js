@@ -1,4 +1,3 @@
-
 // src/pages/UnitVisualizer.js
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -42,7 +41,6 @@ import {
   Edit,
   History,
   Archive,
-  Send,
   ArrowBackIosNew
 } from '@mui/icons-material';
 
@@ -50,12 +48,11 @@ import { helpersWrapper } from '../utils/firebaseCrudHelpers';
 import { keyToLinkMap } from '../layout/keyToLinkMap';
 import * as WorkflowRulesConfig from '../components/Management/entity_workflow_rules.js';
 import BaseManagementComponent from '../components/Management/Base';
-import { collectionName as commentsCollectionName } from '../components/Management/entity_comments_history';
+import CommentsSection from '../components/CommentsSection';
 import ActionTimeline from '../components/ActionTimeline';
 import { collectionName as logsCollectionName } from '../components/Management/manager_action_logs';
 import { useTranslation } from '../contexts/TranslationProvider';
 
-// --- CUSTOM STYLES & COMPONENTS ---
 // Using inline SX for "Fancy" specific overrides that go beyond the theme
 
 const FieldDisplay = ({ label, value }) => (
@@ -209,8 +206,6 @@ const Visualizer = (props) => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
   const [nestedItem, setNestedItem] = useState(null);
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
   const [refreshTimeline, setRefreshTimeline] = useState(0);
 
   const isView = mode === 'view';
@@ -219,7 +214,6 @@ const Visualizer = (props) => {
   const collectionName = config?.collectionName || entity;
 
   const queryHelpers = useMemo(() => helpersWrapper(collectionName), [collectionName]);
-  const commentsHelpers = useMemo(() => helpersWrapper(commentsCollectionName), []);
   const logsHelpers = useMemo(() => helpersWrapper(logsCollectionName), []);
   const rulesHelpers = useMemo(() => helpersWrapper('entity_workflow_rules'), []);
 
@@ -336,13 +330,26 @@ const Visualizer = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       if (!config) return;
-      setLoading(true);
+
+      // Prevent unnecessary loading trigger if form is already initialized for the same ID
+      // This is a safety check, but the dependency array fix is the primary solution.
+      if (isEdit && formInitialized && itemData && itemData.id === idValue) {
+        // We probably don't need to refetch everything if we are just typing
+        // But let's rely on dependencies.
+      } else {
+        setLoading(true);
+      }
+
       setError(null);
+
+      // Instantiate helper locally to avoid dependency on external object reference
+      const api = helpersWrapper(collectionName);
+
       try {
         if (isView || isEdit) {
           if (!idValue) { setError('Invalid URL: Missing Item ID'); setLoading(false); return; }
 
-          const fetchPromise = queryHelpers.fetchItemById(idValue);
+          const fetchPromise = api.fetchItemById(idValue);
           const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), 10000));
           const data = await Promise.race([fetchPromise, timeoutPromise]);
 
@@ -354,11 +361,6 @@ const Visualizer = (props) => {
             setFormInitialized(true);
           }
 
-          if (data) {
-            const allComments = await commentsHelpers.fetchItems();
-            const relevant = allComments.filter(c => c.entity_id === idValue && c.entity_type === collectionName);
-            setComments(relevant);
-          }
         } else if (isCreate && !formInitialized) {
           const initial = Object.keys(config.fieldsConfig)
             .filter((key) => key !== 'created_at' && key !== 'updated_at')
@@ -377,7 +379,10 @@ const Visualizer = (props) => {
       }
     };
     fetchData();
-  }, [config, idValue, isView, isEdit, isCreate, queryHelpers, commentsHelpers, collectionName, formInitialized]);
+    // Removed queryHelpers from dependencies, added collectionName
+  }, [config, idValue, isView, isEdit, isCreate, collectionName, formInitialized]);
+
+
 
   // --- HANDLERS ---
   const handleFieldChange = (key, field) => (e) => {
@@ -416,20 +421,7 @@ const Visualizer = (props) => {
     else navigate(-1);
   };
 
-  const handleAddComment = async () => {
-    if (!newComment.trim()) return;
-    try {
-      await commentsHelpers.addItem({
-        entity_type: collectionName,
-        entity_id: idValue,
-        comment_text: newComment,
-        author_name: 'Current User',
-      });
-      setNewComment('');
-      const allComments = await commentsHelpers.fetchItems();
-      setComments(allComments.filter(c => c.entity_id === idValue && c.entity_type === collectionName));
-    } catch (e) { console.error("Failed to add comment", e); }
-  };
+
 
   const getStepActions = () => {
     if (!logicConfig?.stepsConfig || !itemData) return [];
@@ -523,47 +515,10 @@ const Visualizer = (props) => {
               </Card>
 
               {/* 3. COMMENTS */}
-              <Card>
-                <CardContent sx={{ p: 4 }}>
-                  <SectionHeader title={t("Comments")} />
-                  <List disablePadding sx={{ maxHeight: 300, overflow: 'auto', mb: 2 }}>
-                    {comments.map((c, i) => (
-                      <React.Fragment key={i}>
-                        <ListItem alignItems="flex-start" sx={{ px: 0 }}>
-                          <ListItemAvatar><Avatar sx={{ width: 32, height: 32, borderRadius: 0 }}>{c.author_name?.[0]}</Avatar></ListItemAvatar>
-                          <ListItemText
-                            primary={<Typography variant="subtitle2" sx={{ fontWeight: 700 }}>{c.author_name}</Typography>}
-                            secondary={
-                              <>
-                                <Typography variant="body2" color="text.primary" sx={{ my: 0.5 }}>{c.comment_text}</Typography>
-                                <Typography variant="caption" display="block" color="text.secondary">
-                                  {c.created_at ? new Date(c.created_at).toLocaleString() : 'Just now'}
-                                </Typography>
-                              </>
-                            }
-                          />
-                        </ListItem>
-                        <Divider component="li" />
-                      </React.Fragment>
-                    ))}
-                    {comments.length === 0 && <Typography variant="caption" color="textSecondary">No comments yet.</Typography>}
-                  </List>
-                  <Box display="flex" gap={1}>
-                    <TextField
-                      fullWidth
-                      multiline
-                      rows={2}
-                      placeholder="Write a comment..."
-                      value={newComment}
-                      onChange={e => setNewComment(e.target.value)}
-                      sx={{ '& .MuiOutlinedInput-root': { bgcolor: 'background.default' } }}
-                    />
-                    <IconButton color="primary" onClick={handleAddComment} sx={{ alignSelf: 'flex-end', borderRadius: 0, border: '1px solid', borderColor: 'primary.main', p: 1 }}>
-                      <Send />
-                    </IconButton>
-                  </Box>
-                </CardContent>
-              </Card>
+              <CommentsSection
+                entityId={idValue}
+                entityType={collectionName}
+              />
 
               {/* 4. DETAILS COMPONENT */}
               {detailConfig && (
