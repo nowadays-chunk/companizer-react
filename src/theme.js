@@ -271,8 +271,16 @@ const getTheme = (mode) => {
             MuiDrawer: {
                 styleOverrides: {
                     paper: {
-                        backgroundColor: isDark ? '#0A0A0A' : '#FFFFFF',
-                        borderRight: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}`,
+                        backgroundColor: '#FFFFFF', // Always White
+                        color: '#000000', // Always Black text
+                        borderRight: '1px solid #000000', // Always Black border
+                    }
+                }
+            },
+            MuiListItemIcon: {
+                styleOverrides: {
+                    root: {
+                        color: '#000000', // Always Black icons
                     }
                 }
             },

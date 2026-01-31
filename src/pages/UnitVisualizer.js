@@ -467,22 +467,8 @@ const Visualizer = (props) => {
               <StatusPill label={itemData?.processing_step || logicConfig?.stepsConfig?.initialStep || 'DRAFT'} />
             )}
 
-            {/* HEADER ACTIONS */}
+            {/* HEADER ACTIONS - Edit/Delete REMOVED */}
             <Box gap={1} display="flex" ml={2}>
-              {isView && (
-                <>
-                  <Tooltip title={t('Edit')}>
-                    <IconButton onClick={() => navigate(`/${main}/${sub}/${entity}/edit/${idValue}`)} sx={{ borderRadius: 0, border: '1px solid', borderColor: 'divider' }}>
-                      <Edit />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title={t('Delete')}>
-                    <IconButton onClick={handleDelete} color="error" sx={{ borderRadius: 0, border: '1px solid', borderColor: 'error.main' }}>
-                      <Delete />
-                    </IconButton>
-                  </Tooltip>
-                </>
-              )}
               {props.onClose && (
                 <IconButton onClick={props.onClose} sx={{ borderRadius: 0 }}><Close /></IconButton>
               )}
@@ -490,150 +476,142 @@ const Visualizer = (props) => {
           </Box>
 
 
-          {/* VIEW MODE: DASHBOARD STYLE LAYOUT */}
+          {/* VIEW MODE: STACK LAYOUT */}
           {isView ? (
-            <Grid container spacing={4}>
-              {/* LEFT COLUMN: FIELDS */}
-              <Grid item xs={12} md={8}>
-                <Card sx={{ height: '100%' }}>
+            <Box display="flex" flexDirection="column" gap={4}>
+
+              {/* 1. WORKFLOW ACTIONS (Top, Clean Box) */}
+              {logicConfig && getStepActions().length > 0 && (
+                <Box mb={2}>
+                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.8rem', mb: 2, color: 'text.secondary' }}>
+                    Workflow Actions
+                  </Typography>
+                  <Box display="flex" flexWrap="wrap" gap={2}>
+                    {getStepActions().map(actionName => {
+                      const def = logicConfig.actionsConfig[actionName];
+                      if (!def) return null;
+                      const Icon = ICON_MAP[def.icon] || CheckCircle;
+                      return (
+                        <ActionButton
+                          key={actionName}
+                          icon={Icon}
+                          label={t(def.label)}
+                          onClick={() => handleAction(actionName)}
+                          color={def.type === 'error' ? 'error' : def.type === 'success' ? 'success' : 'primary'}
+                        />
+                      );
+                    })}
+                  </Box>
+                </Box>
+              )}
+
+              {/* 2. FORM FIELDS */}
+              <Card>
+                <CardContent sx={{ p: 4 }}>
+                  <SectionHeader title={t("Information")} />
+                  <Grid container spacing={3}>
+                    {Object.keys(config.fieldsConfig).filter(k => k !== 'created_at' && k !== 'updated_at').map(key => {
+                      const field = config.fieldsConfig[key];
+                      return (
+                        <Grid item xs={12} sm={6} md={3} key={key}>
+                          <FieldDisplay label={t(field.label)} value={String(itemData?.[key] || '')} />
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </CardContent>
+              </Card>
+
+              {/* 3. COMMENTS */}
+              <Card>
+                <CardContent sx={{ p: 4 }}>
+                  <SectionHeader title={t("Comments")} />
+                  <List disablePadding sx={{ maxHeight: 300, overflow: 'auto', mb: 2 }}>
+                    {comments.map((c, i) => (
+                      <React.Fragment key={i}>
+                        <ListItem alignItems="flex-start" sx={{ px: 0 }}>
+                          <ListItemAvatar><Avatar sx={{ width: 32, height: 32, borderRadius: 0 }}>{c.author_name?.[0]}</Avatar></ListItemAvatar>
+                          <ListItemText
+                            primary={<Typography variant="subtitle2" sx={{ fontWeight: 700 }}>{c.author_name}</Typography>}
+                            secondary={
+                              <>
+                                <Typography variant="body2" color="text.primary" sx={{ my: 0.5 }}>{c.comment_text}</Typography>
+                                <Typography variant="caption" display="block" color="text.secondary">
+                                  {c.created_at ? new Date(c.created_at).toLocaleString() : 'Just now'}
+                                </Typography>
+                              </>
+                            }
+                          />
+                        </ListItem>
+                        <Divider component="li" />
+                      </React.Fragment>
+                    ))}
+                    {comments.length === 0 && <Typography variant="caption" color="textSecondary">No comments yet.</Typography>}
+                  </List>
+                  <Box display="flex" gap={1}>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={2}
+                      placeholder="Write a comment..."
+                      value={newComment}
+                      onChange={e => setNewComment(e.target.value)}
+                      sx={{ '& .MuiOutlinedInput-root': { bgcolor: 'background.default' } }}
+                    />
+                    <IconButton color="primary" onClick={handleAddComment} sx={{ alignSelf: 'flex-end', borderRadius: 0, border: '1px solid', borderColor: 'primary.main', p: 1 }}>
+                      <Send />
+                    </IconButton>
+                  </Box>
+                </CardContent>
+              </Card>
+
+              {/* 4. DETAILS COMPONENT */}
+              {detailConfig && (
+                <Card>
                   <CardContent sx={{ p: 4 }}>
-                    <SectionHeader title={t("Information")} />
-                    <Grid container spacing={3}>
-                      {Object.keys(config.fieldsConfig).filter(k => k !== 'created_at' && k !== 'updated_at').map(key => {
-                        const field = config.fieldsConfig[key];
-                        return (
-                          <Grid item xs={12} sm={6} key={key}>
-                            <FieldDisplay label={t(field.label)} value={String(itemData?.[key] || '')} />
-                          </Grid>
-                        );
-                      })}
-                    </Grid>
+                    <SectionHeader title={t("Related Details")} />
+                    <BaseManagementComponent
+                      fetchItems={async () => {
+                        const wrapper = helpersWrapper(detailEntityName || `${entity}_details`);
+                        const all = await wrapper.fetchItems();
+                        return all.filter(r => r.parent_id === idValue);
+                      }}
+                      addItem={async (row) => {
+                        const wrapper = helpersWrapper(detailEntityName);
+                        return wrapper.addItem({ ...row, parent_id: idValue });
+                      }}
+                      deleteItem={async (itemId) => helpersWrapper(detailEntityName).deleteItem(itemId)}
+                      updateItem={async (itemId, row) => helpersWrapper(detailEntityName).updateItem(itemId, row)}
+                      fieldConfig={detailConfig.fieldsConfig}
+                      entityName={detailEntityName}
+                      onViewItem={(itemId) => {
+                        const parentBaseUrl = keyToLinkMap[rawEntity] || `/${main}/${sub}/${rawEntity}`;
+                        window.open(`/#${parentBaseUrl}/details/view/${itemId}`, '_blank');
+                      }}
+                      onEditItem={(itemId) => {
+                        const parentBaseUrl = keyToLinkMap[rawEntity] || `/${main}/${sub}/${rawEntity}`;
+                        window.open(`/#${parentBaseUrl}/details/edit/${itemId}`, '_blank');
+                      }}
+                      onAdd={() => {
+                        const parentBaseUrl = keyToLinkMap[rawEntity] || `/${main}/${sub}/${rawEntity}`;
+                        window.open(`/#${parentBaseUrl}/details/create`, '_blank');
+                      }}
+                      onConfigure={() => {
+                        const parentBaseUrl = keyToLinkMap[rawEntity] || `/${main}/${sub}/${rawEntity}`;
+                        window.open(`/#${parentBaseUrl}/configuration`, '_blank');
+                      }}
+                    />
                   </CardContent>
                 </Card>
+              )}
 
-                {/* DETAILS COMPONENT */}
-                {detailConfig && (
-                  <Box mt={4}>
-                    <Card>
-                      <CardContent sx={{ p: 4 }}>
-                        <SectionHeader title={t("Related Details")} />
-                        <BaseManagementComponent
-                          fetchItems={async () => {
-                            const wrapper = helpersWrapper(detailEntityName || `${entity}_details`);
-                            const all = await wrapper.fetchItems();
-                            return all.filter(r => r.parent_id === idValue);
-                          }}
-                          addItem={async (row) => {
-                            const wrapper = helpersWrapper(detailEntityName);
-                            return wrapper.addItem({ ...row, parent_id: idValue });
-                          }}
-                          deleteItem={async (itemId) => helpersWrapper(detailEntityName).deleteItem(itemId)}
-                          updateItem={async (itemId, row) => helpersWrapper(detailEntityName).updateItem(itemId, row)}
-                          fieldConfig={detailConfig.fieldsConfig}
-                          entityName={detailEntityName}
-                          onViewItem={(itemId) => {
-                            const parentBaseUrl = keyToLinkMap[rawEntity] || `/${main}/${sub}/${rawEntity}`;
-                            window.open(`/#${parentBaseUrl}/details/view/${itemId}`, '_blank');
-                          }}
-                          onEditItem={(itemId) => {
-                            const parentBaseUrl = keyToLinkMap[rawEntity] || `/${main}/${sub}/${rawEntity}`;
-                            window.open(`/#${parentBaseUrl}/details/edit/${itemId}`, '_blank');
-                          }}
-                          onAdd={() => {
-                            const parentBaseUrl = keyToLinkMap[rawEntity] || `/${main}/${sub}/${rawEntity}`;
-                            window.open(`/#${parentBaseUrl}/details/create`, '_blank');
-                          }}
-                          onConfigure={() => {
-                            const parentBaseUrl = keyToLinkMap[rawEntity] || `/${main}/${sub}/${rawEntity}`;
-                            window.open(`/#${parentBaseUrl}/configuration`, '_blank');
-                          }}
-                        />
-                      </CardContent>
-                    </Card>
-                  </Box>
-                )}
+              {/* 5. HISTORY (TIMELINE) */}
+              <Box>
+                <SectionHeader title={t("History")} />
+                <ActionTimeline key={refreshTimeline} entityId={idValue} entityType={collectionName} />
+              </Box>
 
-                {/* TIMELINE */}
-                <Box mt={4}>
-                  <ActionTimeline key={refreshTimeline} entityId={idValue} entityType={collectionName} />
-                </Box>
-              </Grid>
-
-              {/* RIGHT COLUMN: ACTIONS & COMMENTS */}
-              <Grid item xs={12} md={4}>
-                <Box position="sticky" top={20}>
-                  {/* WORKFLOW ACTIONS */}
-                  {logicConfig && getStepActions().length > 0 && (
-                    <Card sx={{ mb: 3, borderTop: '4px solid', borderColor: 'primary.main' }}>
-                      <CardContent>
-                        <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.8rem' }}>
-                          Workflow Actions
-                        </Typography>
-                        <Box display="flex" flexDirection="column" gap={1}>
-                          {getStepActions().map(actionName => {
-                            const def = logicConfig.actionsConfig[actionName];
-                            if (!def) return null;
-                            const Icon = ICON_MAP[def.icon] || CheckCircle;
-                            return (
-                              <ActionButton
-                                key={actionName}
-                                icon={Icon}
-                                label={t(def.label)}
-                                onClick={() => handleAction(actionName)}
-                                color={def.type === 'error' ? 'error' : def.type === 'success' ? 'success' : 'primary'}
-                              />
-                            );
-                          })}
-                        </Box>
-                      </CardContent>
-                    </Card>
-                  )}
-
-                  {/* COMMENTS */}
-                  <Card>
-                    <CardContent>
-                      <SectionHeader title={t("Comments")} />
-                      <List disablePadding sx={{ maxHeight: 300, overflow: 'auto', mb: 2 }}>
-                        {comments.map((c, i) => (
-                          <React.Fragment key={i}>
-                            <ListItem alignItems="flex-start" sx={{ px: 0 }}>
-                              <ListItemAvatar><Avatar sx={{ width: 32, height: 32, borderRadius: 0 }}>{c.author_name?.[0]}</Avatar></ListItemAvatar>
-                              <ListItemText
-                                primary={<Typography variant="subtitle2" sx={{ fontWeight: 700 }}>{c.author_name}</Typography>}
-                                secondary={
-                                  <>
-                                    <Typography variant="body2" color="text.primary" sx={{ my: 0.5 }}>{c.comment_text}</Typography>
-                                    <Typography variant="caption" display="block" color="text.secondary">
-                                      {c.created_at ? new Date(c.created_at).toLocaleString() : 'Just now'}
-                                    </Typography>
-                                  </>
-                                }
-                              />
-                            </ListItem>
-                            <Divider component="li" />
-                          </React.Fragment>
-                        ))}
-                        {comments.length === 0 && <Typography variant="caption" color="textSecondary">No comments yet.</Typography>}
-                      </List>
-                      <Box display="flex" gap={1}>
-                        <TextField
-                          fullWidth
-                          multiline
-                          rows={2}
-                          placeholder="Write a comment..."
-                          value={newComment}
-                          onChange={e => setNewComment(e.target.value)}
-                          sx={{ '& .MuiOutlinedInput-root': { bgcolor: 'background.default' } }}
-                        />
-                        <IconButton color="primary" onClick={handleAddComment} sx={{ alignSelf: 'flex-end', borderRadius: 0, border: '1px solid', borderColor: 'primary.main', p: 1 }}>
-                          <Send />
-                        </IconButton>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Box>
-              </Grid>
-            </Grid>
+            </Box>
           ) : (
             // EDIT/CREATE FORM
             <Card sx={{ maxWidth: 800, mx: 'auto' }}>
