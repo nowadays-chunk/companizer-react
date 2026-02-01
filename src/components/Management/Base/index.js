@@ -82,6 +82,7 @@ export default function BaseTableComponent({
   deleteItem,
   fieldConfig,
   entityName,
+  basePath, // NEW: Explicit path for entities not in keyToLinkMap (e.g., '/management/users')
   onViewItem: onViewItemProp,
   onEditItem: onEditItemProp,
   onConfigure: onConfigureProp,
@@ -200,6 +201,10 @@ export default function BaseTableComponent({
   }, [filters, items]);
 
   const getBaseSlashedURL = () => {
+    // If explicit basePath is provided, use it
+    if (basePath) return basePath;
+
+    // Otherwise lookup in keyToLinkMap
     return keyToLinkMap[entityName.toLowerCase().replace(/ /g, '-').replace(/_/g, '-')];
   };
 

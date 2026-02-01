@@ -21,6 +21,7 @@ export const OrganizationsPage = () => {
             deleteItem={deleteItem}
             fieldConfig={OrganizationsConfig.fieldsConfig}
             entityName={OrganizationsConfig.entityName}
+            basePath="/management/organizations"
         />
     );
 };
@@ -37,6 +38,7 @@ export const UsersPage = () => {
             deleteItem={deleteItem}
             fieldConfig={UsersConfig.fieldsConfig}
             entityName={UsersConfig.entityName}
+            basePath="/management/users"
         />
     );
 };
@@ -53,6 +55,7 @@ export const AuthorizationsPage = () => {
             deleteItem={deleteItem}
             fieldConfig={AuthorizationsConfig.fieldsConfig}
             entityName={AuthorizationsConfig.entityName}
+            basePath="/management/users/authorizations"
         />
     );
 };
@@ -69,6 +72,7 @@ export const EntityRowsStackPage = () => {
             deleteItem={deleteItem}
             fieldConfig={EntityRowsStackConfig.fieldsConfig}
             entityName={EntityRowsStackConfig.entityName}
+            basePath="/management/entity-rows-stack"
         />
     );
 };

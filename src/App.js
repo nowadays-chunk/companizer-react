@@ -128,6 +128,8 @@ const App = () => {
             />
 
             {/* RBAC Routes - Must come before generic /:module/:subModule/:component */}
+
+            {/* Organizations Routes */}
             <Route
               path="/management/organizations"
               element={
@@ -138,7 +140,38 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/management/organizations/view/:id"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <Visualizer mode="view" config={require('./components/RBAC/Organizations')} />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/management/organizations/edit/:id"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <Visualizer mode="edit" config={require('./components/RBAC/Organizations')} />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/management/organizations/create"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <Visualizer mode="create" config={require('./components/RBAC/Organizations')} />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
 
+            {/* Users Routes */}
             <Route
               path="/management/users"
               element={
@@ -149,13 +182,74 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/management/users/view/:id"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <Visualizer mode="view" config={require('./components/RBAC/Users')} />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/management/users/edit/:id"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <Visualizer mode="edit" config={require('./components/RBAC/Users')} />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/management/users/create"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <Visualizer mode="create" config={require('./components/RBAC/Users')} />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
 
+            {/* Authorizations Routes */}
             <Route
               path="/management/users/authorizations"
               element={
                 <ProtectedRoute user={user}>
                   <Dashboard colorMode={colorMode}>
                     <AuthorizationsPage />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/management/users/authorizations/view/:id"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <Visualizer mode="view" config={require('./components/RBAC/Authorizations')} />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/management/users/authorizations/edit/:id"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <Visualizer mode="edit" config={require('./components/RBAC/Authorizations')} />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/management/users/authorizations/create"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <Visualizer mode="create" config={require('./components/RBAC/Authorizations')} />
                   </Dashboard>
                 </ProtectedRoute>
               }
