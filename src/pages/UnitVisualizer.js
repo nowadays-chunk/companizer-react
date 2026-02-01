@@ -219,14 +219,23 @@ const Visualizer = (props) => {
 
   // --- ACTIONS ---
   const handleAction = async (actionName) => {
-    if (!logicConfig?.actionsConfig?.[actionName]) return;
-    const actionDef = logicConfig.actionsConfig[actionName];
+    // Robust Step Resolution
+    const currentStep = itemData?.processing_step || logicConfig?.stepsConfig?.initialStep;
+
+    // Fallback if action is defined in steps but not in actionsConfig
+    let actionDef = logicConfig?.actionsConfig?.[actionName];
+    if (!actionDef) {
+      // Check if it's a known step action to allow execution even if details missing
+      // But we need at least a label.
+      actionDef = { label: actionName, name: actionName };
+      console.warn(`Action ${actionName} missing from actionsConfig. Using default.`);
+    }
 
     try {
       const rules = await rulesHelpers.fetchItems();
       const relevantRules = rules.filter(r =>
         r.is_active && r.entity_type === collectionName &&
-        (r.current_step === itemData?.processing_step || r.current_step === '*') &&
+        (r.current_step === currentStep || r.current_step === '*') &&
         (r.action_name === actionName || r.action_name === '*')
       );
 
@@ -241,8 +250,8 @@ const Visualizer = (props) => {
         }
       }
     } catch (err) {
-      alert(`System Error: Could not verify workflow rules. ${err.message}`);
-      return;
+      // Don't block execution if rules fetch fails, just warn
+      console.warn(`System Error: Could not verify workflow rules. ${err.message}`);
     }
 
     const logEntry = {
@@ -250,7 +259,7 @@ const Visualizer = (props) => {
       entity_type: collectionName,
       entity_id: idValue,
       accountable_id: 'Current User',
-      processing_step: actionDef.nextStep || itemData?.processing_step,
+      processing_step: actionDef.nextStep || currentStep,
       status: 'success',
       details: `Action "${actionName}" initiated.`,
       unit_price: itemData?.unit_price || 0
@@ -261,9 +270,21 @@ const Visualizer = (props) => {
         const updatedData = { ...itemData, processing_step: actionDef.nextStep };
         await queryHelpers.updateItem(idValue, { processing_step: actionDef.nextStep });
         setItemData(updatedData);
-        alert(`Action "${actionDef.label}" executed successfully! Status updated to: ${actionDef.nextStep}`);
+
+        // SPECIAL HANDLING: If action is "Generate PDF", open the window
+        if (actionName === 'Generate PDF' || actionDef.label === 'Generate PDF' || actionDef.actionType === 'pdf') {
+          window.open(`#/print/${main}/${sub}/${entity}/view/${idValue}`, '_blank');
+          alert(`Action "${actionDef.label}" executed! PDF generated.`);
+        } else {
+          alert(`Action "${actionDef.label}" executed successfully! Status updated to: ${actionDef.nextStep}`);
+        }
+
         logEntry.details += ` Status changed to ${actionDef.nextStep}.`;
       } else {
+        // Even if no step change, check for PDF action
+        if (actionName === 'Generate PDF' || actionDef.label === 'Generate PDF' || actionDef.actionType === 'pdf') {
+          window.open(`#/print/${main}/${sub}/${entity}/view/${idValue}`, '_blank');
+        }
         alert(`Action "${actionDef.label}" executed!`);
       }
       await logsHelpers.addItem(logEntry);
@@ -316,6 +337,24 @@ const Visualizer = (props) => {
           }
           if (logicModule) setLogicConfig(logicModule);
         } catch (logicErr) { }
+
+        // Load specific workflow config from relative Config folder
+        if (holdingFolder !== 'Base') {
+          try {
+            const workflowConfigModule = await import(`../components/Management/${holdingFolder}/${subFolder}/Config/${componentName}Config`);
+            const workflowConfig = workflowConfigModule.default || workflowConfigModule;
+
+            if (workflowConfig) {
+              setLogicConfig(prev => ({
+                ...(prev || {}),
+                stepsConfig: workflowConfig.stepsConfig || prev?.stepsConfig,
+                actionsConfig: workflowConfig.actionsConfig || prev?.actionsConfig
+              }));
+            }
+          } catch (e) {
+            // Config file may not exist, ignore
+          }
+        }
 
       } catch (err) {
         console.error('Error loading configuration:', err);
@@ -459,12 +498,9 @@ const Visualizer = (props) => {
               <StatusPill label={itemData?.processing_step || logicConfig?.stepsConfig?.initialStep || 'DRAFT'} />
             )}
 
-            {/* HEADER ACTIONS - Edit/Delete REMOVED */}
-            <Box gap={1} display="flex" ml={2}>
-              {props.onClose && (
-                <IconButton onClick={props.onClose} sx={{ borderRadius: 0 }}><Close /></IconButton>
-              )}
-            </Box>
+            {props.onClose && (
+              <IconButton onClick={props.onClose} sx={{ borderRadius: 0 }}><Close /></IconButton>
+            )}
           </Box>
 
 
@@ -631,7 +667,7 @@ const Visualizer = (props) => {
 
         </Box>
       </Fade>
-    </Container>
+    </Container >
   );
 };
 

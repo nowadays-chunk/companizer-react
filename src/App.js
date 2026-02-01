@@ -21,6 +21,7 @@ import Visualizer from './pages/UnitVisualizer';
 import BilanComptable from './pages/BilanComptable';
 import WorkflowRulesManager from './pages/WorkflowRulesManager';
 import SummaryConfiguration from './pages/SummaryConfiguration';
+import ConfigurablePdf from './pages/ConfigurablePdf';
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -278,6 +279,15 @@ const App = () => {
                 <Dashboard colorMode={colorMode}>
                   <Visualizer mode="create" isDetail={true} />
                 </Dashboard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/print/:main/:sub/:entity/view/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <ConfigurablePdf />
               </ProtectedRoute>
             }
           />

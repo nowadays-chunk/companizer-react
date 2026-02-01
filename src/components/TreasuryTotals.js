@@ -4,14 +4,17 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const TreasuryTotals = ({ rows = [], columns = [] }) => {
     // Calculate totals for numeric columns (excluding 'year')
+    // Calculate totals for numeric columns (excluding 'year')
     const calculateTotals = (rows, type) => {
         return columns.reduce((acc, col) => {
             if (col.type === 'number' && col.field !== 'year') {
                 acc[col.field] = rows.reduce((sum, row) => {
                     const val = row[col.field] || 0;
-                    if (type === 'assets') return sum + (val > 0 ? val : 0);
-                    if (type === 'liabilities') return sum + (val < 0 ? val : 0);
-                    return sum + val; // net
+                    // Filter based on row's invoiceType
+                    if (type === 'Asset' && row.invoiceType !== 'Asset') return sum;
+                    if (type === 'Liability' && row.invoiceType !== 'Liability') return sum;
+                    // For 'Net', include all
+                    return sum + val;
                 }, 0);
             } else {
                 acc[col.field] = '';
@@ -20,9 +23,9 @@ const TreasuryTotals = ({ rows = [], columns = [] }) => {
         }, {});
     };
 
-    const assetTotals = calculateTotals(rows, 'assets');
-    const liabilityTotals = calculateTotals(rows, 'liabilities');
-    const netTotals = calculateTotals(rows, 'net');
+    const assetTotals = calculateTotals(rows, 'Asset');
+    const liabilityTotals = calculateTotals(rows, 'Liability');
+    const netTotals = calculateTotals(rows, 'Net');
 
     // Set row labels (assuming first column is the label column)
     if (columns.length > 0) {
@@ -54,7 +57,7 @@ const TreasuryTotals = ({ rows = [], columns = [] }) => {
 
                 if (isNumber) {
                     if (col.valueFormatter) {
-                        displayValue = col.valueFormatter({ value });
+                        displayValue = col.valueFormatter(value);
                     } else {
                         displayValue = value.toLocaleString();
                     }
@@ -76,14 +79,7 @@ const TreasuryTotals = ({ rows = [], columns = [] }) => {
                         <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
                             {displayValue}
                         </Typography>
-                        {isNumber && (
-                            <Tooltip title="Copy Value">
-                                <IconButton onClick={() => handleCopyCell(displayValue)} size="small" sx={{ ml: 0.5, p: 0.5 }}>
-                                    <ContentCopyIcon fontSize="inherit" style={{ fontSize: '12px' }} />
-                                </IconButton>
-                            </Tooltip>
-                        )}
-                        {/* Add copy row button to the first cell of the row */}
+                        {/* Add copy row button to the first cell of the row only */}
                         {index === 0 && (
                             <Tooltip title={copyTooltip}>
                                 <IconButton onClick={() => handleCopyRow(data, label)} size="small" sx={{ ml: 1 }}>
