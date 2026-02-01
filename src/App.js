@@ -20,6 +20,7 @@ import Management from './pages/Management';
 import Visualizer from './pages/UnitVisualizer';
 import BilanComptable from './pages/BilanComptable';
 import WorkflowRulesManager from './pages/WorkflowRulesManager';
+import SummaryConfiguration from './pages/SummaryConfiguration';
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -95,6 +96,17 @@ const App = () => {
               <ProtectedRoute user={user}>
                 <Dashboard colorMode={colorMode}>
                   <Treasury />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/summary/configuration"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard colorMode={colorMode}>
+                  <SummaryConfiguration />
                 </Dashboard>
               </ProtectedRoute>
             }

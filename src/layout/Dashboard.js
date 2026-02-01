@@ -19,6 +19,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import DrawerDashboard from './Drawer';
 import { keyToLinkMap } from './keyToLinkMap';
+import { generateRandomDataAsync } from '../utils/dataGenerator';
+import GenerationProgressModal from '../components/GenerationProgressModal';
 
 const expandedDrawerWidth = 300;
 const collapsedDrawerWidth = 70;
@@ -72,6 +74,11 @@ const Dashboard = ({ children, colorMode }) => {
   const [open, setOpen] = useState(false);
   const [currentAnalysisPage, setCurrentAnalysisPage] = useState(0);
 
+  // Generation Modal State
+  const [genModalOpen, setGenModalOpen] = useState(false);
+  const [genProgressLog, setGenProgressLog] = useState([]);
+  const [genIsFinished, setGenIsFinished] = useState(false);
+
   const [showAnalytics, setShowAnalytics] = useState(() => {
     const saved = localStorage.getItem('showAnalytics');
     return saved !== null ? JSON.parse(saved) : false;
@@ -112,6 +119,22 @@ const Dashboard = ({ children, colorMode }) => {
     }
   };
 
+  const handleGenerateData = async () => {
+    setGenModalOpen(true);
+    setGenProgressLog([]);
+    setGenIsFinished(false);
+
+    await generateRandomDataAsync((log) => {
+      setGenProgressLog(prev => [...prev, log]);
+    });
+
+    setGenIsFinished(true);
+  };
+
+  const handleCloseGenModal = () => {
+    setGenModalOpen(false);
+  };
+
   // keyboard shortcuts
   useEffect(() => {
     const handler = (event) => {
@@ -130,6 +153,12 @@ const Dashboard = ({ children, colorMode }) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
+      <GenerationProgressModal
+        open={genModalOpen}
+        onClose={handleCloseGenModal}
+        isFinished={genIsFinished}
+        progressLog={genProgressLog}
+      />
 
       <AppBar position="fixed" open={open}>
         <Toolbar
@@ -225,6 +254,15 @@ const Dashboard = ({ children, colorMode }) => {
             >
               {translate('Logout', language)}
             </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
+              onClick={handleGenerateData}
+            >
+              Generate Random Row
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
@@ -242,7 +280,7 @@ const Dashboard = ({ children, colorMode }) => {
           })}
         </Box>
       </Main>
-    </Box>
+    </Box >
   );
 };
 

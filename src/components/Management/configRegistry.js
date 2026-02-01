@@ -1,548 +1,556 @@
 // Auto-generated Config Registry
 // Run 'node scripts/generate_config_registry.js' to update
 
-import * as AccessControlsConfig from './InformationTechnology/DataSecurity/Config/AccessControlsConfig.js';
-import * as AfterActionReportsConfig from './CorporateCommunication/CrisisManagement/Config/AfterActionReportsConfig.js';
-import * as AnnouncementsConfig from './CorporateCommunication/InternalCommunication/Config/AnnouncementsConfig.js';
-import * as ApplicantTrackingConfig from './HrManagement/Recruitment/Config/ApplicantTrackingConfig.js';
-import * as ArbitrationRecordsConfig from './ComplianceLegal/Disputes/Config/ArbitrationRecordsConfig.js';
-import * as AssetDepreciationConfig from './OperationsAssetManagement/Assets/Config/AssetDepreciationConfig.js';
-import * as AssetDisposalConfig from './OperationsAssetManagement/Assets/Config/AssetDisposalConfig.js';
-import * as AssetLifecycleConfig from './InformationTechnology/ItAssets/Config/AssetLifecycleConfig.js';
-import * as AssetTrackingConfig from './OperationsAssetManagement/Assets/Config/AssetTrackingConfig.js';
-import * as BackordersConfig from './SalesMarketing/SalesOrders/Config/BackordersConfig.js';
-import * as BandwidthMonitoringConfig from './InformationTechnology/NetworkManagement/Config/BandwidthMonitoringConfig.js';
-import * as BankTransfersConfig from './FinancialManagement/BankAccounts/Config/BankTransfersConfig.js';
-import * as BenchmarkingConfig from './GovernanceStrategy/KpisAnalytics/Config/BenchmarkingConfig.js';
-import * as BestPracticesConfig from './IntellectualHumanCapital/KnowledgeBase/Config/BestPracticesConfig.js';
-import * as BillableHoursConfig from './ProjectTaskManagement/Timesheets/Config/BillableHoursConfig.js';
-import * as BoardResolutionsConfig from './GovernanceStrategy/CorporateGovernance/Config/BoardResolutionsConfig.js';
-import * as BonusesIncentivesConfig from './HrManagement/Payroll/Config/BonusesIncentivesConfig.js';
-import * as BudgetAllocationsConfig from './FinancialManagement/Budget/Config/BudgetAllocationsConfig.js';
-import * as BugTrackingConfig from './InformationTechnology/SoftwareManagement/Config/BugTrackingConfig.js';
-import * as BusinessContinuityPlansConfig from './CrisisRiskManagement/BusinessContinuity/Config/BusinessContinuityPlansConfig.js';
-import * as BusinessImpactAnalysisConfig from './CrisisRiskManagement/BusinessContinuity/Config/BusinessImpactAnalysisConfig.js';
-import * as CampaignPerformanceConfig from './SalesMarketing/Campaigns/Config/CampaignPerformanceConfig.js';
-import * as CampaignPlanningConfig from './SalesMarketing/Campaigns/Config/CampaignPlanningConfig.js';
-import * as CarbonFootprintTrackingConfig from './EnvironmentalSocialGovernance/SustainabilityReports/Config/CarbonFootprintTrackingConfig.js';
-import * as CaseManagementConfig from './LegalCompliance/LegalCases/Config/CaseManagementConfig.js';
-import * as CashFlowForecastsConfig from './FinancialManagement/TreasuryManagement/Config/CashFlowForecastsConfig.js';
-import * as CertificationTrackingConfig from './TrainingDevelopment/LearningManagement/Config/CertificationTrackingConfig.js';
-import * as CertificationsConfig from './HrManagement/Training/Config/CertificationsConfig.js';
-import * as ChangeLogsConfig from './GovernanceStrategy/AuditTrails/Config/ChangeLogsConfig.js';
-import * as ChartOfAccountsConfig from './FinancialManagement/GeneralLedger/Config/ChartOfAccountsConfig.js';
-import * as ClaimsManagementConfig from './ComplianceLegal/Insurance/Config/ClaimsManagementConfig.js';
-import * as CommunityInvestmentConfig from './CorporateSocialResponsibility/CommunityOutreach/Config/CommunityInvestmentConfig.js';
-import * as RegulatoryCompliance_ComplianceAuditsConfig from './ComplianceLegal/RegulatoryCompliance/Config/ComplianceAuditsConfig.js';
-import * as AuditTrails_ComplianceAuditsConfig from './GovernanceStrategy/AuditTrails/Config/ComplianceAuditsConfig.js';
-import * as ComplianceDeadlinesConfig from './LegalCompliance/ComplianceObligations/Config/ComplianceDeadlinesConfig.js';
-import * as CompliancePoliciesConfig from './GovernanceStrategy/CorporateGovernance/Config/CompliancePoliciesConfig.js';
-import * as ComplianceReportingConfig from './ComplianceLegal/RegulatoryCompliance/Config/ComplianceReportingConfig.js';
-import * as ContractComplianceConfig from './LogisticsSupplyChain/SupplierContracts/Config/ContractComplianceConfig.js';
-import * as ContractNegotiationsConfig from './LogisticsSupplyChain/SupplierContracts/Config/ContractNegotiationsConfig.js';
-import * as ContractObligationsConfig from './ComplianceLegal/Contracts/Config/ContractObligationsConfig.js';
-import * as ContractRenewalRemindersConfig from './ComplianceLegal/Contracts/Config/ContractRenewalRemindersConfig.js';
-import * as ContractRenewalsConfig from './HrManagement/WorkContracts/Config/ContractRenewalsConfig.js';
-import * as ContractTemplatesConfig from './ComplianceLegal/Contracts/Config/ContractTemplatesConfig.js';
-import * as ContractTerminationsConfig from './HrManagement/WorkContracts/Config/ContractTerminationsConfig.js';
-import * as ContractTypesConfig from './HrManagement/WorkContracts/Config/ContractTypesConfig.js';
-import * as ContractualObligationsConfig from './CustomerSupport/ServiceContracts/Config/ContractualObligationsConfig.js';
-import * as CorporateSocialResponsibilityConfig from './EnvironmentalSocialGovernance/CommunityEngagement/Config/CorporateSocialResponsibilityConfig.js';
-import * as CorrectiveActionsConfig from './OperationsAssetManagement/QualityControl/Config/CorrectiveActionsConfig.js';
-import * as CostAnalysisConfig from './LogisticsSupplyChain/LogisticsPartners/Config/CostAnalysisConfig.js';
-import * as CourseCatalogConfig from './TrainingDevelopment/LearningManagement/Config/CourseCatalogConfig.js';
-import * as CourtAppearancesConfig from './LegalCompliance/LegalCases/Config/CourtAppearancesConfig.js';
-import * as CreditManagementConfig from './FinancialManagement/AccountsReceivable/Config/CreditManagementConfig.js';
-import * as CreditorsLedgerConfig from './FinancialManagement/AccountsPayable/Config/CreditorsLedgerConfig.js';
-import * as CrisisCommunicationLogsConfig from './CorporateCommunication/CrisisManagement/Config/CrisisCommunicationLogsConfig.js';
-import * as CrisisResponsePlansConfig from './CorporateCommunication/CrisisManagement/Config/CrisisResponsePlansConfig.js';
-import * as CrisisResponseTeamsConfig from './CrisisRiskManagement/CrisisManagement/Config/CrisisResponseTeamsConfig.js';
-import * as CrisisScenariosConfig from './CrisisRiskManagement/CrisisManagement/Config/CrisisScenariosConfig.js';
-import * as CulturalIntegrationConfig from './MergersAcquisitions/PostMergerIntegration/Config/CulturalIntegrationConfig.js';
-import * as CustomerHistoryConfig from './SalesMarketing/ClientsCustomers/Config/CustomerHistoryConfig.js';
-import * as CustomerInvoicesConfig from './FinancialManagement/AccountsReceivable/Config/CustomerInvoicesConfig.js';
-import * as CustomerSatisfactionConfig from './SalesMarketing/ClientsCustomers/Config/CustomerSatisfactionConfig.js';
-import * as CustomerSegmentationConfig from './SalesMarketing/ClientsCustomers/Config/CustomerSegmentationConfig.js';
-import * as CustomerSurveysConfig from './CustomerSupport/Feedback/Config/CustomerSurveysConfig.js';
-import * as CustomsDocumentationConfig from './LogisticsSupplyChain/Shipping/Config/CustomsDocumentationConfig.js';
-import * as DataEncryptionConfig from './InformationTechnology/DataSecurity/Config/DataEncryptionConfig.js';
-import * as DebtMaturitySchedulesConfig from './FinancialManagement/Debts/Config/DebtMaturitySchedulesConfig.js';
-import * as DebtorAgingConfig from './FinancialManagement/AccountsReceivable/Config/DebtorAgingConfig.js';
-import * as DevelopmentPlansConfig from './TrainingDevelopment/SkillDevelopment/Config/DevelopmentPlansConfig.js';
-import * as DisasterRecoveryPlansConfig from './CrisisRiskManagement/BusinessContinuity/Config/DisasterRecoveryPlansConfig.js';
-import * as DiscountStructuresConfig from './SalesMarketing/Pricing/Config/DiscountStructuresConfig.js';
-import * as DiscountsConfig from './OperationsAssetManagement/Pricing/Config/DiscountsConfig.js';
-import * as DocumentationManagementConfig from './IntellectualHumanCapital/KnowledgeBase/Config/DocumentationManagementConfig.js';
-import * as DueDiligenceConfig from './MergersAcquisitions/MAStrategy/Config/DueDiligenceConfig.js';
-import * as EmergencyCommunicationConfig from './CrisisRiskManagement/CrisisManagement/Config/EmergencyCommunicationConfig.js';
-import * as EmergencyContactsConfig from './HrManagement/EmployeeRecords/Config/EmergencyContactsConfig.js';
-import * as EmployeePortalsConfig from './CorporateCommunication/InternalCommunication/Config/EmployeePortalsConfig.js';
-import * as EmployeeVolunteeringConfig from './CorporateSocialResponsibility/CommunityOutreach/Config/EmployeeVolunteeringConfig.js';
-import * as EmployeesListConfig from './HrManagement/EmployeeRecords/Config/EmployeesListConfig.js';
-import * as EmploymentHistoryConfig from './HrManagement/EmployeeRecords/Config/EmploymentHistoryConfig.js';
-import * as EnergyAuditsConfig from './EnvironmentalSocialGovernance/EnergyManagement/Config/EnergyAuditsConfig.js';
-import * as EnergyConsumptionConfig from './EnvironmentalSocialGovernance/SustainabilityReports/Config/EnergyConsumptionConfig.js';
-import * as EnergySavingsTrackingConfig from './EnvironmentalSocialGovernance/EnergyManagement/Config/EnergySavingsTrackingConfig.js';
-import * as EquityInvestmentsConfig from './FinancialManagement/Investments/Config/EquityInvestmentsConfig.js';
-import * as ExecutiveTrainingConfig from './TrainingDevelopment/LeadershipPrograms/Config/ExecutiveTrainingConfig.js';
-import * as FacilityBookingConfig from './RealEstatePropertyManagement/FacilitiesManagement/Config/FacilityBookingConfig.js';
-import * as FacilityMaintenanceConfig from './RealEstatePropertyManagement/FacilitiesManagement/Config/FacilityMaintenanceConfig.js';
-import * as FeedbackAnalysisConfig from './CustomerSupport/Feedback/Config/FeedbackAnalysisConfig.js';
-import * as FirewallConfigurationsConfig from './InformationTechnology/NetworkManagement/Config/FirewallConfigurationsConfig.js';
-import * as FiscalPeriodsConfig from './FinancialManagement/GeneralLedger/Config/FiscalPeriodsConfig.js';
-import * as FixedIncomeInvestmentsConfig from './FinancialManagement/Investments/Config/FixedIncomeInvestmentsConfig.js';
-import * as ForecastingConfig from './FinancialManagement/Budget/Config/ForecastingConfig.js';
-import * as ForeignCurrencyAccountsConfig from './FinancialManagement/BankAccounts/Config/ForeignCurrencyAccountsConfig.js';
-import * as FreightManagementConfig from './LogisticsSupplyChain/Shipping/Config/FreightManagementConfig.js';
-import * as GreenInitiativesConfig from './CorporateSocialResponsibility/SustainabilityInitiatives/Config/GreenInitiativesConfig.js';
-import * as HardwareInventoryConfig from './InformationTechnology/ItAssets/Config/HardwareInventoryConfig.js';
-import * as IdeaSubmissionConfig from './IntellectualHumanCapital/InnovationManagement/Config/IdeaSubmissionConfig.js';
-import * as ImpactReportsConfig from './CorporateSocialResponsibility/SustainabilityInitiatives/Config/ImpactReportsConfig.js';
-import * as IncidentReportingConfig from './GovernanceStrategy/RiskManagement/Config/IncidentReportingConfig.js';
-import * as InnovationPipelineConfig from './IntellectualHumanCapital/InnovationManagement/Config/InnovationPipelineConfig.js';
-import * as InspectionRecordsConfig from './OperationsAssetManagement/QualityControl/Config/InspectionRecordsConfig.js';
-import * as InsurancePoliciesConfig from './ComplianceLegal/Insurance/Config/InsurancePoliciesConfig.js';
-import * as IntegrationPlansConfig from './MergersAcquisitions/MAStrategy/Config/IntegrationPlansConfig.js';
-import * as InterestPaymentsConfig from './FinancialManagement/Debts/Config/InterestPaymentsConfig.js';
-import * as InternalAuditsConfig from './GovernanceStrategy/CorporateGovernance/Config/InternalAuditsConfig.js';
-import * as InterviewSchedulingConfig from './HrManagement/Recruitment/Config/InterviewSchedulingConfig.js';
-import * as InventoryAgingConfig from './OperationsAssetManagement/Inventory/Config/InventoryAgingConfig.js';
-import * as InventoryLocationsConfig from './OperationsAssetManagement/Warehouses/Config/InventoryLocationsConfig.js';
-import * as InventoryValuationConfig from './OperationsAssetManagement/Inventory/Config/InventoryValuationConfig.js';
-import * as InvestmentReturnsConfig from './FinancialManagement/Investments/Config/InvestmentReturnsConfig.js';
-import * as InvoiceTemplatesConfig from './SalesMarketing/Invoices/Config/InvoiceTemplatesConfig.js';
-import * as IpLicensingConfig from './LegalCompliance/IntellectualProperty/Config/IpLicensingConfig.js';
-import * as IpLitigationConfig from './LegalCompliance/IntellectualProperty/Config/IpLitigationConfig.js';
-import * as IpMonitoringConfig from './LegalCompliance/IntellectualProperty/Config/IpMonitoringConfig.js';
-import * as JobDescriptionsConfig from './HrManagement/Recruitment/Config/JobDescriptionsConfig.js';
-import * as JointVenturesConfig from './ExternalRelationships/Partners/Config/JointVenturesConfig.js';
-import * as JournalEntriesConfig from './FinancialManagement/GeneralLedger/Config/JournalEntriesConfig.js';
-import * as LeadConversionRatesConfig from './SalesMarketing/Leads/Config/LeadConversionRatesConfig.js';
-import * as LeadNurturingConfig from './SalesMarketing/Leads/Config/LeadNurturingConfig.js';
-import * as LeadScoringConfig from './SalesMarketing/Leads/Config/LeadScoringConfig.js';
-import * as LeadershipWorkshopsConfig from './TrainingDevelopment/LeadershipPrograms/Config/LeadershipWorkshopsConfig.js';
-import * as LearningPathsConfig from './TrainingDevelopment/LearningManagement/Config/LearningPathsConfig.js';
-import * as LeaseRenewalsConfig from './RealEstatePropertyManagement/Leases/Config/LeaseRenewalsConfig.js';
-import * as LeaseTermsConfig from './RealEstatePropertyManagement/Leases/Config/LeaseTermsConfig.js';
-import * as LeaveBalancesConfig from './HrManagement/Attendance/Config/LeaveBalancesConfig.js';
-import * as LegalBriefsConfig from './LegalCompliance/LegalCases/Config/LegalBriefsConfig.js';
-import * as LegalProceedingsConfig from './ComplianceLegal/Disputes/Config/LegalProceedingsConfig.js';
-import * as LicensingAgreementsConfig from './ComplianceLegal/IntellectualProperty/Config/LicensingAgreementsConfig.js';
-import * as LiquidityManagementConfig from './FinancialManagement/TreasuryManagement/Config/LiquidityManagementConfig.js';
-import * as LoanAgreementsConfig from './FinancialManagement/Debts/Config/LoanAgreementsConfig.js';
-import * as LogisticsRoutesConfig from './OperationsAssetManagement/SupplyChain/Config/LogisticsRoutesConfig.js';
-import * as MaintenanceLogsConfig from './OperationsAssetManagement/Maintenance/Config/MaintenanceLogsConfig.js';
-import * as MarketAnalysisConfig from './GovernanceStrategy/BusinessPlans/Config/MarketAnalysisConfig.js';
-import * as MediaRelationsConfig from './CorporateCommunication/ExternalCommunication/Config/MediaRelationsConfig.js';
-import * as MentorshipProgramsConfig from './TrainingDevelopment/LeadershipPrograms/Config/MentorshipProgramsConfig.js';
-import * as MilestoneCompletionConfig from './ProjectTaskManagement/Milestones/Config/MilestoneCompletionConfig.js';
-import * as MilestoneDependenciesConfig from './ProjectTaskManagement/Milestones/Config/MilestoneDependenciesConfig.js';
-import * as MilestoneReportingConfig from './ProjectTaskManagement/Milestones/Config/MilestoneReportingConfig.js';
-import * as NetPromoterScoreConfig from './CustomerSupport/Feedback/Config/NetPromoterScoreConfig.js';
-import * as NetworkTopologyConfig from './InformationTechnology/NetworkManagement/Config/NetworkTopologyConfig.js';
-import * as NewProductDevelopmentConfig from './OperationsAssetManagement/ProductLifecycleManagement/Config/NewProductDevelopmentConfig.js';
-import * as NewslettersConfig from './CorporateCommunication/InternalCommunication/Config/NewslettersConfig.js';
-import * as NgoPartnershipsConfig from './EnvironmentalSocialGovernance/CommunityEngagement/Config/NgoPartnershipsConfig.js';
-import * as NonConformanceReportsConfig from './OperationsAssetManagement/QualityControl/Config/NonConformanceReportsConfig.js';
-import * as ObligationTrackingConfig from './LegalCompliance/ComplianceObligations/Config/ObligationTrackingConfig.js';
-import * as OfferLettersConfig from './HrManagement/Recruitment/Config/OfferLettersConfig.js';
-import * as OpportunityStagesConfig from './SalesMarketing/Opportunities/Config/OpportunityStagesConfig.js';
-import * as OrderManagement_OrderFulfillmentConfig from './LogisticsSupplyChain/OrderManagement/Config/OrderFulfillmentConfig.js';
-import * as SupplyChain_OrderFulfillmentConfig from './OperationsAssetManagement/SupplyChain/Config/OrderFulfillmentConfig.js';
-import * as OrderProcessingConfig from './LogisticsSupplyChain/OrderManagement/Config/OrderProcessingConfig.js';
-import * as OrderStatusConfig from './SalesMarketing/SalesOrders/Config/OrderStatusConfig.js';
-import * as OrderTrackingConfig from './LogisticsSupplyChain/OrderManagement/Config/OrderTrackingConfig.js';
-import * as OvertimeManagementConfig from './HrManagement/Payroll/Config/OvertimeManagementConfig.js';
-import * as PartnerAgreementsConfig from './LogisticsSupplyChain/LogisticsPartners/Config/PartnerAgreementsConfig.js';
-import * as PartnerCollaborationConfig from './ExternalRelationships/Partners/Config/PartnerCollaborationConfig.js';
-import * as PatentFilingsConfig from './ComplianceLegal/IntellectualProperty/Config/PatentFilingsConfig.js';
-import * as PatentManagementConfig from './IntellectualHumanCapital/InnovationManagement/Config/PatentManagementConfig.js';
-import * as PaymentTermsConfig from './FinancialManagement/AccountsPayable/Config/PaymentTermsConfig.js';
-import * as PaymentTrackingConfig from './SalesMarketing/Invoices/Config/PaymentTrackingConfig.js';
-import * as PayslipsConfig from './HrManagement/Payroll/Config/PayslipsConfig.js';
-import * as PenaltiesManagementConfig from './LegalCompliance/ComplianceObligations/Config/PenaltiesManagementConfig.js';
-import * as PerformanceDashboardsConfig from './GovernanceStrategy/KpisAnalytics/Config/PerformanceDashboardsConfig.js';
-import * as PerformanceReviews_PerformanceMetricsConfig from './HrManagement/PerformanceReviews/Config/PerformanceMetricsConfig.js';
-import * as LogisticsPartners_PerformanceMetricsConfig from './LogisticsSupplyChain/LogisticsPartners/Config/PerformanceMetricsConfig.js';
-import * as PhilanthropicActivitiesConfig from './CorporateSocialResponsibility/CommunityOutreach/Config/PhilanthropicActivitiesConfig.js';
-import * as PickPackShipConfig from './OperationsAssetManagement/Warehouses/Config/PickPackShipConfig.js';
-import * as PolicyRenewalsConfig from './ComplianceLegal/Insurance/Config/PolicyRenewalsConfig.js';
-import * as PredictiveAnalyticsConfig from './GovernanceStrategy/KpisAnalytics/Config/PredictiveAnalyticsConfig.js';
-import * as PressReleasesConfig from './CorporateCommunication/ExternalCommunication/Config/PressReleasesConfig.js';
-import * as PreventiveMaintenanceSchedulesConfig from './OperationsAssetManagement/Maintenance/Config/PreventiveMaintenanceSchedulesConfig.js';
-import * as Pricing_PriceListsConfig from './SalesMarketing/Pricing/Config/PriceListsConfig.js';
-import * as ProductAttributesConfig from './OperationsAssetManagement/ProductCatalog/Config/ProductAttributesConfig.js';
-import * as ProductCategoriesConfig from './OperationsAssetManagement/ProductCatalog/Config/ProductCategoriesConfig.js';
-import * as ProductDetailsConfig from './OperationsAssetManagement/ProductCatalog/Config/ProductDetailsConfig.js';
-import * as ProductDiscontinuationConfig from './OperationsAssetManagement/ProductLifecycleManagement/Config/ProductDiscontinuationConfig.js';
-import * as ProductReviewsConfig from './CustomerSupport/Feedback/Config/ProductReviewsConfig.js';
-import * as ProductUpdatesConfig from './OperationsAssetManagement/ProductLifecycleManagement/Config/ProductUpdatesConfig.js';
-import * as ProjectMilestonesConfig from './IntellectualHumanCapital/RDProjects/Config/ProjectMilestonesConfig.js';
-import * as ProjectPhasesConfig from './ProjectTaskManagement/Projects/Config/ProjectPhasesConfig.js';
-import * as ProjectScopeConfig from './ProjectTaskManagement/Projects/Config/ProjectScopeConfig.js';
-import * as PromotionRecommandationsConfig from './HrManagement/PerformanceReviews/Config/PromotionRecommandationsConfig.js';
-import * as PromotionalPricingConfig from './SalesMarketing/Pricing/Config/PromotionalPricingConfig.js';
-import * as PromotionsConfig from './OperationsAssetManagement/Pricing/Config/PromotionsConfig.js';
-import * as PropertyDetailsConfig from './RealEstatePropertyManagement/Buildings/Config/PropertyDetailsConfig.js';
-import * as PropertyTaxesConfig from './RealEstatePropertyManagement/Buildings/Config/PropertyTaxesConfig.js';
-import * as PublicStatementsConfig from './CorporateCommunication/ExternalCommunication/Config/PublicStatementsConfig.js';
-import * as PurchaseOrdersConfig from './LogisticsSupplyChain/Procurement/Config/PurchaseOrdersConfig.js';
-import * as PurchaseRequisitionsConfig from './LogisticsSupplyChain/Procurement/Config/PurchaseRequisitionsConfig.js';
-import * as QualityStandardsConfig from './OperationsAssetManagement/QualityControl/Config/QualityStandardsConfig.js';
-import * as ReconciliationStatementsConfig from './FinancialManagement/BankAccounts/Config/ReconciliationStatementsConfig.js';
-import * as RecurringInvoicesConfig from './SalesMarketing/Invoices/Config/RecurringInvoicesConfig.js';
-import * as RegulatoryUpdatesConfig from './ComplianceLegal/RegulatoryCompliance/Config/RegulatoryUpdatesConfig.js';
-import * as RenewableEnergyInitiativesConfig from './EnvironmentalSocialGovernance/EnergyManagement/Config/RenewableEnergyInitiativesConfig.js';
-import * as RentalAgreementsConfig from './RealEstatePropertyManagement/Buildings/Config/RentalAgreementsConfig.js';
-import * as ReorderPointsConfig from './OperationsAssetManagement/Inventory/Config/ReorderPointsConfig.js';
-import * as ResearchOutputsConfig from './IntellectualHumanCapital/RDProjects/Config/ResearchOutputsConfig.js';
-import * as ResearchProposalsConfig from './IntellectualHumanCapital/RDProjects/Config/ResearchProposalsConfig.js';
-import * as ResolutionTimeTrackingConfig from './CustomerSupport/SupportTickets/Config/ResolutionTimeTrackingConfig.js';
-import * as ResourceAllocationConfig from './ProjectTaskManagement/Projects/Config/ResourceAllocationConfig.js';
-import * as RevenueSharingAgreementsConfig from './ExternalRelationships/Partners/Config/RevenueSharingAgreementsConfig.js';
-import * as ReviewSchedulesConfig from './HrManagement/PerformanceReviews/Config/ReviewSchedulesConfig.js';
-import * as RiskAssessmentsConfig from './GovernanceStrategy/RiskManagement/Config/RiskAssessmentsConfig.js';
-import * as RiskIdentificationConfig from './CrisisRiskManagement/RiskAssessments/Config/RiskIdentificationConfig.js';
-import * as RiskMitigationPlansConfig from './GovernanceStrategy/RiskManagement/Config/RiskMitigationPlansConfig.js';
-import * as RiskResponsePlanningConfig from './CrisisRiskManagement/RiskAssessments/Config/RiskResponsePlanningConfig.js';
-import * as RiskScoringConfig from './CrisisRiskManagement/RiskAssessments/Config/RiskScoringConfig.js';
-import * as RoiAnalysisConfig from './SalesMarketing/Campaigns/Config/RoiAnalysisConfig.js';
-import * as SafetyTrainingConfig from './HrManagement/HealthSafety/Config/SafetyTrainingConfig.js';
-import * as SalaryStructureConfig from './HrManagement/Payroll/Config/SalaryStructureConfig.js';
-import * as SalesForecastingConfig from './SalesMarketing/Opportunities/Config/SalesForecastingConfig.js';
-import * as SecurityAuditsConfig from './InformationTechnology/DataSecurity/Config/SecurityAuditsConfig.js';
-import * as ServiceContracts_ServiceLevelAgreementsConfig from './CustomerSupport/ServiceContracts/Config/ServiceLevelAgreementsConfig.js';
-import * as SupportTickets_ServiceLevelAgreementsConfig from './CustomerSupport/SupportTickets/Config/ServiceLevelAgreementsConfig.js';
-import * as ServiceRenewalsConfig from './CustomerSupport/ServiceContracts/Config/ServiceRenewalsConfig.js';
-import * as SettlementAgreementsConfig from './ComplianceLegal/Disputes/Config/SettlementAgreementsConfig.js';
-import * as ShiftSchedulesConfig from './HrManagement/Attendance/Config/ShiftSchedulesConfig.js';
-import * as ShipmentTrackingConfig from './LogisticsSupplyChain/Shipping/Config/ShipmentTrackingConfig.js';
-import * as SkillAssessmentsConfig from './TrainingDevelopment/SkillDevelopment/Config/SkillAssessmentsConfig.js';
-import * as SoftwareDevelopmentLifecycleConfig from './InformationTechnology/SoftwareManagement/Config/SoftwareDevelopmentLifecycleConfig.js';
-import * as SoftwareLicensesConfig from './InformationTechnology/ItAssets/Config/SoftwareLicensesConfig.js';
-import * as SopsConfig from './IntellectualHumanCapital/KnowledgeBase/Config/SopsConfig.js';
-import * as StakeholderAnalysisConfig from './ExternalRelationships/StakeholderManagement/Config/StakeholderAnalysisConfig.js';
-import * as StakeholderCommunicationConfig from './ExternalRelationships/StakeholderManagement/Config/StakeholderCommunicationConfig.js';
-import * as StakeholderFeedbackConfig from './ExternalRelationships/StakeholderManagement/Config/StakeholderFeedbackConfig.js';
-import * as StockLevelsConfig from './OperationsAssetManagement/Inventory/Config/StockLevelsConfig.js';
-import * as StrategicGoalsConfig from './GovernanceStrategy/BusinessPlans/Config/StrategicGoalsConfig.js';
-import * as SupplierBidsConfig from './LogisticsSupplyChain/Procurement/Config/SupplierBidsConfig.js';
-import * as SupplierPerformanceConfig from './OperationsAssetManagement/SupplyChain/Config/SupplierPerformanceConfig.js';
-import * as SupplierPerformanceEvaluationConfig from './LogisticsSupplyChain/SupplierContracts/Config/SupplierPerformanceEvaluationConfig.js';
-import * as SupportEntitlementsConfig from './CustomerSupport/ServiceContracts/Config/SupportEntitlementsConfig.js';
-import * as SustainableSourcingConfig from './CorporateSocialResponsibility/SustainabilityInitiatives/Config/SustainableSourcingConfig.js';
-import * as SwotAnalysisConfig from './GovernanceStrategy/BusinessPlans/Config/SwotAnalysisConfig.js';
-import * as SynergyTrackingConfig from './MergersAcquisitions/PostMergerIntegration/Config/SynergyTrackingConfig.js';
-import * as SystemsIntegrationConfig from './MergersAcquisitions/PostMergerIntegration/Config/SystemsIntegrationConfig.js';
-import * as TargetIdentificationConfig from './MergersAcquisitions/MAStrategy/Config/TargetIdentificationConfig.js';
-import * as TaskAssignmentsConfig from './ProjectTaskManagement/Tasks/Config/TaskAssignmentsConfig.js';
-import * as TaskDeadlinesConfig from './ProjectTaskManagement/Tasks/Config/TaskDeadlinesConfig.js';
-import * as TaskDependenciesConfig from './ProjectTaskManagement/Tasks/Config/TaskDependenciesConfig.js';
-import * as TaxAuditsConfig from './FinancialManagement/Taxation/Config/TaxAuditsConfig.js';
-import * as TaxCreditsConfig from './FinancialManagement/Taxation/Config/TaxCreditsConfig.js';
-import * as TaxFilingsConfig from './FinancialManagement/Taxation/Config/TaxFilingsConfig.js';
-import * as TenantRecordsConfig from './RealEstatePropertyManagement/Leases/Config/TenantRecordsConfig.js';
-import * as TicketEscalationConfig from './CustomerSupport/SupportTickets/Config/TicketEscalationConfig.js';
-import * as TicketPrioritizationConfig from './CustomerSupport/SupportTickets/Config/TicketPrioritizationConfig.js';
-import * as TicketResolutionConfig from './CustomerSupport/SupportTickets/Config/TicketResolutionConfig.js';
-import * as TimeTrackingConfig from './ProjectTaskManagement/Timesheets/Config/TimeTrackingConfig.js';
-import * as Attendance_TimesheetApprovalsConfig from './HrManagement/Attendance/Config/TimesheetApprovalsConfig.js';
-import * as Timesheets_TimesheetApprovalsConfig from './ProjectTaskManagement/Timesheets/Config/TimesheetApprovalsConfig.js';
-import * as TrademarkRegistrationConfig from './ComplianceLegal/IntellectualProperty/Config/TrademarkRegistrationConfig.js';
-import * as TrainingNeedsAnalysisConfig from './TrainingDevelopment/SkillDevelopment/Config/TrainingNeedsAnalysisConfig.js';
-import * as TrainingProgramsConfig from './HrManagement/Training/Config/TrainingProgramsConfig.js';
-import * as TrainingRecordsConfig from './HrManagement/Training/Config/TrainingRecordsConfig.js';
-import * as TreasuryPoliciesConfig from './FinancialManagement/TreasuryManagement/Config/TreasuryPoliciesConfig.js';
-import * as TrialBalanceConfig from './FinancialManagement/GeneralLedger/Config/TrialBalanceConfig.js';
-import * as UserActivityTrackingConfig from './GovernanceStrategy/AuditTrails/Config/UserActivityTrackingConfig.js';
-import * as UtilityManagementConfig from './RealEstatePropertyManagement/FacilitiesManagement/Config/UtilityManagementConfig.js';
-import * as VarianceAnalysisConfig from './FinancialManagement/Budget/Config/VarianceAnalysisConfig.js';
-import * as VatGstRecordsConfig from './FinancialManagement/Taxation/Config/VatGstRecordsConfig.js';
-import * as VendorAssessmentsConfig from './ExternalRelationships/VendorManagement/Config/VendorAssessmentsConfig.js';
-import * as VendorInvoicesConfig from './FinancialManagement/AccountsPayable/Config/VendorInvoicesConfig.js';
-import * as VendorOnboardingConfig from './ExternalRelationships/VendorManagement/Config/VendorOnboardingConfig.js';
-import * as VendorScorecardsConfig from './ExternalRelationships/VendorManagement/Config/VendorScorecardsConfig.js';
-import * as VendorsListConfig from './ExternalRelationships/VendorManagement/Config/VendorsListConfig.js';
-import * as VersionControlConfig from './InformationTechnology/SoftwareManagement/Config/VersionControlConfig.js';
-import * as VolunteerInitiativesConfig from './EnvironmentalSocialGovernance/CommunityEngagement/Config/VolunteerInitiativesConfig.js';
-import * as WarehouseLayoutsConfig from './OperationsAssetManagement/Warehouses/Config/WarehouseLayoutsConfig.js';
-import * as WarrantyManagementConfig from './CustomerSupport/ServiceContracts/Config/WarrantyManagementConfig.js';
-import * as WasteManagementConfig from './EnvironmentalSocialGovernance/SustainabilityReports/Config/WasteManagementConfig.js';
-import * as WinLossAnalysisConfig from './SalesMarketing/Opportunities/Config/WinLossAnalysisConfig.js';
-import * as WithholdingTaxesConfig from './FinancialManagement/Taxation/Config/WithholdingTaxesConfig.js';
-import * as WorkOrdersConfig from './OperationsAssetManagement/Maintenance/Config/WorkOrdersConfig.js';
+import * as AccessControls from './InformationTechnology/DataSecurity/AccessControls.js';
+import * as AfterActionReports from './CorporateCommunication/CrisisManagement/AfterActionReports.js';
+import * as Announcements from './CorporateCommunication/InternalCommunication/Announcements.js';
+import * as ApplicantTracking from './HrManagement/Recruitment/ApplicantTracking.js';
+import * as ArbitrationRecords from './ComplianceLegal/Disputes/ArbitrationRecords.js';
+import * as AssetDepreciation from './OperationsAssetManagement/Assets/AssetDepreciation.js';
+import * as AssetDisposal from './OperationsAssetManagement/Assets/AssetDisposal.js';
+import * as AssetLifecycle from './InformationTechnology/ItAssets/AssetLifecycle.js';
+import * as AssetTracking from './OperationsAssetManagement/Assets/AssetTracking.js';
+import * as Backorders from './SalesMarketing/SalesOrders/Backorders.js';
+import * as BandwidthMonitoring from './InformationTechnology/NetworkManagement/BandwidthMonitoring.js';
+import * as BankTransfers from './FinancialManagement/BankAccounts/BankTransfers.js';
+import * as Benchmarking from './GovernanceStrategy/KpisAnalytics/Benchmarking.js';
+import * as BestPractices from './IntellectualHumanCapital/KnowledgeBase/BestPractices.js';
+import * as BillableHours from './ProjectTaskManagement/Timesheets/BillableHours.js';
+import * as BoardResolutions from './GovernanceStrategy/CorporateGovernance/BoardResolutions.js';
+import * as BonusesIncentives from './HrManagement/Payroll/BonusesIncentives.js';
+import * as BudgetAllocations from './FinancialManagement/Budget/BudgetAllocations.js';
+import * as BugTracking from './InformationTechnology/SoftwareManagement/BugTracking.js';
+import * as BusinessContinuityPlans from './CrisisRiskManagement/BusinessContinuity/BusinessContinuityPlans.js';
+import * as BusinessImpactAnalysis from './CrisisRiskManagement/BusinessContinuity/BusinessImpactAnalysis.js';
+import * as CampaignPerformance from './SalesMarketing/Campaigns/CampaignPerformance.js';
+import * as CampaignPlanning from './SalesMarketing/Campaigns/CampaignPlanning.js';
+import * as CarbonFootprintTracking from './EnvironmentalSocialGovernance/SustainabilityReports/CarbonFootprintTracking.js';
+import * as CaseManagement from './LegalCompliance/LegalCases/CaseManagement.js';
+import * as CashFlowForecasts from './FinancialManagement/TreasuryManagement/CashFlowForecasts.js';
+import * as CertificationTracking from './TrainingDevelopment/LearningManagement/CertificationTracking.js';
+import * as Certifications from './HrManagement/Training/Certifications.js';
+import * as ChangeLogs from './GovernanceStrategy/AuditTrails/ChangeLogs.js';
+import * as ChartOfAccounts from './FinancialManagement/GeneralLedger/ChartOfAccounts.js';
+import * as ClaimsManagement from './ComplianceLegal/Insurance/ClaimsManagement.js';
+import * as CommunityInvestment from './CorporateSocialResponsibility/CommunityOutreach/CommunityInvestment.js';
+import * as RegulatoryCompliance_ComplianceAudits from './ComplianceLegal/RegulatoryCompliance/ComplianceAudits.js';
+import * as AuditTrails_ComplianceAudits from './GovernanceStrategy/AuditTrails/ComplianceAudits.js';
+import * as ComplianceDeadlines from './LegalCompliance/ComplianceObligations/ComplianceDeadlines.js';
+import * as CompliancePolicies from './GovernanceStrategy/CorporateGovernance/CompliancePolicies.js';
+import * as ComplianceReporting from './ComplianceLegal/RegulatoryCompliance/ComplianceReporting.js';
+import * as ContractCompliance from './LogisticsSupplyChain/SupplierContracts/ContractCompliance.js';
+import * as ContractNegotiations from './LogisticsSupplyChain/SupplierContracts/ContractNegotiations.js';
+import * as ContractObligations from './ComplianceLegal/Contracts/ContractObligations.js';
+import * as ContractRenewalReminders from './ComplianceLegal/Contracts/ContractRenewalReminders.js';
+import * as ContractRenewals from './HrManagement/WorkContracts/ContractRenewals.js';
+import * as ContractTemplates from './ComplianceLegal/Contracts/ContractTemplates.js';
+import * as ContractTerminations from './HrManagement/WorkContracts/ContractTerminations.js';
+import * as ContractTypes from './HrManagement/WorkContracts/ContractTypes.js';
+import * as ContractualObligations from './CustomerSupport/ServiceContracts/ContractualObligations.js';
+import * as CorporateSocialResponsibility from './EnvironmentalSocialGovernance/CommunityEngagement/CorporateSocialResponsibility.js';
+import * as CorrectiveActions from './OperationsAssetManagement/QualityControl/CorrectiveActions.js';
+import * as CostAnalysis from './LogisticsSupplyChain/LogisticsPartners/CostAnalysis.js';
+import * as CourseCatalog from './TrainingDevelopment/LearningManagement/CourseCatalog.js';
+import * as CourtAppearances from './LegalCompliance/LegalCases/CourtAppearances.js';
+import * as CreditManagement from './FinancialManagement/AccountsReceivable/CreditManagement.js';
+import * as CreditorsLedger from './FinancialManagement/AccountsPayable/CreditorsLedger.js';
+import * as CrisisCommunicationLogs from './CorporateCommunication/CrisisManagement/CrisisCommunicationLogs.js';
+import * as CrisisResponsePlans from './CorporateCommunication/CrisisManagement/CrisisResponsePlans.js';
+import * as CrisisResponseTeams from './CrisisRiskManagement/CrisisManagement/CrisisResponseTeams.js';
+import * as CrisisScenarios from './CrisisRiskManagement/CrisisManagement/CrisisScenarios.js';
+import * as CulturalIntegration from './MergersAcquisitions/PostMergerIntegration/CulturalIntegration.js';
+import * as CustomerHistory from './SalesMarketing/ClientsCustomers/CustomerHistory.js';
+import * as CustomerInvoices from './FinancialManagement/AccountsReceivable/CustomerInvoices.js';
+import * as CustomerSatisfaction from './SalesMarketing/ClientsCustomers/CustomerSatisfaction.js';
+import * as CustomerSegmentation from './SalesMarketing/ClientsCustomers/CustomerSegmentation.js';
+import * as CustomerSurveys from './CustomerSupport/Feedback/CustomerSurveys.js';
+import * as CustomsDocumentation from './LogisticsSupplyChain/Shipping/CustomsDocumentation.js';
+import * as DataEncryption from './InformationTechnology/DataSecurity/DataEncryption.js';
+import * as DebtMaturitySchedules from './FinancialManagement/Debts/DebtMaturitySchedules.js';
+import * as DebtorAging from './FinancialManagement/AccountsReceivable/DebtorAging.js';
+import * as DevelopmentPlans from './TrainingDevelopment/SkillDevelopment/DevelopmentPlans.js';
+import * as DisasterRecoveryPlans from './CrisisRiskManagement/BusinessContinuity/DisasterRecoveryPlans.js';
+import * as DiscountStructures from './SalesMarketing/Pricing/DiscountStructures.js';
+import * as Discounts from './OperationsAssetManagement/Pricing/Discounts.js';
+import * as DocumentationManagement from './IntellectualHumanCapital/KnowledgeBase/DocumentationManagement.js';
+import * as DueDiligence from './MergersAcquisitions/MAStrategy/DueDiligence.js';
+import * as EmergencyCommunication from './CrisisRiskManagement/CrisisManagement/EmergencyCommunication.js';
+import * as EmergencyContacts from './HrManagement/EmployeeRecords/EmergencyContacts.js';
+import * as EmployeePortals from './CorporateCommunication/InternalCommunication/EmployeePortals.js';
+import * as EmployeeVolunteering from './CorporateSocialResponsibility/CommunityOutreach/EmployeeVolunteering.js';
+import * as EmployeesList from './HrManagement/EmployeeRecords/EmployeesList.js';
+import * as EmploymentHistory from './HrManagement/EmployeeRecords/EmploymentHistory.js';
+import * as EnergyAudits from './EnvironmentalSocialGovernance/EnergyManagement/EnergyAudits.js';
+import * as EnergyConsumption from './EnvironmentalSocialGovernance/SustainabilityReports/EnergyConsumption.js';
+import * as EnergySavingsTracking from './EnvironmentalSocialGovernance/EnergyManagement/EnergySavingsTracking.js';
+import * as EquityInvestments from './FinancialManagement/Investments/EquityInvestments.js';
+import * as ExecutiveTraining from './TrainingDevelopment/LeadershipPrograms/ExecutiveTraining.js';
+import * as FacilityBooking from './RealEstatePropertyManagement/FacilitiesManagement/FacilityBooking.js';
+import * as FacilityMaintenance from './RealEstatePropertyManagement/FacilitiesManagement/FacilityMaintenance.js';
+import * as FeedbackAnalysis from './CustomerSupport/Feedback/FeedbackAnalysis.js';
+import * as FirewallConfigurations from './InformationTechnology/NetworkManagement/FirewallConfigurations.js';
+import * as FiscalPeriods from './FinancialManagement/GeneralLedger/FiscalPeriods.js';
+import * as FixedIncomeInvestments from './FinancialManagement/Investments/FixedIncomeInvestments.js';
+import * as Forecasting from './FinancialManagement/Budget/Forecasting.js';
+import * as ForeignCurrencyAccounts from './FinancialManagement/BankAccounts/ForeignCurrencyAccounts.js';
+import * as FreightManagement from './LogisticsSupplyChain/Shipping/FreightManagement.js';
+import * as GreenInitiatives from './CorporateSocialResponsibility/SustainabilityInitiatives/GreenInitiatives.js';
+import * as HardwareInventory from './InformationTechnology/ItAssets/HardwareInventory.js';
+import * as IdeaSubmission from './IntellectualHumanCapital/InnovationManagement/IdeaSubmission.js';
+import * as ImpactReports from './CorporateSocialResponsibility/SustainabilityInitiatives/ImpactReports.js';
+import * as IncidentReporting from './GovernanceStrategy/RiskManagement/IncidentReporting.js';
+import * as InnovationPipeline from './IntellectualHumanCapital/InnovationManagement/InnovationPipeline.js';
+import * as InspectionRecords from './OperationsAssetManagement/QualityControl/InspectionRecords.js';
+import * as InsurancePolicies from './ComplianceLegal/Insurance/InsurancePolicies.js';
+import * as IntegrationPlans from './MergersAcquisitions/MAStrategy/IntegrationPlans.js';
+import * as InterestPayments from './FinancialManagement/Debts/InterestPayments.js';
+import * as InternalAudits from './GovernanceStrategy/CorporateGovernance/InternalAudits.js';
+import * as InterviewScheduling from './HrManagement/Recruitment/InterviewScheduling.js';
+import * as InventoryAging from './OperationsAssetManagement/Inventory/InventoryAging.js';
+import * as InventoryLocations from './OperationsAssetManagement/Warehouses/InventoryLocations.js';
+import * as InventoryValuation from './OperationsAssetManagement/Inventory/InventoryValuation.js';
+import * as InvestmentReturns from './FinancialManagement/Investments/InvestmentReturns.js';
+import * as InvoiceTemplates from './SalesMarketing/Invoices/InvoiceTemplates.js';
+import * as IpLicensing from './LegalCompliance/IntellectualProperty/IpLicensing.js';
+import * as IpLitigation from './LegalCompliance/IntellectualProperty/IpLitigation.js';
+import * as IpMonitoring from './LegalCompliance/IntellectualProperty/IpMonitoring.js';
+import * as JobDescriptions from './HrManagement/Recruitment/JobDescriptions.js';
+import * as JointVentures from './ExternalRelationships/Partners/JointVentures.js';
+import * as JournalEntries from './FinancialManagement/GeneralLedger/JournalEntries.js';
+import * as LeadConversionRates from './SalesMarketing/Leads/LeadConversionRates.js';
+import * as LeadNurturing from './SalesMarketing/Leads/LeadNurturing.js';
+import * as LeadScoring from './SalesMarketing/Leads/LeadScoring.js';
+import * as LeadershipWorkshops from './TrainingDevelopment/LeadershipPrograms/LeadershipWorkshops.js';
+import * as LearningPaths from './TrainingDevelopment/LearningManagement/LearningPaths.js';
+import * as LeaseRenewals from './RealEstatePropertyManagement/Leases/LeaseRenewals.js';
+import * as LeaseTerms from './RealEstatePropertyManagement/Leases/LeaseTerms.js';
+import * as LeaveBalances from './HrManagement/Attendance/LeaveBalances.js';
+import * as LegalBriefs from './LegalCompliance/LegalCases/LegalBriefs.js';
+import * as LegalProceedings from './ComplianceLegal/Disputes/LegalProceedings.js';
+import * as LicensingAgreements from './ComplianceLegal/IntellectualProperty/LicensingAgreements.js';
+import * as LiquidityManagement from './FinancialManagement/TreasuryManagement/LiquidityManagement.js';
+import * as LoanAgreements from './FinancialManagement/Debts/LoanAgreements.js';
+import * as LogisticsRoutes from './OperationsAssetManagement/SupplyChain/LogisticsRoutes.js';
+import * as MaintenanceLogs from './OperationsAssetManagement/Maintenance/MaintenanceLogs.js';
+import * as MarketAnalysis from './GovernanceStrategy/BusinessPlans/MarketAnalysis.js';
+import * as MediaRelations from './CorporateCommunication/ExternalCommunication/MediaRelations.js';
+import * as MentorshipPrograms from './TrainingDevelopment/LeadershipPrograms/MentorshipPrograms.js';
+import * as MilestoneCompletion from './ProjectTaskManagement/Milestones/MilestoneCompletion.js';
+import * as MilestoneDependencies from './ProjectTaskManagement/Milestones/MilestoneDependencies.js';
+import * as MilestoneReporting from './ProjectTaskManagement/Milestones/MilestoneReporting.js';
+import * as NetPromoterScore from './CustomerSupport/Feedback/NetPromoterScore.js';
+import * as NetworkTopology from './InformationTechnology/NetworkManagement/NetworkTopology.js';
+import * as NewProductDevelopment from './OperationsAssetManagement/ProductLifecycleManagement/NewProductDevelopment.js';
+import * as Newsletters from './CorporateCommunication/InternalCommunication/Newsletters.js';
+import * as NgoPartnerships from './EnvironmentalSocialGovernance/CommunityEngagement/NgoPartnerships.js';
+import * as NonConformanceReports from './OperationsAssetManagement/QualityControl/NonConformanceReports.js';
+import * as ObligationTracking from './LegalCompliance/ComplianceObligations/ObligationTracking.js';
+import * as OfferLetters from './HrManagement/Recruitment/OfferLetters.js';
+import * as OpportunityStages from './SalesMarketing/Opportunities/OpportunityStages.js';
+import * as OrderManagement_OrderFulfillment from './LogisticsSupplyChain/OrderManagement/OrderFulfillment.js';
+import * as SupplyChain_OrderFulfillment from './OperationsAssetManagement/SupplyChain/OrderFulfillment.js';
+import * as OrderProcessing from './LogisticsSupplyChain/OrderManagement/OrderProcessing.js';
+import * as OrderStatus from './SalesMarketing/SalesOrders/OrderStatus.js';
+import * as OrderTracking from './LogisticsSupplyChain/OrderManagement/OrderTracking.js';
+import * as OvertimeManagement from './HrManagement/Payroll/OvertimeManagement.js';
+import * as PartnerAgreements from './LogisticsSupplyChain/LogisticsPartners/PartnerAgreements.js';
+import * as PartnerCollaboration from './ExternalRelationships/Partners/PartnerCollaboration.js';
+import * as PatentFilings from './ComplianceLegal/IntellectualProperty/PatentFilings.js';
+import * as PatentManagement from './IntellectualHumanCapital/InnovationManagement/PatentManagement.js';
+import * as PaymentTerms from './FinancialManagement/AccountsPayable/PaymentTerms.js';
+import * as PaymentTracking from './SalesMarketing/Invoices/PaymentTracking.js';
+import * as Payslips from './HrManagement/Payroll/Payslips.js';
+import * as PenaltiesManagement from './LegalCompliance/ComplianceObligations/PenaltiesManagement.js';
+import * as PerformanceDashboards from './GovernanceStrategy/KpisAnalytics/PerformanceDashboards.js';
+import * as PerformanceReviews_PerformanceMetrics from './HrManagement/PerformanceReviews/PerformanceMetrics.js';
+import * as LogisticsPartners_PerformanceMetrics from './LogisticsSupplyChain/LogisticsPartners/PerformanceMetrics.js';
+import * as PhilanthropicActivities from './CorporateSocialResponsibility/CommunityOutreach/PhilanthropicActivities.js';
+import * as PickPackShip from './OperationsAssetManagement/Warehouses/PickPackShip.js';
+import * as PolicyRenewals from './ComplianceLegal/Insurance/PolicyRenewals.js';
+import * as PredictiveAnalytics from './GovernanceStrategy/KpisAnalytics/PredictiveAnalytics.js';
+import * as PressReleases from './CorporateCommunication/ExternalCommunication/PressReleases.js';
+import * as PreventiveMaintenanceSchedules from './OperationsAssetManagement/Maintenance/PreventiveMaintenanceSchedules.js';
+import * as OAM_Pricing_PriceLists from './OperationsAssetManagement/Pricing/OAM_PriceLists.js';
+import * as SM_Pricing_PriceLists from './SalesMarketing/Pricing/SM_PriceLists.js';
+import * as ProductAttributes from './OperationsAssetManagement/ProductCatalog/ProductAttributes.js';
+import * as ProductCategories from './OperationsAssetManagement/ProductCatalog/ProductCategories.js';
+import * as ProductDetails from './OperationsAssetManagement/ProductCatalog/ProductDetails.js';
+import * as ProductDiscontinuation from './OperationsAssetManagement/ProductLifecycleManagement/ProductDiscontinuation.js';
+import * as ProductReviews from './CustomerSupport/Feedback/ProductReviews.js';
+import * as ProductUpdates from './OperationsAssetManagement/ProductLifecycleManagement/ProductUpdates.js';
+import * as ProjectMilestones from './IntellectualHumanCapital/RDProjects/ProjectMilestones.js';
+import * as ProjectPhases from './ProjectTaskManagement/Projects/ProjectPhases.js';
+import * as ProjectScope from './ProjectTaskManagement/Projects/ProjectScope.js';
+import * as PromotionRecommandations from './HrManagement/PerformanceReviews/PromotionRecommandations.js';
+import * as PromotionalPricing from './SalesMarketing/Pricing/PromotionalPricing.js';
+import * as Promotions from './OperationsAssetManagement/Pricing/Promotions.js';
+import * as PropertyDetails from './RealEstatePropertyManagement/Buildings/PropertyDetails.js';
+import * as PropertyTaxes from './RealEstatePropertyManagement/Buildings/PropertyTaxes.js';
+import * as PublicStatements from './CorporateCommunication/ExternalCommunication/PublicStatements.js';
+import * as PurchaseOrders from './LogisticsSupplyChain/Procurement/PurchaseOrders.js';
+import * as PurchaseRequisitions from './LogisticsSupplyChain/Procurement/PurchaseRequisitions.js';
+import * as QualityStandards from './OperationsAssetManagement/QualityControl/QualityStandards.js';
+import * as ReconciliationStatements from './FinancialManagement/BankAccounts/ReconciliationStatements.js';
+import * as RecurringInvoices from './SalesMarketing/Invoices/RecurringInvoices.js';
+import * as RegulatoryUpdates from './ComplianceLegal/RegulatoryCompliance/RegulatoryUpdates.js';
+import * as RenewableEnergyInitiatives from './EnvironmentalSocialGovernance/EnergyManagement/RenewableEnergyInitiatives.js';
+import * as RentalAgreements from './RealEstatePropertyManagement/Buildings/RentalAgreements.js';
+import * as ReorderPoints from './OperationsAssetManagement/Inventory/ReorderPoints.js';
+import * as ResearchOutputs from './IntellectualHumanCapital/RDProjects/ResearchOutputs.js';
+import * as ResearchProposals from './IntellectualHumanCapital/RDProjects/ResearchProposals.js';
+import * as ResolutionTimeTracking from './CustomerSupport/SupportTickets/ResolutionTimeTracking.js';
+import * as ResourceAllocation from './ProjectTaskManagement/Projects/ResourceAllocation.js';
+import * as RevenueSharingAgreements from './ExternalRelationships/Partners/RevenueSharingAgreements.js';
+import * as ReviewSchedules from './HrManagement/PerformanceReviews/ReviewSchedules.js';
+import * as RiskAssessments from './GovernanceStrategy/RiskManagement/RiskAssessments.js';
+import * as RiskIdentification from './CrisisRiskManagement/RiskAssessments/RiskIdentification.js';
+import * as RiskMitigationPlans from './GovernanceStrategy/RiskManagement/RiskMitigationPlans.js';
+import * as RiskResponsePlanning from './CrisisRiskManagement/RiskAssessments/RiskResponsePlanning.js';
+import * as RiskScoring from './CrisisRiskManagement/RiskAssessments/RiskScoring.js';
+import * as RoiAnalysis from './SalesMarketing/Campaigns/RoiAnalysis.js';
+import * as SafetyTraining from './HrManagement/HealthSafety/SafetyTraining.js';
+import * as SalaryStructure from './HrManagement/Payroll/SalaryStructure.js';
+import * as SalesForecasting from './SalesMarketing/Opportunities/SalesForecasting.js';
+import * as SecurityAudits from './InformationTechnology/DataSecurity/SecurityAudits.js';
+import * as ServiceContracts_ServiceLevelAgreements from './CustomerSupport/ServiceContracts/ServiceLevelAgreements.js';
+import * as SupportTickets_ServiceLevelAgreements from './CustomerSupport/SupportTickets/ServiceLevelAgreements.js';
+import * as ServiceRenewals from './CustomerSupport/ServiceContracts/ServiceRenewals.js';
+import * as SettlementAgreements from './ComplianceLegal/Disputes/SettlementAgreements.js';
+import * as ShiftSchedules from './HrManagement/Attendance/ShiftSchedules.js';
+import * as ShipmentTracking from './LogisticsSupplyChain/Shipping/ShipmentTracking.js';
+import * as SkillAssessments from './TrainingDevelopment/SkillDevelopment/SkillAssessments.js';
+import * as SoftwareDevelopmentLifecycle from './InformationTechnology/SoftwareManagement/SoftwareDevelopmentLifecycle.js';
+import * as SoftwareLicenses from './InformationTechnology/ItAssets/SoftwareLicenses.js';
+import * as Sops from './IntellectualHumanCapital/KnowledgeBase/Sops.js';
+import * as StakeholderAnalysis from './ExternalRelationships/StakeholderManagement/StakeholderAnalysis.js';
+import * as StakeholderCommunication from './ExternalRelationships/StakeholderManagement/StakeholderCommunication.js';
+import * as StakeholderFeedback from './ExternalRelationships/StakeholderManagement/StakeholderFeedback.js';
+import * as StockLevels from './OperationsAssetManagement/Inventory/StockLevels.js';
+import * as StrategicGoals from './GovernanceStrategy/BusinessPlans/StrategicGoals.js';
+import * as SupplierBids from './LogisticsSupplyChain/Procurement/SupplierBids.js';
+import * as SupplierPerformance from './OperationsAssetManagement/SupplyChain/SupplierPerformance.js';
+import * as SupplierPerformanceEvaluation from './LogisticsSupplyChain/SupplierContracts/SupplierPerformanceEvaluation.js';
+import * as SupportEntitlements from './CustomerSupport/ServiceContracts/SupportEntitlements.js';
+import * as SustainableSourcing from './CorporateSocialResponsibility/SustainabilityInitiatives/SustainableSourcing.js';
+import * as SwotAnalysis from './GovernanceStrategy/BusinessPlans/SwotAnalysis.js';
+import * as SynergyTracking from './MergersAcquisitions/PostMergerIntegration/SynergyTracking.js';
+import * as SystemsIntegration from './MergersAcquisitions/PostMergerIntegration/SystemsIntegration.js';
+import * as TargetIdentification from './MergersAcquisitions/MAStrategy/TargetIdentification.js';
+import * as TaskAssignments from './ProjectTaskManagement/Tasks/TaskAssignments.js';
+import * as TaskDeadlines from './ProjectTaskManagement/Tasks/TaskDeadlines.js';
+import * as TaskDependencies from './ProjectTaskManagement/Tasks/TaskDependencies.js';
+import * as TaxAudits from './FinancialManagement/Taxation/TaxAudits.js';
+import * as TaxCredits from './FinancialManagement/Taxation/TaxCredits.js';
+import * as TaxFilings from './FinancialManagement/Taxation/TaxFilings.js';
+import * as TenantRecords from './RealEstatePropertyManagement/Leases/TenantRecords.js';
+import * as TicketEscalation from './CustomerSupport/SupportTickets/TicketEscalation.js';
+import * as TicketPrioritization from './CustomerSupport/SupportTickets/TicketPrioritization.js';
+import * as TicketResolution from './CustomerSupport/SupportTickets/TicketResolution.js';
+import * as TimeTracking from './ProjectTaskManagement/Timesheets/TimeTracking.js';
+import * as Attendance_TimesheetApprovals from './HrManagement/Attendance/TimesheetApprovals.js';
+import * as Timesheets_TimesheetApprovals from './ProjectTaskManagement/Timesheets/TimesheetApprovals.js';
+import * as TrademarkRegistration from './ComplianceLegal/IntellectualProperty/TrademarkRegistration.js';
+import * as TrainingNeedsAnalysis from './TrainingDevelopment/SkillDevelopment/TrainingNeedsAnalysis.js';
+import * as TrainingPrograms from './HrManagement/Training/TrainingPrograms.js';
+import * as TrainingRecords from './HrManagement/Training/TrainingRecords.js';
+import * as TreasuryPolicies from './FinancialManagement/TreasuryManagement/TreasuryPolicies.js';
+import * as TrialBalance from './FinancialManagement/GeneralLedger/TrialBalance.js';
+import * as UserActivityTracking from './GovernanceStrategy/AuditTrails/UserActivityTracking.js';
+import * as UtilityManagement from './RealEstatePropertyManagement/FacilitiesManagement/UtilityManagement.js';
+import * as VarianceAnalysis from './FinancialManagement/Budget/VarianceAnalysis.js';
+import * as VatGstRecords from './FinancialManagement/Taxation/VatGstRecords.js';
+import * as VendorAssessments from './ExternalRelationships/VendorManagement/VendorAssessments.js';
+import * as VendorInvoices from './FinancialManagement/AccountsPayable/VendorInvoices.js';
+import * as VendorOnboarding from './ExternalRelationships/VendorManagement/VendorOnboarding.js';
+import * as VendorScorecards from './ExternalRelationships/VendorManagement/VendorScorecards.js';
+import * as VendorsList from './ExternalRelationships/VendorManagement/VendorsList.js';
+import * as VersionControl from './InformationTechnology/SoftwareManagement/VersionControl.js';
+import * as VolunteerInitiatives from './EnvironmentalSocialGovernance/CommunityEngagement/VolunteerInitiatives.js';
+import * as WarehouseLayouts from './OperationsAssetManagement/Warehouses/WarehouseLayouts.js';
+import * as WarrantyManagement from './CustomerSupport/ServiceContracts/WarrantyManagement.js';
+import * as WasteManagement from './EnvironmentalSocialGovernance/SustainabilityReports/WasteManagement.js';
+import * as WinLossAnalysis from './SalesMarketing/Opportunities/WinLossAnalysis.js';
+import * as WithholdingTaxes from './FinancialManagement/Taxation/WithholdingTaxes.js';
+import * as WorkOrders from './OperationsAssetManagement/Maintenance/WorkOrders.js';
+import * as entity_comments_history from './entity_comments_history.js';
+import * as entity_workflow_rules from './entity_workflow_rules.js';
+import * as manager_action_logs from './manager_action_logs.js';
 
 export const configRegistry = {
-    'AccessControls': AccessControlsConfig,
-    'AfterActionReports': AfterActionReportsConfig,
-    'Announcements': AnnouncementsConfig,
-    'ApplicantTracking': ApplicantTrackingConfig,
-    'ArbitrationRecords': ArbitrationRecordsConfig,
-    'AssetDepreciation': AssetDepreciationConfig,
-    'AssetDisposal': AssetDisposalConfig,
-    'AssetLifecycle': AssetLifecycleConfig,
-    'AssetTracking': AssetTrackingConfig,
-    'Backorders': BackordersConfig,
-    'BandwidthMonitoring': BandwidthMonitoringConfig,
-    'BankTransfers': BankTransfersConfig,
-    'Benchmarking': BenchmarkingConfig,
-    'BestPractices': BestPracticesConfig,
-    'BillableHours': BillableHoursConfig,
-    'BoardResolutions': BoardResolutionsConfig,
-    'BonusesIncentives': BonusesIncentivesConfig,
-    'BudgetAllocations': BudgetAllocationsConfig,
-    'BugTracking': BugTrackingConfig,
-    'BusinessContinuityPlans': BusinessContinuityPlansConfig,
-    'BusinessImpactAnalysis': BusinessImpactAnalysisConfig,
-    'CampaignPerformance': CampaignPerformanceConfig,
-    'CampaignPlanning': CampaignPlanningConfig,
-    'CarbonFootprintTracking': CarbonFootprintTrackingConfig,
-    'CaseManagement': CaseManagementConfig,
-    'CashFlowForecasts': CashFlowForecastsConfig,
-    'CertificationTracking': CertificationTrackingConfig,
-    'Certifications': CertificationsConfig,
-    'ChangeLogs': ChangeLogsConfig,
-    'ChartOfAccounts': ChartOfAccountsConfig,
-    'ClaimsManagement': ClaimsManagementConfig,
-    'CommunityInvestment': CommunityInvestmentConfig,
-    'RegulatoryCompliance_ComplianceAudits': RegulatoryCompliance_ComplianceAuditsConfig, // Disambiguated from ComplianceAudits
-    'AuditTrails_ComplianceAudits': AuditTrails_ComplianceAuditsConfig, // Disambiguated from ComplianceAudits
-    'ComplianceDeadlines': ComplianceDeadlinesConfig,
-    'CompliancePolicies': CompliancePoliciesConfig,
-    'ComplianceReporting': ComplianceReportingConfig,
-    'ContractCompliance': ContractComplianceConfig,
-    'ContractNegotiations': ContractNegotiationsConfig,
-    'ContractObligations': ContractObligationsConfig,
-    'ContractRenewalReminders': ContractRenewalRemindersConfig,
-    'ContractRenewals': ContractRenewalsConfig,
-    'ContractTemplates': ContractTemplatesConfig,
-    'ContractTerminations': ContractTerminationsConfig,
-    'ContractTypes': ContractTypesConfig,
-    'ContractualObligations': ContractualObligationsConfig,
-    'CorporateSocialResponsibility': CorporateSocialResponsibilityConfig,
-    'CorrectiveActions': CorrectiveActionsConfig,
-    'CostAnalysis': CostAnalysisConfig,
-    'CourseCatalog': CourseCatalogConfig,
-    'CourtAppearances': CourtAppearancesConfig,
-    'CreditManagement': CreditManagementConfig,
-    'CreditorsLedger': CreditorsLedgerConfig,
-    'CrisisCommunicationLogs': CrisisCommunicationLogsConfig,
-    'CrisisResponsePlans': CrisisResponsePlansConfig,
-    'CrisisResponseTeams': CrisisResponseTeamsConfig,
-    'CrisisScenarios': CrisisScenariosConfig,
-    'CulturalIntegration': CulturalIntegrationConfig,
-    'CustomerHistory': CustomerHistoryConfig,
-    'CustomerInvoices': CustomerInvoicesConfig,
-    'CustomerSatisfaction': CustomerSatisfactionConfig,
-    'CustomerSegmentation': CustomerSegmentationConfig,
-    'CustomerSurveys': CustomerSurveysConfig,
-    'CustomsDocumentation': CustomsDocumentationConfig,
-    'DataEncryption': DataEncryptionConfig,
-    'DebtMaturitySchedules': DebtMaturitySchedulesConfig,
-    'DebtorAging': DebtorAgingConfig,
-    'DevelopmentPlans': DevelopmentPlansConfig,
-    'DisasterRecoveryPlans': DisasterRecoveryPlansConfig,
-    'DiscountStructures': DiscountStructuresConfig,
-    'Discounts': DiscountsConfig,
-    'DocumentationManagement': DocumentationManagementConfig,
-    'DueDiligence': DueDiligenceConfig,
-    'EmergencyCommunication': EmergencyCommunicationConfig,
-    'EmergencyContacts': EmergencyContactsConfig,
-    'EmployeePortals': EmployeePortalsConfig,
-    'EmployeeVolunteering': EmployeeVolunteeringConfig,
-    'EmployeesList': EmployeesListConfig,
-    'EmploymentHistory': EmploymentHistoryConfig,
-    'EnergyAudits': EnergyAuditsConfig,
-    'EnergyConsumption': EnergyConsumptionConfig,
-    'EnergySavingsTracking': EnergySavingsTrackingConfig,
-    'EquityInvestments': EquityInvestmentsConfig,
-    'ExecutiveTraining': ExecutiveTrainingConfig,
-    'FacilityBooking': FacilityBookingConfig,
-    'FacilityMaintenance': FacilityMaintenanceConfig,
-    'FeedbackAnalysis': FeedbackAnalysisConfig,
-    'FirewallConfigurations': FirewallConfigurationsConfig,
-    'FiscalPeriods': FiscalPeriodsConfig,
-    'FixedIncomeInvestments': FixedIncomeInvestmentsConfig,
-    'Forecasting': ForecastingConfig,
-    'ForeignCurrencyAccounts': ForeignCurrencyAccountsConfig,
-    'FreightManagement': FreightManagementConfig,
-    'GreenInitiatives': GreenInitiativesConfig,
-    'HardwareInventory': HardwareInventoryConfig,
-    'IdeaSubmission': IdeaSubmissionConfig,
-    'ImpactReports': ImpactReportsConfig,
-    'IncidentReporting': IncidentReportingConfig,
-    'InnovationPipeline': InnovationPipelineConfig,
-    'InspectionRecords': InspectionRecordsConfig,
-    'InsurancePolicies': InsurancePoliciesConfig,
-    'IntegrationPlans': IntegrationPlansConfig,
-    'InterestPayments': InterestPaymentsConfig,
-    'InternalAudits': InternalAuditsConfig,
-    'InterviewScheduling': InterviewSchedulingConfig,
-    'InventoryAging': InventoryAgingConfig,
-    'InventoryLocations': InventoryLocationsConfig,
-    'InventoryValuation': InventoryValuationConfig,
-    'InvestmentReturns': InvestmentReturnsConfig,
-    'InvoiceTemplates': InvoiceTemplatesConfig,
-    'IpLicensing': IpLicensingConfig,
-    'IpLitigation': IpLitigationConfig,
-    'IpMonitoring': IpMonitoringConfig,
-    'JobDescriptions': JobDescriptionsConfig,
-    'JointVentures': JointVenturesConfig,
-    'JournalEntries': JournalEntriesConfig,
-    'LeadConversionRates': LeadConversionRatesConfig,
-    'LeadNurturing': LeadNurturingConfig,
-    'LeadScoring': LeadScoringConfig,
-    'LeadershipWorkshops': LeadershipWorkshopsConfig,
-    'LearningPaths': LearningPathsConfig,
-    'LeaseRenewals': LeaseRenewalsConfig,
-    'LeaseTerms': LeaseTermsConfig,
-    'LeaveBalances': LeaveBalancesConfig,
-    'LegalBriefs': LegalBriefsConfig,
-    'LegalProceedings': LegalProceedingsConfig,
-    'LicensingAgreements': LicensingAgreementsConfig,
-    'LiquidityManagement': LiquidityManagementConfig,
-    'LoanAgreements': LoanAgreementsConfig,
-    'LogisticsRoutes': LogisticsRoutesConfig,
-    'MaintenanceLogs': MaintenanceLogsConfig,
-    'MarketAnalysis': MarketAnalysisConfig,
-    'MediaRelations': MediaRelationsConfig,
-    'MentorshipPrograms': MentorshipProgramsConfig,
-    'MilestoneCompletion': MilestoneCompletionConfig,
-    'MilestoneDependencies': MilestoneDependenciesConfig,
-    'MilestoneReporting': MilestoneReportingConfig,
-    'NetPromoterScore': NetPromoterScoreConfig,
-    'NetworkTopology': NetworkTopologyConfig,
-    'NewProductDevelopment': NewProductDevelopmentConfig,
-    'Newsletters': NewslettersConfig,
-    'NgoPartnerships': NgoPartnershipsConfig,
-    'NonConformanceReports': NonConformanceReportsConfig,
-    'ObligationTracking': ObligationTrackingConfig,
-    'OfferLetters': OfferLettersConfig,
-    'OpportunityStages': OpportunityStagesConfig,
-    'OrderManagement_OrderFulfillment': OrderManagement_OrderFulfillmentConfig, // Disambiguated from OrderFulfillment
-    'SupplyChain_OrderFulfillment': SupplyChain_OrderFulfillmentConfig, // Disambiguated from OrderFulfillment
-    'OrderProcessing': OrderProcessingConfig,
-    'OrderStatus': OrderStatusConfig,
-    'OrderTracking': OrderTrackingConfig,
-    'OvertimeManagement': OvertimeManagementConfig,
-    'PartnerAgreements': PartnerAgreementsConfig,
-    'PartnerCollaboration': PartnerCollaborationConfig,
-    'PatentFilings': PatentFilingsConfig,
-    'PatentManagement': PatentManagementConfig,
-    'PaymentTerms': PaymentTermsConfig,
-    'PaymentTracking': PaymentTrackingConfig,
-    'Payslips': PayslipsConfig,
-    'PenaltiesManagement': PenaltiesManagementConfig,
-    'PerformanceDashboards': PerformanceDashboardsConfig,
-    'PerformanceReviews_PerformanceMetrics': PerformanceReviews_PerformanceMetricsConfig, // Disambiguated from PerformanceMetrics
-    'LogisticsPartners_PerformanceMetrics': LogisticsPartners_PerformanceMetricsConfig, // Disambiguated from PerformanceMetrics
-    'PhilanthropicActivities': PhilanthropicActivitiesConfig,
-    'PickPackShip': PickPackShipConfig,
-    'PolicyRenewals': PolicyRenewalsConfig,
-    'PredictiveAnalytics': PredictiveAnalyticsConfig,
-    'PressReleases': PressReleasesConfig,
-    'PreventiveMaintenanceSchedules': PreventiveMaintenanceSchedulesConfig,
-    'Pricing_PriceLists': Pricing_PriceListsConfig, // Disambiguated from PriceLists
-    'ProductAttributes': ProductAttributesConfig,
-    'ProductCategories': ProductCategoriesConfig,
-    'ProductDetails': ProductDetailsConfig,
-    'ProductDiscontinuation': ProductDiscontinuationConfig,
-    'ProductReviews': ProductReviewsConfig,
-    'ProductUpdates': ProductUpdatesConfig,
-    'ProjectMilestones': ProjectMilestonesConfig,
-    'ProjectPhases': ProjectPhasesConfig,
-    'ProjectScope': ProjectScopeConfig,
-    'PromotionRecommandations': PromotionRecommandationsConfig,
-    'PromotionalPricing': PromotionalPricingConfig,
-    'Promotions': PromotionsConfig,
-    'PropertyDetails': PropertyDetailsConfig,
-    'PropertyTaxes': PropertyTaxesConfig,
-    'PublicStatements': PublicStatementsConfig,
-    'PurchaseOrders': PurchaseOrdersConfig,
-    'PurchaseRequisitions': PurchaseRequisitionsConfig,
-    'QualityStandards': QualityStandardsConfig,
-    'ReconciliationStatements': ReconciliationStatementsConfig,
-    'RecurringInvoices': RecurringInvoicesConfig,
-    'RegulatoryUpdates': RegulatoryUpdatesConfig,
-    'RenewableEnergyInitiatives': RenewableEnergyInitiativesConfig,
-    'RentalAgreements': RentalAgreementsConfig,
-    'ReorderPoints': ReorderPointsConfig,
-    'ResearchOutputs': ResearchOutputsConfig,
-    'ResearchProposals': ResearchProposalsConfig,
-    'ResolutionTimeTracking': ResolutionTimeTrackingConfig,
-    'ResourceAllocation': ResourceAllocationConfig,
-    'RevenueSharingAgreements': RevenueSharingAgreementsConfig,
-    'ReviewSchedules': ReviewSchedulesConfig,
-    'RiskAssessments': RiskAssessmentsConfig,
-    'RiskIdentification': RiskIdentificationConfig,
-    'RiskMitigationPlans': RiskMitigationPlansConfig,
-    'RiskResponsePlanning': RiskResponsePlanningConfig,
-    'RiskScoring': RiskScoringConfig,
-    'RoiAnalysis': RoiAnalysisConfig,
-    'SafetyTraining': SafetyTrainingConfig,
-    'SalaryStructure': SalaryStructureConfig,
-    'SalesForecasting': SalesForecastingConfig,
-    'SecurityAudits': SecurityAuditsConfig,
-    'ServiceContracts_ServiceLevelAgreements': ServiceContracts_ServiceLevelAgreementsConfig, // Disambiguated from ServiceLevelAgreements
-    'SupportTickets_ServiceLevelAgreements': SupportTickets_ServiceLevelAgreementsConfig, // Disambiguated from ServiceLevelAgreements
-    'ServiceRenewals': ServiceRenewalsConfig,
-    'SettlementAgreements': SettlementAgreementsConfig,
-    'ShiftSchedules': ShiftSchedulesConfig,
-    'ShipmentTracking': ShipmentTrackingConfig,
-    'SkillAssessments': SkillAssessmentsConfig,
-    'SoftwareDevelopmentLifecycle': SoftwareDevelopmentLifecycleConfig,
-    'SoftwareLicenses': SoftwareLicensesConfig,
-    'Sops': SopsConfig,
-    'StakeholderAnalysis': StakeholderAnalysisConfig,
-    'StakeholderCommunication': StakeholderCommunicationConfig,
-    'StakeholderFeedback': StakeholderFeedbackConfig,
-    'StockLevels': StockLevelsConfig,
-    'StrategicGoals': StrategicGoalsConfig,
-    'SupplierBids': SupplierBidsConfig,
-    'SupplierPerformance': SupplierPerformanceConfig,
-    'SupplierPerformanceEvaluation': SupplierPerformanceEvaluationConfig,
-    'SupportEntitlements': SupportEntitlementsConfig,
-    'SustainableSourcing': SustainableSourcingConfig,
-    'SwotAnalysis': SwotAnalysisConfig,
-    'SynergyTracking': SynergyTrackingConfig,
-    'SystemsIntegration': SystemsIntegrationConfig,
-    'TargetIdentification': TargetIdentificationConfig,
-    'TaskAssignments': TaskAssignmentsConfig,
-    'TaskDeadlines': TaskDeadlinesConfig,
-    'TaskDependencies': TaskDependenciesConfig,
-    'TaxAudits': TaxAuditsConfig,
-    'TaxCredits': TaxCreditsConfig,
-    'TaxFilings': TaxFilingsConfig,
-    'TenantRecords': TenantRecordsConfig,
-    'TicketEscalation': TicketEscalationConfig,
-    'TicketPrioritization': TicketPrioritizationConfig,
-    'TicketResolution': TicketResolutionConfig,
-    'TimeTracking': TimeTrackingConfig,
-    'Attendance_TimesheetApprovals': Attendance_TimesheetApprovalsConfig, // Disambiguated from TimesheetApprovals
-    'Timesheets_TimesheetApprovals': Timesheets_TimesheetApprovalsConfig, // Disambiguated from TimesheetApprovals
-    'TrademarkRegistration': TrademarkRegistrationConfig,
-    'TrainingNeedsAnalysis': TrainingNeedsAnalysisConfig,
-    'TrainingPrograms': TrainingProgramsConfig,
-    'TrainingRecords': TrainingRecordsConfig,
-    'TreasuryPolicies': TreasuryPoliciesConfig,
-    'TrialBalance': TrialBalanceConfig,
-    'UserActivityTracking': UserActivityTrackingConfig,
-    'UtilityManagement': UtilityManagementConfig,
-    'VarianceAnalysis': VarianceAnalysisConfig,
-    'VatGstRecords': VatGstRecordsConfig,
-    'VendorAssessments': VendorAssessmentsConfig,
-    'VendorInvoices': VendorInvoicesConfig,
-    'VendorOnboarding': VendorOnboardingConfig,
-    'VendorScorecards': VendorScorecardsConfig,
-    'VendorsList': VendorsListConfig,
-    'VersionControl': VersionControlConfig,
-    'VolunteerInitiatives': VolunteerInitiativesConfig,
-    'WarehouseLayouts': WarehouseLayoutsConfig,
-    'WarrantyManagement': WarrantyManagementConfig,
-    'WasteManagement': WasteManagementConfig,
-    'WinLossAnalysis': WinLossAnalysisConfig,
-    'WithholdingTaxes': WithholdingTaxesConfig,
-    'WorkOrders': WorkOrdersConfig,
+    'AccessControls': AccessControls,
+    'AfterActionReports': AfterActionReports,
+    'Announcements': Announcements,
+    'ApplicantTracking': ApplicantTracking,
+    'ArbitrationRecords': ArbitrationRecords,
+    'AssetDepreciation': AssetDepreciation,
+    'AssetDisposal': AssetDisposal,
+    'AssetLifecycle': AssetLifecycle,
+    'AssetTracking': AssetTracking,
+    'Backorders': Backorders,
+    'BandwidthMonitoring': BandwidthMonitoring,
+    'BankTransfers': BankTransfers,
+    'Benchmarking': Benchmarking,
+    'BestPractices': BestPractices,
+    'BillableHours': BillableHours,
+    'BoardResolutions': BoardResolutions,
+    'BonusesIncentives': BonusesIncentives,
+    'BudgetAllocations': BudgetAllocations,
+    'BugTracking': BugTracking,
+    'BusinessContinuityPlans': BusinessContinuityPlans,
+    'BusinessImpactAnalysis': BusinessImpactAnalysis,
+    'CampaignPerformance': CampaignPerformance,
+    'CampaignPlanning': CampaignPlanning,
+    'CarbonFootprintTracking': CarbonFootprintTracking,
+    'CaseManagement': CaseManagement,
+    'CashFlowForecasts': CashFlowForecasts,
+    'CertificationTracking': CertificationTracking,
+    'Certifications': Certifications,
+    'ChangeLogs': ChangeLogs,
+    'ChartOfAccounts': ChartOfAccounts,
+    'ClaimsManagement': ClaimsManagement,
+    'CommunityInvestment': CommunityInvestment,
+    'RegulatoryCompliance_ComplianceAudits': RegulatoryCompliance_ComplianceAudits, // Disambiguated from ComplianceAudits
+    'AuditTrails_ComplianceAudits': AuditTrails_ComplianceAudits, // Disambiguated from ComplianceAudits
+    'ComplianceDeadlines': ComplianceDeadlines,
+    'CompliancePolicies': CompliancePolicies,
+    'ComplianceReporting': ComplianceReporting,
+    'ContractCompliance': ContractCompliance,
+    'ContractNegotiations': ContractNegotiations,
+    'ContractObligations': ContractObligations,
+    'ContractRenewalReminders': ContractRenewalReminders,
+    'ContractRenewals': ContractRenewals,
+    'ContractTemplates': ContractTemplates,
+    'ContractTerminations': ContractTerminations,
+    'ContractTypes': ContractTypes,
+    'ContractualObligations': ContractualObligations,
+    'CorporateSocialResponsibility': CorporateSocialResponsibility,
+    'CorrectiveActions': CorrectiveActions,
+    'CostAnalysis': CostAnalysis,
+    'CourseCatalog': CourseCatalog,
+    'CourtAppearances': CourtAppearances,
+    'CreditManagement': CreditManagement,
+    'CreditorsLedger': CreditorsLedger,
+    'CrisisCommunicationLogs': CrisisCommunicationLogs,
+    'CrisisResponsePlans': CrisisResponsePlans,
+    'CrisisResponseTeams': CrisisResponseTeams,
+    'CrisisScenarios': CrisisScenarios,
+    'CulturalIntegration': CulturalIntegration,
+    'CustomerHistory': CustomerHistory,
+    'CustomerInvoices': CustomerInvoices,
+    'CustomerSatisfaction': CustomerSatisfaction,
+    'CustomerSegmentation': CustomerSegmentation,
+    'CustomerSurveys': CustomerSurveys,
+    'CustomsDocumentation': CustomsDocumentation,
+    'DataEncryption': DataEncryption,
+    'DebtMaturitySchedules': DebtMaturitySchedules,
+    'DebtorAging': DebtorAging,
+    'DevelopmentPlans': DevelopmentPlans,
+    'DisasterRecoveryPlans': DisasterRecoveryPlans,
+    'DiscountStructures': DiscountStructures,
+    'Discounts': Discounts,
+    'DocumentationManagement': DocumentationManagement,
+    'DueDiligence': DueDiligence,
+    'EmergencyCommunication': EmergencyCommunication,
+    'EmergencyContacts': EmergencyContacts,
+    'EmployeePortals': EmployeePortals,
+    'EmployeeVolunteering': EmployeeVolunteering,
+    'EmployeesList': EmployeesList,
+    'EmploymentHistory': EmploymentHistory,
+    'EnergyAudits': EnergyAudits,
+    'EnergyConsumption': EnergyConsumption,
+    'EnergySavingsTracking': EnergySavingsTracking,
+    'EquityInvestments': EquityInvestments,
+    'ExecutiveTraining': ExecutiveTraining,
+    'FacilityBooking': FacilityBooking,
+    'FacilityMaintenance': FacilityMaintenance,
+    'FeedbackAnalysis': FeedbackAnalysis,
+    'FirewallConfigurations': FirewallConfigurations,
+    'FiscalPeriods': FiscalPeriods,
+    'FixedIncomeInvestments': FixedIncomeInvestments,
+    'Forecasting': Forecasting,
+    'ForeignCurrencyAccounts': ForeignCurrencyAccounts,
+    'FreightManagement': FreightManagement,
+    'GreenInitiatives': GreenInitiatives,
+    'HardwareInventory': HardwareInventory,
+    'IdeaSubmission': IdeaSubmission,
+    'ImpactReports': ImpactReports,
+    'IncidentReporting': IncidentReporting,
+    'InnovationPipeline': InnovationPipeline,
+    'InspectionRecords': InspectionRecords,
+    'InsurancePolicies': InsurancePolicies,
+    'IntegrationPlans': IntegrationPlans,
+    'InterestPayments': InterestPayments,
+    'InternalAudits': InternalAudits,
+    'InterviewScheduling': InterviewScheduling,
+    'InventoryAging': InventoryAging,
+    'InventoryLocations': InventoryLocations,
+    'InventoryValuation': InventoryValuation,
+    'InvestmentReturns': InvestmentReturns,
+    'InvoiceTemplates': InvoiceTemplates,
+    'IpLicensing': IpLicensing,
+    'IpLitigation': IpLitigation,
+    'IpMonitoring': IpMonitoring,
+    'JobDescriptions': JobDescriptions,
+    'JointVentures': JointVentures,
+    'JournalEntries': JournalEntries,
+    'LeadConversionRates': LeadConversionRates,
+    'LeadNurturing': LeadNurturing,
+    'LeadScoring': LeadScoring,
+    'LeadershipWorkshops': LeadershipWorkshops,
+    'LearningPaths': LearningPaths,
+    'LeaseRenewals': LeaseRenewals,
+    'LeaseTerms': LeaseTerms,
+    'LeaveBalances': LeaveBalances,
+    'LegalBriefs': LegalBriefs,
+    'LegalProceedings': LegalProceedings,
+    'LicensingAgreements': LicensingAgreements,
+    'LiquidityManagement': LiquidityManagement,
+    'LoanAgreements': LoanAgreements,
+    'LogisticsRoutes': LogisticsRoutes,
+    'MaintenanceLogs': MaintenanceLogs,
+    'MarketAnalysis': MarketAnalysis,
+    'MediaRelations': MediaRelations,
+    'MentorshipPrograms': MentorshipPrograms,
+    'MilestoneCompletion': MilestoneCompletion,
+    'MilestoneDependencies': MilestoneDependencies,
+    'MilestoneReporting': MilestoneReporting,
+    'NetPromoterScore': NetPromoterScore,
+    'NetworkTopology': NetworkTopology,
+    'NewProductDevelopment': NewProductDevelopment,
+    'Newsletters': Newsletters,
+    'NgoPartnerships': NgoPartnerships,
+    'NonConformanceReports': NonConformanceReports,
+    'ObligationTracking': ObligationTracking,
+    'OfferLetters': OfferLetters,
+    'OpportunityStages': OpportunityStages,
+    'OrderManagement_OrderFulfillment': OrderManagement_OrderFulfillment, // Disambiguated from OrderFulfillment
+    'SupplyChain_OrderFulfillment': SupplyChain_OrderFulfillment, // Disambiguated from OrderFulfillment
+    'OrderProcessing': OrderProcessing,
+    'OrderStatus': OrderStatus,
+    'OrderTracking': OrderTracking,
+    'OvertimeManagement': OvertimeManagement,
+    'PartnerAgreements': PartnerAgreements,
+    'PartnerCollaboration': PartnerCollaboration,
+    'PatentFilings': PatentFilings,
+    'PatentManagement': PatentManagement,
+    'PaymentTerms': PaymentTerms,
+    'PaymentTracking': PaymentTracking,
+    'Payslips': Payslips,
+    'PenaltiesManagement': PenaltiesManagement,
+    'PerformanceDashboards': PerformanceDashboards,
+    'PerformanceReviews_PerformanceMetrics': PerformanceReviews_PerformanceMetrics, // Disambiguated from PerformanceMetrics
+    'LogisticsPartners_PerformanceMetrics': LogisticsPartners_PerformanceMetrics, // Disambiguated from PerformanceMetrics
+    'PhilanthropicActivities': PhilanthropicActivities,
+    'PickPackShip': PickPackShip,
+    'PolicyRenewals': PolicyRenewals,
+    'PredictiveAnalytics': PredictiveAnalytics,
+    'PressReleases': PressReleases,
+    'PreventiveMaintenanceSchedules': PreventiveMaintenanceSchedules,
+    'OAM_Pricing_PriceLists': OAM_Pricing_PriceLists, // Disambiguated from PriceLists
+    'SM_Pricing_PriceLists': SM_Pricing_PriceLists, // Disambiguated from PriceLists
+    'ProductAttributes': ProductAttributes,
+    'ProductCategories': ProductCategories,
+    'ProductDetails': ProductDetails,
+    'ProductDiscontinuation': ProductDiscontinuation,
+    'ProductReviews': ProductReviews,
+    'ProductUpdates': ProductUpdates,
+    'ProjectMilestones': ProjectMilestones,
+    'ProjectPhases': ProjectPhases,
+    'ProjectScope': ProjectScope,
+    'PromotionRecommandations': PromotionRecommandations,
+    'PromotionalPricing': PromotionalPricing,
+    'Promotions': Promotions,
+    'PropertyDetails': PropertyDetails,
+    'PropertyTaxes': PropertyTaxes,
+    'PublicStatements': PublicStatements,
+    'PurchaseOrders': PurchaseOrders,
+    'PurchaseRequisitions': PurchaseRequisitions,
+    'QualityStandards': QualityStandards,
+    'ReconciliationStatements': ReconciliationStatements,
+    'RecurringInvoices': RecurringInvoices,
+    'RegulatoryUpdates': RegulatoryUpdates,
+    'RenewableEnergyInitiatives': RenewableEnergyInitiatives,
+    'RentalAgreements': RentalAgreements,
+    'ReorderPoints': ReorderPoints,
+    'ResearchOutputs': ResearchOutputs,
+    'ResearchProposals': ResearchProposals,
+    'ResolutionTimeTracking': ResolutionTimeTracking,
+    'ResourceAllocation': ResourceAllocation,
+    'RevenueSharingAgreements': RevenueSharingAgreements,
+    'ReviewSchedules': ReviewSchedules,
+    'RiskAssessments': RiskAssessments,
+    'RiskIdentification': RiskIdentification,
+    'RiskMitigationPlans': RiskMitigationPlans,
+    'RiskResponsePlanning': RiskResponsePlanning,
+    'RiskScoring': RiskScoring,
+    'RoiAnalysis': RoiAnalysis,
+    'SafetyTraining': SafetyTraining,
+    'SalaryStructure': SalaryStructure,
+    'SalesForecasting': SalesForecasting,
+    'SecurityAudits': SecurityAudits,
+    'ServiceContracts_ServiceLevelAgreements': ServiceContracts_ServiceLevelAgreements, // Disambiguated from ServiceLevelAgreements
+    'SupportTickets_ServiceLevelAgreements': SupportTickets_ServiceLevelAgreements, // Disambiguated from ServiceLevelAgreements
+    'ServiceRenewals': ServiceRenewals,
+    'SettlementAgreements': SettlementAgreements,
+    'ShiftSchedules': ShiftSchedules,
+    'ShipmentTracking': ShipmentTracking,
+    'SkillAssessments': SkillAssessments,
+    'SoftwareDevelopmentLifecycle': SoftwareDevelopmentLifecycle,
+    'SoftwareLicenses': SoftwareLicenses,
+    'Sops': Sops,
+    'StakeholderAnalysis': StakeholderAnalysis,
+    'StakeholderCommunication': StakeholderCommunication,
+    'StakeholderFeedback': StakeholderFeedback,
+    'StockLevels': StockLevels,
+    'StrategicGoals': StrategicGoals,
+    'SupplierBids': SupplierBids,
+    'SupplierPerformance': SupplierPerformance,
+    'SupplierPerformanceEvaluation': SupplierPerformanceEvaluation,
+    'SupportEntitlements': SupportEntitlements,
+    'SustainableSourcing': SustainableSourcing,
+    'SwotAnalysis': SwotAnalysis,
+    'SynergyTracking': SynergyTracking,
+    'SystemsIntegration': SystemsIntegration,
+    'TargetIdentification': TargetIdentification,
+    'TaskAssignments': TaskAssignments,
+    'TaskDeadlines': TaskDeadlines,
+    'TaskDependencies': TaskDependencies,
+    'TaxAudits': TaxAudits,
+    'TaxCredits': TaxCredits,
+    'TaxFilings': TaxFilings,
+    'TenantRecords': TenantRecords,
+    'TicketEscalation': TicketEscalation,
+    'TicketPrioritization': TicketPrioritization,
+    'TicketResolution': TicketResolution,
+    'TimeTracking': TimeTracking,
+    'Attendance_TimesheetApprovals': Attendance_TimesheetApprovals, // Disambiguated from TimesheetApprovals
+    'Timesheets_TimesheetApprovals': Timesheets_TimesheetApprovals, // Disambiguated from TimesheetApprovals
+    'TrademarkRegistration': TrademarkRegistration,
+    'TrainingNeedsAnalysis': TrainingNeedsAnalysis,
+    'TrainingPrograms': TrainingPrograms,
+    'TrainingRecords': TrainingRecords,
+    'TreasuryPolicies': TreasuryPolicies,
+    'TrialBalance': TrialBalance,
+    'UserActivityTracking': UserActivityTracking,
+    'UtilityManagement': UtilityManagement,
+    'VarianceAnalysis': VarianceAnalysis,
+    'VatGstRecords': VatGstRecords,
+    'VendorAssessments': VendorAssessments,
+    'VendorInvoices': VendorInvoices,
+    'VendorOnboarding': VendorOnboarding,
+    'VendorScorecards': VendorScorecards,
+    'VendorsList': VendorsList,
+    'VersionControl': VersionControl,
+    'VolunteerInitiatives': VolunteerInitiatives,
+    'WarehouseLayouts': WarehouseLayouts,
+    'WarrantyManagement': WarrantyManagement,
+    'WasteManagement': WasteManagement,
+    'WinLossAnalysis': WinLossAnalysis,
+    'WithholdingTaxes': WithholdingTaxes,
+    'WorkOrders': WorkOrders,
+    'entity_comments_history': entity_comments_history,
+    'entity_workflow_rules': entity_workflow_rules,
+    'manager_action_logs': manager_action_logs,
 };
 
 export function getConfig(entityName) {

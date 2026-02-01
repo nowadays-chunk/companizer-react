@@ -1,198 +1,176 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Container, Box, CircularProgress, Typography, FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText, OutlinedInput, Button } from '@mui/material';
-import { faker } from '@faker-js/faker';
+import { getConfig } from '../components/Management/configRegistry';
+import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { defaultAssets as genDefaultAssets, defaultLiabilities as genDefaultLiabilities } from './defaultSummaryConfig';
+import TreasuryTotals from '../components/TreasuryTotals';
+import { generateRandomDataAsync } from '../utils/dataGenerator';
 
-const fetchInvoices = async () => {
-  const stores = ["Store A", "Store B", "Store C"];
-  const categories = ["Utilities", "Rent", "Salaries", "Supplies", "Maintenance"];
-  const invoiceTypes = ["issued", "received"];
-
-  const invoices = [];
-
-  for (let i = 0; i < 100; i++) {
-    const date = faker.date.between('2022-01-01', '2023-12-31');
-    const store = faker.helpers.arrayElement(stores);
-    const category = faker.helpers.arrayElement(categories);
-    const invoiceType = faker.helpers.arrayElement(invoiceTypes);
-    const amount = faker.finance.amount(100, 10000, 2);
-
-    invoices.push({
-      id: i + 1,
-      date: date.toISOString(),
-      amount: parseFloat(amount),
-      category,
-      invoiceType,
-      store
-    });
-  }
-
-  return invoices;
+// Helper to determine if a entity key belongs to Asset or Liability
+const getEntityType = (entityKey, assetsConfig, liabilitiesConfig) => {
+  if (assetsConfig[entityKey]) return 'Asset';
+  if (liabilitiesConfig[entityKey]) return 'Liability';
+  return 'Unknown';
 };
 
-// Function to group invoices by store, year, month, etc.
-function groupInvoicesByStoreYearMonth(invoices) {
-  const groupedData = {};
+// Function to fetch and aggregate data based on configuration
+const fetchAndAggregateData = async (assetsConfig, liabilitiesConfig) => {
+  const aggregated = {};
 
-  invoices.forEach(invoice => {
-    const date = new Date(invoice.date);
-    const year = date.getFullYear();
-    const month = date.getMonth(); // JavaScript months are 0-indexed (0 = January, 11 = December)
-    const { store, invoiceType, category, amount } = invoice;
+  const allEntities = [
+    ...Object.keys(assetsConfig),
+    ...Object.keys(liabilitiesConfig)
+  ];
 
-    if (!groupedData[store]) groupedData[store] = {};
-    if (!groupedData[store][year]) groupedData[store][year] = {};
-    if (!groupedData[store][year][invoiceType]) groupedData[store][year][invoiceType] = {};
-    if (!groupedData[store][year][invoiceType][category]) {
-      groupedData[store][year][invoiceType][category] = {
-        initialBalance: 0,
-        amounts: Array(12).fill(0), // Initialize the array for 12 months with 0
-        total: 0
-      };
+  // Helper to safely parse amounts (handles strings like "$1,000.00")
+  const parseAmount = (val) => {
+    if (typeof val === 'number') return val;
+    if (!val) return 0;
+    // Remove all non-numeric characters except dot and minus
+    const cleanStr = String(val).replace(/[^0-9.-]+/g, '');
+    const num = parseFloat(cleanStr);
+    return isNaN(num) ? 0 : num;
+  };
+
+  for (const entityKey of allEntities) {
+    const type = getEntityType(entityKey, assetsConfig, liabilitiesConfig);
+    if (type === 'Unknown') continue;
+
+    const entityConfig = getConfig(entityKey);
+    if (!entityConfig || !entityConfig.collectionName) {
+      console.warn(`Configuration missing for ${entityKey}`);
+      continue;
     }
 
-    groupedData[store][year][invoiceType][category].amounts[month] += amount;
-    groupedData[store][year][invoiceType][category].total += amount;
-  });
+    try {
+      const api = helpersWrapper(entityConfig.collectionName);
+      // Request a high limit to ensure we fetch "all" rows as requested
+      const rawData = await api.fetchItems({ limit: 10000 });
 
-  return groupedData;
-}
+      // Determine Date Field
+      let dateField = 'created_at';
+      const fields = entityConfig.fieldsConfig || {};
 
-// Function to calculate total expenses and revenues, and transform grouped data into rows
-function transformGroupedData(groupedData) {
-  const rows = [];
+      // Determine Amount Field
+      let amountField = 'total_price';
 
-  // Iterate through each store and year
-  Object.keys(groupedData).forEach(store => {
-    Object.keys(groupedData[store]).forEach(year => {
-      let totalExpenses = Array(12).fill(0);
-      let totalRevenues = Array(12).fill(0);
-      let totalExpenseAnnual = 0;
-      let totalRevenueAnnual = 0;
 
-      // Calculate totals for expenses and revenues
-      Object.keys(groupedData[store][year]).forEach(invoiceType => {
-        Object.keys(groupedData[store][year][invoiceType]).forEach(category => {
-          const data = groupedData[store][year][invoiceType][category];
+      rawData.forEach(record => {
+        // Try to find a date field
+        let dateVal = record.created_at;
 
-          // Add the regular rows
-          rows.push({
-            id: `${store}-${year}-${invoiceType}-${category}`, // Create a unique ID
-            store,
-            year,
-            invoiceType,
-            category,
-            initialBalance: data.initialBalance,
-            total: data.total,
-            January: data.amounts[0],
-            February: data.amounts[1],
-            March: data.amounts[2],
-            April: data.amounts[3],
-            May: data.amounts[4],
-            June: data.amounts[5],
-            July: data.amounts[6],
-            August: data.amounts[7],
-            September: data.amounts[8],
-            October: data.amounts[9],
-            November: data.amounts[10],
-            December: data.amounts[11],
-          });
+        // Try to find an amount field
+        let amountVal = record.total_price;
+        const amount = parseAmount(amountVal);
 
-          // Accumulate totals for expenses and revenues
-          if (invoiceType === 'received') {
-            data.amounts.forEach((amount, month) => {
-              totalExpenses[month] += amount;
-            });
-            totalExpenseAnnual += data.total;
-          }
+        if (Math.abs(amount) < 0.01) return;
 
-          if (invoiceType === 'issued') {
-            data.amounts.forEach((amount, month) => {
-              totalRevenues[month] += amount;
-            });
-            totalRevenueAnnual += data.total;
-          }
-        });
+        const recordDate = new Date(dateVal);
+        if (isNaN(recordDate.getTime())) return;
+
+        const year = recordDate.getFullYear();
+        const month = recordDate.getMonth();
+
+        // Use Entity Key as the "Category" identifier
+        const key = `${entityKey}-${year}-${type}`;
+
+        if (!aggregated[key]) {
+          aggregated[key] = {
+            id: key,
+            category: entityKey, // Entity Name
+            invoiceType: type, // Asset or Liability
+            year: year,
+            initialBalance: 0,
+            amounts: Array(12).fill(0),
+            total: 0
+          };
+        }
+
+        // Negate Liability amounts for aggregation
+        let signedAmount = amount;
+        if (type === 'Liability') {
+          signedAmount = -amount;
+        }
+
+        aggregated[key].amounts[month] += signedAmount;
+        aggregated[key].total += signedAmount;
+
       });
 
-      // Add a single Total Expenses Row for this store and year
-      rows.push({
-        id: `TotalExpenses-${store}-${year}`,
-        store,
-        year,
-        invoiceType: '',
-        category: 'Total Expenses',
-        initialBalance: 0,
-        total: totalExpenseAnnual,
-        January: totalExpenses[0],
-        February: totalExpenses[1],
-        March: totalExpenses[2],
-        April: totalExpenses[3],
-        May: totalExpenses[4],
-        June: totalExpenses[5],
-        July: totalExpenses[6],
-        August: totalExpenses[7],
-        September: totalExpenses[8],
-        October: totalExpenses[9],
-        November: totalExpenses[10],
-        December: totalExpenses[11],
-      });
+    } catch (err) {
+      console.error(`Error fetching data for ${entityKey}`, err);
+    }
+  }
 
-      // Add a single Total Revenues Row for this store and year
-      rows.push({
-        id: `TotalRevenues-${store}-${year}`,
-        store,
-        year,
-        invoiceType: '',
-        category: 'Total Revenues',
-        initialBalance: 0,
-        total: totalRevenueAnnual,
-        January: totalRevenues[0],
-        February: totalRevenues[1],
-        March: totalRevenues[2],
-        April: totalRevenues[3],
-        May: totalRevenues[4],
-        June: totalRevenues[5],
-        July: totalRevenues[6],
-        August: totalRevenues[7],
-        September: totalRevenues[8],
-        October: totalRevenues[9],
-        November: totalRevenues[10],
-        December: totalRevenues[11],
-      });
-    });
-  });
-
-  return rows;
-}
+  // Flatten to rows and Filter out zero-value rows
+  return Object.values(aggregated)
+    // Show if total is non-zero OR initial balance non-zero OR ANY month has value
+    // Show all aggregated rows regardless of value
+    .map(row => ({
+      id: row.id,
+      category: row.category,
+      invoiceType: row.invoiceType, // "Asset" or "Liability"
+      year: row.year.toString(),
+      initialBalance: row.initialBalance,
+      January: row.amounts[0],
+      February: row.amounts[1],
+      March: row.amounts[2],
+      April: row.amounts[3],
+      May: row.amounts[4],
+      June: row.amounts[5],
+      July: row.amounts[6],
+      August: row.amounts[7],
+      September: row.amounts[8],
+      October: row.amounts[9],
+      November: row.amounts[10],
+      December: row.amounts[11],
+      total: row.total
+    }));
+};
 
 const Treasury = () => {
-  const [invoices, setInvoices] = useState([]);
+  const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filteredRows, setFilteredRows] = useState([]);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationMessage, setGenerationMessage] = useState('');
   const [filters, setFilters] = useState({
-    stores: [],
     years: [],
     invoiceTypes: [],
-    categories: [],
+    categories: [], // Entities
   });
 
-  useEffect(() => {
-    const loadInvoices = async () => {
-      try {
-        const data = await fetchInvoices();
-        const groupedData = groupInvoicesByStoreYearMonth(data);
-        const transformedData = transformGroupedData(groupedData);
-        setInvoices(transformedData);
-        setFilteredRows(transformedData);
-      } catch (error) {
-        console.error("Failed to fetch invoices:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const assetsConfigStr = localStorage.getItem('assetsConfig');
+      const liabilitiesConfigStr = localStorage.getItem('liabilitiesConfig');
 
-    loadInvoices();
+      // Default fallback if empty using generated defaults
+      const assetsConfig = assetsConfigStr ? JSON.parse(assetsConfigStr) : genDefaultAssets;
+      const liabilitiesConfig = liabilitiesConfigStr ? JSON.parse(liabilitiesConfigStr) : genDefaultLiabilities;
+
+      const processedRows = await fetchAndAggregateData(assetsConfig, liabilitiesConfig);
+      setRows(processedRows);
+      setFilteredRows(processedRows);
+      console.log("Processed Rows : ", processedRows);
+
+    } catch (e) {
+      console.error("Error loading summary data", e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+
+    // Listen for data updates
+    const handleDataUpdate = () => loadData();
+    window.addEventListener('dataUpdated', handleDataUpdate);
+    return () => window.removeEventListener('dataUpdated', handleDataUpdate);
   }, []);
 
   const handleFilterChange = (event) => {
@@ -203,43 +181,69 @@ const Treasury = () => {
     }));
   };
 
+  useEffect(() => {
+    applyFilters();
+  }, [filters]);
+
   const applyFilters = () => {
-    const filteredData = invoices.filter(row => {
-      const matchStore = filters.stores.length === 0 || filters.stores.includes(row.store);
+    const filteredData = rows.filter(row => {
       const matchYear = filters.years.length === 0 || filters.years.includes(row.year);
-      const matchInvoiceType = filters.invoiceTypes.length === 0 || filters.invoiceTypes.includes(row.invoiceType) || row.invoiceType === ''; // Always show total rows
-      const matchCategory = filters.categories.length === 0 || filters.categories.includes(row.category) || ['Total Revenues', 'Total Expenses'].includes(row.category); // Always show total rows
-      return matchStore && matchYear && matchInvoiceType && matchCategory;
+      const matchInvoiceType = filters.invoiceTypes.length === 0 || filters.invoiceTypes.includes(row.invoiceType);
+      const matchCategory = filters.categories.length === 0 || filters.categories.includes(row.category);
+      return matchYear && matchInvoiceType && matchCategory;
     });
 
     setFilteredRows(filteredData);
   };
 
+  const handleGenerateData = async () => {
+    setIsGenerating(true);
+    setGenerationMessage('Initializing generation...');
+    try {
+      await generateRandomDataAsync((msg) => {
+        setGenerationMessage(msg);
+      });
+      setGenerationMessage('Data generated! refreshing...');
+      await loadData(); // Reload data
+    } catch (error) {
+      console.error("Generation failed", error);
+      setGenerationMessage('Generation failed see console.');
+    } finally {
+      setIsGenerating(false);
+      setGenerationMessage('');
+    }
+  };
+
+  const currencyFormatter = (value) => {
+    if (value == null) return '';
+    const formatted = value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    return value > 0 ? `+${formatted}` : formatted;
+  };
+
+  // Define Columns
   const columns = [
-    { field: 'store', headerName: 'Store', width: 150 },
+    { field: 'category', headerName: 'Entity', width: 200 },
+    { field: 'invoiceType', headerName: 'Asset/Liability', width: 150 },
     { field: 'year', headerName: 'Year', width: 100 },
-    { field: 'invoiceType', headerName: 'Invoice Type', width: 150 },
-    { field: 'category', headerName: 'Category', width: 150 },
-    { field: 'initialBalance', headerName: 'Initial Balance', width: 150, type: 'number' },
-    { field: 'total', headerName: 'Total Amount', width: 150, type: 'number' },
-    { field: 'January', headerName: 'January', width: 100, type: 'number' },
-    { field: 'February', headerName: 'February', width: 100, type: 'number' },
-    { field: 'March', headerName: 'March', width: 100, type: 'number' },
-    { field: 'April', headerName: 'April', width: 100, type: 'number' },
-    { field: 'May', headerName: 'May', width: 100, type: 'number' },
-    { field: 'June', headerName: 'June', width: 100, type: 'number' },
-    { field: 'July', headerName: 'July', width: 100, type: 'number' },
-    { field: 'August', headerName: 'August', width: 100, type: 'number' },
-    { field: 'September', headerName: 'September', width: 100, type: 'number' },
-    { field: 'October', headerName: 'October', width: 100, type: 'number' },
-    { field: 'November', headerName: 'November', width: 100, type: 'number' },
-    { field: 'December', headerName: 'December', width: 100, type: 'number' },
+    { field: 'initialBalance', headerName: 'Initial Balance', width: 150, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'January', headerName: 'January', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'February', headerName: 'February', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'March', headerName: 'March', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'April', headerName: 'April', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'May', headerName: 'May', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'June', headerName: 'June', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'July', headerName: 'July', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'August', headerName: 'August', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'September', headerName: 'September', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'October', headerName: 'October', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'November', headerName: 'November', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'December', headerName: 'December', width: 100, type: 'number', valueFormatter: currencyFormatter },
+    { field: 'total', headerName: 'Total Amount', width: 150, type: 'number', valueFormatter: currencyFormatter },
   ];
 
-  const uniqueStores = [...new Set(invoices.map(row => row.store))];
-  const uniqueYears = [...new Set(invoices.map(row => row.year))];
-  const uniqueInvoiceTypes = [...new Set(invoices.map(row => row.invoiceType).filter(type => type !== ''))];
-  const uniqueCategories = [...new Set(invoices.map(row => row.category).filter(category => category !== 'Total Revenues' && category !== 'Total Expenses'))];
+  const uniqueYears = [...new Set(rows.map(row => row.year))].sort((a, b) => b - a);
+  const uniqueInvoiceTypes = [...new Set(rows.map(row => row.invoiceType))].sort();
+  const uniqueCategories = [...new Set(rows.map(row => row.category))].sort();
 
   if (loading) {
     return (
@@ -249,37 +253,48 @@ const Treasury = () => {
     );
   }
 
-  if (!invoices.length) {
-    return (
-      <Container maxWidth="md" sx={{ mt: 5 }}>
-        <Typography variant="h6" component="div" textAlign="center">
-          No invoices found.
-        </Typography>
-      </Container>
-    );
-  }
-
   return (
-    <Container maxWidth="xl" sx={{ mt: 5}}>
-      <Box sx={{ mb: 3, width: '100%'}}>
+    <Container maxWidth="xl" sx={{ mt: 5 }}>
+      <Box sx={{ mb: 3, width: '100%' }}>
+        {/* Filters */}
         <FormControl sx={{ m: 1, width: 200 }}>
-          <InputLabel>Store</InputLabel>
+          <InputLabel>Entity</InputLabel>
           <Select
             multiple
-            name="stores"
-            value={filters.stores}
+            name="categories"
+            value={filters.categories}
             onChange={handleFilterChange}
-            input={<OutlinedInput label="Store" />}
+            input={<OutlinedInput label="Entity" />}
             renderValue={(selected) => selected.join(', ')}
           >
-            {uniqueStores.map((store) => (
-              <MenuItem key={store} value={store}>
-                <Checkbox checked={filters.stores.indexOf(store) > -1} />
-                <ListItemText primary={store} />
+            {uniqueCategories.map((cat) => (
+              <MenuItem key={cat} value={cat}>
+                <Checkbox checked={filters.categories.indexOf(cat) > -1} />
+                <ListItemText primary={cat} />
               </MenuItem>
             ))}
           </Select>
         </FormControl>
+
+        <FormControl sx={{ m: 1, width: 200 }}>
+          <InputLabel>Type</InputLabel>
+          <Select
+            multiple
+            name="invoiceTypes"
+            value={filters.invoiceTypes}
+            onChange={handleFilterChange}
+            input={<OutlinedInput label="Type" />}
+            renderValue={(selected) => selected.join(', ')}
+          >
+            {uniqueInvoiceTypes.map((type) => (
+              <MenuItem key={type} value={type}>
+                <Checkbox checked={filters.invoiceTypes.indexOf(type) > -1} />
+                <ListItemText primary={type} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <FormControl sx={{ m: 1, width: 200 }}>
           <InputLabel>Year</InputLabel>
           <Select
@@ -298,46 +313,28 @@ const Treasury = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl sx={{ m: 1, width: 200 }}>
-          <InputLabel>Invoice Type</InputLabel>
-          <Select
-            multiple
-            name="invoiceTypes"
-            value={filters.invoiceTypes}
-            onChange={handleFilterChange}
-            input={<OutlinedInput label="Invoice Type" />}
-            renderValue={(selected) => selected.join(', ')}
-          >
-            {uniqueInvoiceTypes.map((invoiceType) => (
-              <MenuItem key={invoiceType} value={invoiceType}>
-                <Checkbox checked={filters.invoiceTypes.indexOf(invoiceType) > -1} />
-                <ListItemText primary={invoiceType} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl sx={{ m: 1, width: 200 }}>
-          <InputLabel>Category</InputLabel>
-          <Select
-            multiple
-            name="categories"
-            value={filters.categories}
-            onChange={handleFilterChange}
-            input={<OutlinedInput label="Category" />}
-            renderValue={(selected) => selected.join(', ')}
-          >
-            {uniqueCategories.map((category) => (
-              <MenuItem key={category} value={category}>
-                <Checkbox checked={filters.categories.indexOf(category) > -1} />
-                <ListItemText primary={category} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button variant="contained" color="primary" onClick={applyFilters} sx={{ m: 1 }}>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleGenerateData}
+          disabled={isGenerating}
+          sx={{ m: 1 }}
+        >
           Apply Filters
         </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleGenerateData}
+          disabled={isGenerating}
+          sx={{ m: 1 }}
+        >
+          {isGenerating ? 'Generating...' : 'Populate Demo Data'}
+        </Button>
       </Box>
+
+      {isGenerating && <Typography variant="caption" sx={{ display: 'block', mb: 1, textAlign: 'center' }}>{generationMessage}</Typography>}
 
       <Box sx={{ height: 600, width: '100%' }}>
         <DataGrid
@@ -349,7 +346,8 @@ const Treasury = () => {
           disableSelectionOnClick
         />
       </Box>
-    </Container>
+      <TreasuryTotals rows={filteredRows} columns={columns} />
+    </Container >
   );
 };
 

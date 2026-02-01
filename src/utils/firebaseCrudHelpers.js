@@ -2,9 +2,10 @@
 import api from "./apiClient";
 
 // GET /api/subcollections/:subcollectionName
-export const fetchDocuments = async (subcollectionName) => {
+// GET /api/subcollections/:subcollectionName
+export const fetchDocuments = async (subcollectionName, params = {}) => {
   try {
-    const { data } = await api.get(`/subcollections/${subcollectionName}`);
+    const { data } = await api.get(`/subcollections/${subcollectionName}`, { params });
     return data;
   } catch (error) {
     console.error(`Error fetching documents from ${subcollectionName}:`, error);
@@ -114,7 +115,7 @@ export const fetchDocumentById = async (subcollectionName, documentId) => {
 export const helpersWrapper = (collectionName) => {
   const tableName = collectionName.replaceAll("-", "_");
 
-  const fetchItems = () => fetchDocuments(tableName);
+  const fetchItems = (params) => fetchDocuments(tableName, params);
   const addItem = (item) => createDocument(tableName, item);
   const updateItem = (id, item) => updateDocument(tableName, id, item);
   const deleteItem = (id) => deleteDocument(tableName, id);
