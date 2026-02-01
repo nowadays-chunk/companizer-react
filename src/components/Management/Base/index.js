@@ -106,30 +106,84 @@ export default function BaseTableComponent({
     setRefreshedFieldsConfig(fieldConfig);
   }, [fieldConfig]);
 
-  // Fetch items AND validation rules
+  const [hasMore, setHasMore] = useState(true);
+  const [lastDoc, setLastDoc] = useState(null); // specific for cursor-based pagination if needed, but we'll try offset/limit first or just appending
+
+  // Initial Load & Rules
   useEffect(() => {
-    const fetchData = async () => {
+    const initData = async () => {
       setLoading(true);
       try {
-        const [data, rules] = await Promise.all([
-          fetchItems(),
-          helpersWrapper('entity_workflow_rules').fetchItems()
-        ]);
-        setItems(data);
-
+        // Fetch rules
+        const rules = await helpersWrapper('entity_workflow_rules').fetchItems();
         if (rules) {
           const relevantRules = rules.filter(r => r.entity_type === entityName && r.is_active);
           setValidationRules(relevantRules);
         }
+
+        // Fetch Initial Data
+        const rawData = await fetchItems({ limit: rowsPerPage, offset: 0 });
+
+        let data = [];
+        if (Array.isArray(rawData)) {
+          data = rawData;
+        } else if (rawData && Array.isArray(rawData.data)) {
+          data = rawData.data;
+        } else if (rawData && Array.isArray(rawData.items)) {
+          data = rawData.items;
+        }
+
+        setItems(data);
+        if (data.length < rowsPerPage) setHasMore(false);
+        else setHasMore(true);
+
       } catch (e) {
-        console.error("Error fetching data or rules", e);
+        console.error("Error fetching initial data", e);
       }
       setLoading(false);
     };
-
-    fetchData();
+    initData();
     setSelected([]);
-  }, [fetchItems, entityName]);
+  }, [fetchItems, entityName, rowsPerPage]);
+
+  // Handle Page Change (Load More)
+  useEffect(() => {
+    if (page === 0) return; // Managed by init usually, or handled here? 
+    // If we have enough items for this page, don't fetch.
+    const neededIndex = (page + 1) * rowsPerPage;
+    if (items.length >= neededIndex || !hasMore) return;
+
+    const loadMore = async () => {
+      setLoading(true);
+      try {
+        const offset = items.length;
+        const rawData = await fetchItems({ limit: rowsPerPage, offset: offset });
+        let newData = [];
+
+        if (Array.isArray(rawData)) {
+          newData = rawData;
+        } else if (rawData && Array.isArray(rawData.data)) {
+          newData = rawData.data;
+        } else if (rawData && Array.isArray(rawData.items)) {
+          newData = rawData.items;
+        }
+
+        if (newData.length === 0) {
+          setHasMore(false);
+        } else {
+          setItems(prev => {
+            // Dedup just in case
+            const ids = new Set(prev.map(i => i.id));
+            const filtered = newData.filter(i => !ids.has(i.id));
+            return [...prev, ...filtered];
+          });
+          if (newData.length < rowsPerPage) setHasMore(false);
+        }
+      } catch (e) { console.error("Load more error", e); }
+      setLoading(false);
+    };
+    loadMore();
+  }, [page, rowsPerPage, hasMore, fetchItems, items.length]);
 
   useEffect(() => {
     let filteredData = items;
@@ -364,6 +418,7 @@ export default function BaseTableComponent({
             validationRules={validationRules}
             onViewItem={handleViewItem}
             onEditItem={handleEditItem}
+            hasMore={hasMore}
           />
         </Paper>
         <FormControlLabel

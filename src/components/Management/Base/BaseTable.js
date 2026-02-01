@@ -51,6 +51,7 @@ function BaseTable({
   validationRules = [], // Receive rules
   onViewItem, // New Prop
   onEditItem, // New Prop
+  hasMore = false, // Added prop for pagination
 }) {
 
   const validateRow = (row) => {
@@ -256,7 +257,8 @@ function BaseTable({
       <TablePagination
         rowsPerPageOptions={[15, 25, 50]}
         component="div"
-        count={items.length}
+        // If we have more data, pretend we have at least one more page
+        count={hasMore ? items.length + 1 : items.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

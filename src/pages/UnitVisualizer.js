@@ -345,11 +345,41 @@ const Visualizer = (props) => {
             const workflowConfig = workflowConfigModule.default || workflowConfigModule;
 
             if (workflowConfig) {
-              setLogicConfig(prev => ({
-                ...(prev || {}),
-                stepsConfig: workflowConfig.stepsConfig || prev?.stepsConfig,
-                actionsConfig: workflowConfig.actionsConfig || prev?.actionsConfig
-              }));
+              setLogicConfig(prev => {
+                const merged = {
+                  ...(prev || {}),
+                  stepsConfig: workflowConfig.stepsConfig || prev?.stepsConfig,
+                  actionsConfig: workflowConfig.actionsConfig || prev?.actionsConfig
+                };
+
+                // Inject generate_pdf action globally if missing
+                if (merged.actionsConfig && !merged.actionsConfig.generate_pdf) {
+                  merged.actionsConfig = {
+                    ...merged.actionsConfig,
+                    generate_pdf: {
+                      label: 'Generate PDF',
+                      type: 'secondary',
+                      icon: 'PictureAsPdf',
+                      actionType: 'pdf'
+                    }
+                  };
+                }
+
+                // Add generate_pdf to all steps if missing
+                if (merged.stepsConfig?.steps) {
+                  merged.stepsConfig = {
+                    ...merged.stepsConfig,
+                    steps: merged.stepsConfig.steps.map(step => ({
+                      ...step,
+                      actions: step.actions?.includes('generate_pdf')
+                        ? step.actions
+                        : [...(step.actions || []), 'generate_pdf']
+                    }))
+                  };
+                }
+
+                return merged;
+              });
             }
           } catch (e) {
             // Config file may not exist, ignore
