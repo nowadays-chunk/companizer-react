@@ -52,6 +52,7 @@ import CommentsSection from '../components/CommentsSection';
 import ActionTimeline from '../components/ActionTimeline';
 import { collectionName as logsCollectionName } from '../components/Management/manager_action_logs';
 import { useTranslation } from '../contexts/TranslationProvider';
+import { useAuthorization } from '../hooks/useAuthorization';
 
 // Using inline SX for "Fancy" specific overrides that go beyond the theme
 
@@ -182,6 +183,7 @@ const Visualizer = (props) => {
   const params = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { currentUser, getAuthorizedActions } = useAuthorization();
 
   const main = props.main || params.main || params.module;
   const sub = props.sub || params.sub || params.subModule;
@@ -548,6 +550,20 @@ const Visualizer = (props) => {
                     {getStepActions().map(actionName => {
                       const def = logicConfig.actionsConfig[actionName];
                       if (!def) return null;
+
+                      // AUTHORIZATION CHECK: Filter actions by user permissions
+                      const authorizedActions = getAuthorizedActions(
+                        logicConfig.actionsConfig,
+                        collectionName,
+                        idValue,
+                        itemData?.processing_step
+                      );
+
+                      // Skip if user is not authorized for this action
+                      if (!authorizedActions[actionName]) {
+                        return null;
+                      }
+
                       const Icon = ICON_MAP[def.icon] || CheckCircle;
                       return (
                         <ActionButton
