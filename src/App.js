@@ -29,6 +29,9 @@ import PersonalizedDashboard from './pages/PersonalizedDashboard';
 import TaskManager from './pages/TaskManager';
 import AdminExport from './pages/AdminExport';
 import BusinessRulesManager from './pages/BusinessRulesManager';
+import InvoiceCaptureHub from './pages/Analysis/FinancialManagement/AccountsPayable/InvoiceCaptureHub';
+import InvoiceMatchingWorkspace from './pages/Analysis/FinancialManagement/AccountsPayable/InvoiceMatchingWorkspace';
+import InvoiceApprovalCenter from './pages/Analysis/FinancialManagement/AccountsPayable/InvoiceApprovalCenter';
 import MarkdownViewer from './components/MarkdownViewer';
 
 // If you enable Stripe again later, restore this:
@@ -280,6 +283,42 @@ const App = () => {
                 <ProtectedRoute user={user}>
                   <Dashboard colorMode={colorMode}>
                     <AdminExport />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Vendor Invoice Capture Hub */}
+            <Route
+              path="/apps/vendor-invoices/capture"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <InvoiceCaptureHub />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Vendor Invoice Match Workspace */}
+            <Route
+              path="/apps/vendor-invoices/match/:id"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <InvoiceMatchingWorkspace />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Vendor Invoice Approval Center */}
+            <Route
+              path="/apps/vendor-invoices/approvals"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <InvoiceApprovalCenter />
                   </Dashboard>
                 </ProtectedRoute>
               }

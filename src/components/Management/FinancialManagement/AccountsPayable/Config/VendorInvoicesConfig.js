@@ -5,52 +5,87 @@ export const stepsConfig = {
         {
             name: 'draft',
             label: 'Draft',
-            actions: ['submit_for_review', 'save_draft', 'generate_pdf'],
+            actions: ['submit_for_review', 'save_draft', 'delete'],
+        },
+        {
+            name: 'ocr_processing',
+            label: 'Processing',
+            actions: ['ocr_complete', 'ocr_failed'],
         },
         {
             name: 'under_review',
-            label: 'Under Review',
-            actions: ['approve', 'reject', 'request_changes', 'generate_pdf'],
+            label: 'Manager Review',
+            actions: ['approve_manager', 'reject', 'request_changes', 'delegate'],
+        },
+        {
+            name: 'finance_review',
+            label: 'Finance Review',
+            actions: ['approve_finance', 'reject_finance', 'hold_variance'],
         },
         {
             name: 'approved',
             label: 'Approved',
-            actions: ['finalize', 'archive', 'generate_pdf'],
+            actions: ['mark_ready_for_payment', 'dispute'],
+        },
+        {
+            name: 'ready_for_payment',
+            label: 'Ready for Pay',
+            actions: ['process_payment', 'hold_payment'],
+        },
+        {
+            name: 'paid',
+            label: 'Paid',
+            actions: ['archive', 'issue_referral'],
+        },
+        {
+            name: 'disputed',
+            label: 'Disputed',
+            actions: ['resolve_dispute', 'archive'],
         },
         {
             name: 'rejected',
             label: 'Rejected',
-            actions: ['revise', 'archive', 'generate_pdf'],
+            actions: ['revise', 'archive'],
         },
         {
             name: 'archived',
             label: 'Archived',
-            actions: ['restore', 'generate_pdf'],
+            actions: ['restore'],
         },
     ],
 };
 
 export const actionsConfig = {
+    // --- Draft Actions ---
     submit_for_review: {
-        label: 'Submit for Review',
+        label: 'Submit',
         type: 'primary',
         nextStep: 'under_review',
-        icon: 'ThumbUp',
-        authorized_role: 'user', // Minimum role required
-    },
-    save_draft: {
-        label: 'Save Draft',
-        type: 'secondary',
-        nextStep: 'draft',
-        icon: 'Edit',
+        icon: 'Send',
         authorized_role: 'user',
     },
-    approve: {
-        label: 'Approve',
+    save_draft: {
+        label: 'Save',
+        type: 'secondary',
+        nextStep: 'draft',
+        icon: 'Save',
+        authorized_role: 'user',
+    },
+    delete: {
+        label: 'Delete',
+        type: 'error',
+        nextStep: 'deleted',
+        icon: 'Delete',
+        authorized_role: 'user',
+    },
+
+    // --- Review Actions ---
+    approve_manager: {
+        label: 'Approve (Manager)',
         type: 'success',
-        nextStep: 'approved',
+        nextStep: 'finance_review', // Go to Finance next
         icon: 'CheckCircle',
-        authorized_role: 'manager', // Only managers and above
+        authorized_role: 'manager',
     },
     reject: {
         label: 'Reject',
@@ -60,33 +95,62 @@ export const actionsConfig = {
         authorized_role: 'manager',
     },
     request_changes: {
-        label: 'Request Changes',
-        type: 'secondary',
+        label: 'Request Info',
+        type: 'warning',
         nextStep: 'draft',
-        icon: 'Email',
+        icon: 'Help',
         authorized_role: 'manager',
     },
-    finalize: {
-        label: 'Finalize',
+
+    // --- Finance Actions ---
+    approve_finance: {
+        label: 'Approve (Finance)',
         type: 'success',
-        nextStep: 'finalized',
-        icon: 'Paid',
-        authorized_role: 'accountant', // Accountant-specific action
+        nextStep: 'approved',
+        icon: 'VerifiedUser',
+        authorized_role: 'finance_controller',
     },
-    archive: {
-        label: 'Archive',
-        type: 'secondary',
-        nextStep: 'archived',
-        icon: 'Archive',
-        authorized_role: 'manager',
+    reject_finance: {
+        label: 'Reject (Finance)',
+        type: 'error',
+        nextStep: 'rejected',
+        icon: 'Block',
+        authorized_role: 'finance_controller',
     },
-    restore: {
-        label: 'Restore',
-        type: 'secondary',
-        nextStep: 'draft',
-        icon: 'Restore',
-        authorized_role: 'admin', // Only admins can restore
+    hold_variance: {
+        label: 'Hold (Variance)',
+        type: 'warning',
+        nextStep: 'disputed',
+        icon: 'Pause',
+        authorized_role: 'finance_controller',
     },
+
+    // --- Post-Approval Actions ---
+    mark_ready_for_payment: {
+        label: 'Release for Pay',
+        type: 'primary',
+        nextStep: 'ready_for_payment',
+        icon: 'Payment',
+        authorized_role: 'accountant',
+    },
+    dispute: {
+        label: 'Raise Dispute',
+        type: 'error',
+        nextStep: 'disputed',
+        icon: 'ReportProblem',
+        authorized_role: 'user',
+    },
+
+    // --- Payment Actions ---
+    process_payment: {
+        label: 'Mark Paid',
+        type: 'success',
+        nextStep: 'paid',
+        icon: 'AttachMoney',
+        authorized_role: 'treasurer',
+    },
+
+    // --- Other ---
     revise: {
         label: 'Revise',
         type: 'primary',
@@ -94,11 +158,18 @@ export const actionsConfig = {
         icon: 'Edit',
         authorized_role: 'user',
     },
-    generate_pdf: {
-        label: 'Generate PDF',
+    restore: {
+        label: 'Restore',
         type: 'secondary',
-        icon: 'PictureAsPdf',
-        actionType: 'pdf',
-        authorized_role: 'viewer', // Anyone can generate PDF
+        nextStep: 'draft',
+        icon: 'Restore',
+        authorized_role: 'admin',
+    },
+    resolve_dispute: {
+        label: 'Resolve',
+        type: 'success',
+        nextStep: 'under_review', // Re-evaluate
+        icon: 'Handshake',
+        authorized_role: 'manager',
     },
 };
