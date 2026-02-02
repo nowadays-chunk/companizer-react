@@ -3,6 +3,7 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 import GenericAnalyticsDashboard from '../../../../components/Analytics/GenericAnalyticsDashboard';
 import { fieldsConfig, collectionName } from '../../../../components/Management/FinancialManagement/AccountsPayable/VendorInvoices';
 import { helpersWrapper } from '../../../../utils/firebaseCrudHelpers';
+import { modules } from '../../../../components/Management/FinancialManagement/AccountsPayable/Config/VendorInvoicesConfig';
 
 const VendorInvoicesAnalytics = () => {
   const [data, setData] = useState([]);
@@ -48,6 +49,7 @@ const VendorInvoicesAnalytics = () => {
         data={data} 
         fieldsConfig={fieldsConfig} 
         collectionName={collectionName} 
+        modules={modules}
     />
   );
 };

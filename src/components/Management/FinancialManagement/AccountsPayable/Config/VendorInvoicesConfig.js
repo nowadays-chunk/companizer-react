@@ -173,3 +173,27 @@ export const actionsConfig = {
         authorized_role: 'manager',
     },
 };
+
+export const modules = [
+    {
+        name: 'Invoice Capture Hub',
+        type: 'General',
+        path: '/apps/vendor-invoices/capture',
+        icon: 'CloudUpload',
+        description: 'Upload and process new invoices using AI OCR.',
+    },
+    {
+        name: 'Approval Center',
+        type: 'General',
+        path: '/apps/vendor-invoices/approvals',
+        icon: 'FactCheck',
+        description: 'Manage and approve pending invoices.',
+    },
+    {
+        name: 'Match PO',
+        type: 'Specific',
+        path: '/apps/vendor-invoices/match/:id',
+        icon: 'CompareArrows',
+        description: 'Match invoice against Purchase Orders.',
+    },
+];

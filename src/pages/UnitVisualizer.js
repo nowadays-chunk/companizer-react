@@ -379,7 +379,8 @@ const Visualizer = (props) => {
                 const merged = {
                   ...(prev || {}),
                   stepsConfig: workflowConfig.stepsConfig || prev?.stepsConfig,
-                  actionsConfig: workflowConfig.actionsConfig || prev?.actionsConfig
+                  actionsConfig: workflowConfig.actionsConfig || prev?.actionsConfig,
+                  modules: workflowConfig.modules || prev?.modules
                 };
 
                 // Inject generate_pdf action globally if missing
@@ -602,6 +603,40 @@ const Visualizer = (props) => {
                           color={def.type === 'error' ? 'error' : def.type === 'success' ? 'success' : 'primary'}
                         />
                       );
+                    })}
+                  </Box>
+                </Box>
+              )}
+
+              {/* 1.5. SPECIFIC MODULE ACTIONS */}
+              {logicConfig?.modules?.some(m => m.type === 'Specific') && (
+                <Box mb={2}>
+                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.8rem', mb: 2, color: 'text.secondary' }}>
+                    Specific Actions
+                  </Typography>
+                  <Box display="flex" flexWrap="wrap" gap={2}>
+                    {logicConfig.modules.filter(m => m.type === 'Specific').map((mod, idx) => {
+                      const Icon = ICON_MAP[mod.icon] || CheckCircle;
+                      return (
+                        <Button
+                          key={idx}
+                          variant="outlined"
+                          startIcon={<Icon />}
+                          onClick={() => {
+                            const path = mod.path.replace(':id', idValue);
+                            navigate(path);
+                          }}
+                          sx={{
+                            borderWidth: '1px',
+                            borderColor: 'secondary.main',
+                            color: 'secondary.main',
+                            px: 2, py: 1.5,
+                            '&:hover': { bgcolor: 'secondary.light', borderColor: 'secondary.main', color: 'secondary.contrastText' }
+                          }}
+                        >
+                          {t(mod.name)}
+                        </Button>
+                      )
                     })}
                   </Box>
                 </Box>

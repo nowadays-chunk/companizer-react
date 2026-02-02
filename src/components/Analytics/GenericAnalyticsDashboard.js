@@ -12,7 +12,8 @@ import {
     ListItem,
     ListItemText,
     ListItemIcon,
-    Avatar
+    Avatar,
+    Button
 } from '@mui/material';
 import {
     BarChart,
@@ -41,9 +42,13 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'
 const formatCurrency = (value) =>
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
 
-const GenericAnalyticsDashboard = ({ data = [], fieldsConfig, collectionName }) => {
+const GenericAnalyticsDashboard = ({ data = [], fieldsConfig, collectionName, modules = [] }) => {
 
-    // 1. Calculate KPIs (Sum, Avg, Min, Max for numeric fields)
+    // ... (existing useMemos)
+
+    // ...
+
+
     const kpis = useMemo(() => {
         if (!data.length) return [];
 
@@ -151,10 +156,29 @@ const GenericAnalyticsDashboard = ({ data = [], fieldsConfig, collectionName }) 
 
     return (
         <Box sx={{ flexGrow: 1, p: 3 }}>
-            <Typography variant="h4" gutterBottom component="div" sx={{ mb: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Avatar sx={{ bgcolor: 'secondary.main' }}><Timeline /></Avatar>
-                Analytics: {collectionName}
-            </Typography>
+            <Box display="flex" alignItems="center" justifyContent="space-between" mb={4}>
+                <Typography variant="h4" component="div" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Avatar sx={{ bgcolor: 'secondary.main' }}><Timeline /></Avatar>
+                    Analytics: {collectionName}
+                </Typography>
+
+                {/* General Modules Actions */}
+                {modules && modules.some(m => m.type === 'General') && (
+                    <Box display="flex" gap={2}>
+                        {modules.filter(m => m.type === 'General').map((mod, idx) => (
+                            <Button
+                                key={idx}
+                                variant="contained"
+                                color="primary"
+                                startIcon={mod.icon && <Timeline />} // Placeholder icon
+                                onClick={() => window.location.hash = `#${mod.path}`}
+                            >
+                                {mod.name}
+                            </Button>
+                        ))}
+                    </Box>
+                )}
+            </Box>
 
             {/* KPI Cards */}
             <Grid container spacing={3} sx={{ mb: 4 }}>
