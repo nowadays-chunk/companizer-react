@@ -525,8 +525,19 @@ const Visualizer = (props) => {
 
   const getStepActions = () => {
     if (!logicConfig?.stepsConfig || !itemData) return [];
-    const currentStep = itemData.processing_step || logicConfig.stepsConfig.initialStep;
-    const stepDef = logicConfig.stepsConfig.steps.find(s => s.name === currentStep);
+
+    let currentStep = itemData.processing_step || logicConfig.stepsConfig.initialStep;
+
+    // Attempt to find step definition
+    let stepDef = logicConfig.stepsConfig.steps.find(s => s.name === currentStep);
+
+    // Fallback: If current step matches nothing (e.g. data corruption or '1'), use initial step
+    if (!stepDef) {
+      console.warn(`Step "${currentStep}" not found in config. Falling back to initial step.`);
+      currentStep = logicConfig.stepsConfig.initialStep;
+      stepDef = logicConfig.stepsConfig.steps.find(s => s.name === currentStep);
+    }
+
     return stepDef?.actions || [];
   };
 

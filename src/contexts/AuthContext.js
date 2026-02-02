@@ -20,18 +20,31 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const loadUser = async () => {
             try {
-                // TODO: Replace with actual authentication logic
-                // For now, loading from localStorage or mock data
-                const mockUser = {
-                    id: 1,
-                    uuid: 'test-user-uuid',
-                    first_name: 'Test',
-                    last_name: 'User',
-                    email: 'test@example.com',
-                    role: 'admin', // super_admin, admin, manager, accountant, hr_manager, sales_manager, auditor, user, viewer
-                    organization_id: 1,
-                    is_active: true
-                };
+                // Attempt to load from localStorage first
+                const storedUser = localStorage.getItem('user');
+                let mockUser;
+
+                if (storedUser) {
+                    try {
+                        mockUser = JSON.parse(storedUser);
+                    } catch (e) {
+                        console.error("Failed to parse stored user", e);
+                    }
+                }
+
+                // Fallback if no stored user
+                if (!mockUser) {
+                    mockUser = {
+                        id: 1,
+                        uuid: 'test-user-uuid',
+                        first_name: 'Test',
+                        last_name: 'User',
+                        email: 'test@example.com',
+                        role: 'admin', // super_admin, admin, manager, accountant, hr_manager, sales_manager, auditor, user, viewer
+                        organization_id: 1,
+                        is_active: true
+                    };
+                }
 
                 setCurrentUser(mockUser);
 

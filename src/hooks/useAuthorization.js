@@ -22,8 +22,8 @@ export const useAuthorization = () => {
     const hasRole = (requiredRole) => {
         if (!currentUser || !requiredRole) return false;
 
-        const userRoleIndex = ROLE_HIERARCHY.indexOf(currentUser.role);
-        const requiredRoleIndex = ROLE_HIERARCHY.indexOf(requiredRole);
+        const userRoleIndex = ROLE_HIERARCHY.indexOf(currentUser.role?.toLowerCase());
+        const requiredRoleIndex = ROLE_HIERARCHY.indexOf(requiredRole?.toLowerCase());
 
         return userRoleIndex >= requiredRoleIndex;
     };

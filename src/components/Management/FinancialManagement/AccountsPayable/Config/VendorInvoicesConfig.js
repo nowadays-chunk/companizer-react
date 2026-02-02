@@ -108,21 +108,21 @@ export const actionsConfig = {
         type: 'success',
         nextStep: 'approved',
         icon: 'VerifiedUser',
-        authorized_role: 'finance_controller',
+        authorized_role: 'accountant',
     },
     reject_finance: {
         label: 'Reject (Finance)',
         type: 'error',
         nextStep: 'rejected',
         icon: 'Block',
-        authorized_role: 'finance_controller',
+        authorized_role: 'accountant',
     },
     hold_variance: {
         label: 'Hold (Variance)',
         type: 'warning',
         nextStep: 'disputed',
         icon: 'Pause',
-        authorized_role: 'finance_controller',
+        authorized_role: 'accountant',
     },
 
     // --- Post-Approval Actions ---
@@ -147,7 +147,7 @@ export const actionsConfig = {
         type: 'success',
         nextStep: 'paid',
         icon: 'AttachMoney',
-        authorized_role: 'treasurer',
+        authorized_role: 'accountant',
     },
 
     // --- Other ---
