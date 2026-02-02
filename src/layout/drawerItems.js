@@ -12,10 +12,24 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 
 export const drawerItems = [
     {
-        key: "dashboard",
+        key: "dashboard-section",
         label: "Dashboard",
         icon: <DashboardIcon />,
-        description: "Personalized dashboard with customizable widgets."
+        description: "Access your personalized dashboard.",
+        children: [
+            {
+                key: "dashboard-overview",
+                label: "Overview",
+                description: "General view of the dashboard.",
+                children: [
+                    {
+                        key: "dashboard",
+                        label: "Personalized Dashboard",
+                        description: "Your customizable dashboard with widgets."
+                    }
+                ]
+            }
+        ]
     },
     {
         key: "financial-management",
@@ -1067,19 +1081,26 @@ export const drawerItems = [
         description: "Administrative tools and system configuration.",
         children: [
             {
-                key: "console",
-                label: "Console",
-                description: "Manage workflow rules and entity configurations."
-            },
-            {
-                key: "export",
-                label: "Data Export",
-                description: "Export entity data in multiple formats (CSV, Excel, JSON, SQL)."
-            },
-            {
-                key: "business-rules",
-                label: "Business Rules",
-                description: "Configure conditional logic, calculations, and validations."
+                key: "admin-tools",
+                label: "Tools",
+                description: "Administrative tools.",
+                children: [
+                    {
+                        key: "console",
+                        label: "Console",
+                        description: "Manage workflow rules and entity configurations."
+                    },
+                    {
+                        key: "export",
+                        label: "Data Export",
+                        description: "Export entity data in multiple formats (CSV, Excel, JSON, SQL)."
+                    },
+                    {
+                        key: "business-rules",
+                        label: "Business Rules",
+                        description: "Configure conditional logic, calculations, and validations."
+                    }
+                ]
             }
         ]
     }

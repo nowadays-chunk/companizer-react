@@ -1,4 +1,8 @@
 export const keyToLinkMap = {
+    "dashboard": "/summary",
+    "console": "/admin/console",
+    "export": "/admin/export",
+    "business-rules": "/admin/business-rules",
     "financial-management": "/financial-management",
     "accounts-payable": "/financial-management/accounts-payable",
     "vendor-invoices": "/financial-management/accounts-payable/vendor-invoices",
