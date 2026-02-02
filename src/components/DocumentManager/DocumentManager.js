@@ -62,7 +62,7 @@ const DocumentManager = ({ entityType, entityId }) => {
 
     const handleDownload = async (document) => {
         try {
-            const response = await api.get(`/documents/${document.id}/download`, {
+            const response = await api.get(`/documents/download/${document.path}`, {
                 responseType: 'blob'
             });
 
@@ -142,13 +142,13 @@ const DocumentManager = ({ entityType, entityId }) => {
             field: 'file_size',
             headerName: 'Size',
             width: 100,
-            valueFormatter: (params) => formatFileSize(params.value)
+            valueFormatter: (value) => formatFileSize(value)
         },
         {
             field: 'created_at',
             headerName: 'Uploaded',
             width: 160,
-            valueFormatter: (params) => params.value ? format(new Date(params.value), 'MMM d, yyyy h:mm a') : ''
+            valueFormatter: (value) => value ? format(new Date(value), 'MMM d, yyyy h:mm a') : ''
         },
         {
             field: 'uploaded_by',
