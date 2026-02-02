@@ -1075,6 +1075,11 @@ export const drawerItems = [
                 key: "export",
                 label: "Data Export",
                 description: "Export entity data in multiple formats (CSV, Excel, JSON, SQL)."
+            },
+            {
+                key: "business-rules",
+                label: "Business Rules",
+                description: "Configure conditional logic, calculations, and validations."
             }
         ]
     }

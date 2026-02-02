@@ -27,11 +27,8 @@ import {
     Code,
     Storage
 } from '@mui/icons-material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import api from '../utils/apiClient';
-import configRegistry from '../components/Management/configRegistry';
+import { configRegistry } from '../components/Management/configRegistry';
 
 const EXPORT_FORMATS = [
     { value: 'csv', label: 'CSV', icon: <TableChart />, description: 'Comma-separated values' },
@@ -45,8 +42,8 @@ const AdminExport = () => {
     const [format, setFormat] = useState('csv');
     const [columns, setColumns] = useState([]);
     const [selectedColumns, setSelectedColumns] = useState([]);
-    const [dateFrom, setDateFrom] = useState(null);
-    const [dateTo, setDateTo] = useState(null);
+    const [dateFrom, setDateFrom] = useState('');
+    const [dateTo, setDateTo] = useState('');
     const [loading, setLoading] = useState(false);
     const [exporting, setExporting] = useState(false);
     const [error, setError] = useState(null);
@@ -166,257 +163,259 @@ const AdminExport = () => {
     };
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Container maxWidth="lg" sx={{ py: 4 }}>
-                <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, mb: 4 }}>
-                    Admin Export System
-                </Typography>
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+            <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, mb: 4 }}>
+                Admin Export System
+            </Typography>
 
-                <Grid container spacing={3}>
-                    {/* Configuration Panel */}
-                    <Grid item xs={12} md={8}>
-                        <Card>
-                            <CardContent>
-                                <Typography variant="h6" gutterBottom>
-                                    Export Configuration
-                                </Typography>
+            <Grid container spacing={3}>
+                {/* Configuration Panel */}
+                <Grid item xs={12} md={8}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6" gutterBottom>
+                                Export Configuration
+                            </Typography>
 
-                                {error && (
-                                    <Alert severity="error" sx={{ mb: 2 }}>
-                                        {error}
-                                    </Alert>
-                                )}
+                            {error && (
+                                <Alert severity="error" sx={{ mb: 2 }}>
+                                    {error}
+                                </Alert>
+                            )}
 
-                                {success && (
-                                    <Alert severity="success" sx={{ mb: 2 }}>
-                                        Export downloaded successfully!
-                                    </Alert>
-                                )}
+                            {success && (
+                                <Alert severity="success" sx={{ mb: 2 }}>
+                                    Export downloaded successfully!
+                                </Alert>
+                            )}
 
-                                {/* Entity Selection */}
-                                <FormControl fullWidth sx={{ mb: 3 }}>
-                                    <InputLabel>Select Entity</InputLabel>
-                                    <Select
-                                        value={entityType}
-                                        onChange={(e) => setEntityType(e.target.value)}
-                                        label="Select Entity"
-                                    >
-                                        {availableEntities.map(entity => (
-                                            <MenuItem key={entity} value={entity}>
-                                                {entity.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-
-                                {/* Format Selection */}
-                                <Typography variant="subtitle2" gutterBottom sx={{ mt: 3 }}>
-                                    Export Format
-                                </Typography>
-                                <Grid container spacing={2} sx={{ mb: 3 }}>
-                                    {EXPORT_FORMATS.map(fmt => (
-                                        <Grid item xs={6} sm={3} key={fmt.value}>
-                                            <Paper
-                                                onClick={() => setFormat(fmt.value)}
-                                                sx={{
-                                                    p: 2,
-                                                    cursor: 'pointer',
-                                                    border: 2,
-                                                    borderColor: format === fmt.value ? 'primary.main' : 'transparent',
-                                                    bgcolor: format === fmt.value ? 'action.selected' : 'background.paper',
-                                                    transition: 'all 0.2s',
-                                                    '&:hover': {
-                                                        borderColor: 'primary.light',
-                                                        bgcolor: 'action.hover'
-                                                    },
-                                                    textAlign: 'center'
-                                                }}
-                                            >
-                                                <Box sx={{ mb: 1 }}>{fmt.icon}</Box>
-                                                <Typography variant="subtitle2">{fmt.label}</Typography>
-                                                <Typography variant="caption" color="text.secondary">
-                                                    {fmt.description}
-                                                </Typography>
-                                            </Paper>
-                                        </Grid>
+                            {/* Entity Selection */}
+                            <FormControl fullWidth sx={{ mb: 3 }}>
+                                <InputLabel>Select Entity</InputLabel>
+                                <Select
+                                    value={entityType}
+                                    onChange={(e) => setEntityType(e.target.value)}
+                                    label="Select Entity"
+                                >
+                                    {availableEntities.map(entity => (
+                                        <MenuItem key={entity} value={entity}>
+                                            {entity.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                        </MenuItem>
                                     ))}
-                                </Grid>
+                                </Select>
+                            </FormControl>
 
-                                {/* Date Range */}
-                                <Typography variant="subtitle2" gutterBottom sx={{ mt: 3 }}>
-                                    Date Range (Optional)
-                                </Typography>
-                                <Grid container spacing={2} sx={{ mb: 3 }}>
-                                    <Grid item xs={12} sm={6}>
-                                        <DatePicker
-                                            label="From Date"
-                                            value={dateFrom}
-                                            onChange={setDateFrom}
-                                            renderInput={(params) => <TextField {...params} fullWidth />}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <DatePicker
-                                            label="To Date"
-                                            value={dateTo}
-                                            onChange={setDateTo}
-                                            renderInput={(params) => <TextField {...params} fullWidth />}
-                                        />
-                                    </Grid>
-                                </Grid>
-
-                                {/* Column Selection */}
-                                {entityType && (
-                                    <>
-                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                                            <Typography variant="subtitle2">
-                                                Select Columns ({selectedColumns.length}/{columns.length})
+                            {/* Format Selection */}
+                            <Typography variant="subtitle2" gutterBottom sx={{ mt: 3 }}>
+                                Export Format
+                            </Typography>
+                            <Grid container spacing={2} sx={{ mb: 3 }}>
+                                {EXPORT_FORMATS.map(fmt => (
+                                    <Grid item xs={6} sm={3} key={fmt.value}>
+                                        <Paper
+                                            onClick={() => setFormat(fmt.value)}
+                                            sx={{
+                                                p: 2,
+                                                cursor: 'pointer',
+                                                border: 2,
+                                                borderColor: format === fmt.value ? 'primary.main' : 'transparent',
+                                                bgcolor: format === fmt.value ? 'action.selected' : 'background.paper',
+                                                transition: 'all 0.2s',
+                                                '&:hover': {
+                                                    borderColor: 'primary.light',
+                                                    bgcolor: 'action.hover'
+                                                },
+                                                textAlign: 'center'
+                                            }}
+                                        >
+                                            <Box sx={{ mb: 1 }}>{fmt.icon}</Box>
+                                            <Typography variant="subtitle2">{fmt.label}</Typography>
+                                            <Typography variant="caption" color="text.secondary">
+                                                {fmt.description}
                                             </Typography>
-                                            <Button size="small" onClick={handleSelectAllColumns}>
-                                                {selectedColumns.length === columns.length ? 'Deselect All' : 'Select All'}
-                                            </Button>
+                                        </Paper>
+                                    </Grid>
+                                ))}
+                            </Grid>
+
+                            {/* Date Range */}
+                            <Typography variant="subtitle2" gutterBottom sx={{ mt: 3 }}>
+                                Date Range (Optional)
+                            </Typography>
+                            <Grid container spacing={2} sx={{ mb: 3 }}>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        fullWidth
+                                        type="date"
+                                        label="From Date"
+                                        value={dateFrom || ''}
+                                        onChange={(e) => setDateFrom(e.target.value)}
+                                        InputLabelProps={{ shrink: true }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        fullWidth
+                                        type="date"
+                                        label="To Date"
+                                        value={dateTo || ''}
+                                        onChange={(e) => setDateTo(e.target.value)}
+                                        InputLabelProps={{ shrink: true }}
+                                    />
+                                </Grid>
+                            </Grid>
+
+                            {/* Column Selection */}
+                            {entityType && (
+                                <>
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                                        <Typography variant="subtitle2">
+                                            Select Columns ({selectedColumns.length}/{columns.length})
+                                        </Typography>
+                                        <Button size="small" onClick={handleSelectAllColumns}>
+                                            {selectedColumns.length === columns.length ? 'Deselect All' : 'Select All'}
+                                        </Button>
+                                    </Box>
+
+                                    {loading ? (
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+                                            <CircularProgress />
                                         </Box>
+                                    ) : (
+                                        <Paper variant="outlined" sx={{ p: 2, maxHeight: 300, overflow: 'auto' }}>
+                                            <Grid container spacing={1}>
+                                                {columns.map(column => (
+                                                    <Grid item xs={12} sm={6} key={column}>
+                                                        <Box
+                                                            onClick={() => handleColumnToggle(column)}
+                                                            sx={{
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                p: 1,
+                                                                cursor: 'pointer',
+                                                                borderRadius: 1,
+                                                                '&:hover': {
+                                                                    bgcolor: 'action.hover'
+                                                                }
+                                                            }}
+                                                        >
+                                                            <Checkbox
+                                                                checked={selectedColumns.includes(column)}
+                                                                size="small"
+                                                            />
+                                                            <Typography variant="body2">
+                                                                {column}
+                                                            </Typography>
+                                                        </Box>
+                                                    </Grid>
+                                                ))}
+                                            </Grid>
+                                        </Paper>
+                                    )}
+                                </>
+                            )}
 
-                                        {loading ? (
-                                            <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
-                                                <CircularProgress />
-                                            </Box>
-                                        ) : (
-                                            <Paper variant="outlined" sx={{ p: 2, maxHeight: 300, overflow: 'auto' }}>
-                                                <Grid container spacing={1}>
-                                                    {columns.map(column => (
-                                                        <Grid item xs={12} sm={6} key={column}>
-                                                            <Box
-                                                                onClick={() => handleColumnToggle(column)}
-                                                                sx={{
-                                                                    display: 'flex',
-                                                                    alignItems: 'center',
-                                                                    p: 1,
-                                                                    cursor: 'pointer',
-                                                                    borderRadius: 1,
-                                                                    '&:hover': {
-                                                                        bgcolor: 'action.hover'
-                                                                    }
-                                                                }}
-                                                            >
-                                                                <Checkbox
-                                                                    checked={selectedColumns.includes(column)}
-                                                                    size="small"
-                                                                />
-                                                                <Typography variant="body2">
-                                                                    {column}
-                                                                </Typography>
-                                                            </Box>
-                                                        </Grid>
-                                                    ))}
-                                                </Grid>
-                                            </Paper>
-                                        )}
-                                    </>
-                                )}
+                            {/* Export Button */}
+                            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-end' }}>
+                                <Button
+                                    variant="contained"
+                                    size="large"
+                                    startIcon={exporting ? <CircularProgress size={20} /> : <GetApp />}
+                                    onClick={handleExport}
+                                    disabled={!entityType || selectedColumns.length === 0 || exporting}
+                                >
+                                    {exporting ? 'Exporting...' : 'Export Data'}
+                                </Button>
+                            </Box>
+                        </CardContent>
+                    </Card>
+                </Grid>
 
-                                {/* Export Button */}
-                                <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-end' }}>
-                                    <Button
-                                        variant="contained"
-                                        size="large"
-                                        startIcon={exporting ? <CircularProgress size={20} /> : <GetApp />}
-                                        onClick={handleExport}
-                                        disabled={!entityType || selectedColumns.length === 0 || exporting}
-                                    >
-                                        {exporting ? 'Exporting...' : 'Export Data'}
-                                    </Button>
+                {/* Info Panel */}
+                <Grid item xs={12} md={4}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6" gutterBottom>
+                                Export Summary
+                            </Typography>
+
+                            <Stack spacing={2}>
+                                <Box>
+                                    <Typography variant="caption" color="text.secondary">
+                                        Entity
+                                    </Typography>
+                                    <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                                        {entityType || 'Not selected'}
+                                    </Typography>
                                 </Box>
-                            </CardContent>
-                        </Card>
-                    </Grid>
 
-                    {/* Info Panel */}
-                    <Grid item xs={12} md={4}>
-                        <Card>
-                            <CardContent>
-                                <Typography variant="h6" gutterBottom>
-                                    Export Summary
-                                </Typography>
+                                <Box>
+                                    <Typography variant="caption" color="text.secondary">
+                                        Format
+                                    </Typography>
+                                    <Chip
+                                        label={format.toUpperCase()}
+                                        size="small"
+                                        color="primary"
+                                    />
+                                </Box>
 
-                                <Stack spacing={2}>
+                                <Box>
+                                    <Typography variant="caption" color="text.secondary">
+                                        Columns
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        {selectedColumns.length} selected
+                                    </Typography>
+                                </Box>
+
+                                {rowCount !== null && (
                                     <Box>
                                         <Typography variant="caption" color="text.secondary">
-                                            Entity
+                                            Estimated Rows
                                         </Typography>
                                         <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                                            {entityType || 'Not selected'}
+                                            {rowCount.toLocaleString()}
                                         </Typography>
                                     </Box>
+                                )}
 
+                                {dateFrom && (
                                     <Box>
                                         <Typography variant="caption" color="text.secondary">
-                                            Format
+                                            Date Filter
                                         </Typography>
-                                        <Chip
-                                            label={format.toUpperCase()}
-                                            size="small"
-                                            color="primary"
-                                        />
-                                    </Box>
-
-                                    <Box>
-                                        <Typography variant="caption" color="text.secondary">
-                                            Columns
-                                        </Typography>
-                                        <Typography variant="body1">
-                                            {selectedColumns.length} selected
+                                        <Typography variant="body2">
+                                            {dateFrom} - {dateTo || 'Now'}
                                         </Typography>
                                     </Box>
+                                )}
+                            </Stack>
 
-                                    {rowCount !== null && (
-                                        <Box>
-                                            <Typography variant="caption" color="text.secondary">
-                                                Estimated Rows
-                                            </Typography>
-                                            <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                                                {rowCount.toLocaleString()}
-                                            </Typography>
-                                        </Box>
-                                    )}
-
-                                    {dateFrom && (
-                                        <Box>
-                                            <Typography variant="caption" color="text.secondary">
-                                                Date Filter
-                                            </Typography>
-                                            <Typography variant="body2">
-                                                {dateFrom?.toLocaleDateString()} - {dateTo?.toLocaleDateString() || 'Now'}
-                                            </Typography>
-                                        </Box>
-                                    )}
-                                </Stack>
-
-                                <Alert severity="info" sx={{ mt: 3 }}>
-                                    <Typography variant="caption">
-                                        The export will download automatically once generated.
-                                    </Typography>
-                                </Alert>
-                            </CardContent>
-                        </Card>
-
-                        <Card sx={{ mt: 2 }}>
-                            <CardContent>
-                                <Typography variant="subtitle2" gutterBottom>
-                                    Format Details
+                            <Alert severity="info" sx={{ mt: 3 }}>
+                                <Typography variant="caption">
+                                    The export will download automatically once generated.
                                 </Typography>
-                                <Typography variant="caption" color="text.secondary">
-                                    {format === 'csv' && 'UTF-8 encoded, comma-separated file suitable for Excel and other spreadsheet applications.'}
-                                    {format === 'excel' && 'Native Excel format (.xlsx) with formatted headers and auto-column width.'}
-                                    {format === 'json' && 'Pretty-printed JSON array of objects, preserving data types and nested structures.'}
-                                    {format === 'sql' && 'SQL INSERT statements with CREATE TABLE definition, ready for import.'}
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                            </Alert>
+                        </CardContent>
+                    </Card>
+
+                    <Card sx={{ mt: 2 }}>
+                        <CardContent>
+                            <Typography variant="subtitle2" gutterBottom>
+                                Format Details
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">
+                                {format === 'csv' && 'UTF-8 encoded, comma-separated file suitable for Excel and other spreadsheet applications.'}
+                                {format === 'excel' && 'Native Excel format (.xlsx) with formatted headers and auto-column width.'}
+                                {format === 'json' && 'Pretty-printed JSON array of objects, preserving data types and nested structures.'}
+                                {format === 'sql' && 'SQL INSERT statements with CREATE TABLE definition, ready for import.'}
+                            </Typography>
+                        </CardContent>
+                    </Card>
                 </Grid>
-            </Container>
-        </LocalizationProvider>
+            </Grid>
+        </Container>
     );
 };
 

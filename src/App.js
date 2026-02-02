@@ -28,6 +28,7 @@ import AdminConsole from './pages/AdminConsole';
 import PersonalizedDashboard from './pages/PersonalizedDashboard';
 import TaskManager from './pages/TaskManager';
 import AdminExport from './pages/AdminExport';
+import BusinessRulesManager from './pages/BusinessRulesManager';
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -278,6 +279,18 @@ const App = () => {
                 <ProtectedRoute user={user}>
                   <Dashboard colorMode={colorMode}>
                     <AdminExport />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Business Rules Manager Route */}
+            <Route
+              path="/admin/business-rules"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <BusinessRulesManager />
                   </Dashboard>
                 </ProtectedRoute>
               }
