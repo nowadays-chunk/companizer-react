@@ -29,6 +29,7 @@ import PersonalizedDashboard from './pages/PersonalizedDashboard';
 import TaskManager from './pages/TaskManager';
 import AdminExport from './pages/AdminExport';
 import BusinessRulesManager from './pages/BusinessRulesManager';
+import MarkdownViewer from './components/MarkdownViewer';
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -351,6 +352,16 @@ const App = () => {
               }
             />
             {/* Blog and documentation */}
+            <Route
+              path="/documentation"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <MarkdownViewer fileName="documentation.md" />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/blog"
               element={
