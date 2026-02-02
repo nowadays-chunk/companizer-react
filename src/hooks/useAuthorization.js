@@ -109,6 +109,9 @@ export const useAuthorization = () => {
     /**
      * Get filtered actions based on user permissions
      */
+    /**
+     * Get filtered actions based on user permissions
+     */
     const getAuthorizedActions = (actionsConfig, entityType = null, entityRowId = null, processingStep = null) => {
         if (!actionsConfig) return {};
 
@@ -117,19 +120,24 @@ export const useAuthorization = () => {
         Object.entries(actionsConfig).forEach(([actionKey, actionConfig]) => {
             const requiredRole = actionConfig.authorized_role;
 
-            // Check role requirement
-            if (requiredRole && !hasRole(requiredRole)) {
-                return; // Skip this action
-            }
+            // Check if role requirement is met (or if no role is required)
+            const roleSatisfied = requiredRole ? hasRole(requiredRole) : true;
 
-            // Check specific authorizations
-            if (entityType || entityRowId) {
-                if (!canPerformAction(actionKey, entityType, entityRowId, processingStep)) {
-                    return; // Skip this action
-                }
-            }
+            // Check specific authorizations (can override role restrictions or provide granular access)
+            // We only check this if entity context is provided
+            const specificAuthSatisfied = (entityType || entityRowId)
+                ? canPerformAction(actionKey, entityType, entityRowId, processingStep)
+                : false;
 
-            authorized[actionKey] = actionConfig;
+            // Allow if EITHER:
+            // 1. Role requirement is met (standard RBAC)
+            // 2. Specific authorization exists (Granular/Exception access)
+            //
+            // Note: If an action has no authorized_role, roleSatisfied is true, so it defaults to allowed.
+            // Restricting access would require adding a role or implementing a 'deny' list logic.
+            if (roleSatisfied || specificAuthSatisfied) {
+                authorized[actionKey] = actionConfig;
+            }
         });
 
         return authorized;

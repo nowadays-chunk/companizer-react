@@ -133,7 +133,16 @@ const ActionButton = ({ icon: Icon, label, onClick, color }) => (
 // --- HELPERS ---
 
 const ICON_MAP = {
-  CheckCircle, ThumbUp, Cancel, Paid, Restore, PictureAsPdf, Email, Delete, History, Archive
+  CheckCircle: CheckCircle,
+  ThumbUp: ThumbUp,
+  Cancel: Cancel,
+  Paid: Paid,
+  Restore: Restore,
+  PictureAsPdf: PictureAsPdf,
+  Email: Email,
+  Delete: Delete,
+  History: History,
+  Archive: Archive
 };
 
 const pathify = (urlParam) => {
