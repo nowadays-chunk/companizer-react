@@ -8,8 +8,15 @@ import SecurityIcon from '@mui/icons-material/Security';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import InsightsIcon from '@mui/icons-material/Insights';
 import SettingsIcon from '@mui/icons-material/Settings';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 export const drawerItems = [
+    {
+        key: "dashboard",
+        label: "Dashboard",
+        icon: <DashboardIcon />,
+        description: "Personalized dashboard with customizable widgets."
+    },
     {
         key: "financial-management",
         label: "Financial Management",
@@ -443,6 +450,11 @@ export const drawerItems = [
         icon: <WorkIcon />,
         description: "Manages projects and tasks within the company.",
         children: [
+            {
+                key: "my-tasks",
+                label: "My Tasks",
+                description: "View and manage tasks assigned to you."
+            },
             {
                 key: "projects",
                 label: "Projects",
@@ -1045,6 +1057,24 @@ export const drawerItems = [
                     { key: "disaster-recovery-plans", label: "Disaster Recovery Plans", description: "Detailed procedures for restoring IT systems and operations after a disaster." },
                     { key: "business-impact-analysis", label: "Business Impact Analysis", description: "An assessment of the potential effects of various disruptions on business operations." }
                 ]
+            }
+        ]
+    },
+    {
+        key: "admin",
+        label: "Admin",
+        icon: <SettingsIcon />,
+        description: "Administrative tools and system configuration.",
+        children: [
+            {
+                key: "console",
+                label: "Console",
+                description: "Manage workflow rules and entity configurations."
+            },
+            {
+                key: "export",
+                label: "Data Export",
+                description: "Export entity data in multiple formats (CSV, Excel, JSON, SQL)."
             }
         ]
     }

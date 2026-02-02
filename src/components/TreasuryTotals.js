@@ -49,7 +49,7 @@ const TreasuryTotals = ({ rows = [], columns = [] }) => {
     };
 
     const renderRow = (data, label, color, copyTooltip) => (
-        <Box sx={{ display: 'flex', minWidth: 'min-content', borderBottom: '1px solid #ddd' }}>
+        <Box sx={{ display: 'flex', minWidth: 'min-content', borderBottom: '1px solid', borderColor: 'divider' }}>
             {columns.map((col, index) => {
                 const value = data[col.field];
                 let displayValue = value;
@@ -68,13 +68,14 @@ const TreasuryTotals = ({ rows = [], columns = [] }) => {
                         width: col.width,
                         minWidth: col.width,
                         p: 1,
-                        borderRight: '1px solid #eee',
+                        borderRight: '1px solid',
+                        borderColor: 'divider',
                         fontWeight: 'bold',
                         color: color || 'inherit',
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        bgcolor: '#f9f9f9'
+                        bgcolor: 'action.hover'
                     }}>
                         <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
                             {displayValue}

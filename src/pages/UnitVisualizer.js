@@ -53,6 +53,8 @@ import ActionTimeline from '../components/ActionTimeline';
 import { collectionName as logsCollectionName } from '../components/Management/manager_action_logs';
 import { useTranslation } from '../contexts/TranslationProvider';
 import { useAuthorization } from '../hooks/useAuthorization';
+import VersionHistoryDialog from '../components/Versioning/VersionHistoryDialog';
+import DocumentManager from '../components/DocumentManager/DocumentManager';
 
 // Using inline SX for "Fancy" specific overrides that go beyond the theme
 
@@ -193,9 +195,26 @@ const Visualizer = (props) => {
   const idValue = props.id || params.id;
   const mode = props.mode || (window.location.hash.includes('/edit/') ? 'edit' : window.location.hash.includes('/create') ? 'create' : 'view');
 
-  const holdingFolder = pathify(main);
-  const subFolder = pathify(sub);
-  const componentName = pathify(entity);
+  // Fallback: Extract breadcrumb from path when params are missing
+  const extractBreadcrumbFromPath = () => {
+    const hash = window.location.hash.replace('#', '');
+    const parts = hash.split('/').filter(p => p && p !== 'view' && p !== 'edit' && p !== 'create' && !p.match(/^\d+$/));
+
+    if (parts.length >= 2) {
+      return {
+        main: parts[0] || 'Management',
+        sub: parts[1] || '',
+        entity: parts[2] || parts[1] || ''
+      };
+    }
+    return { main: '', sub: '', entity: '' };
+  };
+
+  const breadcrumb = (main && sub) ? { main, sub, entity } : extractBreadcrumbFromPath();
+
+  const holdingFolder = pathify(breadcrumb.main || main);
+  const subFolder = pathify(breadcrumb.sub || sub);
+  const componentName = pathify(breadcrumb.entity || entity);
 
   const [itemData, setItemData] = useState(null);
   const [config, setConfig] = useState(props.config || null);
@@ -517,7 +536,7 @@ const Visualizer = (props) => {
             )}
             <Box>
               <Typography variant="overline" color="text.secondary" sx={{ letterSpacing: '0.2em' }}>
-                {main} / {sub}
+                {breadcrumb.main} / {breadcrumb.sub}
               </Typography>
               <Typography variant="h3" sx={{ fontWeight: 800, mt: -1 }}>
                 {t(componentName)}
@@ -601,6 +620,14 @@ const Visualizer = (props) => {
                 entityId={idValue}
                 entityType={collectionName}
               />
+
+              {/* 3.5. DOCUMENTS */}
+              {!isCreate && (
+                <DocumentManager
+                  entityType={collectionName}
+                  entityId={idValue}
+                />
+              )}
 
               {/* 4. DETAILS COMPONENT */}
               {detailConfig && (

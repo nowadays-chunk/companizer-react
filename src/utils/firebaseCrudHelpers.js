@@ -29,12 +29,50 @@ export const createDocument = async (subcollectionName, documentData) => {
 };
 
 // PUT /api/subcollections/:subcollectionName/:documentId
+// Supports versioning: if is_versioned = true, creates new version instead of updating
 export const updateDocument = async (
   subcollectionName,
   documentId,
-  documentData
+  documentData,
+  options = {}
 ) => {
   try {
+    // Check if versioning is enabled for this row
+    if (options.isVersioned && options.userId) {
+      // Fetch current row to get version info
+      const { data: currentRow } = await api.get(
+        `/subcollections/${subcollectionName}/${documentId}`
+      );
+
+      if (currentRow.is_versioned) {
+        // Create new version instead of updating
+        const originalRowId = currentRow.original_row_id || currentRow.id;
+        const newVersion = {
+          ...documentData,
+          version_number: currentRow.version_number + 1,
+          version_date: new Date().toISOString(),
+          version_author_id: options.userId,
+          is_current_version: true,
+          is_versioned: true,
+          original_row_id: originalRowId,
+        };
+
+        // Mark current version as not current
+        await api.put(
+          `/subcollections/${subcollectionName}/${documentId}`,
+          { is_current_version: false }
+        );
+
+        // Create new version
+        const { data } = await api.post(
+          `/subcollections/${subcollectionName}`,
+          newVersion
+        );
+        return data.id;
+      }
+    }
+
+    // Regular update (non-versioned or versioning disabled)
     await api.put(
       `/subcollections/${subcollectionName}/${documentId}`,
       documentData
@@ -46,8 +84,30 @@ export const updateDocument = async (
 };
 
 // DELETE /api/subcollections/:subcollectionName/:documentId
-export const deleteDocument = async (subcollectionName, documentId) => {
+// Supports versioning: soft delete for versioned rows
+export const deleteDocument = async (subcollectionName, documentId, options = {}) => {
   try {
+    // Check if versioning is enabled
+    if (options.isVersioned) {
+      const { data: currentRow } = await api.get(
+        `/subcollections/${subcollectionName}/${documentId}`
+      );
+
+      if (currentRow.is_versioned) {
+        // Soft delete: mark as not current
+        await api.put(
+          `/subcollections/${subcollectionName}/${documentId}`,
+          {
+            is_current_version: false,
+            deleted_at: new Date().toISOString(),
+            deleted_by: options.userId
+          }
+        );
+        return;
+      }
+    }
+
+    // Regular delete (hard delete)
     await api.delete(`/subcollections/${subcollectionName}/${documentId}`);
   } catch (error) {
     console.error(`Error deleting document from ${subcollectionName}:`, error);
@@ -115,10 +175,19 @@ export const fetchDocumentById = async (subcollectionName, documentId) => {
 export const helpersWrapper = (collectionName) => {
   const tableName = collectionName.replaceAll("-", "_");
 
-  const fetchItems = (params) => fetchDocuments(tableName, params);
+  const fetchItems = (params, includeAllVersions = false) => {
+    return fetchDocuments(tableName, params).then(items => {
+      // Filter to only current versions unless explicitly requested
+      if (!includeAllVersions) {
+        return items.filter(item => item.is_current_version !== false);
+      }
+      return items;
+    });
+  };
+
   const addItem = (item) => createDocument(tableName, item);
-  const updateItem = (id, item) => updateDocument(tableName, id, item);
-  const deleteItem = (id) => deleteDocument(tableName, id);
+  const updateItem = (id, item, options = {}) => updateDocument(tableName, id, item, options);
+  const deleteItem = (id, options = {}) => deleteDocument(tableName, id, options);
   const fetchItemById = (id) => fetchDocumentById(tableName, id);
   const fetchItemsByKeyByValue = (key, value) => fetchDocumentsByFieldValue(tableName, key, value);
 

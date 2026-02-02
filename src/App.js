@@ -24,6 +24,10 @@ import SummaryConfiguration from './pages/SummaryConfiguration';
 import ConfigurablePdf from './pages/ConfigurablePdf';
 import { OrganizationsPage, UsersPage, AuthorizationsPage } from './pages/RBACPages';
 import { AuthProvider } from './contexts/AuthContext';
+import AdminConsole from './pages/AdminConsole';
+import PersonalizedDashboard from './pages/PersonalizedDashboard';
+import TaskManager from './pages/TaskManager';
+import AdminExport from './pages/AdminExport';
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -250,6 +254,30 @@ const App = () => {
                 <ProtectedRoute user={user}>
                   <Dashboard colorMode={colorMode}>
                     <Visualizer mode="create" config={require('./components/RBAC/Authorizations')} />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Admin Console Route */}
+            <Route
+              path="/admin/console"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <AdminConsole />
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Admin Export Route */}
+            <Route
+              path="/admin/export"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <AdminExport />
                   </Dashboard>
                 </ProtectedRoute>
               }

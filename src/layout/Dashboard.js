@@ -21,6 +21,7 @@ import DrawerDashboard from './Drawer';
 import { keyToLinkMap } from './keyToLinkMap';
 import { generateRandomDataAsync } from '../utils/dataGenerator';
 import GenerationProgressModal from '../components/GenerationProgressModal';
+import NotificationBar from '../components/Notifications/NotificationBar';
 
 const expandedDrawerWidth = 300;
 const collapsedDrawerWidth = 70;
@@ -254,6 +255,9 @@ const Dashboard = ({ children, colorMode }) => {
             >
               {translate('Logout', language)}
             </Button>
+
+            <NotificationBar />
+
             <Button
               variant="contained"
               color="secondary"
