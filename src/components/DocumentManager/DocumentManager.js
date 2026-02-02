@@ -66,11 +66,19 @@ const DocumentManager = ({ entityType, entityId }) => {
                 responseType: 'blob'
             });
 
-            // Create download link
-            const url = window.URL.createObjectURL(new Blob([response.data]));
+            // Determine MIME type (use from document data if available, otherwise fallback)
+            const mimeType = document.mime_type || response.headers['content-type'] || 'application/octet-stream';
+
+            // Create blob with explicit type
+            const blob = new Blob([response.data], { type: mimeType });
+            const url = window.URL.createObjectURL(blob);
+
+            // Determine filename (fallback to path basename if original_filename is missing)
+            const filename = document.fileName || document.path.split('/').pop() || 'download';
+
             const link = window.document.createElement('a');
             link.href = url;
-            link.setAttribute('download', document.original_filename);
+            link.setAttribute('download', filename);
             window.document.body.appendChild(link);
             link.click();
             link.remove();
@@ -113,53 +121,98 @@ const DocumentManager = ({ entityType, entityId }) => {
 
     const columns = [
         {
-            field: 'icon',
-            headerName: '',
-            width: 60,
-            renderCell: (params) => (
-                <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                    {getFileIcon(params.row.mime_type)}
-                </Box>
-            ),
-            sortable: false,
-            filterable: false
-        },
-        {
-            field: 'original_filename',
-            headerName: 'Filename',
+            field: 'fileName',
+            headerName: 'File Name',
             flex: 1,
-            minWidth: 200
+            minWidth: 200,
+            renderCell: (params) => (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, overflow: 'hidden', width: '100%' }}>
+                    {getFileIcon(params.row.mime_type)}
+                    <Typography variant="body2" sx={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                    }}>
+                        {params.value}
+                    </Typography>
+                </Box>
+            )
         },
         {
             field: 'category',
             headerName: 'Category',
-            width: 130,
+            width: 120,
             renderCell: (params) => params.value ? (
                 <Chip label={params.value} size="small" />
             ) : null
         },
         {
-            field: 'file_size',
+            field: 'description',
+            headerName: 'Description',
+            width: 200,
+            renderCell: (params) => (
+                <Tooltip title={params.value || ''}>
+                    <Typography variant="body2" sx={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                    }}>
+                        {params.value}
+                    </Typography>
+                </Tooltip>
+            )
+        },
+        {
+            field: 'createdAt',
+            headerName: 'Created Date',
+            width: 180,
+            valueFormatter: (value) => value ? format(new Date(value), 'yyyy/MM/dd HH:mm:ss') : ''
+        },
+        {
+            field: 'mimeType',
+            headerName: 'MIME Type',
+            width: 150
+        },
+        {
+            field: 'size',
             headerName: 'Size',
             width: 100,
             valueFormatter: (value) => formatFileSize(value)
         },
         {
-            field: 'created_at',
-            headerName: 'Uploaded',
-            width: 160,
-            valueFormatter: (value) => value ? format(new Date(value), 'MMM d, yyyy h:mm a') : ''
+            field: 'tags',
+            headerName: 'Tags',
+            width: 200,
+            renderCell: (params) => {
+                let tags = params.value;
+                if (typeof tags === 'string') {
+                    try {
+                        tags = JSON.parse(tags);
+                    } catch (e) {
+                        tags = [];
+                    }
+                }
+                if (!Array.isArray(tags) || tags.length === 0) return null;
+
+                return (
+                    <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+                        {tags.map((tag, index) => (
+                            <Chip key={index} label={tag} size="small" variant="outlined" />
+                        ))}
+                    </Box>
+                );
+            }
         },
         {
-            field: 'uploaded_by',
+            field: 'uploadedBy',
             headerName: 'Uploaded By',
-            width: 120,
+            width: 150,
             renderCell: (params) => `User ${params.value || 'Unknown'}`
         },
         {
             field: 'actions',
             headerName: 'Actions',
-            width: 120,
+            width: 100,
             renderCell: (params) => (
                 <Box>
                     <Tooltip title="Download">
@@ -234,6 +287,7 @@ const DocumentManager = ({ entityType, entityId }) => {
                         pageSize={10}
                         rowsPerPageOptions={[10, 25, 50]}
                         autoHeight
+                        getRowHeight={() => 'auto'}
                         disableSelectionOnClick
                         sx={{ mt: 2 }}
                     />
