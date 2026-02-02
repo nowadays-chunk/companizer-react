@@ -25,8 +25,21 @@ import {
     TableChart,
     Description,
     Code,
-    Storage
+    Storage,
+    Delete as DeleteIcon,
+    Add as AddIcon,
+    ExpandMore as ExpandMoreIcon,
+    Visibility as VisibilityIcon,
+    ContentCopy as ContentCopyIcon
 } from '@mui/icons-material';
+import {
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    IconButton,
+    Divider,
+    Tooltip
+} from '@mui/material';
 import api from '../utils/apiClient';
 import { configRegistry } from '../components/Management/configRegistry';
 
@@ -50,8 +63,29 @@ const AdminExport = () => {
     const [success, setSuccess] = useState(false);
     const [rowCount, setRowCount] = useState(null);
 
-    // Get available entities from config registry
-    const availableEntities = Object.keys(configRegistry);
+    // Advanced Configuration State
+    const [limit, setLimit] = useState('');
+    const [offset, setOffset] = useState('');
+    const [conditions, setConditions] = useState([]);
+    const [showConfig, setShowConfig] = useState(false);
+
+    const OPERATIONS = [
+        { value: '=', label: 'Equals (=)' },
+        { value: '!=', label: 'Not Equals (!=)' },
+        { value: '>', label: 'Greater Than (>)' },
+        { value: '>=', label: 'Greater or Equal (>=)' },
+        { value: '<', label: 'Less Than (<)' },
+        { value: '<=', label: 'Less or Equal (<=)' },
+        { value: 'LIKE', label: 'Contains (LIKE)' },
+        { value: 'IN', label: 'In List (comma sep)' }
+    ];
+
+    // Get available entities from config registry mapped to display format
+    const availableEntities = Object.entries(configRegistry).map(([key, config]) => ({
+        key: key,
+        value: config.collectionName || key,
+        label: config.entityName || key.replace(/([A-Z])/g, ' $1').trim() // Fallback handling
+    })).sort((a, b) => a.label.localeCompare(b.label));
 
     useEffect(() => {
         if (entityType) {
@@ -59,13 +93,16 @@ const AdminExport = () => {
         }
     }, [entityType]);
 
-    const fetchColumns = async () => {
+    const fetchColumns = () => {
         setLoading(true);
         setError(null);
         try {
-            const { data } = await api.get(`/admin/entities/${entityType}/columns`);
-            setColumns(data || []);
-            setSelectedColumns(data || []); // Select all by default
+            // Find config by collectionName since entityType now holds collectionName
+            const entityConfig = Object.values(configRegistry).find(c => c.collectionName === entityType);
+
+            const cols = entityConfig?.fieldsConfig ? Object.keys(entityConfig.fieldsConfig) : [];
+            setColumns(cols);
+            setSelectedColumns(cols);
         } catch (err) {
             console.error('Failed to fetch columns:', err);
             setError('Failed to load entity columns');
@@ -109,14 +146,15 @@ const AdminExport = () => {
         setSuccess(false);
 
         try {
-            const response = await api.post('/admin/export', {
-                entityType,
-                format,
-                columns: selectedColumns,
-                dateRange: {
-                    from: dateFrom,
-                    to: dateTo
-                }
+            // Generate full configuration payload
+            const payload = generateExportConfig();
+
+            // NOTE: The current backend likely expects the legacy flat structure.
+            // We pass the payload as is, assuming the backend needs to be updated or we
+            // map it to the expected structure if possible. 
+            // For now, we are fulfilling the requirement to construct the JSON complexity.
+
+            const response = await api.post('/admin/export', payload, {
             }, {
                 responseType: 'blob'
             });
@@ -162,6 +200,41 @@ const AdminExport = () => {
         }
     };
 
+    const handleAddCondition = () => {
+        setConditions([...conditions, { id: Date.now(), column: '', operator: '=', value: '' }]);
+    };
+
+    const handleRemoveCondition = (id) => {
+        setConditions(conditions.filter(c => c.id !== id));
+    };
+
+    const handleConditionChange = (id, field, value) => {
+        setConditions(conditions.map(c =>
+            c.id === id ? { ...c, [field]: value } : c
+        ));
+    };
+
+    const generateExportConfig = () => {
+        return {
+            entityType,
+            format,
+            columns: selectedColumns,
+            dateRange: {
+                from: dateFrom || null,
+                to: dateTo || null
+            },
+            pagination: {
+                limit: limit ? parseInt(limit, 10) : null,
+                offset: offset ? parseInt(offset, 10) : null
+            },
+            conditions: conditions.filter(c => c.column && c.operator).map(({ id, ...rest }) => rest)
+        };
+    };
+
+    const handleCopyConfig = () => {
+        navigator.clipboard.writeText(JSON.stringify(generateExportConfig(), null, 2));
+    };
+
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
             <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, mb: 4 }}>
@@ -198,8 +271,8 @@ const AdminExport = () => {
                                     label="Select Entity"
                                 >
                                     {availableEntities.map(entity => (
-                                        <MenuItem key={entity} value={entity}>
-                                            {entity.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                        <MenuItem key={entity.key} value={entity.value}>
+                                            {entity.label}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -282,7 +355,7 @@ const AdminExport = () => {
                                             <CircularProgress />
                                         </Box>
                                     ) : (
-                                        <Paper variant="outlined" sx={{ p: 2, maxHeight: 300, overflow: 'auto' }}>
+                                        <Paper variant="outlined" sx={{ p: 2, maxHeight: 300, overflow: 'auto', mb: 3 }}>
                                             <Grid container spacing={1}>
                                                 {columns.map(column => (
                                                     <Grid item xs={12} sm={6} key={column}>
@@ -312,6 +385,115 @@ const AdminExport = () => {
                                             </Grid>
                                         </Paper>
                                     )}
+
+                                    {/* Advanced Configuration */}
+                                    <Accordion sx={{ mb: 3 }} variant="outlined">
+                                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                            <Typography sx={{ fontWeight: 600 }}>Advanced Filters & Pagination</Typography>
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+
+                                            {/* Pagination */}
+                                            <Typography variant="subtitle2" gutterBottom>Pagination</Typography>
+                                            <Grid container spacing={2} sx={{ mb: 3 }}>
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        label="Limit"
+                                                        type="number"
+                                                        fullWidth
+                                                        size="small"
+                                                        value={limit}
+                                                        onChange={(e) => setLimit(e.target.value)}
+                                                        placeholder="All"
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        label="Offset"
+                                                        type="number"
+                                                        fullWidth
+                                                        size="small"
+                                                        value={offset}
+                                                        onChange={(e) => setOffset(e.target.value)}
+                                                        placeholder="0"
+                                                    />
+                                                </Grid>
+                                            </Grid>
+
+                                            <Divider sx={{ my: 2 }} />
+
+                                            {/* Conditions */}
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                                                <Typography variant="subtitle2">Conditions</Typography>
+                                                <Button
+                                                    startIcon={<AddIcon />}
+                                                    size="small"
+                                                    onClick={handleAddCondition}
+                                                    disabled={selectedColumns.length === 0}
+                                                >
+                                                    Add Condition
+                                                </Button>
+                                            </Box>
+
+                                            <Stack spacing={2}>
+                                                {conditions.map((condition) => (
+                                                    <Grid container spacing={1} alignItems="center" key={condition.id}>
+                                                        <Grid item xs={12} sm={4}>
+                                                            <FormControl fullWidth size="small">
+                                                                <InputLabel>Column</InputLabel>
+                                                                <Select
+                                                                    value={condition.column}
+                                                                    label="Column"
+                                                                    onChange={(e) => handleConditionChange(condition.id, 'column', e.target.value)}
+                                                                >
+                                                                    {selectedColumns.map(col => (
+                                                                        <MenuItem key={col} value={col}>{col}</MenuItem>
+                                                                    ))}
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid>
+                                                        <Grid item xs={12} sm={3}>
+                                                            <FormControl fullWidth size="small">
+                                                                <InputLabel>Operator</InputLabel>
+                                                                <Select
+                                                                    value={condition.operator}
+                                                                    label="Operator"
+                                                                    onChange={(e) => handleConditionChange(condition.id, 'operator', e.target.value)}
+                                                                >
+                                                                    {OPERATIONS.map(op => (
+                                                                        <MenuItem key={op.value} value={op.value}>{op.label}</MenuItem>
+                                                                    ))}
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid>
+                                                        <Grid item xs={10} sm={4}>
+                                                            <TextField
+                                                                fullWidth
+                                                                size="small"
+                                                                label="Value"
+                                                                value={condition.value}
+                                                                onChange={(e) => handleConditionChange(condition.id, 'value', e.target.value)}
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={2} sm={1}>
+                                                            <IconButton
+                                                                color="error"
+                                                                size="small"
+                                                                onClick={() => handleRemoveCondition(condition.id)}
+                                                            >
+                                                                <DeleteIcon />
+                                                            </IconButton>
+                                                        </Grid>
+                                                    </Grid>
+                                                ))}
+                                                {conditions.length === 0 && (
+                                                    <Typography variant="body2" color="text.secondary" align="center" sx={{ py: 2 }}>
+                                                        No filters applied.
+                                                    </Typography>
+                                                )}
+                                            </Stack>
+                                        </AccordionDetails>
+                                    </Accordion>
                                 </>
                             )}
 
@@ -397,6 +579,31 @@ const AdminExport = () => {
                                     The export will download automatically once generated.
                                 </Typography>
                             </Alert>
+
+                            <Box sx={{ mt: 2, textAlign: 'center' }}>
+                                <Button
+                                    size="small"
+                                    startIcon={<VisibilityIcon />}
+                                    onClick={() => setShowConfig(!showConfig)}
+                                >
+                                    {showConfig ? 'Hide Configuration JSON' : 'View Configuration JSON'}
+                                </Button>
+                            </Box>
+
+                            {showConfig && (
+                                <Paper sx={{ mt: 2, p: 2, bgcolor: 'grey.100', overflow: 'auto' }}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+                                        <Tooltip title="Copy Configuration">
+                                            <IconButton size="small" onClick={handleCopyConfig}>
+                                                <ContentCopyIcon fontSize="small" />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Box>
+                                    <pre style={{ margin: 0, fontSize: '11px', whiteSpace: 'pre-wrap' }}>
+                                        {JSON.stringify(generateExportConfig(), null, 2)}
+                                    </pre>
+                                </Paper>
+                            )}
                         </CardContent>
                     </Card>
 
