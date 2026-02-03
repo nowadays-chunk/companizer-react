@@ -54,6 +54,14 @@ import RiskEngine from './components/Management/FinancialManagement/AccountsRece
 import ExposureManager from './components/Management/FinancialManagement/AccountsReceivable/Modules/CreditManagement/ExposureManager';
 import GovernanceConsole from './components/Management/FinancialManagement/AccountsReceivable/Modules/CreditManagement/GovernanceConsole';
 
+import AgingDashboard from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/AgingDashboard';
+// Renaming import to avoid conflict with CreditorsLedger/AgingAnalysis
+import DebtorAgingAnalysis from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/AgingAnalysis';
+import RiskAndCollections from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/RiskAndCollections';
+// Renaming import to avoid conflict with CreditorsLedger/CashForecast
+import DebtorCashForecast from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/CashForecast';
+import AgingConfiguration from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/AgingConfiguration';
+
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
 
@@ -566,6 +574,70 @@ const App = () => {
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
                       <GovernanceConsole />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* ========================================================= */}
+              {/* Debtor Aging Modules                                      */}
+              {/* ========================================================= */}
+
+              {/* Aging Dashboard */}
+              <Route
+                path="/apps/debtor-aging/dashboard"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AgingDashboard />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Aging Analysis */}
+              <Route
+                path="/apps/debtor-aging/analysis"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <DebtorAgingAnalysis />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Risk & Collections */}
+              <Route
+                path="/apps/debtor-aging/risk"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <RiskAndCollections />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Cash Forecast */}
+              <Route
+                path="/apps/debtor-aging/forecast"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <DebtorCashForecast />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Aging Configuration */}
+              <Route
+                path="/apps/debtor-aging/configuration"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AgingConfiguration />
                     </Dashboard>
                   </ProtectedRoute>
                 }
