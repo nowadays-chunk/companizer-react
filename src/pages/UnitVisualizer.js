@@ -494,6 +494,45 @@ const Visualizer = (props) => {
   };
 
   const handleSave = async () => {
+    // Validation Check
+    const missingFields = [];
+    Object.entries(config.fieldsConfig).forEach(([key, field]) => {
+      if (field.required) {
+        const val = formData[key];
+        // Check for empty string, null, or undefined (but allow 0)
+        if (val === '' || val === null || val === undefined) {
+          missingFields.push(t(field.label));
+        }
+      }
+    });
+
+    if (missingFields.length > 0) {
+      alert(`${t('Please fill in required fields')}: ${missingFields.join(', ')}`);
+      return;
+    }
+
+    // Duplicate Check (Vendor + Invoice Number)
+    if (formData.invoice_number && formData.vendor_id) {
+      try {
+        const duplicates = await queryHelpers.fetchItems({
+          invoice_number: formData.invoice_number,
+          vendor_id: formData.vendor_id
+        });
+
+        // Filter out self (important for Edit mode)
+        const realDuplicates = duplicates.filter(d => String(d.id) !== String(idValue));
+
+        if (realDuplicates.length > 0) {
+          alert(t('Duplicate invoice detected! This invoice number already exists for this vendor.'));
+          return;
+        }
+      } catch (dupErr) {
+        console.warn('Duplicate check failed', dupErr);
+        // We typically allow saving if check fails to avoid being blocked by network error, 
+        // but strictly we might want to block. For now, just log.
+      }
+    }
+
     setSaving(true);
     try {
       let payload = { ...formData };

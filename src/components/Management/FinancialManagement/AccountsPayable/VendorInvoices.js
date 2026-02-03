@@ -3,14 +3,14 @@ export const fieldsConfig = {
 
   // --- Header Information ---
   invoice_id: { label: 'Internal ID', type: 'text', faker: 'datatype.uuid', hidden: true },
-  vendor_id: { label: 'Vendor', type: 'related', collection: 'vendors', displayField: 'name', faker: 'datatype.uuid' },
+  vendor_id: { label: 'Vendor', type: 'related', collection: 'vendors', displayField: 'name', required: true, faker: 'datatype.uuid' },
   invoice_number: { label: 'Invoice Number', type: 'text', required: true, faker: 'finance.account' },
   invoice_date: { label: 'Invoice Date', type: 'date', required: true, faker: 'date.past' },
   due_date: { label: 'Due Date', type: 'date', required: true, faker: 'date.future' },
   posting_date: { label: 'Posting Date', type: 'date', faker: 'date.recent' },
 
   // --- Financials ---
-  currency: { label: 'Currency', type: 'select', options: [{ id: 'USD', label: 'USD' }, { id: 'EUR', label: 'EUR' }, { id: 'GBP', label: 'GBP' }], faker: 'finance.currencyCode' },
+  currency: { label: 'Currency', type: 'select', options: [{ id: 'USD', label: 'USD' }, { id: 'EUR', label: 'EUR' }, { id: 'GBP', label: 'GBP' }], required: true, faker: 'finance.currencyCode' },
   total_amount: { label: 'Total Amount', type: 'number', required: true, faker: 'finance.amount' },
   tax_amount: { label: 'Tax Total', type: 'number', faker: 'finance.amount' },
   net_amount: { label: 'Net Amount', type: 'number', faker: 'finance.amount' },

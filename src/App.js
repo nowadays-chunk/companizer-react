@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 
 // ⛔️ Removed Firebase + Stripe
 // import { onAuthStateChanged } from 'firebase/auth';
@@ -324,6 +325,20 @@ const App = () => {
               }
             />
 
+            {/* Vendor Invoice Payments */}
+            <Route
+              path="/apps/vendor-invoices/payments"
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard colorMode={colorMode}>
+                    <React.Suspense fallback={<CircularProgress />}>
+                      {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/AccountsPayable/Modules/PaymentRunManager')))}
+                    </React.Suspense>
+                  </Dashboard>
+                </ProtectedRoute>
+              }
+            />
+
             {/* Business Rules Manager Route */}
             <Route
               path="/admin/business-rules"
@@ -366,6 +381,19 @@ const App = () => {
                     <Visualizer mode="view" />
                   </Dashboard>
                 </ProtectedRoute>
+              }
+            />
+
+            {/* Vendor Portal */}
+            <Route
+              path="/portal/vendor"
+              element={
+                <Dashboard colorMode={colorMode}>
+                  <React.Suspense fallback={<CircularProgress />}>
+                    {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/AccountsPayable/Modules/VendorPortalHome')))}
+                  </React.Suspense>
+                </Dashboard>
+                // Note: Typically portals have a different layout without the main admin sidebar
               }
             />
 

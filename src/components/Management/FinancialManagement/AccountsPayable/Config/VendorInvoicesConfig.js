@@ -196,4 +196,18 @@ export const modules = [
         icon: 'CompareArrows',
         description: 'Match invoice against Purchase Orders.',
     },
+    {
+        name: 'Payment Run',
+        type: 'General',
+        path: '/apps/vendor-invoices/payments',
+        icon: 'Payment',
+        description: 'Manage payment batches and settlement.',
+    },
+    {
+        name: 'Vendor Portal',
+        type: 'General',
+        path: '/portal/vendor',
+        icon: 'Public', // or Storefront
+        description: 'External view for vendors.',
+    },
 ];
