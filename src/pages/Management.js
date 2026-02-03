@@ -44,6 +44,16 @@ function ManagementComponent({ showAnalytics }) {
                 });
 
                 setAnalysisComponent(() => analysisModule.default);
+
+                // Try to load module configuration
+                try {
+                    const configModule = await import(`../components/Management/${capitalizedModuleName}/${capitalizedSubModuleName}/Config/${capitalizedComponentName}Config`);
+                    if (configModule && configModule.modules) {
+                        setConfig(prev => ({ ...prev, modules: configModule.modules }));
+                    }
+                } catch (configError) {
+                    // Config file doesn't exist, that's fine
+                }
             } catch (error) {
                 console.error('Error loading modules:', error);
             }
@@ -70,6 +80,7 @@ function ManagementComponent({ showAnalytics }) {
                     updateItem={config.updateItem}
                     deleteItem={config.deleteItem}
                     headCells={config.headCells}
+                    modules={config.modules}
                     onConfigure={() => {
                         window.open(`/#/${module}/${subModule}/${component}/configuration`, '_blank');
                     }}

@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Card, CardContent, Button, Grid, Chip } from '@mui/material';
-import { helpersWrapper } from '../../../../../utils/firebaseCrudHelpers';
-import { useTranslation } from '../../../../../contexts/TranslationProvider';
+import { helpersWrapper } from '../../../../../../utils/firebaseCrudHelpers';
+import { useTranslation } from '../../../../../../contexts/TranslationProvider';
 
 const PaymentRunManager = () => {
     const { t } = useTranslation();

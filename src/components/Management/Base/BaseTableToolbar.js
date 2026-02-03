@@ -10,7 +10,15 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import CalculateIcon from '@mui/icons-material/Calculate';
+import ScienceIcon from '@mui/icons-material/Science';
 import { useTranslation } from '../../../contexts/TranslationProvider';
+import { useNavigate } from 'react-router-dom';
+
+const ICON_MAP = {
+  Calculate: CalculateIcon,
+  Science: ScienceIcon,
+};
 
 export default function BaseTableToolbar({
   numSelected,
@@ -21,7 +29,13 @@ export default function BaseTableToolbar({
   onViewItem,
   onConfigure,
   entityName,
+  modules,
 }) {
+  const navigate = useNavigate();
+
+  // Filter for General type modules (appear on list view)
+  const generalModules = modules?.filter(m => m.type === 'General') || [];
+
   return (
     <Toolbar sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
       <Typography
@@ -80,6 +94,23 @@ export default function BaseTableToolbar({
         >
           View
         </Button>
+
+        {/* General Modules (e.g., Calculator) */}
+        {generalModules.map((module, idx) => {
+          const Icon = ICON_MAP[module.icon] || CalculateIcon;
+          return (
+            <Button
+              key={idx}
+              onClick={() => navigate(module.path)}
+              variant="outlined"
+              color="info"
+              startIcon={<Icon />}
+              sx={{ ml: 1 }}
+            >
+              {module.name}
+            </Button>
+          );
+        })}
 
         {/* Configure Workflow Rules */}
         {onConfigure && (

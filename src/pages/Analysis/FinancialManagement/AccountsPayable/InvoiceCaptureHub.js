@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, Button, Container, Breadcrumbs, Link } from '@mui/material';
-import InvoiceCapture from '../../../../components/Management/FinancialManagement/AccountsPayable/Modules/InvoiceCapture';
+import InvoiceCapture from '../../../../components/Management/FinancialManagement/AccountsPayable/Modules/VendorInvoices/InvoiceCapture';
 import { useNavigate } from 'react-router-dom';
 
 const InvoiceCaptureHub = () => {

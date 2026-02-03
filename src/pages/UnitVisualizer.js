@@ -55,6 +55,9 @@ import { useTranslation } from '../contexts/TranslationProvider';
 import { useAuthorization } from '../hooks/useAuthorization';
 import VersionHistoryDialog from '../components/Versioning/VersionHistoryDialog';
 import DocumentManager from '../components/DocumentManager/DocumentManager';
+import { TermCalculator } from '../components/Management/FinancialManagement/AccountsPayable/Modules/PaymentTerms/TermCalculator';
+import { DiscountEngine } from '../components/Management/FinancialManagement/AccountsPayable/Modules/PaymentTerms/DiscountEngine';
+import { PaymentTermsExtraPanel } from '../components/Management/FinancialManagement/AccountsPayable/Modules/PaymentTerms/PaymentTermsUI';
 
 // Using inline SX for "Fancy" specific overrides that go beyond the theme
 
@@ -482,6 +485,72 @@ const Visualizer = (props) => {
     // Removed queryHelpers from dependencies, added collectionName
   }, [config, idValue, isView, isEdit, isCreate, collectionName, formInitialized]);
 
+  // --- PAYMENT TERMS AUTO-CALCULATION ---
+  const [lastProcessedTermId, setLastProcessedTermId] = useState(null);
+
+  useEffect(() => {
+    const handleTermChange = async () => {
+      if (collectionName !== 'vendor_invoices' || !formData.payment_terms) return;
+
+      // Prevent infinite loops or redundant fetches
+      // logic: if term ID changed AND it's not the one we just processed
+      if (formData.payment_terms === lastProcessedTermId) return;
+
+      // Also prevent running on initial load if we want to respect existing dates?
+      // Usually, if opening an existing invoice, we don't want to re-calculate unless the user *changes* the term.
+      // But detecting "user change" vs "initial load" in this effect is tricky without a 'formDirty' flag or similar.
+      // Simple heuristic: If formInitialized is true.
+      // But formInitialized is true after load.
+      // We can check if lastProcessedTermId is null (first run). If first run, we usually sync it.
+      // Let's assume on Edit mode, we set the initial state.
+
+      // BETTER APPROACH: Only run this logic if we have a way to know it's a change or if we are strict.
+      // For now, let's just do it, but update lastProcessedTermId.
+
+      // Caveat: On 'Edit' load, formData is populated. This effect fires.
+      // It fetches term, calcs date. If date is different (e.g. user manually changed it previously), we overwrite it.
+      // This might be annoying. 
+      // Improvement: Only calc if due_date is empty OR if we track explicit change.
+      // Given limitations, we'll implement it, but maybe check if due_date is empty for 'Create' mode?
+      // For 'Edit' mode, we might want to skip the first run.
+
+      if (isEdit && lastProcessedTermId === null) {
+        // First run on edit, just sync state without overwrite
+        setLastProcessedTermId(formData.payment_terms);
+        return;
+      }
+
+      try {
+        const termsApi = helpersWrapper('payment_terms');
+        const term = await termsApi.fetchItemById(formData.payment_terms);
+
+        if (term && (formData.invoice_date || formData.created_at)) {
+          // Determine Base Date (Invoice Date preferred, else Today/Created)
+          const baseDate = formData.invoice_date || new Date().toISOString();
+
+          const newDueDate = TermCalculator.calculateDueDate(term, baseDate);
+          const discountInfo = DiscountEngine.calculateDiscount(term.discount_rules, formData.total_amount || 0, baseDate);
+
+          setFormData(prev => ({
+            ...prev,
+            due_date: TermCalculator.formatDate(newDueDate),
+            early_payment_discount_date: discountInfo.expiryDate ? TermCalculator.formatDate(discountInfo.expiryDate) : prev.early_payment_discount_date,
+            // If we want to auto-apply discount amount:
+            // discount_amount: discountInfo.discountAmount || 0 
+          }));
+        }
+      } catch (err) {
+        console.warn("Failed to calculate term dates", err);
+      } finally {
+        setLastProcessedTermId(formData.payment_terms);
+      }
+    };
+
+    if (formInitialized) {
+      handleTermChange();
+    }
+  }, [formData.payment_terms, collectionName, formInitialized, isEdit]); // We only trigger on payment_terms change specifically
+
 
 
   // --- HANDLERS ---
@@ -709,6 +778,21 @@ const Visualizer = (props) => {
                 </CardContent>
               </Card>
 
+              {/* PAYMENT TERMS EXTRA PANEL */}
+              {collectionName === 'payment_terms' && itemData && (
+                <Card>
+                  <CardContent sx={{ p: 4 }}>
+                    <PaymentTermsExtraPanel
+                      data={itemData}
+                      onChange={(updatedData) => {
+                        setItemData(updatedData);
+                        // Optionally auto-save or mark as dirty
+                      }}
+                    />
+                  </CardContent>
+                </Card>
+              )}
+
               {/* 3. COMMENTS */}
               <CommentsSection
                 entityId={idValue}
@@ -804,6 +888,16 @@ const Visualizer = (props) => {
                     );
                   })}
                 </Grid>
+
+                {/* PAYMENT TERMS EXTRA PANEL FOR EDIT/CREATE */}
+                {collectionName === 'payment_terms' && (
+                  <Box mt={4}>
+                    <PaymentTermsExtraPanel
+                      data={formData}
+                      onChange={(updatedData) => setFormData(updatedData)}
+                    />
+                  </Box>
+                )}
 
                 <Box mt={5} display="flex" justifyContent="flex-end" gap={2}>
                   <Button variant="outlined" onClick={() => props.onClose ? props.onClose() : navigate(-1)} size="large">

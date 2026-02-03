@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Box, Typography, Container, Card, CardContent, Grid, Button, TextField } from '@mui/material';
-import { useTranslation } from '../../../../../contexts/TranslationProvider';
+import { useTranslation } from '../../../../../../contexts/TranslationProvider';
 
 const VendorPortalHome = () => {
     const { t } = useTranslation();

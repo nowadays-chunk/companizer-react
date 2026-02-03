@@ -30,7 +30,14 @@ export const fieldsConfig = {
   variance_amount: { label: 'Variance Amount', type: 'number', faker: 'finance.amount' },
 
   // --- Payment & Terms ---
-  payment_terms: { label: 'Payment Terms', type: 'select', options: [{ id: 'net30', label: 'Net 30' }, { id: 'net60', label: 'Net 60' }, { id: 'immediate', label: 'Immediate' }], faker: 'random.arrayElement' },
+  payment_terms: {
+    label: 'Payment Terms',
+    type: 'related',
+    collection: 'payment_terms',
+    displayField: 'term_name',
+    required: true,
+    faker: 'datatype.uuid'
+  },
   payment_method: { label: 'Payment Method', type: 'select', options: [{ id: 'check', label: 'Check' }, { id: 'wire', label: 'Wire' }, { id: 'ach', label: 'ACH' }], faker: 'random.arrayElement' },
   payment_status: { label: 'Payment Status', type: 'select', options: [{ id: 'unpaid', label: 'Unpaid' }, { id: 'partial', label: 'Partial' }, { id: 'paid', label: 'Paid' }], faker: 'random.arrayElement' },
   early_payment_discount_date: { label: 'Early Disc. Date', type: 'date', faker: 'date.future' },
@@ -65,8 +72,6 @@ export const fieldsConfig = {
   notes: { label: 'Notes', type: 'text', multiline: true, rows: 2, faker: 'lorem.sentence' },
   processing_step: { label: 'Workflow Step', type: 'text', hidden: true, faker: 'random.arrayElement' },
   accountable_id: { label: 'Owner', type: 'text', hidden: true, faker: 'datatype.uuid' },
-
-
 };
 
 export const entityName = 'Vendor Invoices';

@@ -26,37 +26,38 @@ export const stepsConfig = {
 };
 
 export const actionsConfig = {
-    submit_for_review: {
-        label: 'Submit for Review',
-        type: 'primary',
-        nextStep: 'in_review',
-        icon: 'Send'
-    },
-    approve: {
-        label: 'Approve',
+    activate: {
+        label: 'Activate',
         type: 'success',
-        nextStep: 'approved',
-        icon: 'CheckCircle'
+        nextStep: 'active',
+        icon: 'PlayArrow',
+        authorized_role: 'manager'
     },
-    reject: {
-        label: 'Reject',
+    deactivate: {
+        label: 'Deactivate',
         type: 'error',
-        nextStep: 'rejected',
-        icon: 'Cancel'
-    },
-    reopen: {
-        label: 'Reopen',
-        type: 'warning',
-        nextStep: 'draft',
-        icon: 'Restore'
-    },
-    process_payment: {
-        label: 'Process Payment',
-        type: 'primary',
-        nextStep: 'paid', // Assuming a paid step exists or stays in approved
-        icon: 'Paid'
+        nextStep: 'inactive',
+        icon: 'Stop',
+        authorized_role: 'manager'
     }
 };
+
+export const modules = [
+    {
+        name: 'Test Bench',
+        type: 'Specific', // Appears on Detail View
+        path: '/apps/payment-terms/test-bench/:id',
+        icon: 'Science',
+        description: 'Simulate invoice dates to verify term logic.'
+    },
+    {
+        name: 'Calculator',
+        type: 'General', // Appears on List View
+        path: '/apps/payment-terms/calculator',
+        icon: 'Calculate',
+        description: 'Quick date calculator utility.'
+    }
+];
 
 export const collectionName = 'paymentterms_config';
 export const fieldsConfig = {

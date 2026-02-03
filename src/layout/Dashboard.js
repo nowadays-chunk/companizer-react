@@ -6,6 +6,7 @@ import {
   IconButton,
   Button,
   Container,
+  Typography,
 } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
@@ -15,6 +16,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 import { translate } from '../utils/translate';
 import { useTranslation } from '../contexts/TranslationProvider';
+import { usePageDescription } from '../contexts/PageDescriptionContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import DrawerDashboard from './Drawer';
@@ -69,6 +71,7 @@ const AppBar = styled(MuiAppBar, {
 const Dashboard = ({ children, colorMode }) => {
   const theme = useTheme();
   const { language, toggleLanguage, t } = useTranslation();
+  const { description } = usePageDescription();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -277,6 +280,13 @@ const Dashboard = ({ children, colorMode }) => {
       />
 
       <Main open={open}>
+        <Box mb={2}>
+          <Box sx={{ p: 2, bgcolor: 'background.paper', borderRadius: 1, boxShadow: 1 }}>
+            <Typography variant="body2" color="textSecondary">
+              {description}
+            </Typography>
+          </Box>
+        </Box>
         <Box>
           {React.cloneElement(children, {
             showAnalytics,

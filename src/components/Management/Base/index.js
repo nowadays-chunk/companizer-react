@@ -87,6 +87,7 @@ export default function BaseTableComponent({
   onEditItem: onEditItemProp,
   onConfigure: onConfigureProp,
   onAdd: onAddProp, // Allow override of Add action
+  modules, // NEW: Module configuration for General modules
 }) {
   const { t } = useTranslation();
   const [refreshedFieldsConfig, setRefreshedFieldsConfig] = useState(fieldConfig);
@@ -403,6 +404,7 @@ export default function BaseTableComponent({
             onViewItem={handleViewItem}
             onConfigure={onConfigureProp}
             entityName={entityName}
+            modules={modules}
           />
 
           <BaseTable
