@@ -42,6 +42,11 @@ import ReconciliationManager from './components/Management/FinancialManagement/A
 import CashForecast from './components/Management/FinancialManagement/AccountsPayable/Modules/CreditorsLedger/CashForecast';
 import DPOAnalytics from './components/Management/FinancialManagement/AccountsPayable/Modules/CreditorsLedger/DPOAnalytics';
 import DisputeManager from './components/Management/FinancialManagement/AccountsPayable/Modules/CreditorsLedger/DisputeManager';
+import CustomerInvoicesDunningManager from './components/Management/FinancialManagement/AccountsReceivable/Modules/CustomerInvoices/DunningManager';
+import CustomerInvoicesDisputeManager from './components/Management/FinancialManagement/AccountsReceivable/Modules/CustomerInvoices/DisputeManager';
+import ARAging from './components/Management/FinancialManagement/AccountsReceivable/Modules/CustomerInvoices/ARAging';
+import RevenueAnalytics from './components/Management/FinancialManagement/AccountsReceivable/Modules/CustomerInvoices/RevenueAnalytics';
+import InvoiceGenerator from './components/Management/FinancialManagement/AccountsReceivable/Modules/CustomerInvoices/InvoiceGenerator';
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -427,6 +432,70 @@ const App = () => {
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
                       <DisputeManager />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* ========================================================= */}
+              {/* Customer Invoices (Accounts Receivable) Modules           */}
+              {/* ========================================================= */}
+
+              {/* Invoice Generator */}
+              <Route
+                path="/apps/customer-invoices/generator"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <InvoiceGenerator />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* AR Aging */}
+              <Route
+                path="/apps/customer-invoices/aging"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ARAging />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Revenue Analytics */}
+              <Route
+                path="/apps/customer-invoices/revenue"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <RevenueAnalytics />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Collections & Dunning */}
+              <Route
+                path="/apps/customer-invoices/dunning"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <CustomerInvoicesDunningManager />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* AR Disputes */}
+              <Route
+                path="/apps/customer-invoices/disputes"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <CustomerInvoicesDisputeManager />
                     </Dashboard>
                   </ProtectedRoute>
                 }

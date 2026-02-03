@@ -23,7 +23,7 @@ function ManagementComponent({ showAnalytics }) {
     useEffect(() => {
         const loadConfig = async () => {
             try {
-                const { fieldsConfig, entityName, collectionName } = await import(`../components/Management/${capitalizedModuleName}/${capitalizedSubModuleName}/${capitalizedComponentName}`);
+                const { fieldsConfig, entityName, collectionName, modules } = await import(`../components/Management/${capitalizedModuleName}/${capitalizedSubModuleName}/${capitalizedComponentName}`);
                 const analysisModule = await import(`./Analysis/${capitalizedModuleName}/${capitalizedSubModuleName}/${capitalizedComponentName}`);
                 const operations = helpersWrapper(collectionName);
 
@@ -41,6 +41,7 @@ function ManagementComponent({ showAnalytics }) {
                     updateItem: operations.updateItem,
                     deleteItem: operations.deleteItem,
                     headCells: headCells,
+                    modules: modules,
                 });
 
                 setAnalysisComponent(() => analysisModule.default);

@@ -252,101 +252,101 @@ const AgingAnalysis = ({ items = [], onRefresh }) => {
                     <Card>
                         <CardContent>
                             <Typography color="textSecondary" gutterBottom>90+ Days</Typography>
-                        <Typography variant="h5" color="error">
-                            ${(summary.buckets?.['90_plus'] || 0).toLocaleString()}
-                        </Typography>
-                    </CardContent>
-                </Card>
+                            <Typography variant="h5" color="error">
+                                ${(summary.buckets?.['90_plus'] || 0).toLocaleString()}
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </Grid>
-        </Grid>
 
-      {/* Charts */ }
-    <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} md={8}>
-            <Paper sx={{ p: 2 }}>
-                <Typography variant="h6" gutterBottom>Aging by {groupBy === 'vendor' ? 'Vendor' : groupBy}</Typography>
-                <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={agingData.slice(0, 10)}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
-                        <YAxis />
-                        <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
-                        <Legend />
-                        {AGING_BUCKETS.map(bucket => (
-                            <Bar key={bucket.id} dataKey={bucket.id} stackId="a" fill={bucket.color} name={bucket.label} />
+            {/* Charts */}
+            <Grid container spacing={2} sx={{ mb: 3 }}>
+                <Grid item xs={12} md={8}>
+                    <Paper sx={{ p: 2 }}>
+                        <Typography variant="h6" gutterBottom>Aging by {groupBy === 'vendor' ? 'Vendor' : groupBy}</Typography>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart data={agingData.slice(0, 10)}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
+                                <YAxis />
+                                <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
+                                <Legend />
+                                {AGING_BUCKETS.map(bucket => (
+                                    <Bar key={bucket.id} dataKey={bucket.id} stackId="a" fill={bucket.color} name={bucket.label} />
+                                ))}
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 2 }}>
+                        <Typography variant="h6" gutterBottom>Distribution</Typography>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <PieChart>
+                                <Pie
+                                    data={pieChartData}
+                                    cx="50%"
+                                    cy="50%"
+                                    labelLine={false}
+                                    label={(entry) => `${entry.name}: $${entry.value.toLocaleString()}`}
+                                    outerRadius={80}
+                                    fill="#8884d8"
+                                    dataKey="value"
+                                >
+                                    {pieChartData.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                    ))}
+                                </Pie>
+                                <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </Paper>
+                </Grid>
+            </Grid>
+
+            {/* Detailed Table */}
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell align="right">Current</TableCell>
+                            <TableCell align="right">1-30 Days</TableCell>
+                            <TableCell align="right">31-60 Days</TableCell>
+                            <TableCell align="right">61-90 Days</TableCell>
+                            <TableCell align="right">90+ Days</TableCell>
+                            <TableCell align="right">Total</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {agingData.map((row, index) => (
+                            <TableRow key={index} hover>
+                                <TableCell>{row.name}</TableCell>
+                                <TableCell align="right">${row.current.toLocaleString()}</TableCell>
+                                <TableCell align="right">${row['1_30'].toLocaleString()}</TableCell>
+                                <TableCell align="right">${row['31_60'].toLocaleString()}</TableCell>
+                                <TableCell align="right">${row['61_90'].toLocaleString()}</TableCell>
+                                <TableCell align="right" sx={{ color: row['90_plus'] > 0 ? 'error.main' : 'inherit' }}>
+                                    ${row['90_plus'].toLocaleString()}
+                                </TableCell>
+                                <TableCell align="right" sx={{ fontWeight: 'bold' }}>
+                                    ${row.total.toLocaleString()}
+                                </TableCell>
+                            </TableRow>
                         ))}
-                    </BarChart>
-                </ResponsiveContainer>
-            </Paper>
-        </Grid>
-        <Grid item xs={12} md={4}>
-            <Paper sx={{ p: 2 }}>
-                <Typography variant="h6" gutterBottom>Distribution</Typography>
-                <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                        <Pie
-                            data={pieChartData}
-                            cx="50%"
-                            cy="50%"
-                            labelLine={false}
-                            label={(entry) => `${entry.name}: $${entry.value.toLocaleString()}`}
-                            outerRadius={80}
-                            fill="#8884d8"
-                            dataKey="value"
-                        >
-                            {pieChartData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={entry.color} />
-                            ))}
-                        </Pie>
-                        <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
-                    </PieChart>
-                </ResponsiveContainer>
-            </Paper>
-        </Grid>
-    </Grid>
-
-    {/* Detailed Table */ }
-    <TableContainer component={Paper}>
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="right">Current</TableCell>
-                    <TableCell align="right">1-30 Days</TableCell>
-                    <TableCell align="right">31-60 Days</TableCell>
-                    <TableCell align="right">61-90 Days</TableCell>
-                    <TableCell align="right">90+ Days</TableCell>
-                    <TableCell align="right">Total</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {agingData.map((row, index) => (
-                    <TableRow key={index} hover>
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell align="right">${row.current.toLocaleString()}</TableCell>
-                        <TableCell align="right">${row['1_30'].toLocaleString()}</TableCell>
-                        <TableCell align="right">${row['31_60'].toLocaleString()}</TableCell>
-                        <TableCell align="right">${row['61_90'].toLocaleString()}</TableCell>
-                        <TableCell align="right" sx={{ color: row['90_plus'] > 0 ? 'error.main' : 'inherit' }}>
-                            ${row['90_plus'].toLocaleString()}
-                        </TableCell>
-                        <TableCell align="right" sx={{ fontWeight: 'bold' }}>
-                            ${row.total.toLocaleString()}
-                        </TableCell>
-                    </TableRow>
-                ))}
-                {agingData.length === 0 && (
-                    <TableRow>
-                        <TableCell colSpan={7} align="center">
-                            No data available
-                        </TableCell>
-                    </TableRow>
-                )}
-            </TableBody>
-        </Table>
-    </TableContainer>
-    </Box >
-  );
+                        {agingData.length === 0 && (
+                            <TableRow>
+                                <TableCell colSpan={7} align="center">
+                                    No data available
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Box >
+    );
 };
 
 export default AgingAnalysis;
