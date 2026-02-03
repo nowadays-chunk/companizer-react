@@ -37,6 +37,11 @@ import InvoiceApprovalCenter from './pages/Analysis/FinancialManagement/Accounts
 import MarkdownViewer from './components/MarkdownViewer';
 import PaymentTermsTestBench from './pages/PaymentTermsTestBench';
 import PaymentTermsCalculator from './pages/PaymentTermsCalculator';
+import AgingAnalysis from './components/Management/FinancialManagement/AccountsPayable/Modules/CreditorsLedger/AgingAnalysis';
+import ReconciliationManager from './components/Management/FinancialManagement/AccountsPayable/Modules/CreditorsLedger/ReconciliationManager';
+import CashForecast from './components/Management/FinancialManagement/AccountsPayable/Modules/CreditorsLedger/CashForecast';
+import DPOAnalytics from './components/Management/FinancialManagement/AccountsPayable/Modules/CreditorsLedger/DPOAnalytics';
+import DisputeManager from './components/Management/FinancialManagement/AccountsPayable/Modules/CreditorsLedger/DisputeManager';
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -362,6 +367,66 @@ const App = () => {
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
                       <PaymentTermsCalculator />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Creditors Ledger - Aging Analysis */}
+              <Route
+                path="/apps/creditors-ledger/aging-analysis"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AgingAnalysis />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Creditors Ledger - Reconciliation Manager */}
+              <Route
+                path="/apps/creditors-ledger/reconciliation"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ReconciliationManager />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Creditors Ledger - Cash Forecast */}
+              <Route
+                path="/apps/creditors-ledger/cash-forecast"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <CashForecast />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Creditors Ledger - DPO Analytics */}
+              <Route
+                path="/apps/creditors-ledger/dpo-analytics"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <DPOAnalytics />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Creditors Ledger - Dispute Manager */}
+              <Route
+                path="/apps/creditors-ledger/disputes"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <DisputeManager />
                     </Dashboard>
                   </ProtectedRoute>
                 }

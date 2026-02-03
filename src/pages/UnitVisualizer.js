@@ -58,6 +58,7 @@ import DocumentManager from '../components/DocumentManager/DocumentManager';
 import { TermCalculator } from '../components/Management/FinancialManagement/AccountsPayable/Modules/PaymentTerms/TermCalculator';
 import { DiscountEngine } from '../components/Management/FinancialManagement/AccountsPayable/Modules/PaymentTerms/DiscountEngine';
 import { PaymentTermsExtraPanel } from '../components/Management/FinancialManagement/AccountsPayable/Modules/PaymentTerms/PaymentTermsUI';
+import VendorStatement from '../components/Management/FinancialManagement/AccountsPayable/Modules/CreditorsLedger/VendorStatement';
 
 // Using inline SX for "Fancy" specific overrides that go beyond the theme
 
@@ -788,6 +789,19 @@ const Visualizer = (props) => {
                         setItemData(updatedData);
                         // Optionally auto-save or mark as dirty
                       }}
+                    />
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* CREDITORS LEDGER - VENDOR STATEMENT */}
+              {collectionName === 'creditors_ledger' && itemData && (
+                <Card>
+                  <CardContent sx={{ p: 4 }}>
+                    <SectionHeader title={t("Vendor Statement")} />
+                    <VendorStatement
+                      items={[itemData]}
+                      vendors={[{ id: itemData.vendor_id, name: itemData.creditor_name }]}
                     />
                   </CardContent>
                 </Card>
