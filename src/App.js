@@ -62,6 +62,8 @@ import RiskAndCollections from './components/Management/FinancialManagement/Acco
 import DebtorCashForecast from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/CashForecast';
 import AgingConfiguration from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/AgingConfiguration';
 
+import JournalEntryManager from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/JournalEntryManager';
+
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
 
@@ -439,6 +441,7 @@ const App = () => {
                 }
               />
 
+
               {/* Creditors Ledger - Dispute Manager */}
               <Route
                 path="/apps/creditors-ledger/disputes"
@@ -446,6 +449,28 @@ const App = () => {
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
                       <DisputeManager />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* General Ledger - Journal Entries */}
+              <Route
+                path="/apps/general-ledger/journals"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalEntryManager />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/:id"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalEntryManager />
                     </Dashboard>
                   </ProtectedRoute>
                 }
