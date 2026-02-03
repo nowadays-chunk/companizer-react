@@ -48,6 +48,12 @@ import ARAging from './components/Management/FinancialManagement/AccountsReceiva
 import RevenueAnalytics from './components/Management/FinancialManagement/AccountsReceivable/Modules/CustomerInvoices/RevenueAnalytics';
 import InvoiceGenerator from './components/Management/FinancialManagement/AccountsReceivable/Modules/CustomerInvoices/InvoiceGenerator';
 
+import CreditDashboard from './components/Management/FinancialManagement/AccountsReceivable/Modules/CreditManagement/CreditDashboard';
+import CreditProfiles from './components/Management/FinancialManagement/AccountsReceivable/Modules/CreditManagement/CreditProfiles';
+import RiskEngine from './components/Management/FinancialManagement/AccountsReceivable/Modules/CreditManagement/RiskEngine';
+import ExposureManager from './components/Management/FinancialManagement/AccountsReceivable/Modules/CreditManagement/ExposureManager';
+import GovernanceConsole from './components/Management/FinancialManagement/AccountsReceivable/Modules/CreditManagement/GovernanceConsole';
+
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
 
@@ -501,6 +507,70 @@ const App = () => {
                 }
               />
 
+              {/* ========================================================= */}
+              {/* Credit Management Modules                                 */}
+              {/* ========================================================= */}
+
+              {/* Credit Dashboard */}
+              <Route
+                path="/apps/credit-management/dashboard"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <CreditDashboard />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Credit Profiles */}
+              <Route
+                path="/apps/credit-management/profiles"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <CreditProfiles />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Risk Engine */}
+              <Route
+                path="/apps/credit-management/risk-engine"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <RiskEngine />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Exposure Manager */}
+              <Route
+                path="/apps/credit-management/exposure"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ExposureManager />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Governance Console */}
+              <Route
+                path="/apps/credit-management/governance"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <GovernanceConsole />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
               {/* Business Rules Manager Route */}
               <Route
                 path="/admin/business-rules"
@@ -707,7 +777,7 @@ const App = () => {
             </Routes>
           </PageDescriptionProvider>
         </TranslationProvider>
-      </AuthProvider>
+      </AuthProvider >
     </ThemeProvider >
   );
 };
