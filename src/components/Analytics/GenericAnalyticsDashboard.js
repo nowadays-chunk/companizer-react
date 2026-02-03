@@ -156,28 +156,11 @@ const GenericAnalyticsDashboard = ({ data = [], fieldsConfig, collectionName, mo
 
     return (
         <Box sx={{ flexGrow: 1, p: 3 }}>
-            <Box display="flex" alignItems="center" justifyContent="space-between" mb={4}>
+            <Box display="flex" alignItems="center" mb={4}>
                 <Typography variant="h4" component="div" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <Avatar sx={{ bgcolor: 'secondary.main' }}><Timeline /></Avatar>
                     Analytics: {collectionName}
                 </Typography>
-
-                {/* General Modules Actions */}
-                {modules && modules.some(m => m.type === 'General') && (
-                    <Box display="flex" gap={2}>
-                        {modules.filter(m => m.type === 'General').map((mod, idx) => (
-                            <Button
-                                key={idx}
-                                variant="contained"
-                                color="primary"
-                                startIcon={mod.icon && <Timeline />} // Placeholder icon
-                                onClick={() => window.location.hash = `#${mod.path}`}
-                            >
-                                {mod.name}
-                            </Button>
-                        ))}
-                    </Box>
-                )}
             </Box>
 
             {/* KPI Cards */}

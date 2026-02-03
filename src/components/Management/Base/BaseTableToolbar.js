@@ -95,23 +95,6 @@ export default function BaseTableToolbar({
           View
         </Button>
 
-        {/* General Modules (e.g., Calculator) */}
-        {generalModules.map((module, idx) => {
-          const Icon = ICON_MAP[module.icon] || CalculateIcon;
-          return (
-            <Button
-              key={idx}
-              onClick={() => navigate(module.path)}
-              variant="outlined"
-              color="info"
-              startIcon={<Icon />}
-              sx={{ ml: 1 }}
-            >
-              {module.name}
-            </Button>
-          );
-        })}
-
         {/* Configure Workflow Rules */}
         {onConfigure && (
           <Button

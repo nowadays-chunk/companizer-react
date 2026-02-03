@@ -7,6 +7,7 @@ import {
   Backdrop,
   FormControlLabel,
   Switch,
+  Button,
 } from '@mui/material';
 
 import FilterManager from './FilterManager';
@@ -389,11 +390,37 @@ export default function BaseTableComponent({
       overflowX: 'hidden'
     }}>
       <Box sx={{ maxWidth: '100%', position: 'relative' }}>
-        <FilterManager
-          filters={filters}
-          setFilters={setFilters}
-          fieldConfig={fieldConfig}
-        />
+        {/* Filter and Module Buttons Row */}
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 2 }}>
+          <FilterManager
+            filters={filters}
+            setFilters={setFilters}
+            fieldConfig={fieldConfig}
+          />
+
+          {/* Module Buttons */}
+          {modules && modules.length > 0 && (
+            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+              {modules.filter(m => m.type === 'General').map((module, idx) => (
+                <Button
+                  key={idx}
+                  onClick={() => window.open(`/#${module.path}`, '_blank')}
+                  variant="contained"
+                  sx={{
+                    bgcolor: 'black',
+                    color: 'white',
+                    '&:hover': {
+                      bgcolor: '#333',
+                    }
+                  }}
+                >
+                  {module.name}
+                </Button>
+              ))}
+            </Box>
+          )}
+        </Box>
+
         <Paper sx={{ width: '100%', mb: 2 }}>
           <BaseTableToolbar
             numSelected={selected.length}
