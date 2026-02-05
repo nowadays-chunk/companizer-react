@@ -1,3 +1,4 @@
+import modules from './Modules/TaxFilings';
 
 export const fieldsConfig = {
 
@@ -23,3 +24,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Tax Filings';
 export const collectionName = 'tax_filings';
+
+export { modules };

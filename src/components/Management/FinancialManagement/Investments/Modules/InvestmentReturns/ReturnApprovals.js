@@ -1,7 +1,17 @@
-import React from 'react';
-import { Box, Typography, Paper, Table, TableHead, TableRow, TableCell, TableBody, Chip, Button, Stepper, Step, StepLabel } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, Paper, Table, TableHead, TableRow, TableCell, TableBody, Chip, Button, Stepper, Step, StepLabel, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Stack, Alert } from '@mui/material';
+import { CheckCircle, Cancel, Comment } from '@mui/icons-material';
 
 const ReturnApprovals = () => {
+    const [commentDialog, setCommentDialog] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [comment, setComment] = useState('');
+
+    const handleApprove = (item) => {
+        setSelectedItem(item);
+        setCommentDialog(true);
+    };
+
     return (
         <Box sx={{ p: 3 }}>
             <Typography variant="h5" gutterBottom>Return Approvals & Exceptions</Typography>

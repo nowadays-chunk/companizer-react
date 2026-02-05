@@ -1,10 +1,35 @@
-import React from 'react';
-import { Box, Grid, Typography, Paper, List, ListItem, ListItemText, ListItemSecondaryAction, Switch, Divider, Alert } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Grid, Typography, Paper, List, ListItem, ListItemText, ListItemSecondaryAction, Switch, Divider, Alert, Stack, Chip, Button } from '@mui/material';
+import { CheckCircle, Add } from '@mui/icons-material';
 
 const AuditIntegrityRules = () => {
+    const [rules, setRules] = useState({
+        lockPeriod: true,
+        approvalThreshold: true,
+        autoPost: false,
+        excludeTest: true
+    });
+
+    const activeRules = Object.values(rules).filter(Boolean).length;
+
     return (
         <Box sx={{ p: 3 }}>
-            <Typography variant="h5" gutterBottom>Data Integrity & Automation Rules</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                <Typography variant="h5">Data Integrity & Automation Rules</Typography>
+                <Stack direction="row" spacing={1}>
+                    <Chip
+                        label={`${activeRules} Active Rules`}
+                        color="success"
+                        icon={<CheckCircle />}
+                        size="small"
+                    />
+                    <Button variant="outlined" startIcon={<Add />} size="small">Add Rule</Button>
+                </Stack>
+            </Box>
+
+            <Alert severity="success" sx={{ mb: 3 }}>
+                All integrity rules are functioning correctly. Last validation: {new Date().toLocaleString()}
+            </Alert>
 
             <Grid container spacing={3}>
                 <Grid item xs={12} md={8}>
