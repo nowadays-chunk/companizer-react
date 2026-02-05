@@ -54,7 +54,23 @@ const CURRENCIES = ['USD', 'EUR', 'GBP', 'CAD'];
 const JournalEntryManager = () => {
     const navigate = useNavigate();
     const { id } = useParams(); // If editing existing
+    const location = window.location.href; // Quick check for route context
+    const isAllocation = location.includes('allocations');
+    const isIntercompany = location.includes('intercompany');
+
     const [journal, setJournal] = useState(JournalEntryService.createEmptyJournal());
+
+    // Set default category if creating new allocation
+    useEffect(() => {
+        if (!id || id === 'new') {
+            if (isAllocation) {
+                setJournal(prev => ({ ...prev, journal_category: 'allocation', journal_source: 'allocation' }));
+            } else if (isIntercompany) {
+                setJournal(prev => ({ ...prev, journal_category: 'intercompany', is_intercompany: true }));
+            }
+        }
+    }, [id, isAllocation, isIntercompany]);
+
     const [loading, setLoading] = useState(false);
     const [statusMessage, setStatusMessage] = useState(null);
     const [tabValue, setTabValue] = useState(0);
@@ -88,7 +104,7 @@ const JournalEntryManager = () => {
     const totals = useMemo(() => {
         let debit = 0;
         let credit = 0;
-        journal.lines.forEach(line => {
+        (journal.lines || []).forEach(line => {
             debit += parseFloat(line.debit) || 0;
             credit += parseFloat(line.credit) || 0;
         });
@@ -103,8 +119,19 @@ const JournalEntryManager = () => {
 
     // --- Handlers ---
 
-    const handleHeaderChange = (field, value) => {
+    const handleHeaderChange = async (field, value) => {
+        // Subledger Warning
+        if (field === 'journal_source' && (value === 'ar' || value === 'ap' || value === 'payroll' || value === 'inventory')) {
+            setStatusMessage({ type: 'warning', text: `Warning: Journals from ${value.toUpperCase()} should typically be managed in their respective subledgers.` });
+        }
+
         setJournal(prev => ({ ...prev, [field]: value }));
+
+        // If currency changes, fetch new exchange rate
+        if (field === 'currency_code') {
+            const rate = await JournalEntryService.getExchangeRate(value);
+            setJournal(prev => ({ ...prev, exchange_rate: rate }));
+        }
     };
 
     const handleLineChange = (index, field, value) => {
@@ -135,6 +162,15 @@ const JournalEntryManager = () => {
         if (journal.lines.length <= 2) return; // Maintain min 2 lines
         const newLines = journal.lines.filter((_, i) => i !== index);
         setJournal(prev => ({ ...prev, lines: newLines }));
+    };
+
+    const handleValidate = () => {
+        const validation = JournalEntryService.validateJournal(journal);
+        if (validation.isValid) {
+            setStatusMessage({ type: 'success', text: 'Validation Successful! Journal is ready.' });
+        } else {
+            setStatusMessage({ type: 'error', text: 'Validation Failed: ' + validation.errors.join(' | ') });
+        }
     };
 
     const handleSave = async (asPost = false) => {
@@ -189,6 +225,81 @@ const JournalEntryManager = () => {
         }
     };
 
+    const handleWorkflowAction = async (action) => {
+        setLoading(true);
+        try {
+            const api = helpersWrapper('journal_entries');
+            let updatedJournal = { ...journal };
+
+            if (action === 'submit') {
+                updatedJournal = JournalEntryService.submitJournal(updatedJournal);
+            } else if (action === 'approve') {
+                updatedJournal = JournalEntryService.approveJournal(updatedJournal);
+            } else if (action === 'reject') {
+                const reason = window.prompt("Reason for rejection:"); // Simple prompt for now
+                if (!reason) {
+                    setLoading(false);
+                    return; // Cancel
+                }
+                updatedJournal = JournalEntryService.rejectJournal(updatedJournal, reason);
+            }
+
+            await api.updateItem(updatedJournal.id, updatedJournal);
+            setJournal(updatedJournal);
+            setStatusMessage({ type: 'info', text: `Journal ${action}ed successfully.` });
+
+        } catch (error) {
+            console.error(`Failed to ${action}`, error);
+            setStatusMessage({ type: 'error', text: `Failed to ${action} journal.` });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+    const handleReverse = async () => {
+        if (!window.confirm("Are you sure you want to reverse this journal? A new draft journal will be created.")) return;
+
+        setLoading(true);
+        try {
+            const api = helpersWrapper('journal_entries');
+            const reversalDraft = JournalEntryService.reverseJournal(journal);
+            const newId = await api.addItem(reversalDraft);
+
+            // Navigate to the new reversal journal
+            navigate(`/apps/general-ledger/journals/edit/${newId}`);
+
+            // Ideally we'd also reload to show the new data, but navigation should trigger re-mount or id change effect
+        } catch (error) {
+            console.error("Failed to create reversal", error);
+            setStatusMessage({ type: 'error', text: "Failed to create reversal entry." });
+            setLoading(false);
+        }
+    };
+
+
+
+    const handleGenerateRecurring = async () => {
+        setLoading(true);
+        try {
+            const api = helpersWrapper('journal_entries');
+            // Ensure we use the service to get the next occurrence object
+            const nextOccurrence = JournalEntryService.generateNextOccurrence(journal);
+            const newId = await api.addItem(nextOccurrence);
+
+            setStatusMessage({ type: 'success', text: "Next occurrence generated successfully." });
+
+            // Navigate to the new journal
+            // setTimeout to allow toast to be seen? No, just go.
+            navigate(`/apps/general-ledger/journals/edit/${newId}`);
+        } catch (error) {
+            console.error("Failed to generate recurrence", error);
+            setStatusMessage({ type: 'error', text: "Failed to generate next occurrence." });
+            setLoading(false);
+        }
+    };
+
     return (
         <Box p={3} pb={10}>
             {/* Header Section */}
@@ -202,24 +313,86 @@ const JournalEntryManager = () => {
                     </Typography>
                 </Box>
                 <Box>
-                    <Button
-                        variant="outlined"
-                        startIcon={<SaveIcon />}
-                        onClick={() => handleSave(false)}
-                        disabled={journal.status === 'posted'}
-                        sx={{ mr: 1 }}
-                    >
-                        Save Draft
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="success"
-                        startIcon={<PostIcon />}
-                        onClick={() => handleSave(true)}
-                        disabled={!isBalanced || journal.status === 'posted'}
-                    >
-                        {journal.status === 'posted' ? 'Posted' : 'Post Journal'}
-                    </Button>
+                    {/* DRAFT STATE ACTIONS */}
+                    {(journal.status === 'draft' || journal.status === 'rejected') && (
+                        <>
+                            <Button
+                                variant="outlined"
+                                color="info"
+                                onClick={handleValidate}
+                                sx={{ mr: 1 }}
+                            >
+                                Validate
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                startIcon={<SaveIcon />}
+                                onClick={() => handleSave(false)}
+                                sx={{ mr: 1 }}
+                            >
+                                Save Draft
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => handleWorkflowAction('submit')}
+                                disabled={!isBalanced}
+                                sx={{ mr: 1 }}
+                            >
+                                Submit
+                            </Button>
+                        </>
+                    )}
+
+                    {/* SUBMITTED STATE ACTIONS (Approver View) */}
+                    {journal.status === 'submitted' && (
+                        <>
+                            <Button
+                                variant="outlined"
+                                color="error"
+                                onClick={() => handleWorkflowAction('reject')}
+                                sx={{ mr: 1 }}
+                            >
+                                Reject
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={() => handleWorkflowAction('approve')}
+                                sx={{ mr: 1 }}
+                            >
+                                Approve
+                            </Button>
+                        </>
+                    )}
+
+                    {/* APPROVED STATE ACTIONS */}
+                    {journal.status === 'approved' && (
+                        <Button
+                            variant="contained"
+                            color="success"
+                            startIcon={<PostIcon />}
+                            onClick={() => handleSave(true)} // Calls post
+                        >
+                            Post Journal
+                        </Button>
+                    )}
+
+                    {/* POSTED STATE INDICATOR & ACTIONS */}
+                    {journal.status === 'posted' && (
+                        <Box display="flex" align="center">
+                            <Typography variant="overline" sx={{ px: 2, border: '1px solid', borderColor: 'success.main', borderRadius: 1, color: 'success.main', fontWeight: 'bold', mr: 2 }}>
+                                POSTED
+                            </Typography>
+                            <Button
+                                variant="outlined"
+                                color="warning"
+                                onClick={handleReverse}
+                            >
+                                Reverse Journal
+                            </Button>
+                        </Box>
+                    )}
                 </Box>
             </Box>
 
@@ -231,8 +404,8 @@ const JournalEntryManager = () => {
 
             <Tabs value={tabValue} onChange={(e, v) => setTabValue(v)} sx={{ mb: 3 }}>
                 <Tab label="Manual Entry" />
-                <Tab label="Recurrence" disabled />
-                <Tab label="Audit Trail" disabled />
+                <Tab label="Recurrence / Schedule" />
+                <Tab label="Audit & History" />
             </Tabs>
 
             {/* Journal Header Form */}
@@ -281,6 +454,17 @@ const JournalEntryManager = () => {
                         >
                             {CURRENCIES.map(c => <MenuItem key={c} value={c}>{c}</MenuItem>)}
                         </TextField>
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <TextField
+                            type="number"
+                            label="Exchange Rate"
+                            value={journal.exchange_rate}
+                            onChange={(e) => handleHeaderChange('exchange_rate', parseFloat(e.target.value))}
+                            fullWidth
+                            disabled={journal.currency_code === 'USD' || journal.status === 'posted'}
+                            inputProps={{ step: "0.0001" }}
+                        />
                     </Grid>
 
                     {/* Row 2: Classification */}
@@ -359,117 +543,269 @@ const JournalEntryManager = () => {
                 </Grid>
             </Paper>
 
-            {/* Lines Table */}
-            <Paper sx={{ mb: 3, overflow: 'hidden' }}>
-                <TableContainer sx={{ maxHeight: 600 }}>
-                    <Table stickyHeader size="small">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell width="20%">Account</TableCell>
-                                <TableCell width="25%">Description</TableCell>
-                                <TableCell width="12%" align="right">Debit</TableCell>
-                                <TableCell width="12%" align="right">Credit</TableCell>
-                                <TableCell width="10%">Cost Center</TableCell>
-                                <TableCell width="10%">Project</TableCell>
-                                <TableCell width="5%">Actions</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {journal.lines.map((line, index) => (
-                                <TableRow key={index}>
-                                    <TableCell>
-                                        <TextField
-                                            select
-                                            value={line.account_id}
-                                            onChange={(e) => handleLineChange(index, 'account_id', e.target.value)}
-                                            fullWidth
-                                            size="small"
-                                            variant="standard"
-                                            disabled={journal.status === 'posted'}
-                                        >
-                                            {ACCOUNTS.map(acc => (
-                                                <MenuItem key={acc.id} value={acc.id}>
-                                                    {acc.code} - {acc.name}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                    </TableCell>
-                                    <TableCell>
-                                        <TextField
-                                            value={line.description}
-                                            onChange={(e) => handleLineChange(index, 'description', e.target.value)}
-                                            fullWidth
-                                            size="small"
-                                            variant="standard"
-                                            disabled={journal.status === 'posted'}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <TextField
-                                            type="number"
-                                            value={line.debit}
-                                            onChange={(e) => handleLineChange(index, 'debit', parseFloat(e.target.value) || 0)}
-                                            fullWidth
-                                            size="small"
-                                            variant="standard"
-                                            inputProps={{ style: { textAlign: 'right' }, min: 0 }}
-                                            disabled={journal.status === 'posted'}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <TextField
-                                            type="number"
-                                            value={line.credit}
-                                            onChange={(e) => handleLineChange(index, 'credit', parseFloat(e.target.value) || 0)}
-                                            fullWidth
-                                            size="small"
-                                            variant="standard"
-                                            inputProps={{ style: { textAlign: 'right' }, min: 0 }}
-                                            disabled={journal.status === 'posted'}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <TextField
-                                            value={line.cost_center}
-                                            onChange={(e) => handleLineChange(index, 'cost_center', e.target.value)}
-                                            fullWidth
-                                            size="small"
-                                            variant="standard"
-                                            disabled={journal.status === 'posted'}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <TextField
-                                            value={line.project_id}
-                                            onChange={(e) => handleLineChange(index, 'project_id', e.target.value)}
-                                            fullWidth
-                                            size="small"
-                                            variant="standard"
-                                            disabled={journal.status === 'posted'}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton
-                                            size="small"
-                                            color="error"
-                                            onClick={() => removeLine(index)}
-                                            disabled={journal.status === 'posted'}
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+            {/* TAB CONTENT: MANUAL ENTRY (0) */}
+            {
+                tabValue === 0 && (
+                    <Paper sx={{ mb: 3, overflow: 'hidden' }}>
+                        <TableContainer sx={{ maxHeight: 600 }}>
+                            <Table stickyHeader size="small">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell width="20%">Account</TableCell>
+                                        <TableCell width="25%">Description</TableCell>
+                                        <TableCell width="12%" align="right">Debit</TableCell>
+                                        <TableCell width="12%" align="right">Credit</TableCell>
+                                        <TableCell width="10%">Cost Center</TableCell>
+                                        <TableCell width="10%">Project</TableCell>
+                                        <TableCell width="5%">Actions</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {(journal.lines || []).map((line, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>
+                                                <TextField
+                                                    select
+                                                    value={line.account_id}
+                                                    onChange={(e) => handleLineChange(index, 'account_id', e.target.value)}
+                                                    fullWidth
+                                                    size="small"
+                                                    variant="standard"
+                                                    disabled={journal.status === 'posted'}
+                                                >
+                                                    {ACCOUNTS.map(acc => (
+                                                        <MenuItem key={acc.id} value={acc.id}>
+                                                            {acc.code} - {acc.name}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </TableCell>
+                                            <TableCell>
+                                                <TextField
+                                                    value={line.description}
+                                                    onChange={(e) => handleLineChange(index, 'description', e.target.value)}
+                                                    fullWidth
+                                                    size="small"
+                                                    variant="standard"
+                                                    disabled={journal.status === 'posted'}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <TextField
+                                                    type="number"
+                                                    value={line.debit}
+                                                    onChange={(e) => handleLineChange(index, 'debit', parseFloat(e.target.value) || 0)}
+                                                    fullWidth
+                                                    size="small"
+                                                    variant="standard"
+                                                    inputProps={{ style: { textAlign: 'right' }, min: 0 }}
+                                                    disabled={journal.status === 'posted'}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <TextField
+                                                    type="number"
+                                                    value={line.credit}
+                                                    onChange={(e) => handleLineChange(index, 'credit', parseFloat(e.target.value) || 0)}
+                                                    fullWidth
+                                                    size="small"
+                                                    variant="standard"
+                                                    inputProps={{ style: { textAlign: 'right' }, min: 0 }}
+                                                    disabled={journal.status === 'posted'}
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <TextField
+                                                    value={line.cost_center}
+                                                    onChange={(e) => handleLineChange(index, 'cost_center', e.target.value)}
+                                                    fullWidth
+                                                    size="small"
+                                                    variant="standard"
+                                                    disabled={journal.status === 'posted'}
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <TextField
+                                                    value={line.project_id}
+                                                    onChange={(e) => handleLineChange(index, 'project_id', e.target.value)}
+                                                    fullWidth
+                                                    size="small"
+                                                    variant="standard"
+                                                    disabled={journal.status === 'posted'}
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <IconButton
+                                                    size="small"
+                                                    color="error"
+                                                    onClick={() => removeLine(index)}
+                                                    disabled={journal.status === 'posted'}
+                                                >
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
 
-                <Box p={2} borderTop="1px solid #eee">
-                    <Button startIcon={<AddIcon />} onClick={addLine} disabled={journal.status === 'posted'}>
-                        Add Line
-                    </Button>
-                </Box>
-            </Paper>
+                        <Box p={2} borderTop="1px solid #eee">
+                            <Button startIcon={<AddIcon />} onClick={addLine} disabled={journal.status === 'posted'}>
+                                Add Line
+                            </Button>
+                        </Box>
+                    </Paper>
+                )
+            }
+
+            {/* TAB CONTENT: RECURRENCE (1) */}
+            {
+                tabValue === 1 && (
+                    <Paper sx={{ p: 3, mb: 3 }}>
+                        <Typography variant="h6" gutterBottom>Recurrence Settings</Typography>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    select
+                                    label="Recurrence Frequency"
+                                    value={journal.recurrence_frequency || 'monthly'}
+                                    onChange={(e) => handleHeaderChange('recurrence_frequency', e.target.value)}
+                                    fullWidth
+                                    disabled={journal.status === 'posted'}
+                                >
+                                    <MenuItem value="monthly">Monthly</MenuItem>
+                                    <MenuItem value="quarterly">Quarterly</MenuItem>
+                                    <MenuItem value="yearly">Yearly</MenuItem>
+                                </TextField>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    type="date"
+                                    label="Next Run Date"
+                                    value={journal.next_run_date || ''}
+                                    onChange={(e) => handleHeaderChange('next_run_date', e.target.value)}
+                                    fullWidth
+                                    InputLabelProps={{ shrink: true }}
+                                    disabled={journal.status === 'posted'}
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <Box display="flex" alignItems="center" height="100%">
+                                    <Typography variant="body2" color="textSecondary">
+                                        Enabling recurrence will create a template from this journal.
+                                    </Typography>
+                                </Box>
+                            </Grid>
+
+                            {/* RECURRENCE ACTIONS */}
+                            <Grid item xs={12}>
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    disabled={!journal.next_run_date}
+                                    onClick={handleGenerateRecurring}
+                                >
+                                    Generate Next Occurrence
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Paper >
+                )
+            }
+
+            {/* TAB CONTENT: AUDIT (2) */}
+            {
+                tabValue === 2 && (
+                    <Paper sx={{ p: 3, mb: 3 }}>
+                        <Typography variant="h6" gutterBottom>Audit Trail & History</Typography>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={6}>
+                                <TextField
+                                    label="Created By"
+                                    value={journal.created_by || 'System User'}
+                                    fullWidth
+                                    disabled
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <TextField
+                                    label="Created At"
+                                    value={journal.created_at || new Date().toISOString()}
+                                    fullWidth
+                                    disabled
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <TextField
+                                    label="Posted By"
+                                    value={journal.posted_by || '-'}
+                                    fullWidth
+                                    disabled
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <TextField
+                                    label="Posted At"
+                                    value={journal.posted_at || '-'}
+                                    fullWidth
+                                    disabled
+                                />
+                            </Grid>
+
+                        </Grid>
+
+                        <Divider sx={{ my: 3 }} />
+
+                        <Typography variant="subtitle1" gutterBottom>Change Log / History</Typography>
+                        <TableContainer sx={{ maxHeight: 300 }}>
+                            <Table size="small">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Date/Time</TableCell>
+                                        <TableCell>User</TableCell>
+                                        <TableCell>Action</TableCell>
+                                        <TableCell>Details</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {/* Mock History Data */}
+                                    <TableRow>
+                                        <TableCell>{journal.created_at || new Date().toISOString()}</TableCell>
+                                        <TableCell>{journal.created_by || 'System'}</TableCell>
+                                        <TableCell>Created</TableCell>
+                                        <TableCell>Journal entry created</TableCell>
+                                    </TableRow>
+                                    {journal.status === 'submitted' && (
+                                        <TableRow>
+                                            <TableCell>{journal.submitted_at}</TableCell>
+                                            <TableCell>Current User</TableCell>
+                                            <TableCell>Submitted</TableCell>
+                                            <TableCell>Submitted for approval</TableCell>
+                                        </TableRow>
+                                    )}
+                                    {journal.status === 'approved' && (
+                                        <TableRow>
+                                            <TableCell>{journal.approved_at}</TableCell>
+                                            <TableCell>Approver</TableCell>
+                                            <TableCell>Approved</TableCell>
+                                            <TableCell>Approved for posting</TableCell>
+                                        </TableRow>
+                                    )}
+                                    {journal.status === 'posted' && (
+                                        <TableRow>
+                                            <TableCell>{journal.posted_at}</TableCell>
+                                            <TableCell>Controller</TableCell>
+                                            <TableCell>Posted</TableCell>
+                                            <TableCell>Posted to General Ledger</TableCell>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Paper>
+                )
+            }
 
             {/* Footer Totals (Floating) */}
             <Paper
@@ -510,7 +846,7 @@ const JournalEntryManager = () => {
                     </Grid>
                 </Grid>
             </Paper>
-        </Box>
+        </Box >
     );
 };
 

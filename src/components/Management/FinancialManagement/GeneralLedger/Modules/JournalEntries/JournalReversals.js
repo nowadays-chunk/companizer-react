@@ -1,15 +1,14 @@
 import React from 'react';
-import { Box, Typography, Paper } from '@mui/material';
+import Management from '../../../../../../pages/Management';
 
 const JournalReversals = () => {
     return (
-        <Box p={3}>
-            <Typography variant="h4" gutterBottom>Reversals & Corrections</Typography>
-            <Paper sx={{ p: 3 }}>
-                <Typography>Handle reversals, corrections, and audit trail of changes.</Typography>
-                {/* Placeholder for Reversals Management */}
-            </Paper>
-        </Box>
+        <Management
+            module="financial-management"
+            subModule="general-ledger"
+            component="journal-entries"
+            initialFilters={[{ column: 'is_reversal', value: 'true', active: true }]}
+        />
     );
 };
 

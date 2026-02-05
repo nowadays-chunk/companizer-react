@@ -1,4 +1,3 @@
-
 export const fieldsConfig = {
 
   obligation_id: { label: 'Obligation ID', type: 'text', faker: 'datatype.uuid' },
@@ -8,8 +7,6 @@ export const fieldsConfig = {
   description: { label: 'Description', type: 'text', multiline: true, rows: 3, faker: 'lorem.paragraph' },
   due_date: { label: 'Due Date', type: 'date', faker: 'date.future' },
 
-  // Mandated
-  // Extras
   status: { label: 'Status', type: 'select', options: [{ id: 'pending', label: 'Pending' }, { id: 'fulfilled', label: 'Fulfilled' }, { id: 'breached', label: 'Breached' }], faker: 'random.arrayElement' },
   party_responsible: { label: 'Party Responsible', type: 'text', faker: 'company.name' }, // Us or Them
   penalty_clause: { label: 'Penalty', type: 'text', faker: 'lorem.sentence' },

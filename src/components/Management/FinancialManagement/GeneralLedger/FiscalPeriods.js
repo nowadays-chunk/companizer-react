@@ -1,3 +1,4 @@
+import { modules } from './Modules/FiscalPeriods';
 
 export const fieldsConfig = {
 
@@ -22,3 +23,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Fiscal Periods';
 export const collectionName = 'fiscal_periods';
+
+export { modules };

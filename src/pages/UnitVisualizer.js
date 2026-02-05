@@ -728,11 +728,11 @@ const Visualizer = (props) => {
                 </Box>
               )}
 
-              {/* 1.5. SPECIFIC MODULE ACTIONS */}
+              {/* 1.5. RELATED MODULES ACTIONS */}
               {logicConfig?.modules?.some(m => m.type === 'Specific') && (
                 <Box mb={2}>
                   <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.8rem', mb: 2, color: 'text.secondary' }}>
-                    Specific Actions
+                    Related Modules
                   </Typography>
                   <Box display="flex" flexWrap="wrap" gap={2}>
                     {logicConfig.modules.filter(m => m.type === 'Specific').map((mod, idx) => {

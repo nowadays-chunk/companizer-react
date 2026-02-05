@@ -89,6 +89,7 @@ export default function BaseTableComponent({
   onConfigure: onConfigureProp,
   onAdd: onAddProp, // Allow override of Add action
   modules, // NEW: Module configuration for General modules
+  initialFilters = [], // NEW: Allow pre-set filters
 }) {
   const { t } = useTranslation();
   const [refreshedFieldsConfig, setRefreshedFieldsConfig] = useState(fieldConfig);
@@ -101,7 +102,7 @@ export default function BaseTableComponent({
   const [rowsPerPage, setRowsPerPage] = useState(15);
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState(initialFilters);
   const [loading, setLoading] = useState(false);
   const [validationRules, setValidationRules] = useState([]);
 
@@ -391,7 +392,8 @@ export default function BaseTableComponent({
     }}>
       <Box sx={{ maxWidth: '100%', position: 'relative' }}>
         {/* Filter and Module Buttons Row */}
-        <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 2 }}>
+        {/* Filter and Module Buttons Row */}
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', gap: 2, mb: 2 }}>
           <FilterManager
             filters={filters}
             setFilters={setFilters}

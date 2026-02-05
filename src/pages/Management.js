@@ -9,8 +9,12 @@ const getPath = (path) => {
     return path.split('-').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join('');
 }
 
-function ManagementComponent({ showAnalytics }) {
-    const { module, subModule, component } = useParams();
+function ManagementComponent({ showAnalytics, ...props }) {
+    const params = useParams();
+    const module = props.module || params.module;
+    const subModule = props.subModule || params.subModule;
+    const component = props.component || params.component;
+
     const capitalizedModuleName = getPath(module);
     const capitalizedSubModuleName = getPath(subModule);
     const capitalizedComponentName = getPath(component);
@@ -82,6 +86,7 @@ function ManagementComponent({ showAnalytics }) {
                     deleteItem={config.deleteItem}
                     headCells={config.headCells}
                     modules={config.modules}
+                    initialFilters={props.initialFilters}
                     onConfigure={() => {
                         window.open(`/#/${module}/${subModule}/${component}/configuration`, '_blank');
                     }}

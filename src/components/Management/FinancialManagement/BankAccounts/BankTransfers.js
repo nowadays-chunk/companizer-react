@@ -1,4 +1,6 @@
 
+import { modules } from './Modules/BankTransfers';
+
 export const fieldsConfig = {
 
   transfer_id: { label: 'Transfer ID', type: 'text', faker: 'datatype.uuid' },
@@ -24,3 +26,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Bank Transfers';
 export const collectionName = 'bank_transfers';
+
+export { modules };

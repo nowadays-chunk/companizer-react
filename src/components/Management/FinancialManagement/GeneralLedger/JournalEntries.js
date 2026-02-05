@@ -1,3 +1,4 @@
+import { modules } from './Modules/JournalEntries';
 
 export const fieldsConfig = {
   // ==========================================
@@ -147,75 +148,4 @@ export const fieldsConfig = {
 export const entityName = 'Journal Entries';
 export const collectionName = 'journal_entries';
 
-export const modules = [
-  {
-    name: 'Journal Entry Manager',
-    type: 'Specific',
-    path: '/apps/general-ledger/journals',
-    icon: 'Description',
-    description: 'Create, edit, and manage manual and system journal entries.'
-  },
-  {
-    name: 'Recurring Journals',
-    type: 'Specific',
-    path: '/apps/general-ledger/journals/recurring',
-    icon: 'Repeat',
-    description: 'Manage recurring journal schedules, accruals, and deferrals.'
-  },
-  {
-    name: 'Journal Approvals',
-    type: 'Specific',
-    path: '/apps/general-ledger/journals/approvals',
-    icon: 'AssignmentTurnedIn',
-    description: 'Review and approve journals pending authorization.'
-  },
-  {
-    name: 'Period Close & Posting',
-    type: 'Specific',
-    path: '/apps/general-ledger/journals/posting',
-    icon: 'LockClock',
-    description: 'Manage accounting periods, batch posting, and soft/hard closes.'
-  },
-  {
-    name: 'Reversals & Corrections',
-    type: 'Specific',
-    path: '/apps/general-ledger/journals/reversals',
-    icon: 'History',
-    description: 'Handle reversals, corrections, and audit trail of changes.'
-  },
-  {
-    name: 'Allocations',
-    type: 'Specific',
-    path: '/apps/general-ledger/journals/allocations',
-    icon: 'PieChart',
-    description: 'Cost and revenue allocation cycles and distributions.'
-  },
-  {
-    name: 'Intercompany',
-    type: 'Specific',
-    path: '/apps/general-ledger/journals/intercompany',
-    icon: 'Business',
-    description: 'Intercompany settlements, eliminations, and reconciliation.'
-  },
-  {
-    name: 'Compliance & Audit',
-    type: 'Specific',
-    path: '/apps/general-ledger/journals/compliance',
-    icon: 'VerifiedUser',
-    description: 'SOX compliance, audit trails, and journal certification.'
-  },
-  {
-    name: 'Journal Analytics',
-    type: 'Specific',
-    path: '/apps/general-ledger/journals/analytics',
-    icon: 'Analytics',
-    description: 'Reporting, drill-down analysis, and anomaly detection.'
-  },
-  {
-    name: 'Admin Console',
-    type: 'Specific',
-    path: '/apps/general-ledger/journals/admin',
-    icon: 'Settings',
-    description: 'Configuration of journal sources, approval matrices, and rules.'
-  }
-];
+export { modules };

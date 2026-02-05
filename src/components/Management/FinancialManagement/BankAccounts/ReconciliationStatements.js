@@ -1,3 +1,4 @@
+import { modules } from './Modules/ReconciliationStatements';
 
 export const fieldsConfig = {
 
@@ -21,5 +22,8 @@ export const fieldsConfig = {
 };
 
 
+
 export const entityName = 'Reconciliation Statements';
 export const collectionName = 'reconciliation_statements';
+
+export { modules };

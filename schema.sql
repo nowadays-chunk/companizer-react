@@ -1,6 +1,161 @@
--- Auto-generated MySQL Schema
+-- DROP DATABASE IF EXISTS tailored_bridge_db;
+CREATE DATABASE tailored_bridge_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE tailored_bridge_db;
+ 
+-- UNLISTED
 
--- Main Entity Tables
+CREATE TABLE IF NOT EXISTS entity_rows_stack (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    stack_id BIGINT UNSIGNED NOT NULL COMMENT 'Common ID grouping multiple rows',
+    stack_name VARCHAR(191) NULL COMMENT 'Descriptive name for the stack',
+    entity_type VARCHAR(191) NOT NULL COMMENT 'Collection name (e.g., vendor_invoices)',
+    entity_row_id BIGINT UNSIGNED NOT NULL COMMENT 'ID of the entity row',
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    
+    INDEX idx_stack (stack_id),
+    INDEX idx_entity_row (entity_type, entity_row_id),
+    INDEX idx_stack_entity (stack_id, entity_type),
+    
+    UNIQUE KEY unique_stack_row (stack_id, entity_type, entity_row_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `entity_comments_history` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `organization_id` VARCHAR(255) NOT NULL,
+  `comment_id` CHAR(36),
+  `entity_type` VARCHAR(255),
+  `entity_id` CHAR(36),
+  `user_id` CHAR(36),
+  `author_name` VARCHAR(255),
+  `comment_text` TEXT,
+  `processing_step` VARCHAR(100),
+  `unit_price` DECIMAL(15,2),
+  `accountable_id` CHAR(36),
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `manager_action_logs` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `organization_id` VARCHAR(255) NOT NULL,
+  `log_id` CHAR(36),
+  `accountable_id` CHAR(36),
+  `action_type` VARCHAR(255),
+  `entity_type` VARCHAR(255),
+  `entity_id` CHAR(36),
+  `processing_step` VARCHAR(100),
+  `unit_price` DECIMAL(15,2),
+  `details` TEXT,
+  `ip_address` VARCHAR(255),
+  `status` VARCHAR(100),
+  `user_agent` VARCHAR(255),
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `entity_workflow_rules` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `organization_id` VARCHAR(255) NOT NULL,
+  `entity_type` VARCHAR(255),
+  `current_step` VARCHAR(255),
+  `action_name` VARCHAR(255),
+  `rule_type` VARCHAR(100),
+  `rule_value` VARCHAR(255),
+  `accountable_id` CHAR(36),
+  `error_message` VARCHAR(255),
+  `is_active` TINYINT(1) DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ============================================================================
+-- 1. Organizations Table
+-- ============================================================================
+CREATE TABLE IF NOT EXISTS organizations (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(191) NOT NULL UNIQUE,
+    domain VARCHAR(191) NOT NULL,
+    email VARCHAR(191) NOT NULL,
+    num_users INT NOT NULL DEFAULT 0,
+    num_stores INT NOT NULL DEFAULT 0,
+    price DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    tenant_id CHAR(36) NOT NULL,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+    
+    INDEX idx_org_name (name),
+    INDEX idx_tenant (tenant_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================================
+-- 2. Users Table
+-- ============================================================================
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    uuid CHAR(36) NOT NULL UNIQUE,
+    first_name VARCHAR(191) NOT NULL,
+    last_name VARCHAR(191) NOT NULL,
+    email VARCHAR(191) NOT NULL UNIQUE,
+    password_hash VARCHAR(191) NOT NULL,
+    role VARCHAR(50) NOT NULL DEFAULT 'user',
+    organization_id BIGINT UNSIGNED NOT NULL,
+    entity_id BIGINT UNSIGNED NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+    
+    INDEX idx_users_org (organization_id),
+    INDEX idx_users_email (email),
+    INDEX idx_users_role (role),
+    
+    CONSTRAINT fk_users_org FOREIGN KEY (organization_id)
+        REFERENCES organizations(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ============================================================================
+-- 3. Authorizations Table
+-- ============================================================================
+
+CREATE TABLE IF NOT EXISTS authorizations (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    
+    -- Who grants and who receives
+    accountable_id BIGINT UNSIGNED NOT NULL COMMENT 'User who created this authorization',
+    authorized_user_id BIGINT UNSIGNED NOT NULL COMMENT 'User receiving the authorization',
+    
+    -- What is authorized
+    authorized_role VARCHAR(50) NULL COMMENT 'Role granted (super_admin, admin, manager, etc)',
+    authorized_entity VARCHAR(191) NULL COMMENT 'Specific entity type authorized',
+    authorized_page VARCHAR(191) NULL COMMENT 'Page/route authorized',
+    authorized_actions VARCHAR(255) NULL COMMENT 'Array of actions: ["view","create","edit","delete","validate","approve"]',
+    
+    -- Specific entity row(s) authorization
+    entity_type VARCHAR(191) NULL COMMENT 'Collection name (e.g., cash_flow_forecasts)',
+    entity_row_id BIGINT UNSIGNED NULL COMMENT 'Specific row ID if single-row authorization',
+    entity_rows_stack_id BIGINT UNSIGNED NULL COMMENT 'Stack ID for bulk row authorization',
+    entity_row_processing_step VARCHAR(50) NULL COMMENT 'Workflow step restriction - auth invalid after this step',
+    
+    -- Time and operation bounds
+    authorization_start_date DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    authorization_end_date DATETIME(6) NULL COMMENT 'Optional expiry date',
+    authorization_end_operation VARCHAR(50) NULL COMMENT 'Operation that invalidates auth (e.g., "validated", "approved")',
+    
+    -- Status
+    is_active BOOLEAN DEFAULT TRUE,
+    notes TEXT NULL,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+    
+    INDEX idx_auth_user (authorized_user_id),
+    INDEX idx_auth_entity (entity_type, entity_row_id),
+    INDEX idx_auth_stack (entity_rows_stack_id),
+    INDEX idx_auth_active (is_active, authorization_end_date)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- LISTED
 
 CREATE TABLE IF NOT EXISTS `contract_obligations` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1429,27 +1584,44 @@ CREATE TABLE IF NOT EXISTS `payment_terms` (
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE vendor_invoices;
 
 CREATE TABLE IF NOT EXISTS `vendor_invoices` (
-  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `organization_id` VARCHAR(255) NOT NULL,
-  `invoice_id` CHAR(36),
-  `vendor_id` CHAR(36),
-  `accountable_id` CHAR(36),
-  `invoice_number` VARCHAR(255),
-  `invoice_date` DATE,
-  `due_date` DATE,
-  `total_amount` DECIMAL(15,2),
-  `status` VARCHAR(100),
-  `order_id` CHAR(36),
-  `currency` VARCHAR(255),
-  `payment_method` VARCHAR(100),
-  `notes` VARCHAR(255),
-  `processing_step` VARCHAR(100),
-  `total_price` DECIMAL(15,2),
-  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `organization_id` VARCHAR(255) NOT NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `invoice_id` VARCHAR(255) DEFAULT NULL,
+    `vendor_id` VARCHAR(255) NOT NULL,
+    `invoice_number` VARCHAR(255) NOT NULL,
+    `invoice_date` DATE NOT NULL,
+    `due_date` DATE NOT NULL,
+    `posting_date` DATE DEFAULT NULL,
+    `currency` VARCHAR(100) NOT NULL,
+    `total_amount` INT NOT NULL,
+    `tax_amount` INT DEFAULT NULL,
+    `net_amount` INT DEFAULT NULL,
+    `discount_amount` INT DEFAULT NULL,
+    `po_number` VARCHAR(255) DEFAULT NULL,
+    `grn_number` VARCHAR(255) DEFAULT NULL,
+    `match_status` VARCHAR(100) DEFAULT NULL,
+    `variance_amount` INT DEFAULT NULL,
+    `payment_terms` VARCHAR(255) NOT NULL,
+    `payment_method` VARCHAR(100) DEFAULT NULL,
+    `payment_status` VARCHAR(100) DEFAULT NULL,
+    `early_payment_discount_date` DATE DEFAULT NULL,
+    `gl_account` VARCHAR(255) DEFAULT NULL,
+    `cost_center` VARCHAR(255) DEFAULT NULL,
+    `project_code` VARCHAR(255) DEFAULT NULL,
+    `department` VARCHAR(255) DEFAULT NULL,
+    `is_intercompany` VARCHAR(255) DEFAULT NULL,
+    `source` VARCHAR(100) DEFAULT NULL,
+    `ocr_confidence` INT DEFAULT NULL,
+    `status` VARCHAR(100) DEFAULT NULL,
+    `notes` VARCHAR(255) DEFAULT NULL,
+    `processing_step` VARCHAR(255) DEFAULT NULL,
+    `accountable_id` VARCHAR(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `credit_management` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1735,24 +1907,25 @@ CREATE TABLE IF NOT EXISTS `journal_entries` (
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+DROP TABLE trial_balance;
 CREATE TABLE IF NOT EXISTS `trial_balance` (
-  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `organization_id` VARCHAR(255) NOT NULL,
-  `tb_id` CHAR(36),
-  `period_id` CHAR(36),
-  `accountable_id` CHAR(36),
-  `report_date` DATE,
-  `total_debits` DECIMAL(15,2),
-  `total_credits` DECIMAL(15,2),
-  `difference` DECIMAL(15,2),
-  `is_balanced` TINYINT(1) DEFAULT 0,
-  `generated_by` VARCHAR(255),
-  `notes` VARCHAR(255),
-  `processing_step` VARCHAR(100),
-  `total_price` DECIMAL(15,2),
-  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `tb_id` VARCHAR(255) COMMENT 'TB ID',
+    `period_id` VARCHAR(255) COMMENT 'Period ID',
+    `accountable_id` VARCHAR(255) COMMENT 'Accountable ID',
+    `report_date` DATE COMMENT 'Report Date',
+    `total_debits` DECIMAL(15, 2) DEFAULT 0 COMMENT 'Total Debits',
+    `total_credits` DECIMAL(15, 2) DEFAULT 0 COMMENT 'Total Credits',
+    `difference` DECIMAL(15, 2) DEFAULT 0 COMMENT 'Difference',
+    `is_balanced` VARCHAR(255) COMMENT 'Is Balanced',
+    `generated_by` VARCHAR(255) COMMENT 'Generated By',
+    `notes` VARCHAR(255) COMMENT 'Notes',
+	`organization_id` VARCHAR(255) NOT NULL,
+    `processing_step` VARCHAR(50) COMMENT 'Processing Step',
+    `total_price` DECIMAL(15, 2) DEFAULT 0 COMMENT 'Total Price',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `equity_investments` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

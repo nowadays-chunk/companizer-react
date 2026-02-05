@@ -27,7 +27,6 @@ import ConfigurablePdf from './pages/ConfigurablePdf';
 import { OrganizationsPage, UsersPage, AuthorizationsPage } from './pages/RBACPages';
 import { AuthProvider } from './contexts/AuthContext';
 import AdminConsole from './pages/AdminConsole';
-import PersonalizedDashboard from './pages/PersonalizedDashboard';
 import TaskManager from './pages/TaskManager';
 import AdminExport from './pages/AdminExport';
 import BusinessRulesManager from './pages/BusinessRulesManager';
@@ -62,7 +61,64 @@ import RiskAndCollections from './components/Management/FinancialManagement/Acco
 import DebtorCashForecast from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/CashForecast';
 import AgingConfiguration from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/AgingConfiguration';
 
+import AccountDetails from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/AccountDetails';
+import AccountAudit from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/AccountAudit';
+import IntercompanySettings from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/IntercompanySettings';
+
+import JournalReports from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/JournalReports';
+import RecurringJournals from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/RecurringJournals';
+import JournalApprovals from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/JournalApprovals';
+import JournalPosting from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/JournalPosting';
+import JournalReversals from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/JournalReversals';
+import JournalAllocations from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/JournalAllocations';
+import IntercompanyJournals from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/IntercompanyJournals';
+import JournalCompliance from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/JournalCompliance';
+import JournalAnalytics from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/JournalAnalytics';
+import JournalAdmin from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/JournalAdmin';
 import JournalEntryManager from './components/Management/FinancialManagement/GeneralLedger/Modules/JournalEntries/JournalEntryManager';
+
+// Chart of Accounts Modules
+import AccountHierarchy from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/AccountHierarchy';
+import SegmentConfiguration from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/SegmentConfiguration';
+import AccountTemplates from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/AccountTemplates';
+import PostingControls from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/PostingControls';
+import StatementMapping from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/StatementMapping';
+import SubledgerIntegration from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/SubledgerIntegration';
+import CoAAdmin from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/CoAAdmin';
+import CoAReports from './components/Management/FinancialManagement/GeneralLedger/Modules/ChartOfAccounts/CoAReports';
+
+// Trial Balance Modules
+import TrialBalanceStandard from './components/Management/FinancialManagement/GeneralLedger/Modules/TrialBalance/TrialBalanceStandard';
+import TrialBalanceComparative from './components/Management/FinancialManagement/GeneralLedger/Modules/TrialBalance/TrialBalanceComparative';
+import TrialBalanceClosing from './components/Management/FinancialManagement/GeneralLedger/Modules/TrialBalance/TrialBalanceClosing';
+import TrialBalanceAudit from './components/Management/FinancialManagement/GeneralLedger/Modules/TrialBalance/TrialBalanceAudit';
+import TrialBalanceConfig from './components/Management/FinancialManagement/GeneralLedger/Modules/TrialBalance/TrialBalanceConfig';
+
+
+// Reconciliation Statements Modules
+import ReconciliationDashboard from './components/Management/FinancialManagement/BankAccounts/Modules/ReconciliationStatements/ReconciliationDashboard';
+import BankReconciliation from './components/Management/FinancialManagement/BankAccounts/Modules/ReconciliationStatements/BankReconciliation';
+import ImportDataFeeds from './components/Management/FinancialManagement/BankAccounts/Modules/ReconciliationStatements/ImportDataFeeds';
+import MatchingRulesEngine from './components/Management/FinancialManagement/BankAccounts/Modules/ReconciliationStatements/MatchingRulesEngine';
+import ReconcilingItems from './components/Management/FinancialManagement/BankAccounts/Modules/ReconciliationStatements/ReconcilingItems';
+import IntercompanyReconciliation from './components/Management/FinancialManagement/BankAccounts/Modules/ReconciliationStatements/IntercompanyReconciliation';
+import BalanceSheetReconciliation from './components/Management/FinancialManagement/BankAccounts/Modules/ReconciliationStatements/BalanceSheetReconciliation';
+import ReconciliationWorkflow from './components/Management/FinancialManagement/BankAccounts/Modules/ReconciliationStatements/ReconciliationWorkflow';
+import ReconciliationReports from './components/Management/FinancialManagement/BankAccounts/Modules/ReconciliationStatements/ReconciliationReports';
+import ReconciliationSettings from './components/Management/FinancialManagement/BankAccounts/Modules/ReconciliationStatements/ReconciliationSettings';
+
+// Bank Transfers Modules
+import TransferDashboard from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/TransferDashboard';
+import TransferEntry from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/TransferEntry';
+import ApprovalWorkflow from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/ApprovalWorkflow';
+import ExecutionConnectivity from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/ExecutionConnectivity';
+import FXManager from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/FXManager';
+import AccountingIntegration from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/AccountingIntegration';
+import IntercompanyManager from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/IntercompanyManager';
+import ReconciliationStatus from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/ReconciliationStatus';
+import AutomationRules from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/AutomationRules';
+import TransferHistory from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/TransferHistory';
+
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -460,6 +516,127 @@ const App = () => {
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
+                      <Management module="financial-management" subModule="general-ledger" component="journal-entries" />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/recurring"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <RecurringJournals />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/approvals"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalApprovals />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/posting"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalPosting />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/:id/reversals"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalReversals />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/allocations"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalAllocations />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/intercompany"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <IntercompanyJournals />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/compliance"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalCompliance />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/apps/general-ledger/journals/reports"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalReports />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/admin"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalAdmin />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/create"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalEntryManager />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/view/:id"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <JournalEntryManager />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/journals/edit/:id"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
                       <JournalEntryManager />
                     </Dashboard>
                   </ProtectedRoute>
@@ -476,17 +653,526 @@ const App = () => {
                 }
               />
 
+              {/* General Ledger - Trial Balance */}
+              <Route
+                path="/apps/general-ledger/trial-balance/standard"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <TrialBalanceStandard />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/trial-balance/comparative"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <TrialBalanceComparative />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/trial-balance/closing"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <TrialBalanceClosing />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/trial-balance/audit"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <TrialBalanceAudit />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/general-ledger/trial-balance/config"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <TrialBalanceConfig />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* General Ledger - Chart of Accounts */}
+              <Route
+                path="/apps/chart-of-accounts/hierarchy"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AccountHierarchy />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/chart-of-accounts/segments"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <SegmentConfiguration />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/chart-of-accounts/templates"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AccountTemplates />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/chart-of-accounts/posting-controls"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <PostingControls />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/chart-of-accounts/statements"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <StatementMapping />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/chart-of-accounts/subledgers"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <SubledgerIntegration />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/chart-of-accounts/admin"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <CoAAdmin />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/chart-of-accounts/:id/details"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AccountDetails />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/chart-of-accounts/:id/audit"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AccountAudit />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/chart-of-accounts/:id/intercompany"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <IntercompanySettings />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/chart-of-accounts/reports"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <CoAReports />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* ========================================================= */}
+              {/* Bank Accounts - Reconciliation Statements                 */}
+              {/* ========================================================= */}
+              <Route
+                path="/apps/bank-accounts/reconciliation/dashboard"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ReconciliationDashboard />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/reconciliation/matching"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <BankReconciliation />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/reconciliation/import"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ImportDataFeeds />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/reconciliation/rules"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <MatchingRulesEngine />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/reconciliation/items"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ReconcilingItems />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/reconciliation/intercompany"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <IntercompanyReconciliation />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/reconciliation/balance-sheet"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <BalanceSheetReconciliation />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/reconciliation/workflow"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ReconciliationWorkflow />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/reconciliation/reports"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ReconciliationReports />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/reconciliation/settings"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ReconciliationSettings />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* ========================================================= */}
+              {/* Bank Accounts - Bank Transfers                            */}
+              {/* ========================================================= */}
+              <Route
+                path="/apps/bank-accounts/transfers/dashboard"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <TransferDashboard />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/transfers/entry"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <TransferEntry />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/transfers/approvals"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ApprovalWorkflow />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/transfers/execution"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ExecutionConnectivity />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/transfers/fx"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <FXManager />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/transfers/accounting"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AccountingIntegration />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/transfers/intercompany"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <IntercompanyManager />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/transfers/reconciliation"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ReconciliationStatus />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/transfers/automation"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AutomationRules />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/bank-accounts/transfers/history"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <TransferHistory />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
               {/* ========================================================= */}
               {/* Customer Invoices (Accounts Receivable) Modules           */}
               {/* ========================================================= */}
 
               {/* Invoice Generator */}
               <Route
-                path="/apps/customer-invoices/generator"
+                path="/apps/customer-invoices/generate"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
                       <InvoiceGenerator />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* ========================================================= */}
+              {/* Fiscal Periods (Financial Management) Modules             */}
+              {/* ========================================================= */}
+
+              <Route
+                path="/apps/fiscal-periods/calendar-setup"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/FiscalCalendarSetup')))}
+                      </React.Suspense>
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/fiscal-periods/period-definition"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/FiscalPeriodDefinition')))}
+                      </React.Suspense>
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/fiscal-periods/status-manager"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/PeriodStatusManager')))}
+                      </React.Suspense>
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/fiscal-periods/posting-controls"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/PostingControls')))}
+                      </React.Suspense>
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/fiscal-periods/close-process"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/CloseProcessManager')))}
+                      </React.Suspense>
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/fiscal-periods/adjustment-periods"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/AdjustmentPeriods')))}
+                      </React.Suspense>
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/fiscal-periods/multi-entity"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/MultiEntityPeriods')))}
+                      </React.Suspense>
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/fiscal-periods/parallel-ledgers"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/ParallelLedgers')))}
+                      </React.Suspense>
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/fiscal-periods/security"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/PeriodSecurity')))}
+                      </React.Suspense>
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/fiscal-periods/automation"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/PeriodAutomation')))}
+                      </React.Suspense>
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/fiscal-periods/reporting"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <React.Suspense fallback={<CircularProgress />}>
+                        {React.createElement(React.lazy(() => import('./components/Management/FinancialManagement/GeneralLedger/Modules/FiscalPeriods/FiscalReporting')))}
+                      </React.Suspense>
                     </Dashboard>
                   </ProtectedRoute>
                 }
