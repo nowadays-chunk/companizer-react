@@ -1,3 +1,4 @@
+import { modules } from './Modules/FixedIncomeInvestments';
 
 export const fieldsConfig = {
 
@@ -23,3 +24,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Fixed Income Investments';
 export const collectionName = 'fixed_income_investments';
+
+export { modules };

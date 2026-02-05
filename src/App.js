@@ -123,6 +123,7 @@ import { modules as LoanAgreementModules } from './components/Management/Financi
 import { modules as InterestPaymentModules } from './components/Management/FinancialManagement/Debts/Modules/InterestPayments';
 import { modules as DebtMaturityModules } from './components/Management/FinancialManagement/Debts/Modules/DebtMaturitySchedules';
 import { modules as EquityInvestmentModules } from './components/Management/FinancialManagement/Investments/Modules/EquityInvestments';
+import { modules as FixedIncomeInvestmentModules } from './components/Management/FinancialManagement/Investments/Modules/FixedIncomeInvestments';
 
 
 // If you enable Stripe again later, restore this:
@@ -1442,6 +1443,25 @@ const App = () => {
               {/* Investments - Equity Investments Modules                  */}
               {/* ========================================================= */}
               {EquityInvestmentModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Investments - Fixed Income Investments Modules            */}
+              {/* ========================================================= */}
+              {FixedIncomeInvestmentModules.map((module) => (
                 <Route
                   key={module.id}
                   path={module.path}
