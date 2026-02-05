@@ -1,3 +1,4 @@
+import { modules } from './Modules/InterestPayments';
 
 export const fieldsConfig = {
 
@@ -22,3 +23,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Interest Payments';
 export const collectionName = 'interest_payments';
+
+export { modules };

@@ -120,6 +120,7 @@ import AutomationRules from './components/Management/FinancialManagement/BankAcc
 import TransferHistory from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/TransferHistory';
 import { modules as ForeignCurrencyModules } from './components/Management/FinancialManagement/BankAccounts/Modules/ForeignCurrencyAccounts';
 import { modules as LoanAgreementModules } from './components/Management/FinancialManagement/Debts/Modules/LoanAgreements';
+import { modules as InterestPaymentModules } from './components/Management/FinancialManagement/Debts/Modules/InterestPayments';
 
 
 // If you enable Stripe again later, restore this:
@@ -1381,6 +1382,25 @@ const App = () => {
               {/* Debts - Loan Agreements Modules                           */}
               {/* ========================================================= */}
               {LoanAgreementModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Debts - Interest Payments Modules                         */}
+              {/* ========================================================= */}
+              {InterestPaymentModules.map((module) => (
                 <Route
                   key={module.id}
                   path={module.path}
