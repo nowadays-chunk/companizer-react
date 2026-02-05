@@ -1,3 +1,4 @@
+import { modules } from './Modules/ForeignCurrencyAccounts';
 
 export const fieldsConfig = {
 
@@ -23,3 +24,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Foreign Currency Accounts';
 export const collectionName = 'foreign_currency_accounts';
+
+export { modules };

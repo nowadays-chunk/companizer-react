@@ -118,6 +118,7 @@ import IntercompanyManager from './components/Management/FinancialManagement/Ban
 import ReconciliationStatus from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/ReconciliationStatus';
 import AutomationRules from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/AutomationRules';
 import TransferHistory from './components/Management/FinancialManagement/BankAccounts/Modules/BankTransfers/TransferHistory';
+import { modules as ForeignCurrencyModules } from './components/Management/FinancialManagement/BankAccounts/Modules/ForeignCurrencyAccounts';
 
 
 // If you enable Stripe again later, restore this:
@@ -1024,6 +1025,27 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
+
+
+              {/* ========================================================= */}
+              {/* Bank Accounts - Foreign Currency Accounts                 */}
+              {/* ========================================================= */}
+              {ForeignCurrencyModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
 
               {/* ========================================================= */}
               {/* Customer Invoices (Accounts Receivable) Modules           */}

@@ -1,12 +1,14 @@
 // Creditors Ledger Modules Configuration
 // Links analytical modules to the Creditors Ledger entity
 
-import AgingAnalysis from './AgingAnalysis';
-import ReconciliationManager from './ReconciliationManager';
-import CashForecast from './CashForecast';
-import DPOAnalytics from './DPOAnalytics';
-import DisputeManager from './DisputeManager';
-import VendorStatement from './VendorStatement';
+import React, { lazy } from 'react';
+
+const AgingAnalysis = lazy(() => import('./AgingAnalysis'));
+const ReconciliationManager = lazy(() => import('./ReconciliationManager'));
+const CashForecast = lazy(() => import('./CashForecast'));
+const DPOAnalytics = lazy(() => import('./DPOAnalytics'));
+const DisputeManager = lazy(() => import('./DisputeManager'));
+const VendorStatement = lazy(() => import('./VendorStatement'));
 
 export const modules = [
     {

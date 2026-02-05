@@ -1,4 +1,4 @@
-import modules from './Modules/CreditorsLedger';
+import modules from './Modules/CreditorsLedger/index.js';
 
 export const fieldsConfig = {
   // ==========================================
