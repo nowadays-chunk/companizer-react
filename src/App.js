@@ -121,6 +121,8 @@ import TransferHistory from './components/Management/FinancialManagement/BankAcc
 import { modules as ForeignCurrencyModules } from './components/Management/FinancialManagement/BankAccounts/Modules/ForeignCurrencyAccounts';
 import { modules as LoanAgreementModules } from './components/Management/FinancialManagement/Debts/Modules/LoanAgreements';
 import { modules as InterestPaymentModules } from './components/Management/FinancialManagement/Debts/Modules/InterestPayments';
+import { modules as DebtMaturityModules } from './components/Management/FinancialManagement/Debts/Modules/DebtMaturitySchedules';
+import { modules as EquityInvestmentModules } from './components/Management/FinancialManagement/Investments/Modules/EquityInvestments';
 
 
 // If you enable Stripe again later, restore this:
@@ -1401,6 +1403,45 @@ const App = () => {
               {/* Debts - Interest Payments Modules                         */}
               {/* ========================================================= */}
               {InterestPaymentModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+
+              {/* ========================================================= */}
+              {/* Debts - Debt Maturity Schedules Module                    */}
+              {/* ========================================================= */}
+              {DebtMaturityModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Investments - Equity Investments Modules                  */}
+              {/* ========================================================= */}
+              {EquityInvestmentModules.map((module) => (
                 <Route
                   key={module.id}
                   path={module.path}

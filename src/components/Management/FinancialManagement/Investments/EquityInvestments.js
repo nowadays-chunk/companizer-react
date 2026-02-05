@@ -1,3 +1,4 @@
+import { modules } from './Modules/EquityInvestments';
 
 export const fieldsConfig = {
 
@@ -18,7 +19,6 @@ export const fieldsConfig = {
   unrealized_gain_loss: { label: 'Unrealized Gain/Loss', type: 'number', faker: 'finance.amount' },
   purchase_date: { label: 'Purchase Date', type: 'date', faker: 'date.past' },
   dividend_yield: { label: 'Dividend Yield', type: 'number', faker: 'datatype.float' },
-  e: 'text', faker: 'lorem.word',
   processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }], faker: 'random.arrayElement' },
   total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
@@ -26,3 +26,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Equity Investments';
 export const collectionName = 'equity_investments';
+
+export { modules };

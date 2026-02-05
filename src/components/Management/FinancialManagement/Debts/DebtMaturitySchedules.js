@@ -1,3 +1,4 @@
+import { modules } from './Modules/DebtMaturitySchedules';
 
 export const fieldsConfig = {
 
@@ -20,3 +21,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Debt Maturity Schedules';
 export const collectionName = 'debt_maturity_schedules';
+
+export { modules };
