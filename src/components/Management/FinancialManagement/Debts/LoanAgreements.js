@@ -1,3 +1,4 @@
+import { modules } from './Modules/LoanAgreements';
 
 export const fieldsConfig = {
 
@@ -23,3 +24,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Loan Agreements';
 export const collectionName = 'loan_agreements';
+
+export { modules };
