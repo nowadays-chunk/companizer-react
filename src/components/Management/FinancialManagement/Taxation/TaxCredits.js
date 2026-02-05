@@ -1,3 +1,4 @@
+import modules from './Modules/TaxCredits';
 
 export const fieldsConfig = {
 
@@ -22,3 +23,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Tax Credits';
 export const collectionName = 'tax_credits';
+
+export { modules };

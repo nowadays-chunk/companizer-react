@@ -126,6 +126,7 @@ import { modules as EquityInvestmentModules } from './components/Management/Fina
 import { modules as FixedIncomeInvestmentModules } from './components/Management/FinancialManagement/Investments/Modules/FixedIncomeInvestments';
 import { modules as InvestmentReturnModules } from './components/Management/FinancialManagement/Investments/Modules/InvestmentReturns';
 import { modules as TaxFilingsModules } from './components/Management/FinancialManagement/Taxation/TaxFilings';
+import { modules as TaxCreditsModules } from './components/Management/FinancialManagement/Taxation/TaxCredits';
 
 
 // If you enable Stripe again later, restore this:
@@ -1502,6 +1503,25 @@ const App = () => {
               {/* Taxation - Tax Filings Modules                            */}
               {/* ========================================================= */}
               {TaxFilingsModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Taxation - Tax Credits Modules                            */}
+              {/* ========================================================= */}
+              {TaxCreditsModules.map((module) => (
                 <Route
                   key={module.id}
                   path={module.path}
