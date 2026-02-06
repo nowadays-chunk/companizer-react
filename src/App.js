@@ -146,6 +146,26 @@ import RulesEngine from './components/Management/FinancialManagement/Taxation/Mo
 import SecurityPermissions from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/SecurityPermissions';
 import SystemIntegration from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/SystemIntegration';
 
+// Tax Audits Module Imports
+import AuditCaseManagement from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditCaseManagement';
+import AuditDocumentManagement from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditDocumentManagement';
+import AuditRequestsResponses from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditRequestsResponses';
+import AuditFindingsAdjustments from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditFindingsAdjustments';
+import PenaltiesInterestAssessments from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/PenaltiesInterestAssessments';
+import AppealsDisputeManagement from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AppealsDisputeManagement';
+import AccountingGLIntegration from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AccountingGLIntegration';
+import AuditTrailHistory from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditTrailHistory';
+import AuditConsolidation from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditConsolidation';
+import AuditReportingAnalytics from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditReportingAnalytics';
+import AuditWorkflowApprovals from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditWorkflowApprovals';
+import TaxEcosystemIntegration from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/TaxEcosystemIntegration';
+import ComplianceDeadlines from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/ComplianceDeadlines';
+import InternalControlsRisk from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/InternalControlsRisk';
+import AuditSecurityAccess from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditSecurityAccess';
+import AuditDashboard from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditDashboard';
+import AuditAutomationIntelligence from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditAutomationIntelligence';
+import DataIntegrityPeriodControls from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/DataIntegrityPeriodControls';
+
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -1791,6 +1811,188 @@ const App = () => {
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
                       <SystemIntegration />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Tax Audits Modules */}
+              <Route
+                path="/apps/tax-audits/cases"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditCaseManagement />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/documents"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditDocumentManagement />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/requests"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditRequestsResponses />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/findings"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditFindingsAdjustments />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/penalties"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <PenaltiesInterestAssessments />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/appeals"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AppealsDisputeManagement />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/accounting"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AccountingGLIntegration />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/history"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditTrailHistory />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/consolidation"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditConsolidation />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/analytics"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditReportingAnalytics />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/workflow"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditWorkflowApprovals />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/integration"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <TaxEcosystemIntegration />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/deadlines"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ComplianceDeadlines />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/risk"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <InternalControlsRisk />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/security"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditSecurityAccess />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/dashboard"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditDashboard />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/automation"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AuditAutomationIntelligence />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/tax-audits/integrity"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <DataIntegrityPeriodControls />
                     </Dashboard>
                   </ProtectedRoute>
                 }
