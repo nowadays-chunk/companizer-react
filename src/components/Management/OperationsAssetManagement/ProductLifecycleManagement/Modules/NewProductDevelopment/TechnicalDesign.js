@@ -14,7 +14,8 @@ import {
     TableHead,
     TableRow,
     Paper,
-    Chip
+    Chip,
+    List, ListItem, ListItemIcon, ListItemText
 } from '@mui/material';
 import {
     Architecture,
@@ -118,7 +119,5 @@ const TechnicalDesign = () => {
         </Box>
     );
 };
-
-import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 
 export default TechnicalDesign;
