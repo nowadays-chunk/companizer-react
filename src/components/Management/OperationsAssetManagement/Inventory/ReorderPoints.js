@@ -1,3 +1,5 @@
+import { modules } from './Modules/ReorderPoints';
+export { modules };
 
 export const fieldsConfig = {
 

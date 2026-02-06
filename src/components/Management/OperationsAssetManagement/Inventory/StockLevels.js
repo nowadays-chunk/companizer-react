@@ -1,3 +1,5 @@
+import { modules } from './Modules/StockLevels';
+export { modules };
 
 export const fieldsConfig = {
 

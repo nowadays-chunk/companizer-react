@@ -1,3 +1,5 @@
+import { modules } from './Modules/InventoryValuation';
+export { modules };
 
 export const fieldsConfig = {
 

@@ -1,3 +1,5 @@
+import { modules } from './Modules/InventoryAging';
+export { modules };
 
 export const fieldsConfig = {
 

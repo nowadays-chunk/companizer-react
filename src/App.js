@@ -53,7 +53,7 @@ import RiskEngine from './components/Management/FinancialManagement/AccountsRece
 import ExposureManager from './components/Management/FinancialManagement/AccountsReceivable/Modules/CreditManagement/ExposureManager';
 import GovernanceConsole from './components/Management/FinancialManagement/AccountsReceivable/Modules/CreditManagement/GovernanceConsole';
 
-import AgingDashboard from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/AgingDashboard';
+import DebtorAgingDashboard from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/AgingDashboard';
 // Renaming import to avoid conflict with CreditorsLedger/AgingAnalysis
 import DebtorAgingAnalysis from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/AgingAnalysis';
 import RiskAndCollections from './components/Management/FinancialManagement/AccountsReceivable/Modules/DebtorAging/RiskAndCollections';
@@ -137,6 +137,7 @@ import { modules as ProductAttributeModules } from './components/Management/Oper
 import { modules as NPDModules } from './components/Management/OperationsAssetManagement/ProductLifecycleManagement/NewProductDevelopment';
 import { modules as ProductUpdatesModules } from './components/Management/OperationsAssetManagement/ProductLifecycleManagement/ProductUpdates';
 import { modules as ProductDiscontinuationModules } from './components/Management/OperationsAssetManagement/ProductLifecycleManagement/ProductDiscontinuation';
+import { modules as StockLevelsModules } from './components/Management/OperationsAssetManagement/Inventory/StockLevels';
 
 import WithholdingTaxMasterData from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/WithholdingTaxMasterData';
 import CounterpartyTaxProfiles from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/CounterpartyTaxProfiles';
@@ -153,7 +154,7 @@ import StatusTracking from './components/Management/FinancialManagement/Taxation
 import MultiJurisdictionTreaty from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/MultiJurisdictionTreaty';
 import ReportingAnalytics from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/ReportingAnalytics';
 import RulesEngine from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/RulesEngine';
-import SecurityPermissions from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/SecurityPermissions';
+import TaxationSecurityPermissions from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/SecurityPermissions';
 import SystemIntegration from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/SystemIntegration';
 
 // Tax Audits Module Imports
@@ -250,6 +251,66 @@ import ForecastAccuracyTracking from './components/Management/FinancialManagemen
 import ExternalDataIntegration from './components/Management/FinancialManagement/Budget/Modules/Forecasting/ExternalDataIntegration';
 import ConsolidatedForecastReports from './components/Management/FinancialManagement/Budget/Modules/Forecasting/ConsolidatedForecastReports';
 import ForecastVersionControl from './components/Management/FinancialManagement/Budget/Modules/Forecasting/ForecastVersionControl';
+
+// Reorder Points Module Imports
+import ReorderPointMaster from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/ReorderPointMaster';
+import AutoReplenishment from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/AutoReplenishment';
+import DemandAnalysis from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/DemandAnalysis';
+import LeadTimeManagement from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/LeadTimeManagement';
+import ReplenishmentTriggers from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/ReplenishmentTriggers';
+import ReorderApprovalWorkflow from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/ApprovalWorkflow';
+import PurchaseIntegration from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/PurchaseIntegration';
+import MultiWarehousePlanning from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/MultiWarehousePlanning';
+import FinancialImpact from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/FinancialImpact';
+import ExceptionAlerts from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/ExceptionAlerts';
+import ScenarioSimulation from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/ScenarioSimulation';
+import IntegrationStatus from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/IntegrationStatus';
+import ReorderAnalytics from './components/Management/OperationsAssetManagement/Inventory/Modules/ReorderPoints/ReorderAnalytics';
+
+// Inventory Valuation Module Imports
+import ValuationMethods from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/ValuationMethods';
+import ValuationProcessing from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/ValuationProcessing';
+import TransactionValuation from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/TransactionValuation';
+import MultiEntityValuation from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/MultiEntityValuation';
+import ProductCosting from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/ProductCosting';
+import BatchSerialValuation from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/BatchSerialValuation';
+import CostAdjustments from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/CostAdjustments';
+import InventoryValuationGLIntegration from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/GLIntegration';
+import ValuationAging from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/ValuationAging';
+import CurrencyValuation from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/CurrencyValuation';
+import ValuationAnalytics from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/ValuationAnalytics';
+import ValuationApprovals from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/ValuationApprovals';
+import ValuationSimulation from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/ValuationSimulation';
+import ValuationAutomation from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/ValuationAutomation';
+import InventoryValuationSecurityPermissions from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryValuation/SecurityPermissions';
+
+// Inventory Aging Module Imports
+import AgingCalculation from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryAging/AgingCalculation';
+import StockSegmentation from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryAging/StockSegmentation';
+import ValuationIntegration from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryAging/ValuationIntegration';
+import AgingAlerts from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryAging/AgingAlerts';
+import InventoryAgingDashboard from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryAging/InventoryAgingDashboard';
+import ProcurementIntegration from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryAging/ProcurementIntegration';
+import LifecycleManagement from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryAging/LifecycleManagement';
+import MultiEntityAging from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryAging/MultiEntityAging';
+import AgingAutomation from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryAging/AgingAutomation';
+import InventoryAgingSecurityPermissions from './components/Management/OperationsAssetManagement/Inventory/Modules/InventoryAging/SecurityPermissions';
+
+// Asset Depreciation Module Imports
+import AssetMasterIntegration from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/AssetMasterIntegration';
+import DepreciationMethods from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/DepreciationMethods';
+import DepreciationSchedule from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/DepreciationSchedule';
+import MultiEntityDepreciation from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/MultiEntityDepreciation';
+import AssetRevaluation from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/AssetRevaluation';
+import AssetDepreciationGLIntegration from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/GLIntegration';
+import AssetLifecycle from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/AssetLifecycle';
+import DepreciationAnalytics from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/DepreciationAnalytics';
+import TaxDepreciation from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/TaxDepreciation';
+import AdjustmentGovernance from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/AdjustmentGovernance';
+import DepreciationAutomation from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/DepreciationAutomation';
+import AssetDepreciationSecurityPermissions from './components/Management/OperationsAssetManagement/Assets/Modules/AssetDepreciation/SecurityPermissions';
+
+
 
 
 // If you enable Stripe again later, restore this:
@@ -1453,7 +1514,7 @@ const App = () => {
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
-                      <AgingDashboard />
+                      <DebtorAgingDashboard />
                     </Dashboard>
                   </ProtectedRoute>
                 }
@@ -1850,6 +1911,25 @@ const App = () => {
                 />
               ))}
 
+              {/* ========================================================= */}
+              {/* Inventory - Stock Levels                                  */}
+              {/* ========================================================= */}
+              {StockLevelsModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
               {/* Business Rules Manager Route */}
               <Route
                 path="/admin/business-rules"
@@ -2075,7 +2155,7 @@ const App = () => {
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
-                      <SecurityPermissions />
+                      <TaxationSecurityPermissions />
                     </Dashboard>
                   </ProtectedRoute>
                 }
@@ -2347,6 +2427,64 @@ const App = () => {
               <Route path="/apps/financial-forecasting/external-data" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ExternalDataIntegration /></Dashboard></ProtectedRoute>} />
               <Route path="/apps/financial-forecasting/reports" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ConsolidatedForecastReports /></Dashboard></ProtectedRoute>} />
               <Route path="/apps/financial-forecasting/versions" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ForecastVersionControl /></Dashboard></ProtectedRoute>} />
+
+              {/* Reorder Points Modules */}
+              <Route path="/apps/inventory/reorder-points/master" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ReorderPointMaster /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/auto-replenishment" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AutoReplenishment /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/demand-analysis" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><DemandAnalysis /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/lead-time" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><LeadTimeManagement /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/triggers" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ReplenishmentTriggers /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/approvals" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ReorderApprovalWorkflow /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/purchase-integration" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><PurchaseIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/multi-warehouse" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><MultiWarehousePlanning /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/financial-impact" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><FinancialImpact /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/exception-alerts" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ExceptionAlerts /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/scenarios" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ScenarioSimulation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/integration-status" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><IntegrationStatus /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/reorder-points/analytics" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ReorderAnalytics /></Dashboard></ProtectedRoute>} />
+
+              {/* Inventory Valuation Modules */}
+              <Route path="/apps/inventory/valuation/methods" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ValuationMethods /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/processing" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ValuationProcessing /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/transactions" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><TransactionValuation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/multi-entity" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><MultiEntityValuation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/costing" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ProductCosting /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/traceability" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BatchSerialValuation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/adjustments" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><CostAdjustments /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/gl-integration" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><InventoryValuationGLIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/aging" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ValuationAging /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/currency" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><CurrencyValuation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/analytics" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ValuationAnalytics /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/approvals" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ValuationApprovals /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/simulation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ValuationSimulation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/automation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ValuationAutomation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/valuation/security" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><InventoryValuationSecurityPermissions /></Dashboard></ProtectedRoute>} />
+
+              {/* Inventory Aging Modules */}
+              <Route path="/apps/inventory/aging/calculation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AgingCalculation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/aging/segmentation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><StockSegmentation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/aging/valuation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ValuationIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/aging/alerts" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AgingAlerts /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/aging/dashboard" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><InventoryAgingDashboard /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/aging/procurement" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ProcurementIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/aging/lifecycle" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><LifecycleManagement /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/aging/multi-entity" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><MultiEntityAging /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/aging/automation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AgingAutomation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/inventory/aging/security" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><InventoryAgingSecurityPermissions /></Dashboard></ProtectedRoute>} />
+
+              {/* Asset Depreciation Modules */}
+              <Route path="/apps/assets/depreciation/master" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AssetMasterIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/methods" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><DepreciationMethods /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/schedule" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><DepreciationSchedule /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/multi-entity" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><MultiEntityDepreciation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/revaluation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AssetRevaluation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/gl-integration" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AssetDepreciationGLIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/lifecycle" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AssetLifecycle /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/analytics" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><DepreciationAnalytics /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/tax" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><TaxDepreciation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/governance" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AdjustmentGovernance /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/automation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><DepreciationAutomation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/assets/depreciation/security" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AssetDepreciationSecurityPermissions /></Dashboard></ProtectedRoute>} />
 
               <Route
                 path="/:module/:subModule/:component/configuration/create"
