@@ -1,4 +1,7 @@
 
+import { modules } from './Modules/LiquidityManagement';
+export { modules };
+
 export const fieldsConfig = {
 
   liquidity_id: { label: 'Liquidity ID', type: 'text', faker: 'datatype.uuid' },

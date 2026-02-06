@@ -1,4 +1,7 @@
 
+import { modules } from './Modules/TreasuryPolicies';
+export { modules };
+
 export const fieldsConfig = {
 
   policy_id: { label: 'Policy ID', type: 'text', faker: 'datatype.uuid' },

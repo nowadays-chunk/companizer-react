@@ -1,4 +1,7 @@
 
+import { modules } from './Modules/CashFlowForecasts';
+export { modules };
+
 export const fieldsConfig = {
 
   forecast_id: { label: 'Forecast ID', type: 'text', faker: 'datatype.uuid' },

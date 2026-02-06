@@ -39,6 +39,7 @@ export const keyToLinkMap = {
     "budget": "/financial-management/budget",
     "budget-allocations": "/financial-management/budget/budget-allocations",
     "variance-analysis": "/financial-management/budget/variance-analysis",
+    "financial-forecasting": "/financial-management/budget/forecasting",
     "forecasting": "/financial-management/budget/forecasting",
     "treasury-management": "/financial-management/treasury-management",
     "cash-flow-forecasts": "/financial-management/treasury-management/cash-flow-forecasts",

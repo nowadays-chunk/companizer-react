@@ -127,6 +127,9 @@ import { modules as FixedIncomeInvestmentModules } from './components/Management
 import { modules as InvestmentReturnModules } from './components/Management/FinancialManagement/Investments/Modules/InvestmentReturns';
 import { modules as TaxFilingsModules } from './components/Management/FinancialManagement/Taxation/TaxFilings';
 import { modules as TaxCreditsModules } from './components/Management/FinancialManagement/Taxation/TaxCredits';
+import { modules as CashFlowForecastsModules } from './components/Management/FinancialManagement/TreasuryManagement/Modules/CashFlowForecasts';
+import { modules as LiquidityManagementModules } from './components/Management/FinancialManagement/TreasuryManagement/Modules/LiquidityManagement';
+import { modules as TreasuryPoliciesModules } from './components/Management/FinancialManagement/TreasuryManagement/Modules/TreasuryPolicies';
 
 import WithholdingTaxMasterData from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/WithholdingTaxMasterData';
 import CounterpartyTaxProfiles from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/CounterpartyTaxProfiles';
@@ -185,6 +188,61 @@ import VATAutomation from './components/Management/FinancialManagement/Taxation/
 import VATStatusMonitor from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATStatusMonitor';
 import VATEcosystemIntegration from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATEcosystemIntegration';
 import VATDataIntegrity from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATDataIntegrity';
+
+// Budget Allocations Module Imports
+import BudgetStructureDimensions from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetStructureDimensions';
+import AllocationRulesMethods from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/AllocationRulesMethods';
+import TimeBasedAllocation from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/TimeBasedAllocation';
+import BudgetControlEnforcement from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetControlEnforcement';
+import BudgetRevisionsAdjustments from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetRevisionsAdjustments';
+import ActualVsBudgetTracking from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/ActualVsBudgetTracking';
+import MultiEntityConsolidation from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/MultiEntityConsolidation';
+import BudgetApprovalWorkflow from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetApprovalWorkflow';
+import PlanningForecastingIntegration from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/PlanningForecastingIntegration';
+import BudgetReportingAnalytics from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetReportingAnalytics';
+import EncumbrancesCommitments from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/EncumbrancesCommitments';
+import BudgetCalendarsDeadlines from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetCalendarsDeadlines';
+import BudgetAuditControls from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetAuditControls';
+import BudgetAutomationEngine from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetAutomationEngine';
+import BudgetEntryProductivity from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetEntryProductivity';
+import BudgetSecurityPermissions from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetSecurityPermissions';
+import BudgetEcosystemIntegration from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/BudgetEcosystemIntegration';
+import AdvancedBudgetFeatures from './components/Management/FinancialManagement/Budget/Modules/BudgetAllocations/AdvancedBudgetFeatures';
+
+// Variance Analysis Module Imports
+import VarianceCalculationEngine from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/VarianceCalculationEngine';
+import RootCauseAnalysis from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/RootCauseAnalysis';
+import TrendAnalysis from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/TrendAnalysis';
+import RevenueVariance from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/RevenueVariance';
+import CostVariance from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/CostVariance';
+import ProfitabilityVariance from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/ProfitabilityVariance';
+import OperationalMetricsVariance from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/OperationalMetricsVariance';
+import DepartmentalScorecards from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/DepartmentalScorecards';
+import CorrectiveActionWorkflow from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/CorrectiveActionWorkflow';
+import VarianceThresholdAlerts from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/VarianceThresholdAlerts';
+import VarianceReports from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/VarianceReports';
+import ForecastAdjustmentIntegration from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/ForecastAdjustmentIntegration';
+import AuditTrailLog from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/AuditTrailLog';
+import SecurityAccessControls from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/SecurityAccessControls';
+import ConfigurationSettings from './components/Management/FinancialManagement/Budget/Modules/VarianceAnalysis/ConfigurationSettings';
+
+// Forecasting Module Imports
+import RollingForecastEngine from './components/Management/FinancialManagement/Budget/Modules/Forecasting/RollingForecastEngine';
+import DriverBasedModeling from './components/Management/FinancialManagement/Budget/Modules/Forecasting/DriverBasedModeling';
+import ScenarioPlanningManager from './components/Management/FinancialManagement/Budget/Modules/Forecasting/ScenarioPlanningManager';
+import RevenueForecastModels from './components/Management/FinancialManagement/Budget/Modules/Forecasting/RevenueForecastModels';
+import OpexForecasting from './components/Management/FinancialManagement/Budget/Modules/Forecasting/OpexForecasting';
+import CapExForecasting from './components/Management/FinancialManagement/Budget/Modules/Forecasting/CapExForecasting';
+import CashFlowForecasting from './components/Management/FinancialManagement/Budget/Modules/Forecasting/CashFlowForecasting';
+import PredictiveAnalyticsAI from './components/Management/FinancialManagement/Budget/Modules/Forecasting/PredictiveAnalyticsAI';
+import SensitivityAnalysis from './components/Management/FinancialManagement/Budget/Modules/Forecasting/SensitivityAnalysis';
+import WhatIfSimulations from './components/Management/FinancialManagement/Budget/Modules/Forecasting/WhatIfSimulations';
+import CollaborativeForecasting from './components/Management/FinancialManagement/Budget/Modules/Forecasting/CollaborativeForecasting';
+import ForecastApprovalWorkflow from './components/Management/FinancialManagement/Budget/Modules/Forecasting/ForecastApprovalWorkflow';
+import ForecastAccuracyTracking from './components/Management/FinancialManagement/Budget/Modules/Forecasting/ForecastAccuracyTracking';
+import ExternalDataIntegration from './components/Management/FinancialManagement/Budget/Modules/Forecasting/ExternalDataIntegration';
+import ConsolidatedForecastReports from './components/Management/FinancialManagement/Budget/Modules/Forecasting/ConsolidatedForecastReports';
+import ForecastVersionControl from './components/Management/FinancialManagement/Budget/Modules/Forecasting/ForecastVersionControl';
 
 
 // If you enable Stripe again later, restore this:
@@ -1595,6 +1653,63 @@ const App = () => {
                 />
               ))}
 
+              {/* ========================================================= */}
+              {/* Treasury Management - Cash Flow Forecasts Modules         */}
+              {/* ========================================================= */}
+              {CashFlowForecastsModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Treasury Management - Liquidity Management Modules        */}
+              {/* ========================================================= */}
+              {LiquidityManagementModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Treasury Management - Treasury Policies Modules           */}
+              {/* ========================================================= */}
+              {TreasuryPoliciesModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
               {/* Business Rules Manager Route */}
               <Route
                 path="/admin/business-rules"
@@ -2037,6 +2152,61 @@ const App = () => {
               <Route path="/apps/vat-gst/status" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATStatusMonitor /></Dashboard></ProtectedRoute>} />
               <Route path="/apps/vat-gst/integration" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATEcosystemIntegration /></Dashboard></ProtectedRoute>} />
               <Route path="/apps/vat-gst/integrity" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATDataIntegrity /></Dashboard></ProtectedRoute>} />
+
+              {/* Budget Allocations Modules */}
+              <Route path="/apps/budget-allocations/structure" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetStructureDimensions /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/rules" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AllocationRulesMethods /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/time-based" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><TimeBasedAllocation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/controls" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetControlEnforcement /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/revisions" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetRevisionsAdjustments /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/tracking" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ActualVsBudgetTracking /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/consolidation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><MultiEntityConsolidation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/workflow" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetApprovalWorkflow /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/planning" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><PlanningForecastingIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/analytics" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetReportingAnalytics /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/encumbrances" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><EncumbrancesCommitments /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/calendars" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetCalendarsDeadlines /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/audit" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetAuditControls /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/automation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetAutomationEngine /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/productivity" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetEntryProductivity /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/security" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetSecurityPermissions /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/integration" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><BudgetEcosystemIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/budget-allocations/advanced" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AdvancedBudgetFeatures /></Dashboard></ProtectedRoute>} />
+
+              {/* Variance Analysis Modules */}
+              <Route path="/apps/variance-analysis/calculation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VarianceCalculationEngine /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/root-cause" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><RootCauseAnalysis /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/trends" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><TrendAnalysis /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/revenue" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><RevenueVariance /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/cost" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><CostVariance /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/profitability" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ProfitabilityVariance /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/operational" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><OperationalMetricsVariance /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/scorecards" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><DepartmentalScorecards /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/corrective-action" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><CorrectiveActionWorkflow /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/alerts" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VarianceThresholdAlerts /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/reports" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VarianceReports /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/forecast-integration" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ForecastAdjustmentIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/audit" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><AuditTrailLog /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/security" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><SecurityAccessControls /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/variance-analysis/configuration" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ConfigurationSettings /></Dashboard></ProtectedRoute>} />
+
+              {/* Forecasting Modules */}
+              <Route path="/apps/financial-forecasting/rolling" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><RollingForecastEngine /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/drivers" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><DriverBasedModeling /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/scenarios" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ScenarioPlanningManager /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/revenue" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><RevenueForecastModels /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/opex" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><OpexForecasting /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/capex" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><CapExForecasting /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/cash-flow" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><CashFlowForecasting /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/predictive" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><PredictiveAnalyticsAI /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/sensitivity" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><SensitivityAnalysis /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/simulations" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><WhatIfSimulations /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/collaboration" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><CollaborativeForecasting /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/approval" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ForecastApprovalWorkflow /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/accuracy" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ForecastAccuracyTracking /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/external-data" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ExternalDataIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/reports" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ConsolidatedForecastReports /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/financial-forecasting/versions" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ForecastVersionControl /></Dashboard></ProtectedRoute>} />
 
               <Route
                 path="/:module/:subModule/:component/configuration/create"
