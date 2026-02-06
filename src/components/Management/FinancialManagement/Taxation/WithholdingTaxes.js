@@ -1,3 +1,4 @@
+import modules from './Modules/WithholdingTaxes';
 
 export const fieldsConfig = {
 
@@ -21,3 +22,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Withholding Taxes';
 export const collectionName = 'withholding_taxes';
+
+export { modules };

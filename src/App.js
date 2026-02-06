@@ -128,6 +128,24 @@ import { modules as InvestmentReturnModules } from './components/Management/Fina
 import { modules as TaxFilingsModules } from './components/Management/FinancialManagement/Taxation/TaxFilings';
 import { modules as TaxCreditsModules } from './components/Management/FinancialManagement/Taxation/TaxCredits';
 
+import WithholdingTaxMasterData from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/WithholdingTaxMasterData';
+import CounterpartyTaxProfiles from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/CounterpartyTaxProfiles';
+import WithholdingCalculationEngine from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/WithholdingCalculationEngine';
+import InvoicePaymentIntegration from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/InvoicePaymentIntegration';
+import AccountingGLPosting from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/AccountingGLPosting';
+import CertificatesReporting from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/CertificatesReporting';
+import TaxAuthorityReporting from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/TaxAuthorityReporting';
+import RemittancePayment from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/RemittancePayment';
+import ReconciliationControl from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/ReconciliationControl';
+import AdjustmentsRefunds from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/AdjustmentsRefunds';
+import WorkflowApprovals from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/WorkflowApprovals';
+import StatusTracking from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/StatusTracking';
+import MultiJurisdictionTreaty from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/MultiJurisdictionTreaty';
+import ReportingAnalytics from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/ReportingAnalytics';
+import RulesEngine from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/RulesEngine';
+import SecurityPermissions from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/SecurityPermissions';
+import SystemIntegration from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/SystemIntegration';
+
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -1601,6 +1619,178 @@ const App = () => {
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
                       <Visualizer mode="edit" />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Withholding Taxes Modules */}
+              <Route
+                path="/apps/withholding-taxes/master-data"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <WithholdingTaxMasterData />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/counterparty"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <CounterpartyTaxProfiles />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/calculation"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <WithholdingCalculationEngine />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/integration"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <InvoicePaymentIntegration />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/accounting"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AccountingGLPosting />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/certificates"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <CertificatesReporting />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/filing"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <TaxAuthorityReporting />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/remittance"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <RemittancePayment />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/reconciliation"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ReconciliationControl />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/adjustments"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <AdjustmentsRefunds />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/workflow/:id"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <WorkflowApprovals />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/status/:id"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <StatusTracking />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/treaty"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <MultiJurisdictionTreaty />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/analytics"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <ReportingAnalytics />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/rules"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <RulesEngine />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/security"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <SecurityPermissions />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/apps/withholding-taxes/system-integration"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <SystemIntegration />
                     </Dashboard>
                   </ProtectedRoute>
                 }
