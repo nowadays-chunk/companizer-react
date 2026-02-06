@@ -1,3 +1,4 @@
+import modules from './Modules/VATGSTRecords';
 
 export const fieldsConfig = {
 
@@ -23,3 +24,5 @@ export const fieldsConfig = {
 
 export const entityName = 'VAT/GST Records';
 export const collectionName = 'vat_gst_records';
+
+export { modules };

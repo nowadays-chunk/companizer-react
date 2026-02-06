@@ -35,6 +35,7 @@ export const keyToLinkMap = {
     "withholding-taxes": "/financial-management/taxation/withholding-taxes",
     "tax-audits": "/financial-management/taxation/tax-audits",
     "vat-gst-records": "/financial-management/taxation/vat-gst-records",
+    "vat/gst-records": "/financial-management/taxation/vat-gst-records",
     "budget": "/financial-management/budget",
     "budget-allocations": "/financial-management/budget/budget-allocations",
     "variance-analysis": "/financial-management/budget/variance-analysis",

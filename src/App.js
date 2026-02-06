@@ -166,6 +166,26 @@ import AuditDashboard from './components/Management/FinancialManagement/Taxation
 import AuditAutomationIntelligence from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/AuditAutomationIntelligence';
 import DataIntegrityPeriodControls from './components/Management/FinancialManagement/Taxation/Modules/TaxAudits/DataIntegrityPeriodControls';
 
+// VAT/GST Records Module Imports
+import VATGSTRegister from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATGSTRegister';
+import VATClassificationRules from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATClassificationRules';
+import InputVATRecovery from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/InputVATRecovery';
+import OutputVATLiability from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/OutputVATLiability';
+import VATPeriodClosing from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATPeriodClosing';
+import VATReturnPreparation from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATReturnPreparation';
+import VATAdjustments from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATAdjustments';
+import ReverseChargeVAT from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/ReverseChargeVAT';
+import MultiJurisdictionVAT from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/MultiJurisdictionVAT';
+import VATGLIntegration from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATGLIntegration';
+import VATReconciliation from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATReconciliation';
+import VATReporting from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATReporting';
+import VATAuditSupport from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATAuditSupport';
+import VATWorkflow from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATWorkflow';
+import VATAutomation from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATAutomation';
+import VATStatusMonitor from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATStatusMonitor';
+import VATEcosystemIntegration from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATEcosystemIntegration';
+import VATDataIntegrity from './components/Management/FinancialManagement/Taxation/Modules/VATGSTRecords/VATDataIntegrity';
+
 
 // If you enable Stripe again later, restore this:
 // const stripePromise = loadStripe(String(process.env.REACT_APP_STRIPE_PUBLIC_KEY));
@@ -1998,6 +2018,26 @@ const App = () => {
                 }
               />
 
+              {/* VAT/GST Records Modules */}
+              <Route path="/apps/vat-gst/register" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATGSTRegister /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/rules" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATClassificationRules /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/input" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><InputVATRecovery /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/output" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><OutputVATLiability /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/closing" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATPeriodClosing /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/return" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATReturnPreparation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/adjustments" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATAdjustments /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/reverse-charge" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><ReverseChargeVAT /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/international" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><MultiJurisdictionVAT /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/gl" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATGLIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/reconciliation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATReconciliation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/reporting" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATReporting /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/audit" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATAuditSupport /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/workflow" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATWorkflow /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/automation" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATAutomation /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/status" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATStatusMonitor /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/integration" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATEcosystemIntegration /></Dashboard></ProtectedRoute>} />
+              <Route path="/apps/vat-gst/integrity" element={<ProtectedRoute user={user}><Dashboard colorMode={colorMode}><VATDataIntegrity /></Dashboard></ProtectedRoute>} />
+
               <Route
                 path="/:module/:subModule/:component/configuration/create"
                 element={
@@ -2118,6 +2158,21 @@ const App = () => {
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
                       <Visualizer mode="create" isDetail={true} />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Deep Link Route for Taxation Entities (4 levels) */}
+              <Route
+                path="/management/financial-management/taxation/:entity/view/:id"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <Visualizer
+                        main="financial-management"
+                        sub="taxation"
+                      />
                     </Dashboard>
                   </ProtectedRoute>
                 }
