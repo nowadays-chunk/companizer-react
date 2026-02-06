@@ -1,3 +1,4 @@
+import { modules } from './Modules/ProductDetails';
 
 export const fieldsConfig = {
   accountable_id: { label: 'Accountable ID', type: 'text', faker: 'datatype.uuid' },
@@ -18,3 +19,5 @@ export const fieldsConfig = {
 
 export const entityName = 'Product Details';
 export const collectionName = 'product_details';
+
+export { modules };

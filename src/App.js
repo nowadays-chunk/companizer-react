@@ -130,6 +130,13 @@ import { modules as TaxCreditsModules } from './components/Management/FinancialM
 import { modules as CashFlowForecastsModules } from './components/Management/FinancialManagement/TreasuryManagement/Modules/CashFlowForecasts';
 import { modules as LiquidityManagementModules } from './components/Management/FinancialManagement/TreasuryManagement/Modules/LiquidityManagement';
 import { modules as TreasuryPoliciesModules } from './components/Management/FinancialManagement/TreasuryManagement/Modules/TreasuryPolicies';
+import { modules as ProductDetailsModules } from './components/Management/OperationsAssetManagement/ProductCatalog/ProductDetails';
+import { modules as ProductCategoryModules } from './components/Management/OperationsAssetManagement/ProductCatalog/ProductCategories';
+import { modules as ProductAttributeModules } from './components/Management/OperationsAssetManagement/ProductCatalog/ProductAttributes';
+// import { modules as PriceListModules } from './components/Management/OperationsAssetManagement/Pricing/OAM_PriceLists';
+import { modules as NPDModules } from './components/Management/OperationsAssetManagement/ProductLifecycleManagement/NewProductDevelopment';
+import { modules as ProductUpdatesModules } from './components/Management/OperationsAssetManagement/ProductLifecycleManagement/ProductUpdates';
+import { modules as ProductDiscontinuationModules } from './components/Management/OperationsAssetManagement/ProductLifecycleManagement/ProductDiscontinuation';
 
 import WithholdingTaxMasterData from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/WithholdingTaxMasterData';
 import CounterpartyTaxProfiles from './components/Management/FinancialManagement/Taxation/Modules/WithholdingTaxes/CounterpartyTaxProfiles';
@@ -1695,6 +1702,139 @@ const App = () => {
               {/* Treasury Management - Treasury Policies Modules           */}
               {/* ========================================================= */}
               {TreasuryPoliciesModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Product Catalog - Product Details Modules                 */}
+              {/* ========================================================= */}
+              {ProductDetailsModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Product Catalog - Product Categories Modules              */}
+              {/* ========================================================= */}
+              {ProductCategoryModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Product Catalog - Product Attributes Modules              */}
+              {/* ========================================================= */}
+              {ProductAttributeModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Pricing - Price Lists Modules                             */}
+              {/* ========================================================= */}
+              {/* {PriceListModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))} */}
+
+              {/* ========================================================= */}
+              {/* Product Lifecycle Management - NPD Modules                */}
+              {/* ========================================================= */}
+              {NPDModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Product Lifecycle Management - Product Updates            */}
+              {/* ========================================================= */}
+              {ProductUpdatesModules.map((module) => (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard colorMode={colorMode}>
+                        <React.Suspense fallback={<CircularProgress />}>
+                          <module.component />
+                        </React.Suspense>
+                      </Dashboard>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {/* ========================================================= */}
+              {/* Product Lifecycle Management - Product Discontinuation    */}
+              {/* ========================================================= */}
+              {ProductDiscontinuationModules.map((module) => (
                 <Route
                   key={module.id}
                   path={module.path}

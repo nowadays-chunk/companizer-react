@@ -51,7 +51,7 @@ export const keyToLinkMap = {
     "product-categories": "/operations-asset-management/product-catalog/product-categories",
     "product-attributes": "/operations-asset-management/product-catalog/product-attributes",
     "pricing-management": "/operations-asset-management/pricing-management",
-    "price-lists": "/operations-asset-management/pricing-management/price-lists",
+    "oam-price-lists": "/operations-asset-management/pricing-management/oam-price-lists",
     "discounts": "/operations-asset-management/pricing-management/discounts",
     "promotions": "/operations-asset-management/pricing-management/promotions",
     "product-lifecycle-management": "/operations-asset-management/product-lifecycle-management",

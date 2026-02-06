@@ -1,3 +1,5 @@
+import { modules } from './Modules/ProductUpdates';
+export { modules };
 
 export const fieldsConfig = {
 

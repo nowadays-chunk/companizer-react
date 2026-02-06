@@ -170,7 +170,7 @@ import * as PolicyRenewals from './ComplianceLegal/Insurance/PolicyRenewals.js';
 import * as PredictiveAnalytics from './GovernanceStrategy/KpisAnalytics/PredictiveAnalytics.js';
 import * as PressReleases from './CorporateCommunication/ExternalCommunication/PressReleases.js';
 import * as PreventiveMaintenanceSchedules from './OperationsAssetManagement/Maintenance/PreventiveMaintenanceSchedules.js';
-import * as OAM_Pricing_PriceLists from './OperationsAssetManagement/Pricing/OAM_PriceLists.js';
+// import * as OAM_Pricing_PriceLists from './OperationsAssetManagement/Pricing/OAM_PriceLists.js';
 import * as SM_Pricing_PriceLists from './SalesMarketing/Pricing/SM_PriceLists.js';
 import * as ProductAttributes from './OperationsAssetManagement/ProductCatalog/ProductAttributes.js';
 import * as ProductCategories from './OperationsAssetManagement/ProductCatalog/ProductCategories.js';
@@ -446,7 +446,7 @@ export const configRegistry = {
     'PredictiveAnalytics': PredictiveAnalytics,
     'PressReleases': PressReleases,
     'PreventiveMaintenanceSchedules': PreventiveMaintenanceSchedules,
-    'OAM_Pricing_PriceLists': OAM_Pricing_PriceLists, // Disambiguated from PriceLists
+    // 'OAM_Pricing_PriceLists': OAM_Pricing_PriceLists, // Disambiguated from PriceLists
     'SM_Pricing_PriceLists': SM_Pricing_PriceLists, // Disambiguated from PriceLists
     'ProductAttributes': ProductAttributes,
     'ProductCategories': ProductCategories,

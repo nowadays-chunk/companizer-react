@@ -1,3 +1,5 @@
+import { modules } from './Modules/ProductDiscontinuation';
+export { modules };
 
 export const fieldsConfig = {
 
