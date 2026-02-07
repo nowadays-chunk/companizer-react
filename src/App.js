@@ -89,7 +89,7 @@ const App = () => {
               {allModules.map((module) => (
                 <Route
                   key={module.id}
-                  path={module.path}
+                  path={`/tailored_bridge/#${module.path}`}
                   element={
                     <ProtectedRoute user={user}>
                       <Dashboard colorMode={colorMode}>
@@ -104,7 +104,7 @@ const App = () => {
 
               {/* Generic Analytics Route */}
               <Route
-                path="/analysis/:entity"
+                path="/tailored_bridge/#/analysis/:entity"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -115,7 +115,7 @@ const App = () => {
               />
 
               <Route
-                path="/:module/:subModule/:component/configuration/create"
+                path="/tailored_bridge/#/:module/:subModule/:component/configuration/create"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -130,13 +130,13 @@ const App = () => {
               {markdownRoutes.map((route) => (
                 <Route
                   key={route.path}
-                  path={route.path}
+                  path={`/tailored_bridge/#${route.path}`}
                   element={<Pages.MarkdownViewer fileName={route.fileName} />}
                 />
               ))}
 
               <Route
-                path="/summary"
+                path="/tailored_bridge/#/summary"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -147,7 +147,7 @@ const App = () => {
               />
 
               <Route
-                path="/blog"
+                path="/tailored_bridge/#/blog"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -158,7 +158,7 @@ const App = () => {
               />
 
               <Route
-                path="/article/:slug"
+                path="/tailored_bridge/#/article/:slug"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -170,12 +170,12 @@ const App = () => {
 
               {/* Authentication */}
               <Route
-                path="/registration"
+                path="/tailored_bridge/#/registration"
                 element={<OrganizationRegistration />}
               />
 
               <Route
-                path="/gantt-chart"
+                path="/tailored_bridge/#/gantt-chart"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -186,7 +186,7 @@ const App = () => {
               />
 
               <Route
-                path="/print/:main/:sub/:entity/view/:id"
+                path="/tailored_bridge/#/print/:main/:sub/:entity/view/:id"
                 element={
                   <ProtectedRoute user={user}>
                     <Pages.ConfigurablePdf />
@@ -195,7 +195,7 @@ const App = () => {
               />
 
               <Route
-                path="/:module/:subModule/:component/view/:id"
+                path="/tailored_bridge/#/:module/:subModule/:component/view/:id"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -206,7 +206,7 @@ const App = () => {
               />
 
               <Route
-                path="/:module/:subModule/:component"
+                path="/tailored_bridge/#/:module/:subModule/:component"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -217,7 +217,7 @@ const App = () => {
               />
 
               <Route
-                path="/:module/:subModule/:targetEntity/configuration"
+                path="/tailored_bridge/#/:module/:subModule/:targetEntity/configuration"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -228,7 +228,7 @@ const App = () => {
               />
 
               <Route
-                path="/:module/:subModule/:component/configuration/view/:id"
+                path="/tailored_bridge/#/:module/:subModule/:component/configuration/view/:id"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -239,7 +239,7 @@ const App = () => {
               />
 
               <Route
-                path="/:module/:subModule/:component/configuration/edit/:id"
+                path="/tailored_bridge/#/:module/:subModule/:component/configuration/edit/:id"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -251,7 +251,7 @@ const App = () => {
 
               {/* Business Rules Manager Route */}
               <Route
-                path="/admin/business-rules"
+                path="/tailored_bridge/#/admin/business-rules"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -263,7 +263,7 @@ const App = () => {
 
               {/* Admin Console Route */}
               <Route
-                path="/admin/console"
+                path="/tailored_bridge/#/admin/console"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
@@ -275,7 +275,7 @@ const App = () => {
 
               {/* Admin Export Route */}
               <Route
-                path="/admin/export"
+                path="/tailored_bridge/#/admin/export"
                 element={
                   <ProtectedRoute user={user}>
                     <Dashboard colorMode={colorMode}>
