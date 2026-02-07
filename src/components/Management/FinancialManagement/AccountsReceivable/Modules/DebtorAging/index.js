@@ -1,66 +1,62 @@
+import React from 'react';
 
-import AgingConfiguration from './AgingConfiguration';
-import AgingDashboard from './AgingDashboard';
-import RiskAndCollections from './RiskAndCollections';
-import AgingAnalysis from './AgingAnalysis';
-import CashForecast from './CashForecast';
+const AgingDashboard = React.lazy(() => import('./AgingDashboard'));
+const AgingAnalysis = React.lazy(() => import('./AgingAnalysis'));
+const RiskAndCollections = React.lazy(() => import('./RiskAndCollections'));
+const CashForecast = React.lazy(() => import('./CashForecast'));
+const AgingConfiguration = React.lazy(() => import('./AgingConfiguration'));
 
 export const modules = [
     {
-        id: 'aging_dashboard',
-        label: 'Dashboard & KPIs',
-        component: AgingDashboard,
+        id: 'dashboard',
+        name: 'Collections Dashboard',
         type: 'General',
+        path: '/apps/debtor-aging/dashboard',
         icon: 'Dashboard',
-        description: 'Debtor aging dashboard and key performance indicators.',
-        requiresSelection: false,
-        name: 'Aging Dashboard',
-        path: '/apps/debtor-aging/dashboard'
+        description: 'Overview of collections and aging.',
+        component: AgingDashboard,
+        requiresSelection: false
     },
     {
-        id: 'aging_analysis',
-        label: 'Analysis & Segments',
-        component: AgingAnalysis,
-        type: 'General',
-        icon: 'Analytics',
-        description: 'Detailed analysis and segmentation of debtor aging.',
-        requiresSelection: false,
+        id: 'analysis',
         name: 'Aging Analysis',
-        path: '/apps/debtor-aging/analysis'
+        type: 'General',
+        path: '/apps/debtor-aging/analysis',
+        icon: 'Analytics',
+        description: 'Deep dive into aging buckets.',
+        component: AgingAnalysis,
+        requiresSelection: false
     },
     {
-        id: 'risk_and_collections',
-        label: 'Risk & Collections',
-        component: RiskAndCollections,
-        type: 'General',
-        icon: 'Warning',
-        description: 'Risk assessment and collections management.',
-        requiresSelection: false,
+        id: 'risk',
         name: 'Risk & Collections',
-        path: '/apps/debtor-aging/risk'
+        type: 'General',
+        path: '/apps/debtor-aging/risk',
+        icon: 'WarningAmber',
+        description: 'Manage collection risks.',
+        component: RiskAndCollections,
+        requiresSelection: false
     },
     {
-        id: 'cash_forecast',
-        label: 'Forecasting',
-        component: CashForecast,
-        type: 'General',
-        icon: 'Timeline',
-        description: 'Cash flow forecasting and liquidity planning.',
-        requiresSelection: false,
+        id: 'forecast',
         name: 'Cash Forecast',
-        path: '/apps/debtor-aging/forecast'
+        type: 'General',
+        path: '/apps/debtor-aging/forecast',
+        icon: 'ShowChart',
+        description: 'Forecast receipts from debtors.',
+        component: CashForecast,
+        requiresSelection: false
     },
     {
-        id: 'aging_configuration',
-        label: 'Configuration',
-        component: AgingConfiguration,
+        id: 'configuration',
+        name: 'Configuration',
         type: 'General',
+        path: '/apps/debtor-aging/configuration',
         icon: 'Settings',
-        description: 'Configuration settings for debtor aging.',
-        requiresSelection: false,
-        name: 'Aging Configuration',
-        path: '/apps/debtor-aging/configuration'
-    }
+        description: 'Aging bucket settings.',
+        component: AgingConfiguration,
+        requiresSelection: false
+    },
 ];
 
 export default modules;

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
+import { login as apiLogin, registerOrganization as apiRegister } from '../utils/authHelpers';
 
 const AuthContext = createContext(null);
 
@@ -16,48 +17,25 @@ export const AuthProvider = ({ children }) => {
     const [userAuthorizations, setUserAuthorizations] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Mock user for development - replace with actual auth
+    // Initial load from localStorage
     useEffect(() => {
         const loadUser = async () => {
             try {
-                // Attempt to load from localStorage first
-                const storedUser = localStorage.getItem('user');
-                let mockUser;
+                const token = localStorage.getItem('token');
+                const storedUser = localStorage.getItem('userData');
+                let parsedUser = null;
 
-                if (storedUser) {
+                if (token && storedUser) {
                     try {
-                        mockUser = JSON.parse(storedUser);
+                        parsedUser = JSON.parse(storedUser);
                     } catch (e) {
                         console.error("Failed to parse stored user", e);
                     }
                 }
 
-                // Fallback if no stored user
-                if (!mockUser) {
-                    mockUser = {
-                        id: 1,
-                        uuid: 'test-user-uuid',
-                        first_name: 'Test',
-                        last_name: 'User',
-                        email: 'test@example.com',
-                        role: 'admin', // super_admin, admin, manager, accountant, hr_manager, sales_manager, auditor, user, viewer
-                        organization_id: 1,
-                        is_active: true
-                    };
-                }
-
-                setCurrentUser(mockUser);
-
-                // Load user's authorizations
-                if (mockUser?.id) {
-                    const authHelper = helpersWrapper('authorizations');
-                    const auths = await authHelper.fetchItems();
-                    const userAuths = auths.filter(auth =>
-                        auth.authorized_user_id === mockUser.id &&
-                        auth.is_active &&
-                        (!auth.authorization_end_date || new Date(auth.authorization_end_date) > new Date())
-                    );
-                    setUserAuthorizations(userAuths);
+                if (parsedUser) {
+                    setCurrentUser(parsedUser);
+                    await loadAuthorizations(parsedUser.id);
                 }
             } catch (error) {
                 console.error('Error loading user:', error);
@@ -69,11 +47,73 @@ export const AuthProvider = ({ children }) => {
         loadUser();
     }, []);
 
+    const loadAuthorizations = async (userId) => {
+        if (!userId) return;
+        try {
+            const authHelper = helpersWrapper('authorizations');
+            const auths = await authHelper.fetchItems();
+            const userAuths = auths.filter(auth =>
+                auth.authorized_user_id === userId &&
+                auth.is_active &&
+                (!auth.authorization_end_date || new Date(auth.authorization_end_date) > new Date())
+            );
+            setUserAuthorizations(userAuths);
+        } catch (error) {
+            console.error("Error loading authorizations:", error);
+        }
+    };
+
+    const login = async (email, password) => {
+        try {
+            const success = await apiLogin(email, password);
+            if (success) {
+                const storedUser = localStorage.getItem('userData');
+                if (storedUser) {
+                    const parsedUser = JSON.parse(storedUser);
+                    setCurrentUser(parsedUser);
+                    await loadAuthorizations(parsedUser.id);
+                    return true;
+                }
+            }
+            return false;
+        } catch (error) {
+            console.error("Login context error:", error);
+            throw error;
+        }
+    };
+
+    const registerOrganization = async (data) => {
+        try {
+            // Register returns { token, user, organization }
+            const response = await apiRegister(data);
+
+            if (response && response.user) {
+                setCurrentUser(response.user);
+                await loadAuthorizations(response.user.id);
+                return response;
+            }
+        } catch (error) {
+            console.error("Registration context error:", error);
+            throw error;
+        }
+    };
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userData');
+        localStorage.removeItem('organizationData');
+        setCurrentUser(null);
+        setUserAuthorizations([]);
+    };
+
     const value = {
         currentUser,
         userAuthorizations,
         loading,
-        setCurrentUser
+        setCurrentUser,
+        login,
+        registerOrganization,
+        logout
     };
 
     return (

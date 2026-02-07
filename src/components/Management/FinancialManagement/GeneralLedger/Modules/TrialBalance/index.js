@@ -1,51 +1,62 @@
+import React from 'react';
 
-import TrialBalanceStandard from './TrialBalanceStandard';
-import TrialBalanceComparative from './TrialBalanceComparative';
-import TrialBalanceClosing from './TrialBalanceClosing';
-import TrialBalanceAudit from './TrialBalanceAudit';
-import TrialBalanceConfig from './TrialBalanceConfig';
+const TrialBalanceStandard = React.lazy(() => import('./TrialBalanceStandard'));
+const TrialBalanceComparative = React.lazy(() => import('./TrialBalanceComparative'));
+const TrialBalanceClosing = React.lazy(() => import('./TrialBalanceClosing'));
+const TrialBalanceAudit = React.lazy(() => import('./TrialBalanceAudit'));
+const TrialBalanceConfig = React.lazy(() => import('./TrialBalanceConfig'));
 
 export const modules = [
     {
+        id: 'standard',
         name: 'Standard Trial Balance',
         type: 'General',
         path: '/apps/general-ledger/trial-balance/standard',
-        icon: 'TableView',
-        description: 'Generate standard trial balances with hierarchical view and filtering.',
-        component: TrialBalanceStandard
+        icon: 'TableChart',
+        description: 'View standard trial balance.',
+        component: TrialBalanceStandard,
+        requiresSelection: false
     },
     {
-        name: 'Comparative Analysis',
+        id: 'comparative',
+        name: 'Comparative TB',
         type: 'General',
         path: '/apps/general-ledger/trial-balance/comparative',
-        icon: 'CompareArrows',
-        description: 'Multi-period and multi-currency comparison analysis.',
-        component: TrialBalanceComparative
+        icon: 'Compare',
+        description: 'Compare trial balances across periods.',
+        component: TrialBalanceComparative,
+        requiresSelection: false
     },
     {
-        name: 'Closing & Adjustments',
-        type: 'General',
+        id: 'closing',
+        name: 'Closing TB',
+        type: 'Specific',
         path: '/apps/general-ledger/trial-balance/closing',
-        icon: 'FactCheck',
-        description: 'Manage period closing, adjustments, and reconciliations.',
-        component: TrialBalanceClosing
+        icon: 'DoneAll',
+        description: 'Trial balance for closing periods.',
+        component: TrialBalanceClosing,
+        requiresSelection: false
     },
     {
-        name: 'Audit & Snapshots',
-        type: 'General',
+        id: 'audit',
+        name: 'Audit View',
+        type: 'Specific',
         path: '/apps/general-ledger/trial-balance/audit',
-        icon: 'HistoryEdu',
-        description: 'View audit trails, snapshots, and version history.',
-        component: TrialBalanceAudit
+        icon: 'Plagiarism',
+        description: 'Trial balance with audit details.',
+        component: TrialBalanceAudit,
+        requiresSelection: false
     },
     {
+        id: 'config',
         name: 'Configuration',
         type: 'General',
         path: '/apps/general-ledger/trial-balance/config',
         icon: 'Settings',
-        description: 'Configure display settings, validation rules, and export preferences.',
-        component: TrialBalanceConfig
-    }
+        description: 'Trial balance settings.',
+        component: TrialBalanceConfig,
+        requiresSelection: false
+    },
 ];
 
 export default modules;

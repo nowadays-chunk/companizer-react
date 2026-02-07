@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import {
   Box,
-  Card,
-  CardContent,
   Typography,
   Table,
   TableBody,
@@ -11,10 +9,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  CircularProgress,
-  Button
+  CircularProgress
 } from '@mui/material';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 
 const DetailsVisualizer = ({ parentId, detailConfig, detailEntityName, fkFieldName }) => {
   const [items, setItems] = useState([]);

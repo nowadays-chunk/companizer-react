@@ -20,22 +20,19 @@ import {
     Divider,
     Tabs,
     Tab,
-    Alert,
-    Tooltip
+    Alert
 } from '@mui/material';
 import {
     Add as AddIcon,
     Delete as DeleteIcon,
     Save as SaveIcon,
     PostAdd as PostIcon,
-    CheckCircle as CheckCircleIcon,
-    ArrowBack as ArrowBackIcon,
-    ContentCopy as CopyIcon
+    ArrowBack as ArrowBackIcon
 } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { JournalEntryService } from './JournalEntryService';
-import { helpersWrapper } from '../../../../../../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../../../../../../utils/clientQueries';
 
 // Mock Data for Selectors (Ideally fetched from backend/config)
 const ACCOUNTS = [
@@ -71,7 +68,6 @@ const JournalEntryManager = () => {
         }
     }, [id, isAllocation, isIntercompany]);
 
-    const [loading, setLoading] = useState(false);
     const [statusMessage, setStatusMessage] = useState(null);
     const [tabValue, setTabValue] = useState(0);
 

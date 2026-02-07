@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 
 const useNotifications = (userId) => {
     const [notifications, setNotifications] = useState([]);
@@ -25,7 +25,7 @@ const useNotifications = (userId) => {
             console.error('Failed to fetch notifications:', error);
             setLoading(false);
         }
-    }, [userId]);
+    }, [userId, notificationHelper]);
 
     // Initial load
     useEffect(() => {
@@ -53,7 +53,7 @@ const useNotifications = (userId) => {
         } catch (error) {
             console.error('Failed to mark notification as read:', error);
         }
-    }, []);
+    }, [notificationHelper]);
 
     // Mark all as read
     const markAllAsRead = useCallback(async () => {
@@ -74,7 +74,7 @@ const useNotifications = (userId) => {
         } catch (error) {
             console.error('Failed to mark all as read:', error);
         }
-    }, [notifications]);
+    }, [notifications, notificationHelper]);
 
     // Create notification
     const createNotification = useCallback(async (notification) => {
@@ -99,7 +99,7 @@ const useNotifications = (userId) => {
             console.error('Failed to create notification:', error);
             throw error;
         }
-    }, [fetchNotifications]);
+    }, [fetchNotifications, notificationHelper]);
 
     // Delete notification
     const deleteNotification = useCallback(async (notificationId) => {
@@ -114,7 +114,7 @@ const useNotifications = (userId) => {
         } catch (error) {
             console.error('Failed to delete notification:', error);
         }
-    }, [notifications]);
+    }, [notifications, notificationHelper]);
 
     return {
         notifications,

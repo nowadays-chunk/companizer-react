@@ -1,218 +1,172 @@
-import VarianceCalculationEngine from './VarianceCalculationEngine';
-import RootCauseAnalysis from './RootCauseAnalysis';
-import TrendAnalysis from './TrendAnalysis';
-import RevenueVariance from './RevenueVariance';
-import CostVariance from './CostVariance';
-import ProfitabilityVariance from './ProfitabilityVariance';
-import OperationalMetricsVariance from './OperationalMetricsVariance';
-import DepartmentalScorecards from './DepartmentalScorecards';
-import CorrectiveActionWorkflow from './CorrectiveActionWorkflow';
-import VarianceThresholdAlerts from './VarianceThresholdAlerts';
-import VarianceReports from './VarianceReports';
-import ForecastAdjustmentIntegration from './ForecastAdjustmentIntegration';
-import AuditTrailLog from './AuditTrailLog';
-import SecurityAccessControls from './SecurityAccessControls';
-import ConfigurationSettings from './ConfigurationSettings';
+import React from 'react';
 
-import {
-    Calculate,
-    Search,
-    TrendingUp,
-    AttachMoney,
-    MoneyOff,
-    ShowChart,
-    Speed,
-    Score,
-    AssignmentTurnedIn,
-    NotificationsActive,
-    BarChart,
-    Transform,
-    History,
-    Security,
-    Settings
-} from '@mui/icons-material';
+const VarianceCalculationEngine = React.lazy(() => import('./VarianceCalculationEngine'));
+const RootCauseAnalysis = React.lazy(() => import('./RootCauseAnalysis'));
+const TrendAnalysis = React.lazy(() => import('./TrendAnalysis'));
+const RevenueVariance = React.lazy(() => import('./RevenueVariance'));
+const CostVariance = React.lazy(() => import('./CostVariance'));
+const ProfitabilityVariance = React.lazy(() => import('./ProfitabilityVariance'));
+const OperationalMetricsVariance = React.lazy(() => import('./OperationalMetricsVariance'));
+const DepartmentalScorecards = React.lazy(() => import('./DepartmentalScorecards'));
+const CorrectiveActionWorkflow = React.lazy(() => import('./CorrectiveActionWorkflow'));
+const VarianceThresholdAlerts = React.lazy(() => import('./VarianceThresholdAlerts'));
+const VarianceReports = React.lazy(() => import('./VarianceReports'));
+const ForecastAdjustmentIntegration = React.lazy(() => import('./ForecastAdjustmentIntegration'));
+const AuditTrailLog = React.lazy(() => import('./AuditTrailLog'));
+const SecurityAccessControls = React.lazy(() => import('./SecurityAccessControls'));
+const ConfigurationSettings = React.lazy(() => import('./ConfigurationSettings'));
 
 export const modules = [
     {
-        id: 'variance-calculation',
-        name: 'Variance Calculation Engine',
-        description: 'Real-time calculation of variances between actuals and budget.',
-        icon: Calculate,
-        component: VarianceCalculationEngine,
-        group: 'Core Analysis',
+        id: 'calculation',
+        name: 'Calculation Engine',
         type: 'General',
         path: '/apps/variance-analysis/calculation',
-        label: 'Calculation Engine',
+        icon: 'Calculate',
+        description: 'Engine for computing budget variances.',
+        component: VarianceCalculationEngine,
         requiresSelection: false
     },
     {
-        id: 'root-cause-analysis',
+        id: 'root-cause',
         name: 'Root Cause Analysis',
-        description: 'Tools for tagging and analyzing reasons for variances.',
-        icon: Search,
-        component: RootCauseAnalysis,
-        group: 'Core Analysis',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/variance-analysis/root-cause',
-        label: 'Root Cause',
+        icon: 'FindInPage',
+        description: 'Identify reasons for variance.',
+        component: RootCauseAnalysis,
         requiresSelection: false
     },
     {
-        id: 'trend-analysis',
+        id: 'trends',
         name: 'Trend Analysis',
-        description: 'Historical trend visualization of variances over time.',
-        icon: TrendingUp,
-        component: TrendAnalysis,
-        group: 'Core Analysis',
         type: 'General',
         path: '/apps/variance-analysis/trends',
-        label: 'Trends',
+        icon: 'TrendingUp',
+        description: 'Analyze variance trends over time.',
+        component: TrendAnalysis,
         requiresSelection: false
     },
     {
-        id: 'revenue-variance',
+        id: 'revenue',
         name: 'Revenue Variance',
-        description: 'Analysis of sales volume vs price variance.',
-        icon: AttachMoney,
-        component: RevenueVariance,
-        group: 'Financial Variance',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/variance-analysis/revenue',
-        label: 'Revenue',
+        icon: 'AttachMoney',
+        description: 'Analyze revenue deviations.',
+        component: RevenueVariance,
         requiresSelection: false
     },
     {
-        id: 'cost-variance',
+        id: 'cost',
         name: 'Cost Variance',
-        description: 'Analysis of fixed vs variable cost variances.',
-        icon: MoneyOff,
-        component: CostVariance,
-        group: 'Financial Variance',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/variance-analysis/cost',
-        label: 'Cost',
+        icon: 'MoneyOff',
+        description: 'Analyze cost deviations.',
+        component: CostVariance,
         requiresSelection: false
     },
     {
-        id: 'profitability-variance',
-        name: 'Profitability Variance',
-        description: 'Margin analysis and profitability impact assessment.',
-        icon: ShowChart,
-        component: ProfitabilityVariance,
-        group: 'Financial Variance',
+        id: 'profitability',
+        name: 'Profitability',
         type: 'General',
         path: '/apps/variance-analysis/profitability',
-        label: 'Profitability',
+        icon: 'QueryStats',
+        description: 'Profit margin impact analysis.',
+        component: ProfitabilityVariance,
         requiresSelection: false
     },
     {
-        id: 'operational-metrics',
-        name: 'Operational Metrics Variance',
-        description: 'Analysis of non-financial KPIs (e.g., headcount, hours).',
-        icon: Speed,
-        component: OperationalMetricsVariance,
-        group: 'Operational Variance',
-        type: 'General',
+        id: 'operational',
+        name: 'Operational Metrics',
+        type: 'Specific',
         path: '/apps/variance-analysis/operational',
-        label: 'Ops Metrics',
+        icon: 'Speed',
+        description: 'Variance in operational KPIs.',
+        component: OperationalMetricsVariance,
         requiresSelection: false
     },
     {
-        id: 'departmental-scorecards',
-        name: 'Departmental Scorecards',
-        description: 'Variance scorecards by department and business unit.',
-        icon: Score,
-        component: DepartmentalScorecards,
-        group: 'Operational Variance',
+        id: 'scorecards',
+        name: 'Scorecards',
         type: 'General',
         path: '/apps/variance-analysis/scorecards',
-        label: 'Scorecards',
+        icon: 'Score',
+        description: 'Departmental performance scorecards.',
+        component: DepartmentalScorecards,
         requiresSelection: false
     },
     {
         id: 'corrective-action',
-        name: 'Corrective Action Workflow',
-        description: 'Workflow for assigning and tracking remediation actions.',
-        icon: AssignmentTurnedIn,
-        component: CorrectiveActionWorkflow,
-        group: 'Workflow & Control',
+        name: 'Corrective Action',
         type: 'General',
         path: '/apps/variance-analysis/corrective-action',
-        label: 'Actions',
+        icon: 'Build',
+        description: 'Workflows to address variances.',
+        component: CorrectiveActionWorkflow,
         requiresSelection: false
     },
     {
-        id: 'variance-alerts',
-        name: 'Variance Threshold Alerts',
-        description: 'Configuration for automated alerts on significant variances.',
-        icon: NotificationsActive,
-        component: VarianceThresholdAlerts,
-        group: 'Workflow & Control',
+        id: 'alerts',
+        name: 'Threshold Alerts',
         type: 'General',
         path: '/apps/variance-analysis/alerts',
-        label: 'Alerts',
+        icon: 'NotificationsActive',
+        description: 'Notifications for significant variances.',
+        component: VarianceThresholdAlerts,
         requiresSelection: false
     },
     {
-        id: 'variance-reports',
+        id: 'reports',
         name: 'Variance Reports',
-        description: 'Comprehensive reporting suite for variance analysis.',
-        icon: BarChart,
-        component: VarianceReports,
-        group: 'Reporting & Integration',
         type: 'General',
         path: '/apps/variance-analysis/reports',
-        label: 'Reports',
+        icon: 'Assessment',
+        description: 'Detailed variance reporting.',
+        component: VarianceReports,
         requiresSelection: false
     },
     {
-        id: 'forecast-adjustment',
-        name: 'Forecast Adjustment Integration',
-        description: 'Link variance outcomes to re-forecasting processes.',
-        icon: Transform,
-        component: ForecastAdjustmentIntegration,
-        group: 'Reporting & Integration',
+        id: 'forecast-integration',
+        name: 'Forecast Integration',
         type: 'General',
         path: '/apps/variance-analysis/forecast-integration',
-        label: 'Forecast Link',
+        icon: 'CompareArrows',
+        description: 'Adjust forecasts based on variance.',
+        component: ForecastAdjustmentIntegration,
         requiresSelection: false
     },
     {
-        id: 'audit-trail',
-        name: 'Audit Trail Log',
-        description: 'Track changes, explanations, and approvals.',
-        icon: History,
-        component: AuditTrailLog,
-        group: 'Reporting & Integration',
+        id: 'audit',
+        name: 'Audit Trail',
         type: 'General',
         path: '/apps/variance-analysis/audit',
-        label: 'Audit',
+        icon: 'History',
+        description: 'Log of analysis activities.',
+        component: AuditTrailLog,
         requiresSelection: false
     },
     {
-        id: 'security-access',
-        name: 'Security Access Controls',
-        description: 'Grid-based permission management for variance data.',
-        icon: Security,
-        component: SecurityAccessControls,
-        group: 'Security & Configuration',
+        id: 'security',
+        name: 'Security',
         type: 'General',
         path: '/apps/variance-analysis/security',
-        label: 'Security',
+        icon: 'Security',
+        description: 'Access controls.',
+        component: SecurityAccessControls,
         requiresSelection: false
     },
     {
-        id: 'configuration-settings',
-        name: 'Configuration Settings',
-        description: 'Global settings for variance logic and thresholds.',
-        icon: Settings,
-        component: ConfigurationSettings,
-        group: 'Security & Configuration',
+        id: 'configuration',
+        name: 'Configuration',
         type: 'General',
         path: '/apps/variance-analysis/configuration',
-        label: 'Configuration',
+        icon: 'Settings',
+        description: 'System settings.',
+        component: ConfigurationSettings,
         requiresSelection: false
-    }
+    },
 ];
 
 export default modules;

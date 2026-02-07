@@ -1,10 +1,12 @@
-import LiquidityDashboard from './LiquidityDashboard';
-import CashPositioning from './CashPositioning';
-import FundingGapAnalysis from './FundingGapAnalysis';
-import CashPooling from './CashPooling';
-import LiquidityStressTest from './LiquidityStressTest';
-import SurplusManagement from './SurplusManagement';
-import BankRiskSummary from './BankRiskSummary';
+import React from 'react';
+
+const LiquidityDashboard = React.lazy(() => import('./LiquidityDashboard'));
+const CashPositioning = React.lazy(() => import('./CashPositioning'));
+const FundingGapAnalysis = React.lazy(() => import('./FundingGapAnalysis'));
+const CashPooling = React.lazy(() => import('./CashPooling'));
+const LiquidityStressTest = React.lazy(() => import('./LiquidityStressTest'));
+const SurplusManagement = React.lazy(() => import('./SurplusManagement'));
+const BankRiskSummary = React.lazy(() => import('./BankRiskSummary'));
 
 export const modules = [
     {

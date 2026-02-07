@@ -1,23 +1,23 @@
-import React, { lazy } from 'react';
+import React from 'react';
 
-const InterestSourceTypes = lazy(() => import('./InterestSourceTypes'));
-const InterestCalculationEngine = lazy(() => import('./InterestCalculationEngine'));
-const AccruedVsPaidHandling = lazy(() => import('./AccruedVsPaidHandling'));
-const PaymentScheduling = lazy(() => import('./PaymentScheduling'));
-const PaymentProcessing = lazy(() => import('./PaymentProcessing'));
-const GLAccountingIntegration = lazy(() => import('./GLAccountingIntegration'));
-const ForeignCurrencyInterest = lazy(() => import('./ForeignCurrencyInterest'));
-const TaxesWithholding = lazy(() => import('./TaxesWithholding'));
-const ApprovalsWorkflow = lazy(() => import('./ApprovalsWorkflow'));
-const PeriodCloseIntegration = lazy(() => import('./PeriodCloseIntegration'));
-const StatusLifecycle = lazy(() => import('./StatusLifecycle'));
-const ReconciliationIntegration = lazy(() => import('./ReconciliationIntegration'));
-const ReportingAnalytics = lazy(() => import('./ReportingAnalytics'));
-const AuditTrailDocs = lazy(() => import('./AuditTrailDocs'));
-const AutomationRules = lazy(() => import('./AutomationRules'));
-const UXProductivity = lazy(() => import('./UXProductivity'));
-const IntegrationArchitecture = lazy(() => import('./IntegrationArchitecture'));
-const DataIntegrityControls = lazy(() => import('./DataIntegrityControls'));
+const InterestSourceTypes = React.lazy(() => import('./InterestSourceTypes'));
+const InterestCalculationEngine = React.lazy(() => import('./InterestCalculationEngine'));
+const AccruedVsPaidHandling = React.lazy(() => import('./AccruedVsPaidHandling'));
+const PaymentScheduling = React.lazy(() => import('./PaymentScheduling'));
+const PaymentProcessing = React.lazy(() => import('./PaymentProcessing'));
+const GLAccountingIntegration = React.lazy(() => import('./GLAccountingIntegration'));
+const ForeignCurrencyInterest = React.lazy(() => import('./ForeignCurrencyInterest'));
+const TaxesWithholding = React.lazy(() => import('./TaxesWithholding'));
+const ApprovalsWorkflow = React.lazy(() => import('./ApprovalsWorkflow'));
+const PeriodCloseIntegration = React.lazy(() => import('./PeriodCloseIntegration'));
+const StatusLifecycle = React.lazy(() => import('./StatusLifecycle'));
+const ReconciliationIntegration = React.lazy(() => import('./ReconciliationIntegration'));
+const ReportingAnalytics = React.lazy(() => import('./ReportingAnalytics'));
+const AuditTrailDocs = React.lazy(() => import('./AuditTrailDocs'));
+const AutomationRules = React.lazy(() => import('./AutomationRules'));
+const UXProductivity = React.lazy(() => import('./UXProductivity'));
+const IntegrationArchitecture = React.lazy(() => import('./IntegrationArchitecture'));
+const DataIntegrityControls = React.lazy(() => import('./DataIntegrityControls'));
 
 export const modules = [
     {

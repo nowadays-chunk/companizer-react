@@ -1,87 +1,157 @@
-import JournalEntryManager from './JournalEntryManager';
-import RecurringJournals from './RecurringJournals';
-import JournalApprovals from './JournalApprovals';
-import JournalPosting from './JournalPosting';
-import JournalReversals from './JournalReversals';
-import JournalAllocations from './JournalAllocations';
-import IntercompanyJournals from './IntercompanyJournals';
-import JournalCompliance from './JournalCompliance';
-import JournalReports from './JournalReports';
-import JournalAdmin from './JournalAdmin';
+import React from 'react';
+
+const JournalEntryManager = React.lazy(() => import('./JournalEntryManager'));
+const RecurringJournals = React.lazy(() => import('./RecurringJournals'));
+const JournalApprovals = React.lazy(() => import('./JournalApprovals'));
+const JournalPosting = React.lazy(() => import('./JournalPosting'));
+const JournalReversals = React.lazy(() => import('./JournalReversals'));
+const JournalAllocations = React.lazy(() => import('./JournalAllocations'));
+const IntercompanyJournals = React.lazy(() => import('./IntercompanyJournals'));
+const JournalCompliance = React.lazy(() => import('./JournalCompliance'));
+const JournalReports = React.lazy(() => import('./JournalReports'));
+const JournalAdmin = React.lazy(() => import('./JournalAdmin'));
 
 export const modules = [
     {
-        name: 'Edit Journal',
-        type: 'Specific',
-        path: '/apps/general-ledger/journals/:id',
-        icon: 'Description',
-        description: 'Create, edit, and manage manual and system journal entries.',
-        component: JournalEntryManager
-    },
-    {
-        name: 'Recurring Journals',
+        id: 'management',
+        name: 'Journal Management',
         type: 'General',
-        path: '/apps/general-ledger/journals/recurring',
-        icon: 'Repeat',
-        description: 'Manage recurring journal schedules, accruals, and deferrals.',
-        component: RecurringJournals
+        path: '/apps/general-ledger/journals',
+        icon: 'MenuBook',
+        description: 'Create and manage journal entries.',
+        component: JournalEntryManager,
+        requiresSelection: false
     },
     {
-        name: 'Journal Approvals',
+        id: 'recurring',
+        name: 'Recurring Journals',
+        type: 'Specific',
+        path: '/apps/general-ledger/journals/recurring',
+        icon: 'Autorenew',
+        description: 'Manage recurring journal templates.',
+        component: RecurringJournals,
+        requiresSelection: false
+    },
+    {
+        id: 'approvals',
+        name: 'Approvals',
         type: 'General',
         path: '/apps/general-ledger/journals/approvals',
-        icon: 'AssignmentTurnedIn',
-        description: 'Review and approve journals pending authorization.',
-        component: JournalApprovals
+        icon: 'ThumbUp',
+        description: 'Approve pending journal entries.',
+        component: JournalApprovals,
+        requiresSelection: false
     },
     {
-        name: 'Period Close & Posting',
-        type: 'General',
+        id: 'posting',
+        name: 'Posting',
+        type: 'Specific',
         path: '/apps/general-ledger/journals/posting',
-        icon: 'LockClock',
-        description: 'Manage accounting periods, batch posting, and soft/hard closes.',
-        component: JournalPosting
+        icon: 'PostAdd',
+        description: 'Post approved journals to GL.',
+        component: JournalPosting,
+        requiresSelection: false
     },
     {
-        name: 'Reversals & Corrections',
+        id: 'reversals',
+        name: 'Reversals',
         type: 'Specific',
         path: '/apps/general-ledger/journals/:id/reversals',
-        icon: 'History',
-        description: 'Handle reversals, corrections, and audit trail of changes.',
-        component: JournalReversals
+        icon: 'Undo',
+        description: 'Reverse posted journal entries.',
+        component: JournalReversals,
+        requiresSelection: true
     },
     {
+        id: 'allocations',
         name: 'Allocations',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/general-ledger/journals/allocations',
         icon: 'PieChart',
-        description: 'Cost and revenue allocation cycles and distributions.',
-        component: JournalAllocations
+        description: 'Define and run allocation rules.',
+        component: JournalAllocations,
+        requiresSelection: false
     },
     {
+        id: 'intercompany',
         name: 'Intercompany',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/general-ledger/journals/intercompany',
         icon: 'Business',
-        description: 'Intercompany settlements, eliminations, and reconciliation.',
-        component: IntercompanyJournals
+        description: 'Manage intercompany transactions.',
+        component: IntercompanyJournals,
+        requiresSelection: false
     },
     {
-        name: 'Compliance & Audit',
+        id: 'compliance',
+        name: 'Compliance',
         type: 'General',
         path: '/apps/general-ledger/journals/compliance',
-        icon: 'VerifiedUser',
-        description: 'SOX compliance, audit trails, and journal certification.',
-        component: JournalCompliance
+        icon: 'Policy',
+        description: 'Ensure journal entry compliance.',
+        component: JournalCompliance,
+        requiresSelection: false
     },
     {
-        name: 'Admin Console',
+        id: 'reports',
+        name: 'Reports',
+        type: 'General',
+        path: '/apps/general-ledger/journals/reports',
+        icon: 'Assessment',
+        description: 'Journal entry reports and logs.',
+        component: JournalReports,
+        requiresSelection: false
+    },
+    {
+        id: 'admin',
+        name: 'Administration',
         type: 'General',
         path: '/apps/general-ledger/journals/admin',
-        icon: 'Settings',
-        description: 'Configuration of journal sources, approval matrices, and rules.',
-        component: JournalAdmin
-    }
+        icon: 'AdminPanelSettings',
+        description: 'Journal settings and configuration.',
+        component: JournalAdmin,
+        requiresSelection: false
+    },
+    {
+        id: 'create',
+        name: 'Create Journal',
+        type: 'Detail',
+        path: '/apps/general-ledger/journals/create',
+        icon: 'Add',
+        description: 'Create a new journal entry.',
+        component: JournalEntryManager,
+        requiresSelection: false
+    },
+    {
+        id: 'view',
+        name: 'View Journal',
+        type: 'Detail',
+        path: '/apps/general-ledger/journals/view/:id',
+        icon: 'Visibility',
+        description: 'View journal entry details.',
+        component: JournalEntryManager,
+        requiresSelection: true
+    },
+    {
+        id: 'edit',
+        name: 'Edit Journal',
+        type: 'Detail',
+        path: '/apps/general-ledger/journals/edit/:id',
+        icon: 'Edit',
+        description: 'Edit existing journal entry.',
+        component: JournalEntryManager,
+        requiresSelection: true
+    },
+    {
+        id: 'details',
+        name: 'Journal Details',
+        type: 'Detail',
+        path: '/apps/general-ledger/journals/:id',
+        icon: 'Article',
+        description: 'Detailed view of journal entry.',
+        component: JournalEntryManager,
+        requiresSelection: true
+    },
 ];
 
 export default modules;

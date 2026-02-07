@@ -1,16 +1,17 @@
+import React from 'react';
 
-import UpdateRequest from './UpdateRequest';
-import ChangeClassification from './ChangeClassification';
-import ImpactAnalysis from './ImpactAnalysis';
-import VersionControl from './VersionControl';
-import ApprovalWorkflow from './ApprovalWorkflow';
-import TechnicalUpdates from './TechnicalUpdates';
-import CommercialUpdates from './CommercialUpdates';
-import InventoryOperations from './InventoryOperations';
-import QualityCompliance from './QualityCompliance';
-import Communication from './Communication';
-import UpdateAnalytics from './UpdateAnalytics';
-import AuditHistory from './AuditHistory';
+const UpdateRequest = React.lazy(() => import('./UpdateRequest'));
+const ChangeClassification = React.lazy(() => import('./ChangeClassification'));
+const ImpactAnalysis = React.lazy(() => import('./ImpactAnalysis'));
+const VersionControl = React.lazy(() => import('./VersionControl'));
+const ApprovalWorkflow = React.lazy(() => import('./ApprovalWorkflow'));
+const TechnicalUpdates = React.lazy(() => import('./TechnicalUpdates'));
+const CommercialUpdates = React.lazy(() => import('./CommercialUpdates'));
+const InventoryOperations = React.lazy(() => import('./InventoryOperations'));
+const QualityCompliance = React.lazy(() => import('./QualityCompliance'));
+const Communication = React.lazy(() => import('./Communication'));
+const UpdateAnalytics = React.lazy(() => import('./UpdateAnalytics'));
+const AuditHistory = React.lazy(() => import('./AuditHistory'));
 
 export const modules = [
     {

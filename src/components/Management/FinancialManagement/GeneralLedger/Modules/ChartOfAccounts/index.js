@@ -1,129 +1,128 @@
-import AccountHierarchy from './AccountHierarchy';
-import SegmentConfiguration from './SegmentConfiguration';
-import AccountTemplates from './AccountTemplates';
-import PostingControls from './PostingControls';
-import StatementMapping from './StatementMapping';
-import SubledgerIntegration from './SubledgerIntegration';
-import CoAAdmin from './CoAAdmin';
-import CoAReports from './CoAReports';
-import AccountDetails from './AccountDetails';
-import AccountAudit from './AccountAudit';
-import IntercompanySettings from './IntercompanySettings';
+import React from 'react';
+
+const AccountHierarchy = React.lazy(() => import('./AccountHierarchy'));
+const SegmentConfiguration = React.lazy(() => import('./SegmentConfiguration'));
+const AccountTemplates = React.lazy(() => import('./AccountTemplates'));
+const PostingControls = React.lazy(() => import('./PostingControls'));
+const StatementMapping = React.lazy(() => import('./StatementMapping'));
+const SubledgerIntegration = React.lazy(() => import('./SubledgerIntegration'));
+const CoAAdmin = React.lazy(() => import('./CoAAdmin'));
+const AccountDetails = React.lazy(() => import('./AccountDetails'));
+const AccountAudit = React.lazy(() => import('./AccountAudit'));
+const IntercompanySettings = React.lazy(() => import('./IntercompanySettings'));
+const CoAReports = React.lazy(() => import('./CoAReports'));
 
 export const modules = [
-    // GENERAL MODULES (shown in Management Table toolbar)
     {
-        id: 'account_hierarchy',
+        id: 'hierarchy',
         name: 'Account Hierarchy',
         type: 'General',
         path: '/apps/chart-of-accounts/hierarchy',
         icon: 'AccountTree',
-        description: 'Manage parent/child account structure, groupings, and versioning',
+        description: 'View and manage account structure.',
         component: AccountHierarchy,
         requiresSelection: false
     },
     {
-        id: 'segment_configuration',
-        name: 'Segment Configuration',
+        id: 'segments',
+        name: 'Segments',
         type: 'General',
         path: '/apps/chart-of-accounts/segments',
-        icon: 'Settings',
-        description: 'Configure multi-segment account structure and validation rules',
+        icon: 'ViewColumn',
+        description: 'Configure account segments.',
         component: SegmentConfiguration,
         requiresSelection: false
     },
     {
-        id: 'account_templates',
-        name: 'Account Templates',
+        id: 'templates',
+        name: 'Templates',
         type: 'General',
         path: '/apps/chart-of-accounts/templates',
-        icon: 'Description',
-        description: 'Manage account templates, mass creation, and bulk operations',
+        icon: 'CopyAll',
+        description: 'Manage account templates.',
         component: AccountTemplates,
         requiresSelection: false
     },
     {
-        id: 'posting_controls',
+        id: 'posting-controls',
         name: 'Posting Controls',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/chart-of-accounts/posting-controls',
-        icon: 'Lock',
-        description: 'Manage posting permissions, account blocks, and approval requirements',
+        icon: 'LockOpen',
+        description: 'Manage posting permissions.',
         component: PostingControls,
         requiresSelection: false
     },
     {
-        id: 'statement_mapping',
-        name: 'Statement Mapping',
+        id: 'statements',
+        name: 'Financial Statements',
         type: 'General',
         path: '/apps/chart-of-accounts/statements',
-        icon: 'Map',
-        description: 'Map accounts to Balance Sheet, P&L, and Cash Flow statements',
+        icon: 'Description',
+        description: 'Map accounts to financial statements.',
         component: StatementMapping,
         requiresSelection: false
     },
     {
-        id: 'subledger_integration',
-        name: 'Subledger Integration',
+        id: 'subledgers',
+        name: 'Subledgers',
         type: 'General',
         path: '/apps/chart-of-accounts/subledgers',
-        icon: 'Link',
-        description: 'Configure default account assignments and rule-based derivation',
+        icon: 'Book',
+        description: 'Integrate with subledgers.',
         component: SubledgerIntegration,
         requiresSelection: false
     },
     {
-        id: 'coa_admin',
-        name: 'Admin Console',
+        id: 'admin',
+        name: 'Administration',
         type: 'General',
         path: '/apps/chart-of-accounts/admin',
         icon: 'AdminPanelSettings',
-        description: 'Global CoA templates, entity rules, and workflow configuration',
+        description: 'CoA settings and maintenance.',
         component: CoAAdmin,
         requiresSelection: false
     },
     {
-        id: 'coa_reports',
-        name: 'Reports & Analytics',
-        type: 'General',
-        path: '/apps/chart-of-accounts/reports',
-        icon: 'Assessment',
-        description: 'Generate reports, analyze account usage, and export data',
-        component: CoAReports,
-        requiresSelection: false
-    },
-
-    // SPECIFIC MODULES (shown in detail view)
-    {
-        id: 'account_details',
+        id: 'details',
         name: 'Account Details',
-        type: 'Specific',
+        type: 'Detail',
         path: '/apps/chart-of-accounts/:id/details',
-        icon: 'Edit',
-        description: 'Edit multilingual descriptions, tax settings, and account configuration',
+        icon: 'Info',
+        description: 'Detailed view of an account.',
         component: AccountDetails,
         requiresSelection: true
     },
     {
-        id: 'account_audit',
-        name: 'Account History',
-        type: 'Specific',
+        id: 'audit',
+        name: 'Audit History',
+        type: 'Detail',
         path: '/apps/chart-of-accounts/:id/audit',
         icon: 'History',
-        description: 'Full audit trail with field-level change history and approval workflow',
+        description: 'Audit log for an account.',
         component: AccountAudit,
         requiresSelection: true
     },
     {
-        id: 'intercompany_settings',
+        id: 'intercompany',
         name: 'Intercompany Settings',
-        type: 'Specific',
+        type: 'Detail',
         path: '/apps/chart-of-accounts/:id/intercompany',
         icon: 'Business',
-        description: 'Configure intercompany flags, elimination mappings, and consolidation',
+        description: 'Intercompany configs for an account.',
         component: IntercompanySettings,
         requiresSelection: true
-    }
+    },
+    {
+        id: 'reports',
+        name: 'Reports',
+        type: 'General',
+        path: '/apps/chart-of-accounts/reports',
+        icon: 'Assessment',
+        description: 'Chart of Accounts reports.',
+        component: CoAReports,
+        requiresSelection: false
+    },
 ];
 
 export default modules;

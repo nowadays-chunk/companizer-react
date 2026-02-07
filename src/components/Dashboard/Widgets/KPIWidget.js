@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { TrendingUp, TrendingDown } from '@mui/icons-material';
 import DashboardWidget from '../DashboardWidget';
-import { helpersWrapper } from '../../../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../../../utils/clientQueries';
 
 const KPIWidget = ({ id, config, onRemove }) => {
     const [value, setValue] = useState(0);

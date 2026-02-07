@@ -1,16 +1,17 @@
+import React from 'react';
 
-import PriceListMasterData from './PriceListMasterData';
-import PriceAssignment from './PriceAssignment';
-import PricingRules from './PricingRules';
-import PricingAdjustments from './PricingAdjustments';
-import PriceHistory from './PriceHistory';
-import PriceListTax from './PriceListTax';
-import PromotionCampaigns from './PromotionCampaigns';
-import ChannelPricing from './ChannelPricing';
-import PriceWorkflow from './PriceWorkflow';
-import PriceAnalytics from './PriceAnalytics';
-import AutomationRules from './AutomationRules';
-import DataIntegrity from './DataIntegrity';
+const PriceListMasterData = React.lazy(() => import('./PriceListMasterData'));
+const PriceAssignment = React.lazy(() => import('./PriceAssignment'));
+const PricingRules = React.lazy(() => import('./PricingRules'));
+const PricingAdjustments = React.lazy(() => import('./PricingAdjustments'));
+const PriceHistory = React.lazy(() => import('./PriceHistory'));
+const PriceListTax = React.lazy(() => import('./PriceListTax'));
+const PromotionCampaigns = React.lazy(() => import('./PromotionCampaigns'));
+const ChannelPricing = React.lazy(() => import('./ChannelPricing'));
+const PriceWorkflow = React.lazy(() => import('./PriceWorkflow'));
+const PriceAnalytics = React.lazy(() => import('./PriceAnalytics'));
+const AutomationRules = React.lazy(() => import('./AutomationRules'));
+const DataIntegrity = React.lazy(() => import('./DataIntegrity'));
 
 export const modules = [
     {

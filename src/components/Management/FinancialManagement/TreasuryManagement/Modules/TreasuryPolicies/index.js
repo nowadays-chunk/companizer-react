@@ -1,10 +1,12 @@
-import PolicyManager from './PolicyManager';
-import PolicyDashboard from './PolicyDashboard';
-import PolicyLibrary from './PolicyLibrary';
-import ComplianceMonitor from './ComplianceMonitor';
-import LimitManagement from './LimitManagement';
-import ExceptionWorkflows from './ExceptionWorkflows';
-import PolicyAuditLog from './PolicyAuditLog';
+import React from 'react';
+
+const PolicyManager = React.lazy(() => import('./PolicyManager'));
+const PolicyDashboard = React.lazy(() => import('./PolicyDashboard'));
+const PolicyLibrary = React.lazy(() => import('./PolicyLibrary'));
+const ComplianceMonitor = React.lazy(() => import('./ComplianceMonitor'));
+const LimitManagement = React.lazy(() => import('./LimitManagement'));
+const ExceptionWorkflows = React.lazy(() => import('./ExceptionWorkflows'));
+const PolicyAuditLog = React.lazy(() => import('./PolicyAuditLog'));
 
 export const modules = [
     {

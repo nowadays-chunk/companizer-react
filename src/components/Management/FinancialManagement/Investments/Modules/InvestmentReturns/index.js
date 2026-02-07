@@ -1,15 +1,15 @@
 import React from 'react';
 
-import ReturnCalculationEngine from './ReturnCalculationEngine';
-import IncomeTrackingManager from './IncomeTrackingManager';
-import ValuationImpact from './ValuationImpact';
-import FXReturnImpact from './FXReturnImpact';
-import PortfolioAggregation from './PortfolioAggregation';
-import PerformanceMetrics from './PerformanceMetrics';
-import ReturnAnalyticsDashboard from './ReturnAnalyticsDashboard';
-import PeriodCloseReturns from './PeriodCloseReturns';
-import ReturnApprovals from './ReturnApprovals';
-import AuditIntegrityRules from './AuditIntegrityRules';
+const ReturnCalculationEngine = React.lazy(() => import('./ReturnCalculationEngine'));
+const IncomeTrackingManager = React.lazy(() => import('./IncomeTrackingManager'));
+const ValuationImpact = React.lazy(() => import('./ValuationImpact'));
+const FXReturnImpact = React.lazy(() => import('./FXReturnImpact'));
+const PortfolioAggregation = React.lazy(() => import('./PortfolioAggregation'));
+const PerformanceMetrics = React.lazy(() => import('./PerformanceMetrics'));
+const ReturnAnalyticsDashboard = React.lazy(() => import('./ReturnAnalyticsDashboard'));
+const PeriodCloseReturns = React.lazy(() => import('./PeriodCloseReturns'));
+const ReturnApprovals = React.lazy(() => import('./ReturnApprovals'));
+const AuditIntegrityRules = React.lazy(() => import('./AuditIntegrityRules'));
 
 export const modules = [
     {
@@ -19,7 +19,8 @@ export const modules = [
         path: '/apps/returns/engine',
         icon: 'Calculate',
         description: 'Run TWR/IRR calculations.',
-        component: ReturnCalculationEngine
+        component: ReturnCalculationEngine,
+        requiresSelection: false
     },
     {
         id: 'ret-income',
@@ -28,7 +29,8 @@ export const modules = [
         path: '/apps/returns/income',
         icon: 'Paid',
         description: 'Dividends, interest & accruals.',
-        component: IncomeTrackingManager
+        component: IncomeTrackingManager,
+        requiresSelection: false
     },
     {
         id: 'ret-valuation',
@@ -37,7 +39,8 @@ export const modules = [
         path: '/apps/returns/valuation',
         icon: 'TrendingUp',
         description: 'Fair value P&L vs OCI.',
-        component: ValuationImpact
+        component: ValuationImpact,
+        requiresSelection: false
     },
     {
         id: 'ret-fx',
@@ -46,7 +49,8 @@ export const modules = [
         path: '/apps/returns/fx',
         icon: 'Public',
         description: 'Currency gain/loss visualization.',
-        component: FXReturnImpact
+        component: FXReturnImpact,
+        requiresSelection: false
     },
     {
         id: 'ret-dashboard',
@@ -55,7 +59,8 @@ export const modules = [
         path: '/apps/returns/dashboard',
         icon: 'Dashboard',
         description: 'Performance dashboard & trends.',
-        component: ReturnAnalyticsDashboard
+        component: ReturnAnalyticsDashboard,
+        requiresSelection: false
     },
     {
         id: 'ret-aggregation',
@@ -64,7 +69,8 @@ export const modules = [
         path: '/apps/returns/portfolio',
         icon: 'PieChart',
         description: 'Asset class & entity drilldown.',
-        component: PortfolioAggregation
+        component: PortfolioAggregation,
+        requiresSelection: false
     },
     {
         id: 'ret-metrics',
@@ -73,7 +79,8 @@ export const modules = [
         path: '/apps/returns/metrics',
         icon: 'ShowChart',
         description: 'Sharpe, Alpha, Beta analysis.',
-        component: PerformanceMetrics
+        component: PerformanceMetrics,
+        requiresSelection: false
     },
     {
         id: 'ret-close',
@@ -82,7 +89,8 @@ export const modules = [
         path: '/apps/returns/close',
         icon: 'LockClock',
         description: 'Month-end locking & validation.',
-        component: PeriodCloseReturns
+        component: PeriodCloseReturns,
+        requiresSelection: false
     },
     {
         id: 'ret-approvals',
@@ -91,7 +99,8 @@ export const modules = [
         path: '/apps/returns/approvals',
         icon: 'Gavel',
         description: 'Workflow for adjustments.',
-        component: ReturnApprovals
+        component: ReturnApprovals,
+        requiresSelection: false
     },
     {
         id: 'ret-integrity',
@@ -100,6 +109,7 @@ export const modules = [
         path: '/apps/returns/rules',
         icon: 'Security',
         description: 'System integrity rules.',
-        component: AuditIntegrityRules
+        component: AuditIntegrityRules,
+        requiresSelection: false
     }
 ];

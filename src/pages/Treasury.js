@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Container, Box, CircularProgress, Typography, FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText, OutlinedInput, Button } from '@mui/material';
 import { getConfig } from '../components/Management/configRegistry';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 import { defaultAssets as genDefaultAssets, defaultLiabilities as genDefaultLiabilities } from './defaultSummaryConfig';
 import TreasuryTotals from '../components/TreasuryTotals';
 import { generateRandomDataAsync } from '../utils/dataGenerator';
@@ -132,7 +132,6 @@ const fetchAndAggregateData = async (assetsConfig, liabilitiesConfig) => {
 const Treasury = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [filteredRows, setFilteredRows] = useState([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationMessage, setGenerationMessage] = useState('');
@@ -142,7 +141,18 @@ const Treasury = () => {
     categories: [], // Entities
   });
 
-  const loadData = async () => {
+  const applyFilters = React.useCallback(() => {
+    const filteredData = rows.filter(row => {
+      const matchYear = filters.years.length === 0 || filters.years.includes(row.year);
+      const matchInvoiceType = filters.invoiceTypes.length === 0 || filters.invoiceTypes.includes(row.invoiceType);
+      const matchCategory = filters.categories.length === 0 || filters.categories.includes(row.category);
+      return matchYear && matchInvoiceType && matchCategory;
+    });
+
+    setFilteredRows(filteredData);
+  }, [rows, filters]);
+
+  const loadData = React.useCallback(async () => {
     setLoading(true);
     try {
       const assetsConfigStr = localStorage.getItem('assetsConfig');
@@ -162,7 +172,7 @@ const Treasury = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadData();
@@ -171,7 +181,7 @@ const Treasury = () => {
     const handleDataUpdate = () => loadData();
     window.addEventListener('dataUpdated', handleDataUpdate);
     return () => window.removeEventListener('dataUpdated', handleDataUpdate);
-  }, []);
+  }, [loadData]);
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
@@ -183,18 +193,7 @@ const Treasury = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [filters]);
-
-  const applyFilters = () => {
-    const filteredData = rows.filter(row => {
-      const matchYear = filters.years.length === 0 || filters.years.includes(row.year);
-      const matchInvoiceType = filters.invoiceTypes.length === 0 || filters.invoiceTypes.includes(row.invoiceType);
-      const matchCategory = filters.categories.length === 0 || filters.categories.includes(row.category);
-      return matchYear && matchInvoiceType && matchCategory;
-    });
-
-    setFilteredRows(filteredData);
-  };
+  }, [filters, applyFilters]);
 
   const handleGenerateData = async () => {
     setIsGenerating(true);

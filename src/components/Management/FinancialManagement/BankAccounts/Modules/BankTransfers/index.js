@@ -1,15 +1,15 @@
-import React, { lazy } from 'react';
+import React from 'react';
 
-const TransferDashboard = lazy(() => import('./TransferDashboard'));
-const TransferEntry = lazy(() => import('./TransferEntry'));
-const ApprovalWorkflow = lazy(() => import('./ApprovalWorkflow'));
-const ExecutionConnectivity = lazy(() => import('./ExecutionConnectivity'));
-const FXManager = lazy(() => import('./FXManager'));
-const AccountingIntegration = lazy(() => import('./AccountingIntegration'));
-const IntercompanyManager = lazy(() => import('./IntercompanyManager'));
-const ReconciliationStatus = lazy(() => import('./ReconciliationStatus'));
-const AutomationRules = lazy(() => import('./AutomationRules'));
-const TransferHistory = lazy(() => import('./TransferHistory'));
+const TransferDashboard = React.lazy(() => import('./TransferDashboard'));
+const TransferEntry = React.lazy(() => import('./TransferEntry'));
+const ApprovalWorkflow = React.lazy(() => import('./ApprovalWorkflow'));
+const ExecutionConnectivity = React.lazy(() => import('./ExecutionConnectivity'));
+const FXManager = React.lazy(() => import('./FXManager'));
+const AccountingIntegration = React.lazy(() => import('./AccountingIntegration'));
+const IntercompanyManager = React.lazy(() => import('./IntercompanyManager'));
+const ReconciliationStatus = React.lazy(() => import('./ReconciliationStatus'));
+const AutomationRules = React.lazy(() => import('./AutomationRules'));
+const TransferHistory = React.lazy(() => import('./TransferHistory'));
 
 export const modules = [
     {
@@ -18,98 +18,100 @@ export const modules = [
         type: 'General',
         path: '/apps/bank-accounts/transfers/dashboard',
         icon: 'Dashboard',
-        description: 'Overview of transfer status, cash movements, and KPIs.',
+        description: 'Overview of bank transfers.',
         component: TransferDashboard,
         requiresSelection: false
     },
     {
         id: 'entry',
-        name: 'Transfer Entry',
-        type: 'Specific',
+        name: 'New Transfer',
+        type: 'Link',
         path: '/apps/bank-accounts/transfers/entry',
         icon: 'Send',
-        description: 'Create internal, external, and intercompany transfers.',
+        description: 'Initiate a new bank transfer.',
         component: TransferEntry,
         requiresSelection: false
     },
     {
-        id: 'approval',
-        name: 'Approval Workflow',
+        id: 'approvals',
+        name: 'Approvals',
         type: 'General',
         path: '/apps/bank-accounts/transfers/approvals',
-        icon: 'Approval',
-        description: 'Manage transfer approvals and emergency overrides.',
+        icon: 'ThumbUp',
+        description: 'Approve pending transfers.',
         component: ApprovalWorkflow,
         requiresSelection: false
     },
     {
         id: 'execution',
-        name: 'Execution & Connectivity',
+        name: 'Execution',
         type: 'General',
         path: '/apps/bank-accounts/transfers/execution',
-        icon: 'AccountBalance',
-        description: 'Generate bank files (SEPA/SWIFT) and track status.',
+        icon: 'PlayCircleFilled',
+        description: 'Monitor transfer execution.',
         component: ExecutionConnectivity,
         requiresSelection: false
     },
     {
         id: 'fx',
-        name: 'FX Manager',
-        type: 'Specific',
+        name: 'FX Deals',
+        type: 'Link',
         path: '/apps/bank-accounts/transfers/fx',
         icon: 'CurrencyExchange',
-        description: 'Manage cross-currency transfers and FX rates.',
+        description: 'Manage foreign exchange for transfers.',
         component: FXManager,
         requiresSelection: false
     },
     {
         id: 'accounting',
-        name: 'Accounting Integration',
+        name: 'Accounting',
         type: 'General',
         path: '/apps/bank-accounts/transfers/accounting',
-        icon: 'Book',
-        description: 'Preview and post GL journals for transfers.',
+        icon: 'AccountBalance',
+        description: 'GL integration settings.',
         component: AccountingIntegration,
         requiresSelection: false
     },
     {
         id: 'intercompany',
-        name: 'Intercompany Manager',
-        type: 'Specific',
+        name: 'Intercompany',
+        type: 'Link',
         path: '/apps/bank-accounts/transfers/intercompany',
         icon: 'Business',
-        description: 'Manage due to/from postings and settlements.',
+        description: 'Internal fund transfers.',
         component: IntercompanyManager,
         requiresSelection: false
     },
     {
         id: 'reconciliation',
-        name: 'Reconciliation Status',
+        name: 'Reconciliation',
         type: 'General',
         path: '/apps/bank-accounts/transfers/reconciliation',
         icon: 'FactCheck',
-        description: 'Track matching status and in-transit transfers.',
+        description: 'Transfer reconciliation status.',
         component: ReconciliationStatus,
         requiresSelection: false
     },
     {
         id: 'automation',
-        name: 'Automation Rules',
+        name: 'Automation',
         type: 'General',
         path: '/apps/bank-accounts/transfers/automation',
-        icon: 'Autorenew',
-        description: 'Configure recurring transfers and routing rules.',
+        icon: 'AutoMode',
+        description: 'Recurring transfer rules.',
         component: AutomationRules,
         requiresSelection: false
     },
     {
         id: 'history',
-        name: 'Transfer History',
+        name: 'History',
         type: 'General',
         path: '/apps/bank-accounts/transfers/history',
         icon: 'History',
-        description: 'Full audit trail and document archive.',
+        description: 'Log of past transfers.',
         component: TransferHistory,
         requiresSelection: false
-    }
+    },
 ];
+
+export default modules;

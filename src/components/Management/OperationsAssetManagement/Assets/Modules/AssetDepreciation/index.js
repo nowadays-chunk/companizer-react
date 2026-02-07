@@ -1,113 +1,139 @@
-import AssetMasterIntegration from './AssetMasterIntegration';
-import DepreciationMethods from './DepreciationMethods';
-import DepreciationSchedule from './DepreciationSchedule';
-import MultiEntityDepreciation from './MultiEntityDepreciation';
-import AssetRevaluation from './AssetRevaluation';
-import GLIntegration from './GLIntegration';
-import AssetLifecycle from './AssetLifecycle';
-import DepreciationAnalytics from './DepreciationAnalytics';
-import TaxDepreciation from './TaxDepreciation';
-import AdjustmentGovernance from './AdjustmentGovernance';
-import DepreciationAutomation from './DepreciationAutomation';
-import SecurityPermissions from './SecurityPermissions';
+import React from 'react';
+
+const AssetMasterIntegration = React.lazy(() => import('./AssetMasterIntegration'));
+const DepreciationMethods = React.lazy(() => import('./DepreciationMethods'));
+const DepreciationSchedule = React.lazy(() => import('./DepreciationSchedule'));
+const MultiEntityDepreciation = React.lazy(() => import('./MultiEntityDepreciation'));
+const AssetRevaluation = React.lazy(() => import('./AssetRevaluation'));
+const AssetDepreciationGLIntegration = React.lazy(() => import('./GLIntegration'));
+const AssetLifecycle = React.lazy(() => import('./AssetLifecycle'));
+const DepreciationAnalytics = React.lazy(() => import('./DepreciationAnalytics'));
+const TaxDepreciation = React.lazy(() => import('./TaxDepreciation'));
+const AdjustmentGovernance = React.lazy(() => import('./AdjustmentGovernance'));
+const DepreciationAutomation = React.lazy(() => import('./DepreciationAutomation'));
+const AssetDepreciationSecurityPermissions = React.lazy(() => import('./SecurityPermissions'));
 
 export const modules = [
     {
-        name: 'Asset Master Data',
-        type: 'General',
+        id: 'master',
+        name: 'Asset Master',
+        type: 'Link',
         path: '/apps/assets/depreciation/master',
-        icon: 'Business',
-        description: 'Asset records and parameters',
-        component: AssetMasterIntegration
+        icon: 'Source',
+        description: 'Integration with asset master data.',
+        component: AssetMasterIntegration,
+        requiresSelection: false
     },
     {
-        name: 'Depreciation Methods',
+        id: 'methods',
+        name: 'Methods',
         type: 'General',
         path: '/apps/assets/depreciation/methods',
         icon: 'Functions',
-        description: 'SL, DDB, Units of Production',
-        component: DepreciationMethods
+        description: 'Manage depreciation methods.',
+        component: DepreciationMethods,
+        requiresSelection: false
     },
     {
-        name: 'Depreciation Schedule',
+        id: 'schedule',
+        name: 'Schedule',
         type: 'General',
         path: '/apps/assets/depreciation/schedule',
         icon: 'CalendarToday',
-        description: 'Monthly/Yearly runs and postings',
-        component: DepreciationSchedule
+        description: 'View depreciation schedules.',
+        component: DepreciationSchedule,
+        requiresSelection: false
     },
     {
-        name: 'Multi-Entity Assets',
+        id: 'multi-entity',
+        name: 'Multi-Entity',
         type: 'General',
         path: '/apps/assets/depreciation/multi-entity',
-        icon: 'Language',
-        description: 'International & Consolidated',
-        component: MultiEntityDepreciation
+        icon: 'Business',
+        description: 'Depreciation across entities.',
+        component: MultiEntityDepreciation,
+        requiresSelection: false
     },
     {
-        name: 'Revaluation & Adjustments',
-        type: 'General',
+        id: 'revaluation',
+        name: 'Revaluation',
+        type: 'Specific',
         path: '/apps/assets/depreciation/revaluation',
         icon: 'TrendingUp',
-        description: 'Value changes and impairments',
-        component: AssetRevaluation
+        description: 'Manage asset revaluations.',
+        component: AssetRevaluation,
+        requiresSelection: false
     },
     {
+        id: 'gl-integration',
         name: 'GL Integration',
         type: 'General',
         path: '/apps/assets/depreciation/gl-integration',
         icon: 'AccountBalance',
-        description: 'Journal Entries & Mapping',
-        component: GLIntegration
+        description: 'Post depreciation to GL.',
+        component: AssetDepreciationGLIntegration,
+        requiresSelection: false
     },
     {
-        name: 'Asset Lifecycle',
+        id: 'lifecycle',
+        name: 'Lifecycle',
         type: 'General',
         path: '/apps/assets/depreciation/lifecycle',
-        icon: 'Timeline',
-        description: 'Acquisition to Disposal',
-        component: AssetLifecycle
+        icon: 'Loop',
+        description: 'Tracking full asset lifecycle.',
+        component: AssetLifecycle,
+        requiresSelection: false
     },
     {
+        id: 'analytics',
         name: 'Analytics',
         type: 'General',
         path: '/apps/assets/depreciation/analytics',
-        icon: 'Assessment',
-        description: 'NBV reports and insights',
-        component: DepreciationAnalytics
+        icon: 'Analytics',
+        description: 'Depreciation analysis.',
+        component: DepreciationAnalytics,
+        requiresSelection: false
     },
     {
-        name: 'Tax Compliance',
+        id: 'tax',
+        name: 'Tax Depreciation',
         type: 'General',
         path: '/apps/assets/depreciation/tax',
-        icon: 'AccountBalanceWallet',
-        description: 'MACRS & Statutory reporting',
-        component: TaxDepreciation
+        icon: 'ReceiptLong',
+        description: 'Tax-specific depreciation rules.',
+        component: TaxDepreciation,
+        requiresSelection: false
     },
     {
+        id: 'governance',
         name: 'Governance',
         type: 'General',
         path: '/apps/assets/depreciation/governance',
         icon: 'Gavel',
-        description: 'Approvals & Audit Trails',
-        component: AdjustmentGovernance
+        description: 'Adjustment approvals and governance.',
+        component: AdjustmentGovernance,
+        requiresSelection: false
     },
     {
+        id: 'automation',
         name: 'Automation',
         type: 'General',
         path: '/apps/assets/depreciation/automation',
-        icon: 'AutoFixHigh',
-        description: 'Auto-posting settings',
-        component: DepreciationAutomation
+        icon: 'AutoMode',
+        description: 'Automated depreciation runs.',
+        component: DepreciationAutomation,
+        requiresSelection: false
     },
     {
+        id: 'security',
         name: 'Security',
         type: 'General',
         path: '/apps/assets/depreciation/security',
         icon: 'Security',
-        description: 'Permissions & Access',
-        component: SecurityPermissions
-    }
+        description: 'User access controls.',
+        component: AssetDepreciationSecurityPermissions,
+        requiresSelection: false
+    },
 ];
 
 export default modules;

@@ -1,21 +1,21 @@
-import React, { lazy } from 'react';
+import React from 'react';
 
-const CurrencyConfiguration = lazy(() => import('./CurrencyConfiguration'));
-const TransactionEntry = lazy(() => import('./TransactionEntry'));
-const ExchangeRateManager = lazy(() => import('./ExchangeRateManager'));
-const FXRevaluation = lazy(() => import('./FXRevaluation'));
-const RealizedGainsLosses = lazy(() => import('./RealizedGainsLosses'));
-const MultiCurrencyReporting = lazy(() => import('./MultiCurrencyReporting'));
-const FXReconciliation = lazy(() => import('./FXReconciliation'));
-const PeriodEndClose = lazy(() => import('./PeriodEndClose'));
-const IntercompanyFX = lazy(() => import('./IntercompanyFX'));
-const ConsolidationTranslation = lazy(() => import('./ConsolidationTranslation'));
-const FeesAndCharges = lazy(() => import('./FeesAndCharges'));
-const FXControls = lazy(() => import('./FXControls'));
-const AuditTrail = lazy(() => import('./AuditTrail'));
-const CurrencyDashboard = lazy(() => import('./CurrencyDashboard'));
-const IntegrationSettings = lazy(() => import('./IntegrationSettings'));
-const SystemSafeguards = lazy(() => import('./SystemSafeguards'));
+const CurrencyConfiguration = React.lazy(() => import('./CurrencyConfiguration'));
+const TransactionEntry = React.lazy(() => import('./TransactionEntry'));
+const ExchangeRateManager = React.lazy(() => import('./ExchangeRateManager'));
+const FXRevaluation = React.lazy(() => import('./FXRevaluation'));
+const RealizedGainsLosses = React.lazy(() => import('./RealizedGainsLosses'));
+const MultiCurrencyReporting = React.lazy(() => import('./MultiCurrencyReporting'));
+const FXReconciliation = React.lazy(() => import('./FXReconciliation'));
+const PeriodEndClose = React.lazy(() => import('./PeriodEndClose'));
+const IntercompanyFX = React.lazy(() => import('./IntercompanyFX'));
+// const ConsolidationTranslation = React.lazy(() => import('./ConsolidationTranslation'));
+const FeesAndCharges = React.lazy(() => import('./FeesAndCharges'));
+const FXControls = React.lazy(() => import('./FXControls'));
+const AuditTrail = React.lazy(() => import('./AuditTrail'));
+const CurrencyDashboard = React.lazy(() => import('./CurrencyDashboard'));
+const IntegrationSettings = React.lazy(() => import('./IntegrationSettings'));
+const SystemSafeguards = React.lazy(() => import('./SystemSafeguards'));
 
 export const modules = [
     {

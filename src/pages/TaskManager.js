@@ -19,7 +19,7 @@ import {
 import { MoreVert, CheckCircle, PlayArrow, OpenInNew } from '@mui/icons-material';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 import { useAuthorization } from '../hooks/useAuthorization';
 import useNotifications from '../hooks/useNotifications';
 
@@ -36,11 +36,7 @@ const TaskManager = () => {
 
     const taskHelper = helpersWrapper('tasks');
 
-    useEffect(() => {
-        loadTasks();
-    }, [currentUser]);
-
-    const loadTasks = async () => {
+    const loadTasks = React.useCallback(async () => {
         if (!currentUser) return;
 
         try {
@@ -52,7 +48,11 @@ const TaskManager = () => {
             console.error('Failed to load tasks:', error);
             setLoading(false);
         }
-    };
+    }, [currentUser, taskHelper]);
+
+    useEffect(() => {
+        loadTasks();
+    }, [loadTasks]);
 
     const handleMenuClick = (event, task) => {
         setAnchorEl(event.currentTarget);

@@ -1,10 +1,12 @@
-import CashFlowVisualizer from './CashFlowVisualizer';
-import ForecastDashboard from './ForecastDashboard';
-import CashFlowSources from './CashFlowSources';
-import ForecastScenarios from './ForecastScenarios';
-import AdjustmentsEntry from './AdjustmentsEntry';
-import VarianceAnalysis from './VarianceAnalysis';
-import FXExposure from './FXExposure';
+import React from 'react';
+
+const CashFlowVisualizer = React.lazy(() => import('./CashFlowVisualizer'));
+const ForecastDashboard = React.lazy(() => import('./ForecastDashboard'));
+const CashFlowSources = React.lazy(() => import('./CashFlowSources'));
+const ForecastScenarios = React.lazy(() => import('./ForecastScenarios'));
+const AdjustmentsEntry = React.lazy(() => import('./AdjustmentsEntry'));
+const VarianceAnalysis = React.lazy(() => import('./VarianceAnalysis'));
+const FXExposure = React.lazy(() => import('./FXExposure'));
 
 export const modules = [
     {

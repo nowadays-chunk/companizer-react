@@ -1,19 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Card, CardContent, Button, Grid, Chip } from '@mui/material';
-import { helpersWrapper } from '../../../../../../utils/firebaseCrudHelpers';
-import { useTranslation } from '../../../../../../contexts/TranslationProvider';
+import { helpersWrapper } from '../../../../../../utils/clientQueries';
 
 const PaymentRunManager = () => {
-    const { t } = useTranslation();
     const [dueInvoices, setDueInvoices] = useState([]);
     const [invoicesHelper] = useState(() => helpersWrapper('vendor_invoices'));
 
-    useEffect(() => {
-        loadDueInvoices();
-    }, []);
-
-    const loadDueInvoices = async () => {
+    const loadDueInvoices = React.useCallback(async () => {
         try {
             const allInvoices = await invoicesHelper.fetchItems();
             // Filter for 'Approved' or 'Ready for Pay'
@@ -25,7 +19,11 @@ const PaymentRunManager = () => {
         } catch (error) {
             console.error("Error loading invoices", error);
         }
-    };
+    }, [invoicesHelper]);
+
+    useEffect(() => {
+        loadDueInvoices();
+    }, [loadDueInvoices]);
 
     const handleCreateBatch = () => {
         alert("Payment Batch Feature Plan: This will group selected invoices into a single payment file (SEPA/ACH).");

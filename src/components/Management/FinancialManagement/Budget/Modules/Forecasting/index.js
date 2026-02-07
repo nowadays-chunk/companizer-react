@@ -1,232 +1,183 @@
-import RollingForecastEngine from './RollingForecastEngine';
-import DriverBasedModeling from './DriverBasedModeling';
-import ScenarioPlanningManager from './ScenarioPlanningManager';
-import RevenueForecastModels from './RevenueForecastModels';
-import OpexForecasting from './OpexForecasting';
-import CapExForecasting from './CapExForecasting';
-import CashFlowForecasting from './CashFlowForecasting';
-import PredictiveAnalyticsAI from './PredictiveAnalyticsAI';
-import SensitivityAnalysis from './SensitivityAnalysis';
-import WhatIfSimulations from './WhatIfSimulations';
-import CollaborativeForecasting from './CollaborativeForecasting';
-import ForecastApprovalWorkflow from './ForecastApprovalWorkflow';
-import ForecastAccuracyTracking from './ForecastAccuracyTracking';
-import ExternalDataIntegration from './ExternalDataIntegration';
-import ConsolidatedForecastReports from './ConsolidatedForecastReports';
-import ForecastVersionControl from './ForecastVersionControl';
+import React from 'react';
 
-import {
-    Update,
-    Settings,
-    CompareArrows,
-    MonetizationOn,
-    MoneyOff,
-    Build,
-    AccountBalance,
-    Psychology,
-    Tune,
-    Gamepad,
-    GroupWork,
-    AssignmentTurnedIn,
-    TrackChanges,
-    Public,
-    Assessment,
-    History
-} from '@mui/icons-material';
+const RollingForecastEngine = React.lazy(() => import('./RollingForecastEngine'));
+const DriverBasedModeling = React.lazy(() => import('./DriverBasedModeling'));
+const ScenarioPlanningManager = React.lazy(() => import('./ScenarioPlanningManager'));
+const RevenueForecastModels = React.lazy(() => import('./RevenueForecastModels'));
+const OpexForecasting = React.lazy(() => import('./OpexForecasting'));
+const CapExForecasting = React.lazy(() => import('./CapExForecasting'));
+const CashFlowForecasting = React.lazy(() => import('./CashFlowForecasting'));
+const PredictiveAnalyticsAI = React.lazy(() => import('./PredictiveAnalyticsAI'));
+const SensitivityAnalysis = React.lazy(() => import('./SensitivityAnalysis'));
+const WhatIfSimulations = React.lazy(() => import('./WhatIfSimulations'));
+const CollaborativeForecasting = React.lazy(() => import('./CollaborativeForecasting'));
+const ForecastApprovalWorkflow = React.lazy(() => import('./ForecastApprovalWorkflow'));
+const ForecastAccuracyTracking = React.lazy(() => import('./ForecastAccuracyTracking'));
+const ExternalDataIntegration = React.lazy(() => import('./ExternalDataIntegration'));
+const ConsolidatedForecastReports = React.lazy(() => import('./ConsolidatedForecastReports'));
+const ForecastVersionControl = React.lazy(() => import('./ForecastVersionControl'));
 
 export const modules = [
     {
-        id: 'rolling-forecast',
-        name: 'Rolling Forecast Engine',
-        description: '12/18 month rolling forecast setup and management.',
-        icon: Update,
-        component: RollingForecastEngine,
-        group: 'Core Forecasting Models',
+        id: 'rolling',
+        name: 'Rolling Forecast',
         type: 'General',
         path: '/apps/financial-forecasting/rolling',
-        label: 'Rolling Forecast',
+        icon: 'Update',
+        description: 'Manage continuous rolling forecasts.',
+        component: RollingForecastEngine,
         requiresSelection: false
     },
     {
-        id: 'driver-modeling',
+        id: 'drivers',
         name: 'Driver-Based Modeling',
-        description: 'Create forecast models based on key business drivers.',
-        icon: Settings,
-        component: DriverBasedModeling,
-        group: 'Core Forecasting Models',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/financial-forecasting/drivers',
-        label: 'Driver Models',
+        icon: 'Tune',
+        description: 'Forecast based on key business drivers.',
+        component: DriverBasedModeling,
         requiresSelection: false
     },
     {
-        id: 'scenario-planning',
-        name: 'Scenario Planning Manager',
-        description: 'Manage best, worst, and base case scenarios.',
-        icon: CompareArrows,
-        component: ScenarioPlanningManager,
-        group: 'Core Forecasting Models',
+        id: 'scenarios',
+        name: 'Scenario Planning',
         type: 'General',
         path: '/apps/financial-forecasting/scenarios',
-        label: 'Scenarios',
+        icon: 'MovieFilter',
+        description: 'Create and compare forecast scenarios.',
+        component: ScenarioPlanningManager,
         requiresSelection: false
     },
     {
-        id: 'revenue-forecast',
-        name: 'Revenue Forecast Models',
-        description: 'Pipeline-weighted and trend-based revenue projection.',
-        icon: MonetizationOn,
-        component: RevenueForecastModels,
-        group: 'Revenue & Expense',
-        type: 'General',
+        id: 'revenue',
+        name: 'Revenue Forecast',
+        type: 'Specific',
         path: '/apps/financial-forecasting/revenue',
-        label: 'Revenue',
+        icon: 'AttachMoney',
+        description: 'Project future revenue streams.',
+        component: RevenueForecastModels,
         requiresSelection: false
     },
     {
-        id: 'opex-forecast',
-        name: 'OpEx Forecasting',
-        description: 'Operational expense projection with inflation adjustments.',
-        icon: MoneyOff,
-        component: OpexForecasting,
-        group: 'Revenue & Expense',
-        type: 'General',
+        id: 'opex',
+        name: 'OpEx Forecast',
+        type: 'Specific',
         path: '/apps/financial-forecasting/opex',
-        label: 'OpEx',
+        icon: 'MoneyOff',
+        description: 'Forecast operational expenses.',
+        component: OpexForecasting,
         requiresSelection: false
     },
     {
-        id: 'capex-forecast',
-        name: 'CapEx Forecasting',
-        description: 'Capital expenditure planning and depreciation forecasting.',
-        icon: Build,
-        component: CapExForecasting,
-        group: 'Revenue & Expense',
-        type: 'General',
+        id: 'capex',
+        name: 'CapEx Forecast',
+        type: 'Specific',
         path: '/apps/financial-forecasting/capex',
-        label: 'CapEx',
+        icon: 'Construction',
+        description: 'Plan capital expenditures.',
+        component: CapExForecasting,
         requiresSelection: false
     },
     {
-        id: 'cash-flow-forecast',
-        name: 'Cash Flow Forecasting',
-        description: 'Direct and indirect cash flow projections.',
-        icon: AccountBalance,
-        component: CashFlowForecasting,
-        group: 'Revenue & Expense',
+        id: 'cash-flow',
+        name: 'Cash Flow Forecast',
         type: 'General',
         path: '/apps/financial-forecasting/cash-flow',
-        label: 'Cash Flow',
+        icon: 'ShowChart',
+        description: 'Project liquidity and cash position.',
+        component: CashFlowForecasting,
         requiresSelection: false
     },
     {
-        id: 'predictive-analytics',
-        name: 'Predictive Analytics AI',
-        description: 'AI-driven trends and anomaly detection.',
-        icon: Psychology,
-        component: PredictiveAnalyticsAI,
-        group: 'Advanced Analytics',
+        id: 'predictive',
+        name: 'Predictive Analytics',
         type: 'General',
         path: '/apps/financial-forecasting/predictive',
-        label: 'Predictive AI',
+        icon: 'Psychology',
+        description: 'AI-driven forecast suggestions.',
+        component: PredictiveAnalyticsAI,
         requiresSelection: false
     },
     {
-        id: 'sensitivity-analysis',
+        id: 'sensitivity',
         name: 'Sensitivity Analysis',
-        description: 'Impact analysis of variable changes (e.g., FX rates).',
-        icon: Tune,
-        component: SensitivityAnalysis,
-        group: 'Advanced Analytics',
         type: 'General',
         path: '/apps/financial-forecasting/sensitivity',
-        label: 'Sensitivity',
+        icon: 'WifiTethering',
+        description: 'Analyze impact of variable changes.',
+        component: SensitivityAnalysis,
         requiresSelection: false
     },
     {
-        id: 'what-if-simulations',
-        name: 'What-If Simulations',
-        description: 'Interactive simulation playground for strategic decisions.',
-        icon: Gamepad,
-        component: WhatIfSimulations,
-        group: 'Advanced Analytics',
+        id: 'simulations',
+        name: 'Simulations',
         type: 'General',
         path: '/apps/financial-forecasting/simulations',
-        label: 'What-If',
+        icon: 'Science',
+        description: 'What-if analysis and simulations.',
+        component: WhatIfSimulations,
         requiresSelection: false
     },
     {
-        id: 'collaborative-forecasting',
-        name: 'Collaborative Forecasting',
-        description: 'Tools for input contribution from department heads.',
-        icon: GroupWork,
-        component: CollaborativeForecasting,
-        group: 'Workflow & Collaboration',
+        id: 'collaboration',
+        name: 'Collaboration',
         type: 'General',
         path: '/apps/financial-forecasting/collaboration',
-        label: 'Collaboration',
+        icon: 'Groups',
+        description: 'Team forecasting tools.',
+        component: CollaborativeForecasting,
         requiresSelection: false
     },
     {
-        id: 'forecast-approval',
-        name: 'Forecast Approval Workflow',
-        description: 'Review and approval chain for forecast versions.',
-        icon: AssignmentTurnedIn,
-        component: ForecastApprovalWorkflow,
-        group: 'Workflow & Collaboration',
+        id: 'approval',
+        name: 'Approvals',
         type: 'General',
         path: '/apps/financial-forecasting/approval',
-        label: 'Approval',
+        icon: 'ThumbUp',
+        description: 'Forecast sign-off workflows.',
+        component: ForecastApprovalWorkflow,
         requiresSelection: false
     },
     {
-        id: 'accuracy-tracking',
-        name: 'Forecast Accuracy Tracking',
-        description: 'Measure forecast vs actual performance over time.',
-        icon: TrackChanges,
-        component: ForecastAccuracyTracking,
-        group: 'Reporting & Integration',
+        id: 'accuracy',
+        name: 'Forecast Accuracy',
         type: 'General',
         path: '/apps/financial-forecasting/accuracy',
-        label: 'Accuracy',
+        icon: 'CenterFocusStrong',
+        description: 'Track forecast vs actuals over time.',
+        component: ForecastAccuracyTracking,
         requiresSelection: false
     },
     {
         id: 'external-data',
-        name: 'External Data Integration',
-        description: 'Import market data and economic indicators.',
-        icon: Public,
-        component: ExternalDataIntegration,
-        group: 'Reporting & Integration',
+        name: 'External Data',
         type: 'General',
         path: '/apps/financial-forecasting/external-data',
-        label: 'External Data',
+        icon: 'CloudDownload',
+        description: 'Integrate market data feeds.',
+        component: ExternalDataIntegration,
         requiresSelection: false
     },
     {
-        id: 'consolidated-reports',
-        name: 'Consolidated Forecast Reports',
-        description: 'Aggregated views for group-level reporting.',
-        icon: Assessment,
-        component: ConsolidatedForecastReports,
-        group: 'Reporting & Integration',
+        id: 'reports',
+        name: 'Reports',
         type: 'General',
         path: '/apps/financial-forecasting/reports',
-        label: 'Reports',
+        icon: 'Description',
+        description: 'Forecast summaries and presentations.',
+        component: ConsolidatedForecastReports,
         requiresSelection: false
     },
     {
-        id: 'version-control',
-        name: 'Forecast Version Control',
-        description: 'Version history and comparison.',
-        icon: History,
-        component: ForecastVersionControl,
-        group: 'Reporting & Integration',
+        id: 'versions',
+        name: 'Version Control',
         type: 'General',
         path: '/apps/financial-forecasting/versions',
-        label: 'Versions',
+        icon: 'history',
+        description: 'Manage forecast iterations.',
+        component: ForecastVersionControl,
         requiresSelection: false
-    }
+    },
 ];
 
 export default modules;

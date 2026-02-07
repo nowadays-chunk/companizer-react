@@ -1,23 +1,23 @@
 import React from 'react';
 
-import InvestmentMasterData from './InvestmentMasterData';
-import AcquisitionDisposal from './AcquisitionDisposal';
-import DividendManagement from './DividendManagement';
-import OwnershipChanges from './OwnershipChanges';
-import IntercompanyEquity from './IntercompanyEquity';
-import ValuationFairValue from './ValuationFairValue';
-import UnrealizedGainsLosses from './UnrealizedGainsLosses';
-import EquityMethodAccounting from './EquityMethodAccounting';
-import ImpairmentTesting from './ImpairmentTesting';
-import ForeignCurrencyEquity from './ForeignCurrencyEquity';
-import ConsolidationIntegration from './ConsolidationIntegration';
-import DisclosuresCompliance from './DisclosuresCompliance';
-import WorkflowApprovals from './WorkflowApprovals';
-import PeriodCloseIntegration from './PeriodCloseIntegration';
-import AuditTrailDocumentation from './AuditTrailDocumentation';
-import ReportingAnalytics from './ReportingAnalytics';
-import InvestmentDashboard from './InvestmentDashboard';
-import TreasuryCashIntegration from './TreasuryCashIntegration';
+const InvestmentMasterData = React.lazy(() => import('./InvestmentMasterData'));
+const AcquisitionDisposal = React.lazy(() => import('./AcquisitionDisposal'));
+const DividendManagement = React.lazy(() => import('./DividendManagement'));
+const OwnershipChanges = React.lazy(() => import('./OwnershipChanges'));
+const IntercompanyEquity = React.lazy(() => import('./IntercompanyEquity'));
+const ValuationFairValue = React.lazy(() => import('./ValuationFairValue'));
+const UnrealizedGainsLosses = React.lazy(() => import('./UnrealizedGainsLosses'));
+const EquityMethodAccounting = React.lazy(() => import('./EquityMethodAccounting'));
+const ImpairmentTesting = React.lazy(() => import('./ImpairmentTesting'));
+const ForeignCurrencyEquity = React.lazy(() => import('./ForeignCurrencyEquity'));
+const ConsolidationIntegration = React.lazy(() => import('./ConsolidationIntegration'));
+const DisclosuresCompliance = React.lazy(() => import('./DisclosuresCompliance'));
+const WorkflowApprovals = React.lazy(() => import('./WorkflowApprovals'));
+const PeriodCloseIntegration = React.lazy(() => import('./PeriodCloseIntegration'));
+const AuditTrailDocumentation = React.lazy(() => import('./AuditTrailDocumentation'));
+const ReportingAnalytics = React.lazy(() => import('./ReportingAnalytics'));
+const InvestmentDashboard = React.lazy(() => import('./InvestmentDashboard'));
+const TreasuryCashIntegration = React.lazy(() => import('./TreasuryCashIntegration'));
 
 export const modules = [
     {
@@ -27,7 +27,8 @@ export const modules = [
         path: '/apps/equity-investments/dashboard',
         icon: 'Dashboard',
         description: 'Executive overview of equity portfolio.',
-        component: InvestmentDashboard
+        component: InvestmentDashboard,
+        requiresSelection: false
     },
     {
         id: 'master-data',
@@ -36,7 +37,8 @@ export const modules = [
         path: '/apps/equity-investments/master-data',
         icon: 'Business',
         description: 'Manage investment entities and classification.',
-        component: InvestmentMasterData
+        component: InvestmentMasterData,
+        requiresSelection: false
     },
     {
         id: 'acquisition-disposal',
@@ -45,7 +47,8 @@ export const modules = [
         path: '/apps/equity-investments/transactions',
         icon: 'ReceiptLong',
         description: 'Record purchases, sales, and capital changes.',
-        component: AcquisitionDisposal
+        component: AcquisitionDisposal,
+        requiresSelection: false
     },
     {
         id: 'dividend-management',
@@ -54,7 +57,8 @@ export const modules = [
         path: '/apps/equity-investments/dividends',
         icon: 'AttachMoney',
         description: 'Track declared dividends and income recognition.',
-        component: DividendManagement
+        component: DividendManagement,
+        requiresSelection: false
     },
     {
         id: 'ownership-changes',
@@ -63,7 +67,8 @@ export const modules = [
         path: '/apps/equity-investments/ownership',
         icon: 'Timeline',
         description: 'Handle step acquisitions and control changes.',
-        component: OwnershipChanges
+        component: OwnershipChanges,
+        requiresSelection: false
     },
     {
         id: 'intercompany-equity',
@@ -72,7 +77,8 @@ export const modules = [
         path: '/apps/equity-investments/intercompany',
         icon: 'Lan',
         description: 'Manage group structure and eliminations.',
-        component: IntercompanyEquity
+        component: IntercompanyEquity,
+        requiresSelection: false
     },
     {
         id: 'valuation-fair-value',
@@ -81,7 +87,8 @@ export const modules = [
         path: '/apps/equity-investments/valuation',
         icon: 'TrendingUp',
         description: 'Fair value measurement and Input tracking.',
-        component: ValuationFairValue
+        component: ValuationFairValue,
+        requiresSelection: false
     },
     {
         id: 'unrealized-gains-losses',
@@ -90,7 +97,8 @@ export const modules = [
         path: '/apps/equity-investments/unrealized',
         icon: 'ShowChart',
         description: 'Track valuation movements to P&L or OCI.',
-        component: UnrealizedGainsLosses
+        component: UnrealizedGainsLosses,
+        requiresSelection: false
     },
     {
         id: 'equity-method',
@@ -99,7 +107,8 @@ export const modules = [
         path: '/apps/equity-investments/equity-method',
         icon: 'AccountBalance',
         description: 'Share of profit/loss and OCI for associates.',
-        component: EquityMethodAccounting
+        component: EquityMethodAccounting,
+        requiresSelection: false
     },
     {
         id: 'impairment-testing',
@@ -108,7 +117,8 @@ export const modules = [
         path: '/apps/equity-investments/impairment',
         icon: 'Warning',
         description: 'Recoverable amount testing and impairment booking.',
-        component: ImpairmentTesting
+        component: ImpairmentTesting,
+        requiresSelection: false
     },
     {
         id: 'foreign-currency',
@@ -117,7 +127,8 @@ export const modules = [
         path: '/apps/equity-investments/fx',
         icon: 'Public',
         description: 'FX translation and exposure management.',
-        component: ForeignCurrencyEquity
+        component: ForeignCurrencyEquity,
+        requiresSelection: false
     },
     {
         id: 'consolidation-integration',
@@ -126,7 +137,8 @@ export const modules = [
         path: '/apps/equity-investments/consolidation',
         icon: 'MergeType',
         description: 'Consolidation entries and NCI calculation.',
-        component: ConsolidationIntegration
+        component: ConsolidationIntegration,
+        requiresSelection: false
     },
     {
         id: 'treasury-integration',
@@ -135,7 +147,8 @@ export const modules = [
         path: '/apps/equity-investments/treasury',
         icon: 'AccountBalance',
         description: 'Link investments to bank cash flows.',
-        component: TreasuryCashIntegration
+        component: TreasuryCashIntegration,
+        requiresSelection: false
     },
     {
         id: 'workflow-approvals',
@@ -144,7 +157,8 @@ export const modules = [
         path: '/apps/equity-investments/workflows',
         icon: 'Assignment',
         description: 'Manage approval chains for transactions.',
-        component: WorkflowApprovals
+        component: WorkflowApprovals,
+        requiresSelection: false
     },
     {
         id: 'period-close',
@@ -153,7 +167,8 @@ export const modules = [
         path: '/apps/equity-investments/close',
         icon: 'LockClock',
         description: 'Month-end validation and closing checklist.',
-        component: PeriodCloseIntegration
+        component: PeriodCloseIntegration,
+        requiresSelection: false
     },
     {
         id: 'disclosures-compliance',
@@ -162,7 +177,8 @@ export const modules = [
         path: '/apps/equity-investments/compliance',
         icon: 'Gavel',
         description: 'IFRS/GAAP disclosure generation.',
-        component: DisclosuresCompliance
+        component: DisclosuresCompliance,
+        requiresSelection: false
     },
     {
         id: 'reporting-analytics',
@@ -171,7 +187,8 @@ export const modules = [
         path: '/apps/equity-investments/reporting',
         icon: 'Assessment',
         description: 'Detailed analysis and custom reports.',
-        component: ReportingAnalytics
+        component: ReportingAnalytics,
+        requiresSelection: false
     },
     {
         id: 'audit-trail',
@@ -180,6 +197,7 @@ export const modules = [
         path: '/apps/equity-investments/audit',
         icon: 'HistoryEdu',
         description: 'System logs of all changes.',
-        component: AuditTrailDocumentation
+        component: AuditTrailDocumentation,
+        requiresSelection: false
     }
 ];

@@ -1,263 +1,205 @@
-import {
-    Receipt,
-    Rule,
-    TrendingUp,
-    TrendingDown,
-    Event,
-    Description,
-    Edit,
-    SwapHoriz,
-    Public,
-    AccountBalance,
-    FactCheck,
-    Assessment,
-    Gavel,
-    ThumbUp,
-    AutoFixHigh,
-    TrackChanges,
-    Link,
-    Lock
-} from '@mui/icons-material';
+import React from 'react';
 
-import VATGSTRegister from './VATGSTRegister';
-import VATClassificationRules from './VATClassificationRules';
-import InputVATRecovery from './InputVATRecovery';
-import OutputVATLiability from './OutputVATLiability';
-import VATPeriodClosing from './VATPeriodClosing';
-import VATReturnPreparation from './VATReturnPreparation';
-import VATAdjustments from './VATAdjustments';
-import ReverseChargeVAT from './ReverseChargeVAT';
-import MultiJurisdictionVAT from './MultiJurisdictionVAT';
-import VATGLIntegration from './VATGLIntegration';
-import VATReconciliation from './VATReconciliation';
-import VATReporting from './VATReporting';
-import VATAuditSupport from './VATAuditSupport';
-import VATWorkflow from './VATWorkflow';
-import VATAutomation from './VATAutomation';
-import VATStatusMonitor from './VATStatusMonitor';
-import VATEcosystemIntegration from './VATEcosystemIntegration';
-import VATDataIntegrity from './VATDataIntegrity';
+const VATGSTRegister = React.lazy(() => import('./VATGSTRegister'));
+const VATClassificationRules = React.lazy(() => import('./VATClassificationRules'));
+const InputVATRecovery = React.lazy(() => import('./InputVATRecovery'));
+const OutputVATLiability = React.lazy(() => import('./OutputVATLiability'));
+const VATPeriodClosing = React.lazy(() => import('./VATPeriodClosing'));
+const VATReturnPreparation = React.lazy(() => import('./VATReturnPreparation'));
+const VATAdjustments = React.lazy(() => import('./VATAdjustments'));
+const ReverseChargeVAT = React.lazy(() => import('./ReverseChargeVAT'));
+const MultiJurisdictionVAT = React.lazy(() => import('./MultiJurisdictionVAT'));
+const VATGLIntegration = React.lazy(() => import('./VATGLIntegration'));
+const VATReconciliation = React.lazy(() => import('./VATReconciliation'));
+const VATReporting = React.lazy(() => import('./VATReporting'));
+const VATAuditSupport = React.lazy(() => import('./VATAuditSupport'));
+const VATWorkflow = React.lazy(() => import('./VATWorkflow'));
+const VATAutomation = React.lazy(() => import('./VATAutomation'));
+const VATStatusMonitor = React.lazy(() => import('./VATStatusMonitor'));
+const VATEcosystemIntegration = React.lazy(() => import('./VATEcosystemIntegration'));
+const VATDataIntegrity = React.lazy(() => import('./VATDataIntegrity'));
 
 export const modules = [
     {
-        id: 'vat-register',
-        name: 'Transaction Register',
-        description: 'Comprehensive Sales & Purchase VAT logs',
-        icon: Receipt,
-        component: VATGSTRegister,
-        group: 'Core',
+        id: 'register',
+        name: 'VAT/GST Register',
         type: 'General',
         path: '/apps/vat-gst/register',
-        label: 'Register',
+        icon: 'Book',
+        description: 'Central register of VAT/GST transactions.',
+        component: VATGSTRegister,
         requiresSelection: false
     },
     {
-        id: 'vat-rules',
-        name: 'Classification & Rules',
-        description: 'Tax determination logic',
-        icon: Rule,
-        component: VATClassificationRules,
-        group: 'Core',
+        id: 'rules',
+        name: 'Classification Rules',
         type: 'General',
         path: '/apps/vat-gst/rules',
-        label: 'Rules',
+        icon: 'RuleFolder',
+        description: 'Define VAT/GST tax codes and rules.',
+        component: VATClassificationRules,
         requiresSelection: false
     },
     {
-        id: 'input-vat',
+        id: 'input',
         name: 'Input VAT Recovery',
-        description: 'Recoverable vs Non-Recoverable',
-        icon: TrendingDown,
-        component: InputVATRecovery,
-        group: 'Core',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/vat-gst/input',
-        label: 'Input VAT',
+        icon: 'Input',
+        description: 'Manage recoverable input tax.',
+        component: InputVATRecovery,
         requiresSelection: false
     },
     {
-        id: 'output-vat',
+        id: 'output',
         name: 'Output VAT Liability',
-        description: 'Sales tax obligations',
-        icon: TrendingUp,
-        component: OutputVATLiability,
-        group: 'Core',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/vat-gst/output',
-        label: 'Output VAT',
+        icon: 'Output',
+        description: 'Track output tax liabilities.',
+        component: OutputVATLiability,
         requiresSelection: false
     },
     {
-        id: 'vat-closing',
+        id: 'closing',
         name: 'Period Closing',
-        description: 'Aggregation & locking',
-        icon: Event,
-        component: VATPeriodClosing,
-        group: 'Process',
         type: 'General',
         path: '/apps/vat-gst/closing',
-        label: 'Closing',
+        icon: 'LockClock',
+        description: 'Close VAT periods and lock data.',
+        component: VATPeriodClosing,
         requiresSelection: false
     },
     {
-        id: 'vat-return',
+        id: 'return',
         name: 'Return Preparation',
-        description: 'Filing integration',
-        icon: Description,
-        component: VATReturnPreparation,
-        group: 'Process',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/vat-gst/return',
-        label: 'Return',
+        icon: 'AssignmentReturn',
+        description: 'Prepare VAT/GST returns.',
+        component: VATReturnPreparation,
         requiresSelection: false
     },
     {
-        id: 'vat-adjustments',
-        name: 'Adjustments',
-        description: 'Manual corrections & audit trail',
-        icon: Edit,
-        component: VATAdjustments,
-        group: 'Process',
-        type: 'General',
+        id: 'adjustments',
+        name: 'VAT Adjustments',
+        type: 'Specific',
         path: '/apps/vat-gst/adjustments',
-        label: 'Adjustments',
+        icon: 'Tune',
+        description: 'Make manual tax adjustments.',
+        component: VATAdjustments,
         requiresSelection: false
     },
     {
         id: 'reverse-charge',
         name: 'Reverse Charge',
-        description: 'Self-assessment mechanisms',
-        icon: SwapHoriz,
-        component: ReverseChargeVAT,
-        group: 'Advanced',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/vat-gst/reverse-charge',
-        label: 'Rev. Charge',
+        icon: 'SwapHoriz',
+        description: 'Manage reverse charge mechanisms.',
+        component: ReverseChargeVAT,
         requiresSelection: false
     },
     {
-        id: 'multi-jurisdiction',
+        id: 'international',
         name: 'Multi-Jurisdiction',
-        description: 'International VAT management',
-        icon: Public,
-        component: MultiJurisdictionVAT,
-        group: 'Advanced',
         type: 'General',
         path: '/apps/vat-gst/international',
-        label: 'International',
+        icon: 'Public',
+        description: 'Manage VAT across borders.',
+        component: MultiJurisdictionVAT,
         requiresSelection: false
     },
     {
-        id: 'vat-gl',
+        id: 'gl',
         name: 'GL Integration',
-        description: 'Accounting mapping',
-        icon: AccountBalance,
-        component: VATGLIntegration,
-        group: 'Accounting',
         type: 'General',
         path: '/apps/vat-gst/gl',
-        label: 'GL',
+        icon: 'AccountBalance',
+        description: 'Map tax codes to GL accounts.',
+        component: VATGLIntegration,
         requiresSelection: false
     },
     {
-        id: 'vat-reconciliation',
+        id: 'reconciliation',
         name: 'Reconciliation',
-        description: 'Control & validation',
-        icon: FactCheck,
-        component: VATReconciliation,
-        group: 'Accounting',
         type: 'General',
         path: '/apps/vat-gst/reconciliation',
-        label: 'Reconcile',
+        icon: 'FactCheck',
+        description: 'Reconcile tax reports with GL.',
+        component: VATReconciliation,
         requiresSelection: false
     },
     {
-        id: 'vat-reporting',
-        name: 'Reporting & Analytics',
-        description: 'Operational insights',
-        icon: Assessment,
-        component: VATReporting,
-        group: 'Reporting',
+        id: 'reporting',
+        name: 'Reporting',
         type: 'General',
         path: '/apps/vat-gst/reporting',
-        label: 'Reporting',
+        icon: 'Assessment',
+        description: 'Detailed tax reports.',
+        component: VATReporting,
         requiresSelection: false
     },
     {
-        id: 'vat-audit',
+        id: 'audit',
         name: 'Audit Support',
-        description: 'Compliance & evidence',
-        icon: Gavel,
-        component: VATAuditSupport,
-        group: 'Compliance',
         type: 'General',
         path: '/apps/vat-gst/audit',
-        label: 'Audit',
+        icon: 'SupportAgent',
+        description: 'Tools for tax audits.',
+        component: VATAuditSupport,
         requiresSelection: false
     },
     {
-        id: 'vat-workflow',
-        name: 'Workflow & Approvals',
-        description: 'Governance & sign-offs',
-        icon: ThumbUp,
-        component: VATWorkflow,
-        group: 'Governance',
+        id: 'workflow',
+        name: 'Workflow',
         type: 'General',
         path: '/apps/vat-gst/workflow',
-        label: 'Workflow',
+        icon: 'LinearScale',
+        description: 'Approval workflows.',
+        component: VATWorkflow,
         requiresSelection: false
     },
     {
-        id: 'vat-automation',
-        name: 'Automation Rules',
-        description: 'Auto-assignment engine',
-        icon: AutoFixHigh,
-        component: VATAutomation,
-        group: 'Advanced',
+        id: 'automation',
+        name: 'Automation',
         type: 'General',
         path: '/apps/vat-gst/automation',
-        label: 'Automation',
+        icon: 'AutoFixHigh',
+        description: 'Automate repetitive tax tasks.',
+        component: VATAutomation,
         requiresSelection: false
     },
     {
-        id: 'vat-status',
-        name: 'Lifecycle Status',
-        description: 'Tracking record states',
-        icon: TrackChanges,
-        component: VATStatusMonitor,
-        group: 'Governance',
+        id: 'status',
+        name: 'Status Monitor',
         type: 'General',
         path: '/apps/vat-gst/status',
-        label: 'Status',
+        icon: 'MonitorHeart',
+        description: 'Monitor tax compliance status.',
+        component: VATStatusMonitor,
         requiresSelection: false
     },
     {
-        id: 'vat-ecosystem',
-        name: 'Integration',
-        description: 'Cross-module links',
-        icon: Link,
-        component: VATEcosystemIntegration,
-        group: 'Enterprise',
+        id: 'integration',
+        name: 'Ecosystem Integration',
         type: 'General',
         path: '/apps/vat-gst/integration',
-        label: 'Integration',
+        icon: 'Hub',
+        description: 'External tax system connections.',
+        component: VATEcosystemIntegration,
         requiresSelection: false
     },
     {
-        id: 'vat-integrity',
+        id: 'integrity',
         name: 'Data Integrity',
-        description: 'Controls & safeguards',
-        icon: Lock,
-        component: VATDataIntegrity,
-        group: 'Governance',
         type: 'General',
         path: '/apps/vat-gst/integrity',
-        label: 'Integrity',
+        icon: 'HealthAndSafety',
+        description: 'Ensure data accuracy.',
+        component: VATDataIntegrity,
         requiresSelection: false
-    }
+    },
 ];
-
-export const entityName = 'VAT Records';
-export const collectionName = 'vat_records';
 
 export default modules;

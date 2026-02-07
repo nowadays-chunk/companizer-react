@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Box, Typography, Button, Breadcrumbs, Link, Paper, CircularProgress } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { TermTestBench } from '../components/Management/FinancialManagement/AccountsPayable/Modules/PaymentTerms/TermTestBench';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 
 const PaymentTermsTestBench = () => {
     const { id } = useParams();

@@ -1,26 +1,27 @@
-import article1_en from '../articles/the-five-levels-of-treasury-management';
-import article1_fr from '../articles/les-cinq-piliers-de-gestion-de-tresorerie';
-import article2_en from '../articles/quick-overview';
-import article2_fr from '../articles/apercu-rapide-de-notre-logiciel';
-import article3_en from '../articles/sepa-support';
-import article3_fr from '../articles/soutenir-les-paiements-sepa';
-
+// Articles data for blog and article pages
 const articles = [
-  { 
-    slug: 'the-five-levels-of-treasury-management', 
-    content: { en: article1_en, fr: article1_fr }, 
-    title: { en: "The Five Levels of Treasury Management", fr: "Les cinq piliers de gestion de trésorerie" } 
-  },
-  { 
-    slug: 'quick-overview', 
-    content: { en: article2_en, fr: article2_fr }, 
-    title: { en: "Quick overview of our software", fr: "Aperçu rapide de notre logiciel" } 
-  },
-  { 
-    slug: 'sepa-support', 
-    content: { en: article3_en, fr: article3_fr }, 
-    title: { en: "Supporting SEPA Euro Payments for Streamlined Transactions", fr: "Soutenir les paiements en euros SEPA pour des transactions simplifiées" } 
-  },
+    {
+        slug: 'getting-started',
+        title: {
+            en: 'Getting Started',
+            fr: 'Premiers Pas'
+        },
+        content: {
+            en: '# Getting Started\n\nWelcome to the platform! This guide will help you get started.',
+            fr: '# Premiers Pas\n\nBienvenue sur la plateforme! Ce guide vous aidera à démarrer.'
+        }
+    },
+    {
+        slug: 'faq',
+        title: {
+            en: 'Frequently Asked Questions',
+            fr: 'Questions Fréquentes'
+        },
+        content: {
+            en: '# FAQ\n\n**Q: How do I start?**\n\nA: Follow the getting started guide.',
+            fr: '# FAQ\n\n**Q: Comment démarrer?**\n\nR: Suivez le guide de démarrage.'
+        }
+    }
 ];
 
 export default articles;

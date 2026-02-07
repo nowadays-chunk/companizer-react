@@ -1,35 +1,77 @@
 import React, { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
-import { login } from '../../utils/authHelpers';
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+
+const neonBlue = '#00f3ff';
+const neonRed = '#ff0055';
+const darkBg = '#050505';
 
 const LoginDialog = ({ open, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async () => {
+    setError('');
     try {
-      const isDone = await login(email, password);
-      if (isDone) {
-        navigate('/summary');
+      const isSuccess = await login(email, password);
+      if (isSuccess) {
+        onClose();
+        navigate('/summary'); // Or dashboard
+      } else {
+        setError('Invalid credentials');
       }
     } catch (error) {
       console.error('Login failed:', error);
-      // Optionally, show an error message to the user
+      setError('Login failed. Please try again.');
     }
   };
 
+  const textFieldSx = {
+    my: 2,
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': { borderColor: '#333' },
+      '&:hover fieldset': { borderColor: neonBlue },
+      '&.Mui-focused fieldset': { borderColor: neonBlue, boxShadow: `0 0 10px ${neonBlue}` },
+    },
+    '& .MuiInputLabel-root': { color: '#aaa' },
+    '& .MuiInputLabel-root.Mui-focused': { color: neonBlue },
+    '& .MuiInputBase-input': { color: '#fff' },
+  };
+
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Login</DialogTitle>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      PaperProps={{
+        sx: {
+          backgroundColor: darkBg,
+          border: `1px solid ${neonBlue}`,
+          boxShadow: `0 0 20px rgba(0, 243, 255, 0.2)`,
+          color: '#fff',
+          minWidth: '350px'
+        }
+      }}
+    >
+      <DialogTitle sx={{ color: '#fff', textAlign: 'center', fontWeight: 'bold' }}>
+        Login
+      </DialogTitle>
       <DialogContent>
+        {error && (
+          <Typography variant="body2" color={neonRed} sx={{ textAlign: 'center', mb: 1 }}>
+            {error}
+          </Typography>
+        )}
         <TextField
           label="Email"
           type="email"
           fullWidth
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          sx={textFieldSx}
         />
         <TextField
           label="Password"
@@ -37,12 +79,23 @@ const LoginDialog = ({ open, onClose }) => {
           fullWidth
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          sx={{ mt: 2 }}
+          sx={textFieldSx}
         />
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="primary">Cancel</Button>
-        <Button onClick={handleLogin} color="primary">Login</Button>
+      <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
+        <Button onClick={onClose} sx={{ color: '#aaa', '&:hover': { color: '#fff' } }}>Cancel</Button>
+        <Button
+          onClick={handleLogin}
+          variant="contained"
+          sx={{
+            backgroundColor: neonBlue,
+            color: '#000',
+            fontWeight: 'bold',
+            '&:hover': { backgroundColor: '#fff', boxShadow: `0 0 15px ${neonBlue}` }
+          }}
+        >
+          Login
+        </Button>
       </DialogActions>
     </Dialog>
   );

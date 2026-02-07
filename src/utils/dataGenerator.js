@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { getConfig } from '../components/Management/configRegistry';
-import { helpersWrapper } from './firebaseCrudHelpers';
+import { helpersWrapper } from './clientQueries';
 import { defaultAssets as genAssets, defaultLiabilities as genLiabilities } from '../pages/defaultSummaryConfig';
 
 // Default configuration keys (fallback)
@@ -86,12 +86,11 @@ export const generateRandomDataAsync = async (onProgress) => {
         return;
     }
 
-    // Time Configuration
+    // Time Configuration: 10 items per year
     const today = new Date();
     const currentYear = today.getFullYear();
     const startYear = currentYear - 5;
     const endYear = currentYear + 5;
-    const itemsPerMonth = 2; // Density: 2 items per month per entity
 
     for (const entityKey of entitiesArray) {
         if (onProgress) onProgress(`Starting generation for: ${entityKey}...`);
@@ -114,51 +113,51 @@ export const generateRandomDataAsync = async (onProgress) => {
 
         // Loop Years
         for (let year = startYear; year <= endYear; year++) {
-            // Loop Months
-            for (let month = 0; month < 12; month++) {
-                // Loop Density
-                for (let k = 0; k < itemsPerMonth; k++) {
-                    try {
-                        const newRow = {};
+            // Generate 10 items per year
+            for (let k = 0; k < 10; k++) {
+                // Pick a random month for this item to ensure distribution across the year
+                const month = Math.floor(Math.random() * 12);
 
-                        // Build row based on fieldsConfig
-                        Object.entries(fieldsConfig).forEach(([key, field]) => {
-                            // Skip created_at/updated_at in automatic loop, we set created_at manually
-                            if (key === 'created_at' || key === 'updated_at') return;
+                try {
+                    const newRow = {};
 
-                            let value;
-                            if (field.type === 'select') {
-                                value = getRandomElementId(field.options);
-                            } else if (field.type === 'checkbox') {
-                                value = Math.random() > 0.5 ? 1 : 0;
-                            } else if (field.type === 'number') {
-                                let min = field.min ?? 0;
-                                let max = field.max ?? 10000;
-                                if (key === 'total_price' || key === 'amount') max = 50000;
-                                value = getRandomNumberInRange(min, max, field.decimals ?? 2);
-                            } else if (field.type === 'date') {
-                                value = getRandomDateISO();
-                            } else if (field.faker) {
-                                try {
-                                    if (field.faker === 'finance.currencyCode') value = 'USD';
-                                    else if (field.faker.includes('uuid')) value = faker.string.uuid();
-                                    else value = faker.lorem.word();
-                                } catch (e) { value = "Random"; }
-                            } else {
-                                value = "Generated-" + k;
-                            }
-                            newRow[key] = value;
-                        });
+                    // Build row based on fieldsConfig
+                    Object.entries(fieldsConfig).forEach(([key, field]) => {
+                        // Skip created_at/updated_at in automatic loop, we set created_at manually
+                        if (key === 'created_at' || key === 'updated_at') return;
 
-                        // Explicitly set created_at to target date to ensure full coverage
-                        newRow['created_at'] = generateDateInBucket(year, month);
+                        let value;
+                        if (field.type === 'select') {
+                            value = getRandomElementId(field.options);
+                        } else if (field.type === 'checkbox') {
+                            value = Math.random() > 0.5 ? 1 : 0;
+                        } else if (field.type === 'number') {
+                            let min = field.min ?? 0;
+                            let max = field.max ?? 10000;
+                            if (key === 'total_price' || key === 'amount') max = 50000;
+                            value = getRandomNumberInRange(min, max, field.decimals ?? 2);
+                        } else if (field.type === 'date') {
+                            value = getRandomDateISO();
+                        } else if (field.faker) {
+                            try {
+                                if (field.faker === 'finance.currencyCode') value = 'USD';
+                                else if (field.faker.includes('uuid')) value = faker.string.uuid();
+                                else value = faker.lorem.word();
+                            } catch (e) { value = "Random"; }
+                        } else {
+                            value = "Generated-" + k;
+                        }
+                        newRow[key] = value;
+                    });
 
-                        await api.addItem(newRow);
-                        entitySuccessCount++;
+                    // Explicitly set created_at to target date to ensure full coverage
+                    newRow['created_at'] = generateDateInBucket(year, month);
 
-                    } catch (err) {
-                        console.error(`Failed to insert row for ${entityKey}`, err);
-                    }
+                    await api.addItem(newRow);
+                    entitySuccessCount++;
+
+                } catch (err) {
+                    console.error(`Failed to insert row for ${entityKey}`, err);
                 }
             }
             // Yield every year to keep UI responsive

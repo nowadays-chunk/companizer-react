@@ -1,65 +1,62 @@
-import CreditDashboard from './CreditDashboard';
-import CreditProfiles from './CreditProfiles';
-import RiskEngine from './RiskEngine';
-import ExposureManager from './ExposureManager';
-import GovernanceConsole from './GovernanceConsole';
+import React from 'react';
+
+const CreditDashboard = React.lazy(() => import('./CreditDashboard'));
+const CreditProfiles = React.lazy(() => import('./CreditProfiles'));
+const RiskEngine = React.lazy(() => import('./RiskEngine'));
+const ExposureManager = React.lazy(() => import('./ExposureManager'));
+const GovernanceConsole = React.lazy(() => import('./GovernanceConsole'));
 
 export const modules = [
     {
-        id: 'credit_dashboard',
-        label: 'Credit Dashboard',
-        component: CreditDashboard,
-        type: 'General',
-        icon: 'Dashboard',
-        description: 'Real-time credit monitoring, KPI widgets, and alerts.',
-        requiresSelection: false,
+        id: 'dashboard',
         name: 'Credit Dashboard',
-        path: '/apps/credit-management/dashboard'
+        type: 'General',
+        path: '/apps/credit-management/dashboard',
+        icon: 'Dashboard',
+        description: 'Overview of credit risk.',
+        component: CreditDashboard,
+        requiresSelection: false
     },
     {
-        id: 'credit_profiles',
-        label: 'Credit Profiles',
-        component: CreditProfiles,
-        type: 'General',
-        icon: 'AccountBox',
-        description: 'Manage master data, limits, and corporate hierarchies.',
-        requiresSelection: false,
+        id: 'profiles',
         name: 'Credit Profiles',
-        path: '/apps/credit-management/profiles'
+        type: 'General',
+        path: '/apps/credit-management/profiles',
+        icon: 'AccountBox',
+        description: 'Manage customer credit profiles.',
+        component: CreditProfiles,
+        requiresSelection: false
     },
     {
-        id: 'risk_engine',
-        label: 'Risk Engine',
-        component: RiskEngine,
-        type: 'General',
-        icon: 'Gavel', // Using Gavel or similar for rules/judgment
-        description: 'Scoring models, automated checks, and simulations.',
-        requiresSelection: false,
+        id: 'risk-engine',
         name: 'Risk Engine',
-        path: '/apps/credit-management/risk-engine'
+        type: 'General',
+        path: '/apps/credit-management/risk-engine',
+        icon: 'Psychology',
+        description: 'Automated credit risk assessment.',
+        component: RiskEngine,
+        requiresSelection: false
     },
     {
-        id: 'exposure_manager',
-        label: 'Exposure Manager',
+        id: 'exposure',
+        name: 'Exposure Management',
+        type: 'General',
+        path: '/apps/credit-management/exposure',
+        icon: 'TrendingDown',
+        description: 'Monitor credit exposure limits.',
         component: ExposureManager,
-        type: 'General',
-        icon: 'TrendingUp',
-        description: 'Track exposure breakdown, collateral, and insurance.',
-        requiresSelection: false,
-        name: 'Exposure Manager',
-        path: '/apps/credit-management/exposure'
+        requiresSelection: false
     },
     {
-        id: 'governance_console',
-        label: 'Governance Console',
-        component: GovernanceConsole,
+        id: 'governance',
+        name: 'Governance',
         type: 'General',
-        icon: 'AdminPanelSettings',
-        description: 'Approvals, audit trails, and policy configuration.',
-        requiresSelection: false,
-        name: 'Governance Console',
-        path: '/apps/credit-management/governance'
-    }
+        path: '/apps/credit-management/governance',
+        icon: 'Gavel',
+        description: 'Credit policies and governance.',
+        component: GovernanceConsole,
+        requiresSelection: false
+    },
 ];
 
 export default modules;

@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import BaseManagementComponent from '../components/Management/Base';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
-import * as WorkflowRulesConfig from '../components/Management/entity_workflow_rules.js';
-import { Dialog, DialogContent, DialogTitle, Typography } from '@mui/material';
+import BaseManagementComponent from '../components/Base';
+import { helpersWrapper } from '../utils/clientQueries';
 import { useParams } from 'react-router-dom';
 
 const getPath = (path) => {
     return path.split('-').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join('');
 }
 
-function ManagementComponent({ showAnalytics, ...props }) {
+function ManagementComponent(props) {
     const params = useParams();
     const module = props.module || params.module;
     const subModule = props.subModule || params.subModule;
@@ -20,15 +18,11 @@ function ManagementComponent({ showAnalytics, ...props }) {
     const capitalizedComponentName = getPath(component);
 
     const [config, setConfig] = useState(null);
-    const [AnalysisComponent, setAnalysisComponent] = useState(null);
-    const [showConfigDialog, setShowConfigDialog] = useState(false);
-    const rulesHelpers = React.useMemo(() => helpersWrapper('entity_workflow_rules'), []);
 
     useEffect(() => {
         const loadConfig = async () => {
             try {
                 const { fieldsConfig, entityName, collectionName, modules } = await import(`../components/Management/${capitalizedModuleName}/${capitalizedSubModuleName}/${capitalizedComponentName}`);
-                const analysisModule = await import(`./Analysis/${capitalizedModuleName}/${capitalizedSubModuleName}/${capitalizedComponentName}`);
                 const operations = helpersWrapper(collectionName);
 
                 const headCells = Object.keys(fieldsConfig).map(key => ({
@@ -48,8 +42,6 @@ function ManagementComponent({ showAnalytics, ...props }) {
                     modules: modules,
                 });
 
-                setAnalysisComponent(() => analysisModule.default);
-
                 // Try to load module configuration
                 try {
                     const configModule = await import(`../components/Management/${capitalizedModuleName}/${capitalizedSubModuleName}/Config/${capitalizedComponentName}Config`);
@@ -67,32 +59,25 @@ function ManagementComponent({ showAnalytics, ...props }) {
         loadConfig();
     }, [capitalizedComponentName, capitalizedModuleName, capitalizedSubModuleName]);
 
-    // if (!config || !AnalysisComponent) {
     if (!config) {
         return <div>Loading...</div>;
     }
 
     return (
-        <>
-            {showAnalytics ? (
-                <AnalysisComponent fetchItems={config.fetchItems} fieldsConfig={config.fieldsConfig} />
-            ) : (
-                <BaseManagementComponent
-                    fieldConfig={config.fieldsConfig}
-                    entityName={config.entityName}
-                    fetchItems={config.fetchItems}
-                    addItem={config.addItem}
-                    updateItem={config.updateItem}
-                    deleteItem={config.deleteItem}
-                    headCells={config.headCells}
-                    modules={config.modules}
-                    initialFilters={props.initialFilters}
-                    onConfigure={() => {
-                        window.open(`/#/${module}/${subModule}/${component}/configuration`, '_blank');
-                    }}
-                />
-            )}
-        </>
+        <BaseManagementComponent
+            fieldConfig={config.fieldsConfig}
+            entityName={config.entityName}
+            fetchItems={config.fetchItems}
+            addItem={config.addItem}
+            updateItem={config.updateItem}
+            deleteItem={config.deleteItem}
+            headCells={config.headCells}
+            modules={config.modules}
+            initialFilters={props.initialFilters}
+            onConfigure={() => {
+                window.open(`/#/${module}/${subModule}/${component}/configuration`, '_blank');
+            }}
+        />
     );
 }
 

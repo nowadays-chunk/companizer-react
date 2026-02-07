@@ -1,13 +1,14 @@
+import React from 'react';
 
-import CategoryMasterData from './CategoryMasterData';
-import CategoryHierarchy from './CategoryHierarchy';
-import CategoryProducts from './CategoryProducts';
-import CategoryPricing from './CategoryPricing';
-import CategoryTax from './CategoryTax';
-import CategoryInventory from './CategoryInventory';
-import CategoryAnalytics from './CategoryAnalytics';
-import CategoryWorkflow from './CategoryWorkflow';
-import CategoryChannels from './CategoryChannels';
+const CategoryMasterData = React.lazy(() => import('./CategoryMasterData'));
+const CategoryHierarchy = React.lazy(() => import('./CategoryHierarchy'));
+const CategoryProducts = React.lazy(() => import('./CategoryProducts'));
+const CategoryPricing = React.lazy(() => import('./CategoryPricing'));
+const CategoryTax = React.lazy(() => import('./CategoryTax'));
+const CategoryInventory = React.lazy(() => import('./CategoryInventory'));
+const CategoryAnalytics = React.lazy(() => import('./CategoryAnalytics'));
+const CategoryWorkflow = React.lazy(() => import('./CategoryWorkflow'));
+const CategoryChannels = React.lazy(() => import('./CategoryChannels'));
 
 export const modules = [
     {

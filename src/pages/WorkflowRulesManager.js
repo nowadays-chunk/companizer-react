@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import BaseManagementComponent from '../components/Management/Base';
+import BaseManagementComponent from '../components/Base';
 import * as WorkflowRulesConfig from '../components/Management/entity_workflow_rules.js';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 import { Container, Typography, Box } from '@mui/material';
 
 const WorkflowRulesManager = () => {

@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { helpersWrapper } from '../utils/clientQueries';
 
 const useDashboard = (userId) => {
     const [layout, setLayout] = useState([]);
@@ -7,7 +7,7 @@ const useDashboard = (userId) => {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
 
-    const dashboardHelper = helpersWrapper('dashboard_configurations');
+    const dashboardHelper = useMemo(() => helpersWrapper('dashboard_configurations'), []);
 
     // Load dashboard configuration
     useEffect(() => {
@@ -35,7 +35,7 @@ const useDashboard = (userId) => {
         };
 
         loadDashboard();
-    }, [userId]);
+    }, [userId, dashboardHelper]);
 
     const loadDefaultLayout = () => {
         // Default layout with sample widgets
@@ -95,7 +95,7 @@ const useDashboard = (userId) => {
         } finally {
             setSaving(false);
         }
-    }, [userId, layout, widgets]);
+    }, [userId, layout, widgets, dashboardHelper]);
 
     // Add widget
     const addWidget = useCallback((widget) => {

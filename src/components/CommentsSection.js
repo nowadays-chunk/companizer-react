@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { Send } from '@mui/icons-material';
 import { useTranslation } from '../contexts/TranslationProvider';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 import { collectionName as commentsCollectionName } from './Management/entity_comments_history';
 
 // Reusing the SectionHeader style if possible, or defining locally
@@ -32,7 +32,6 @@ const CommentsSection = ({ entityId, entityType }) => {
     const { t } = useTranslation();
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
-    const [loading, setLoading] = useState(false);
 
     // Initialize helper strictly for this component
     const commentsHelpers = useMemo(() => helpersWrapper(commentsCollectionName), []);

@@ -1,210 +1,88 @@
-import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Container } from '@mui/material';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import { Box, CircularProgress, Typography, Container, Alert } from '@mui/material';
+import GenericAnalyticsDashboard from './GenericAnalyticsDashboard';
+import { helpersWrapper } from '../utils/clientQueries';
+import analysisRegistry from '../analysisRegistry';
 
-const VisualAnalytics = ({ fetchItems, fieldsConfig }) => {
+const Analytics = () => {
+    const { entity } = useParams();
     const [data, setData] = useState([]);
-    const [kpiData, setKpiData] = useState({});
-    const [chartData, setChartData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Get config from registry based on URL parameter
+    const config = analysisRegistry[entity];
+
+    const helpers = useMemo(() => {
+        if (config) {
+            return helpersWrapper(config.collectionName);
+        }
+        return null;
+    }, [config]);
 
     useEffect(() => {
-        async function loadData() {
-            const fetchedData = await fetchItems();
-            setData(fetchedData);
-            processKPIs(fetchedData);
-            processChartsData(fetchedData);
+        if (!config || !helpers) {
+            setLoading(false);
+            return;
         }
 
-        loadData();
-    }, [fetchItems]);
+        let isMounted = true;
+        setLoading(true);
+        setError(null);
 
-    const processKPIs = (rows) => {
-        const totalRecords = rows.length;
-        let totalAmount = 0;
-        let scoreSum = 0;
-        let scoreCount = 0;
-        const statusMap = {};
-        const categoryMap = {};
-
-        rows.forEach(row => {
-            if (row.amount) {
-                totalAmount += parseFloat(row.amount);
-            }
-            if (row.score) {
-                scoreSum += parseFloat(row.score);
-                scoreCount++;
-            }
-            if (row.status) {
-                statusMap[row.status] = (statusMap[row.status] || 0) + 1;
-            }
-            if (row.category && Array.isArray(row.category)) {
-                row.category.forEach(tag => {
-                    if (tag) {
-                        categoryMap[tag] = (categoryMap[tag] || 0) + 1;
-                    }
-                });
-            }
-        });
-
-        const averageScore = scoreCount > 0 ? scoreSum / scoreCount : null;
-
-        setKpiData({ 
-            totalRecords, 
-            totalAmount: totalAmount || null, 
-            averageScore,
-            statusDistribution: statusMap,
-            categoryDistribution: categoryMap,
-        });
-    };
-
-    const processChartsData = (rows) => {
-        const charts = [];
-
-        // Category pie chart
-        if (kpiData.categoryDistribution && Object.keys(kpiData.categoryDistribution).length > 0) {
-            const categories = Object.keys(kpiData.categoryDistribution);
-            const values = categories.map(key => ({
-                name: key,
-                y: kpiData.categoryDistribution[key],
-            }));
-
-            charts.push({
-                title: 'Category Distribution',
-                type: 'pie',
-                data: values,
-            });
-        }
-
-        // Dynamic chart generation based on fields with "options" property
-        Object.keys(fieldsConfig).forEach(field => {
-            const fieldConfig = fieldsConfig[field];
-            if (fieldConfig.options) {
-                const categoryMap = {};
-
-                rows.forEach(row => {
-                    const category = row[field];
-                    if (category !== null && category !== undefined && category !== '') {
-                        categoryMap[category] = (categoryMap[category] || 0) + 1;
-                    }
-                });
-
-                const categories = Object.keys(categoryMap);
-                const values = categories.map(key => ({
-                    name: key,
-                    y: categoryMap[key],
-                }));
-
-                if (categories.length > 0) {
-                    charts.push({
-                        title: `${fieldConfig.label} Distribution`,
-                        type: 'pie',
-                        data: values,
-                    });
+        helpers.fetchItems()
+            .then(items => {
+                if (isMounted) {
+                    setData(items || []);
+                    setLoading(false);
                 }
-            }
-        });
-
-        // Additional timeline chart
-        const timelineMap = {};
-
-        rows.forEach(row => {
-            if (row.createdDate) {
-                const date = new Date(row.createdDate).toLocaleDateString();
-                timelineMap[date] = (timelineMap[date] || 0) + 1;
-            }
-        });
-
-        const timelineDates = Object.keys(timelineMap);
-        const timelineCounts = timelineDates.map(key => timelineMap[key]);
-
-        if (timelineDates.length > 0) {
-            charts.push({
-                title: 'Timeline Analysis',
-                type: 'line',
-                data: timelineCounts,
-                categories: timelineDates,
+            })
+            .catch(err => {
+                console.error("Error loading analysis data:", err);
+                if (isMounted) {
+                    setError("Failed to load data.");
+                    setLoading(false);
+                }
             });
-        }
 
-        setChartData(charts);
-    };
+        return () => { isMounted = false; };
+    }, [helpers, config]);
+
+    if (!config) {
+        return (
+            <Container sx={{ mt: 4 }}>
+                <Alert severity="error">
+                    Analytics configuration not found for entity: <strong>{entity}</strong>
+                </Alert>
+            </Container>
+        );
+    }
+
+    if (loading) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+                <CircularProgress />
+            </Box>
+        );
+    }
+
+    if (error) {
+        return (
+            <Container sx={{ mt: 4 }}>
+                <Typography color="error" variant="h6">{error}</Typography>
+            </Container>
+        );
+    }
 
     return (
-        <Container maxWidth="xl" sx={{ mt: 12, mb: 12 }}>
-            {/* KPI Section */}
-            <div className="kpi-section">
-                <h2>Key Performance Indicators</h2>
-                <div className="kpi-card">
-                    <h3>Total Records</h3>
-                    <p>{kpiData.totalRecords}</p>
-                </div>
-                {kpiData.totalAmount !== null && (
-                    <div className="kpi-card">
-                        <h3>Total Amount</h3>
-                        <p>${Number(kpiData.totalAmount).toFixed(2)}</p>
-                    </div>
-                )}
-                {kpiData.averageScore !== null && (
-                    <div className="kpi-card">
-                        <h3>Average Score</h3>
-                        <p>{Number(kpiData.averageScore).toFixed(2)}</p>
-                    </div>
-                )}
-            </div>
-
-            {/* Highcharts Section */}
-            <div className="charts-section">
-                <h2>Visual Analytics</h2>
-
-                {/* Render dynamically generated charts */}
-                {chartData.map((chart, index) => (
-                    <div className="chart-container" key={index}>
-                        <HighchartsReact 
-                            highcharts={Highcharts} 
-                            options={
-                                chart.type === 'line' ? 
-                                getTimelineAnalysisOptions(chart.title, chart.categories, chart.data) : 
-                                getPieChartOptions(chart.title, chart.data)
-                            } 
-                        />
-                    </div>
-                ))}
-            </div>
-        </Container>
+        <GenericAnalyticsDashboard
+            data={data}
+            fieldsConfig={config.fieldsConfig}
+            collectionName={config.collectionName}
+            title={config.title}
+        />
     );
 };
 
-// Reusable function to create pie chart options
-function getPieChartOptions(title, data) {
-    return {
-        chart: { type: 'pie' },
-        title: { text: title },
-        series: [{
-            name: 'Count',
-            colorByPoint: true,
-            data: data
-        }]
-    };
-}
-
-// Reusable function to create timeline analysis options
-function getTimelineAnalysisOptions(title, dates, counts) {
-    return {
-        chart: { type: 'line' },
-        title: { text: title },
-        xAxis: {
-            categories: dates,
-            title: { text: 'Date' }
-        },
-        yAxis: {
-            title: { text: 'Count' }
-        },
-        series: [{
-            name: 'Records',
-            data: counts
-        }]
-    };
-}
-
-export default VisualAnalytics;
+export default Analytics;

@@ -2,10 +2,10 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, Grid, Avatar } from '@mui/material';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 import { collectionName as logsCollectionName } from '../components/Management/manager_action_logs';
 import { collectionName as commentsCollectionName } from '../components/Management/entity_comments_history';
-import { AccessTime, Person, CheckCircleOutline, InsertComment, ArrowForward } from '@mui/icons-material';
+import { AccessTime, InsertComment } from '@mui/icons-material';
 import { getConfig } from '../components/Management/configRegistry';
 
 // --- HELPERS ---

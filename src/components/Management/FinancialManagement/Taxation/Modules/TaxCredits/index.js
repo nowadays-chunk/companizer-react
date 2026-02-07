@@ -32,7 +32,7 @@ import UXProductivity from './UXProductivity';
 import DataIntegrity from './DataIntegrity';
 import ModuleIntegration from './ModuleIntegration';
 
-export const taxCreditsModules = [
+export const modules = [
     {
         id: 'tax-credit-master-data',
         name: 'Tax Credit Master Data',
@@ -216,4 +216,4 @@ export const taxCreditsModules = [
     }
 ];
 
-export default taxCreditsModules;
+export default modules;

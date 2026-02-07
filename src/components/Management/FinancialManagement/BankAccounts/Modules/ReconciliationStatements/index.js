@@ -1,15 +1,15 @@
-import React, { lazy } from 'react';
+import React from 'react';
 
-const ReconciliationDashboard = lazy(() => import('./ReconciliationDashboard'));
-const BankReconciliation = lazy(() => import('./BankReconciliation'));
-const ImportDataFeeds = lazy(() => import('./ImportDataFeeds'));
-const MatchingRulesEngine = lazy(() => import('./MatchingRulesEngine'));
-const ReconcilingItems = lazy(() => import('./ReconcilingItems'));
-const IntercompanyReconciliation = lazy(() => import('./IntercompanyReconciliation'));
-const BalanceSheetReconciliation = lazy(() => import('./BalanceSheetReconciliation'));
-const ReconciliationWorkflow = lazy(() => import('./ReconciliationWorkflow'));
-const ReconciliationReports = lazy(() => import('./ReconciliationReports'));
-const ReconciliationSettings = lazy(() => import('./ReconciliationSettings'));
+const ReconciliationDashboard = React.lazy(() => import('./ReconciliationDashboard'));
+const BankReconciliation = React.lazy(() => import('./BankReconciliation'));
+const ImportDataFeeds = React.lazy(() => import('./ImportDataFeeds'));
+const MatchingRulesEngine = React.lazy(() => import('./MatchingRulesEngine'));
+const ReconcilingItems = React.lazy(() => import('./ReconcilingItems'));
+const IntercompanyReconciliation = React.lazy(() => import('./IntercompanyReconciliation'));
+const BalanceSheetReconciliation = React.lazy(() => import('./BalanceSheetReconciliation'));
+const ReconciliationWorkflow = React.lazy(() => import('./ReconciliationWorkflow'));
+const ReconciliationReports = React.lazy(() => import('./ReconciliationReports'));
+const ReconciliationSettings = React.lazy(() => import('./ReconciliationSettings'));
 
 export const modules = [
     {
@@ -18,98 +18,100 @@ export const modules = [
         type: 'General',
         path: '/apps/bank-accounts/reconciliation/dashboard',
         icon: 'Dashboard',
-        description: 'Overview of reconciliation status, KPIs, and urgent tasks.',
+        description: 'Overview of reconciliation status.',
         component: ReconciliationDashboard,
         requiresSelection: false
     },
     {
-        id: 'bank-reconciliation',
-        name: 'Bank & Cash Reconciliation',
+        id: 'matching',
+        name: 'Bank Matching',
         type: 'Specific',
         path: '/apps/bank-accounts/reconciliation/matching',
-        icon: 'AccountBalance',
-        description: 'Match bank statements with GL transactions side-by-side.',
+        icon: 'CompareArrows',
+        description: 'Match bank transactions to ledger.',
         component: BankReconciliation,
-        requiresSelection: true
+        requiresSelection: false
     },
     {
-        id: 'import-data',
-        name: 'Import & Data Feeds',
+        id: 'import',
+        name: 'Import Feeds',
         type: 'General',
         path: '/apps/bank-accounts/reconciliation/import',
         icon: 'CloudUpload',
-        description: 'Import bank statements or manage API feeds.',
+        description: 'Import bank statements.',
         component: ImportDataFeeds,
         requiresSelection: false
     },
     {
-        id: 'matching-rules',
-        name: 'Matching Rules Engine',
+        id: 'rules',
+        name: 'Matching Rules',
         type: 'General',
         path: '/apps/bank-accounts/reconciliation/rules',
         icon: 'Rule',
-        description: 'Configure auto-match rules, tolerances, and ML settings.',
+        description: 'Configure auto-matching rules.',
         component: MatchingRulesEngine,
         requiresSelection: false
     },
     {
-        id: 'reconciling-items',
+        id: 'items',
         name: 'Reconciling Items',
         type: 'Specific',
         path: '/apps/bank-accounts/reconciliation/items',
         icon: 'ListAlt',
-        description: 'Manage outstanding items, adjustments, and exceptions.',
+        description: 'Manage outstanding items.',
         component: ReconcilingItems,
-        requiresSelection: true
+        requiresSelection: false
     },
     {
         id: 'intercompany',
-        name: 'Intercompany Reconciliation',
-        type: 'General',
+        name: 'Intercompany',
+        type: 'Specific',
         path: '/apps/bank-accounts/reconciliation/intercompany',
         icon: 'Business',
-        description: 'Reconcile transactions between entity branches and subsidiaries.',
+        description: 'Reconcile intercompany accounts.',
         component: IntercompanyReconciliation,
         requiresSelection: false
     },
     {
         id: 'balance-sheet',
-        name: 'Balance Sheet Reconciliation',
+        name: 'Balance Sheet',
         type: 'General',
         path: '/apps/bank-accounts/reconciliation/balance-sheet',
-        icon: 'AccountBalanceWallet',
-        description: 'Reconcile suspense, control, tax, and clearing accounts.',
+        icon: 'AccountBalance',
+        description: 'Reconcile balance sheet accounts.',
         component: BalanceSheetReconciliation,
         requiresSelection: false
     },
     {
         id: 'workflow',
-        name: 'Workflow & Approvals',
+        name: 'Workflow',
         type: 'General',
         path: '/apps/bank-accounts/reconciliation/workflow',
-        icon: 'Approval',
-        description: 'Manage approvals and period close dependencies.',
+        icon: 'LinearScale',
+        description: 'Reconciliation approval process.',
         component: ReconciliationWorkflow,
         requiresSelection: false
     },
     {
         id: 'reports',
-        name: 'Reconciliation Reports',
+        name: 'Reports',
         type: 'General',
         path: '/apps/bank-accounts/reconciliation/reports',
         icon: 'Assessment',
-        description: 'Generate audit-ready reconciliation statements and reports.',
+        description: 'Reconciliation reports.',
         component: ReconciliationReports,
         requiresSelection: false
     },
     {
         id: 'settings',
-        name: 'Settings & Security',
+        name: 'Settings',
         type: 'General',
         path: '/apps/bank-accounts/reconciliation/settings',
         icon: 'Settings',
-        description: 'Configure permissions, FX rules, and system controls.',
+        description: 'Reconciliation configuration.',
         component: ReconciliationSettings,
         requiresSelection: false
-    }
+    },
 ];
+
+export default modules;

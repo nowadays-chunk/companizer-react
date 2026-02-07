@@ -1,260 +1,205 @@
-import BudgetStructureDimensions from './BudgetStructureDimensions';
-import AllocationRulesMethods from './AllocationRulesMethods';
-import TimeBasedAllocation from './TimeBasedAllocation';
-import BudgetControlEnforcement from './BudgetControlEnforcement';
-import BudgetRevisionsAdjustments from './BudgetRevisionsAdjustments';
-import ActualVsBudgetTracking from './ActualVsBudgetTracking';
-import MultiEntityConsolidation from './MultiEntityConsolidation';
-import BudgetApprovalWorkflow from './BudgetApprovalWorkflow';
-import PlanningForecastingIntegration from './PlanningForecastingIntegration';
-import BudgetReportingAnalytics from './BudgetReportingAnalytics';
-import EncumbrancesCommitments from './EncumbrancesCommitments';
-import BudgetCalendarsDeadlines from './BudgetCalendarsDeadlines';
-import BudgetAuditControls from './BudgetAuditControls';
-import BudgetAutomationEngine from './BudgetAutomationEngine';
-import BudgetEntryProductivity from './BudgetEntryProductivity';
-import BudgetSecurityPermissions from './BudgetSecurityPermissions';
-import BudgetEcosystemIntegration from './BudgetEcosystemIntegration';
-import AdvancedBudgetFeatures from './AdvancedBudgetFeatures';
+import React from 'react';
 
-import {
-    AccountTree,
-    Rule,
-    Timeline,
-    GppBad,
-    Transform,
-    CompareArrows,
-    MergeType,
-    Approval,
-    Psychology,
-    Analytics,
-    Assignment,
-    CalendarMonth,
-    History,
-    AutoMode,
-    Speed,
-    Security,
-    Hub,
-    Star
-} from '@mui/icons-material';
+const BudgetStructureDimensions = React.lazy(() => import('./BudgetStructureDimensions'));
+const AllocationRulesMethods = React.lazy(() => import('./AllocationRulesMethods'));
+const TimeBasedAllocation = React.lazy(() => import('./TimeBasedAllocation'));
+const BudgetControlEnforcement = React.lazy(() => import('./BudgetControlEnforcement'));
+const BudgetRevisionsAdjustments = React.lazy(() => import('./BudgetRevisionsAdjustments'));
+const ActualVsBudgetTracking = React.lazy(() => import('./ActualVsBudgetTracking'));
+const MultiEntityConsolidation = React.lazy(() => import('./MultiEntityConsolidation'));
+const BudgetApprovalWorkflow = React.lazy(() => import('./BudgetApprovalWorkflow'));
+const PlanningForecastingIntegration = React.lazy(() => import('./PlanningForecastingIntegration'));
+const BudgetReportingAnalytics = React.lazy(() => import('./BudgetReportingAnalytics'));
+const EncumbrancesCommitments = React.lazy(() => import('./EncumbrancesCommitments'));
+const BudgetCalendarsDeadlines = React.lazy(() => import('./BudgetCalendarsDeadlines'));
+const BudgetAuditControls = React.lazy(() => import('./BudgetAuditControls'));
+const BudgetAutomationEngine = React.lazy(() => import('./BudgetAutomationEngine'));
+const BudgetEntryProductivity = React.lazy(() => import('./BudgetEntryProductivity'));
+const BudgetSecurityPermissions = React.lazy(() => import('./BudgetSecurityPermissions'));
+const BudgetEcosystemIntegration = React.lazy(() => import('./BudgetEcosystemIntegration'));
+const AdvancedBudgetFeatures = React.lazy(() => import('./AdvancedBudgetFeatures'));
 
 export const modules = [
     {
-        id: 'budget-structure',
-        name: 'Budget Structure & Dimensions',
-        description: 'Define fiscal years, scenarios, and hierarchy dimensions.',
-        icon: AccountTree,
-        component: BudgetStructureDimensions,
-        group: 'Core',
+        id: 'structure',
+        name: 'Structure & Dimensions',
         type: 'General',
         path: '/apps/budget-allocations/structure',
-        label: 'Structure',
+        icon: 'AccountTree',
+        description: 'Define budget hierarchy and dimensions.',
+        component: BudgetStructureDimensions,
         requiresSelection: false
     },
     {
-        id: 'allocation-rules',
-        name: 'Allocation Rules & Methods',
-        description: 'Configure top-down, driver-based, and rule-based allocations.',
-        icon: Rule,
-        component: AllocationRulesMethods,
-        group: 'Core',
+        id: 'rules',
+        name: 'Allocation Rules',
         type: 'General',
         path: '/apps/budget-allocations/rules',
-        label: 'Rules',
+        icon: 'Rule',
+        description: 'Set rules for distributing budget funds.',
+        component: AllocationRulesMethods,
         requiresSelection: false
     },
     {
-        id: 'time-allocation',
+        id: 'time-based',
         name: 'Time-Based Allocation',
-        description: 'Manage periodization, seasonality, and rolling budgets.',
-        icon: Timeline,
-        component: TimeBasedAllocation,
-        group: 'Core',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/budget-allocations/time-based',
-        label: 'Timeline',
+        icon: 'DateRange',
+        description: 'Allocate budget across time periods.',
+        component: TimeBasedAllocation,
         requiresSelection: false
     },
     {
-        id: 'budget-control',
+        id: 'controls',
         name: 'Control & Enforcement',
-        description: 'Set thresholds, blocking rules, and soft/hard limits.',
-        icon: GppBad,
+        type: 'General',
+        path: '/apps/budget-allocations/controls',
+        icon: 'GppGood',
+        description: 'Enforce budget limits and spending controls.',
         component: BudgetControlEnforcement,
-        group: 'Controls',
-        type: 'General',
-        path: '/apps/budget-allocations/control',
-        label: 'Controls',
         requiresSelection: false
     },
     {
-        id: 'budget-revisions',
+        id: 'revisions',
         name: 'Revisions & Adjustments',
-        description: 'Handle transfers, amendments, and reforecasting.',
-        icon: Transform,
-        component: BudgetRevisionsAdjustments,
-        group: 'Management',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/budget-allocations/revisions',
-        label: 'Revisions',
+        icon: 'EditNote',
+        description: 'Manage budget changes and transfers.',
+        component: BudgetRevisionsAdjustments,
         requiresSelection: false
     },
     {
-        id: 'actual-vs-budget',
-        name: 'Actual vs Budget Tracking',
-        description: 'Real-time variance analysis and consumption tracking.',
-        icon: CompareArrows,
-        component: ActualVsBudgetTracking,
-        group: 'Analytics',
+        id: 'tracking',
+        name: 'Actual vs Budget',
         type: 'General',
         path: '/apps/budget-allocations/tracking',
-        label: 'Tracking',
+        icon: 'TrackChanges',
+        description: 'Track spending against budget.',
+        component: ActualVsBudgetTracking,
         requiresSelection: false
     },
     {
         id: 'consolidation',
-        name: 'Multi-Entity & Consolidation',
-        description: 'Group-level budgets and intercompany allocations.',
-        icon: MergeType,
-        component: MultiEntityConsolidation,
-        group: 'Enterprise',
+        name: 'Consolidation',
         type: 'General',
         path: '/apps/budget-allocations/consolidation',
-        label: 'Consolidation',
+        icon: 'CallMerge',
+        description: 'Consolidate budgets across entities.',
+        component: MultiEntityConsolidation,
         requiresSelection: false
     },
     {
-        id: 'approval-workflow',
+        id: 'workflow',
         name: 'Approval Workflow',
-        description: 'Manage budget submissions, approvals, and overrides.',
-        icon: Approval,
-        component: BudgetApprovalWorkflow,
-        group: 'Controls',
         type: 'General',
         path: '/apps/budget-allocations/workflow',
-        label: 'Workflow',
+        icon: 'Approval',
+        description: 'Budget approval processes.',
+        component: BudgetApprovalWorkflow,
         requiresSelection: false
     },
     {
-        id: 'planning-forecasting',
-        name: 'Planning & Forecasting',
-        description: 'Integrate with strategic planning and what-if scenarios.',
-        icon: Psychology,
-        component: PlanningForecastingIntegration,
-        group: 'Strategic',
+        id: 'planning',
+        name: 'Planning Integration',
         type: 'General',
         path: '/apps/budget-allocations/planning',
-        label: 'Planning',
+        icon: 'NextPlan',
+        description: 'Link planning to budget execution.',
+        component: PlanningForecastingIntegration,
         requiresSelection: false
     },
     {
-        id: 'reporting-analytics',
+        id: 'analytics',
         name: 'Reporting & Analytics',
-        description: 'Visual dashboards, heatmaps, and drill-down reports.',
-        icon: Analytics,
-        component: BudgetReportingAnalytics,
-        group: 'Analytics',
         type: 'General',
         path: '/apps/budget-allocations/analytics',
-        label: 'Analytics',
+        icon: 'Analytics',
+        description: 'Budget performance analysis.',
+        component: BudgetReportingAnalytics,
         requiresSelection: false
     },
     {
         id: 'encumbrances',
-        name: 'Encumbrances & Commitments',
-        description: 'Track procurement commitments and accruals.',
-        icon: Assignment,
-        component: EncumbrancesCommitments,
-        group: 'Procurement',
-        type: 'General',
+        name: 'Encumbrances',
+        type: 'Specific',
         path: '/apps/budget-allocations/encumbrances',
-        label: 'Encumbrances',
+        icon: 'Lock',
+        description: 'Track committed funds.',
+        component: EncumbrancesCommitments,
         requiresSelection: false
     },
     {
-        id: 'calendars-deadlines',
-        name: 'Calculators & Deadlines',
-        description: 'Manage budget cycles, deadlines, and freeze periods.',
-        icon: CalendarMonth,
-        component: BudgetCalendarsDeadlines,
-        group: 'Management',
+        id: 'calendars',
+        name: 'Budget Calendar',
         type: 'General',
         path: '/apps/budget-allocations/calendars',
-        label: 'Calendars',
+        icon: 'CalendarMonth',
+        description: 'Manage budget cycle deadlines.',
+        component: BudgetCalendarsDeadlines,
         requiresSelection: false
     },
     {
-        id: 'audit-controls',
-        name: 'Controls & Audit Trail',
-        description: 'Full history of changes and audit-ready logs.',
-        icon: History,
-        component: BudgetAuditControls,
-        group: 'Controls',
+        id: 'audit',
+        name: 'Audit Controls',
         type: 'General',
         path: '/apps/budget-allocations/audit',
-        label: 'Audit',
+        icon: 'FactCheck',
+        description: 'Audit trails for budget changes.',
+        component: BudgetAuditControls,
         requiresSelection: false
     },
     {
         id: 'automation',
-        name: 'Automation Engine',
-        description: 'Auto-allocate, roll forward, and trigger notifications.',
-        icon: AutoMode,
-        component: BudgetAutomationEngine,
-        group: 'Automation',
+        name: 'Automation',
         type: 'General',
         path: '/apps/budget-allocations/automation',
-        label: 'Automation',
+        icon: 'AutoMode',
+        description: 'Automate budget updates.',
+        component: BudgetAutomationEngine,
         requiresSelection: false
     },
     {
         id: 'productivity',
-        name: 'UX & Productivity',
-        description: 'Bulk tools, templates, and Excel import/export.',
-        icon: Speed,
-        component: BudgetEntryProductivity,
-        group: 'UX',
+        name: 'Entry Productivity',
         type: 'General',
         path: '/apps/budget-allocations/productivity',
-        label: 'Productivity',
+        icon: 'Speed',
+        description: 'Tools for faster budget entry.',
+        component: BudgetEntryProductivity,
         requiresSelection: false
     },
     {
         id: 'security',
-        name: 'Security & Permissions',
-        description: 'Role-based access and sensitive data masking.',
-        icon: Security,
-        component: BudgetSecurityPermissions,
-        group: 'Security',
+        name: 'Security',
         type: 'General',
         path: '/apps/budget-allocations/security',
-        label: 'Security',
+        icon: 'Security',
+        description: 'Budget access permissions.',
+        component: BudgetSecurityPermissions,
         requiresSelection: false
     },
     {
         id: 'integration',
-        name: 'Ecosystem Integration',
-        description: 'Connect with GL, AP, Payroll, and Projects.',
-        icon: Hub,
-        component: BudgetEcosystemIntegration,
-        group: 'Integration',
+        name: 'Integration',
         type: 'General',
         path: '/apps/budget-allocations/integration',
-        label: 'Integration',
+        icon: 'IntegrationInstructions',
+        description: 'External system connectors.',
+        component: BudgetEcosystemIntegration,
         requiresSelection: false
     },
     {
-        id: 'advanced-features',
+        id: 'advanced',
         name: 'Advanced Features',
-        description: 'Zero-based budgeting, CapEx, and fund accounting.',
-        icon: Star,
-        component: AdvancedBudgetFeatures,
-        group: 'Advanced',
         type: 'General',
         path: '/apps/budget-allocations/advanced',
-        label: 'Advanced',
+        icon: 'Stars',
+        description: 'Advanced budgeting tools.',
+        component: AdvancedBudgetFeatures,
         requiresSelection: false
-    }
+    },
 ];
 
 export default modules;

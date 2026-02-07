@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Box, Typography, Paper, CircularProgress, Divider } from '@mui/material';
+import { Box, Typography, Paper, CircularProgress } from '@mui/material';
 import {
     CheckCircle,
     ThumbUp,
@@ -15,7 +15,7 @@ import {
     Edit,
     Add
 } from '@mui/icons-material';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 import { collectionName as logsCollectionName } from './Management/manager_action_logs';
 
 const ICON_MAP = {

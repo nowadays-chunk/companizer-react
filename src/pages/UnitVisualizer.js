@@ -44,10 +44,10 @@ import {
   ArrowBackIosNew
 } from '@mui/icons-material';
 
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 import { keyToLinkMap } from '../layout/keyToLinkMap';
 import * as WorkflowRulesConfig from '../components/Management/entity_workflow_rules.js';
-import BaseManagementComponent from '../components/Management/Base';
+import BaseManagementComponent from '../components/Base';
 import CommentsSection from '../components/CommentsSection';
 import ActionTimeline from '../components/ActionTimeline';
 import { collectionName as logsCollectionName } from '../components/Management/manager_action_logs';

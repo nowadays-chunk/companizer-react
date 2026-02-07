@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 
 const useVersioning = (entityType) => {
     const [versionHistory, setVersionHistory] = useState([]);
@@ -26,7 +26,7 @@ const useVersioning = (entityType) => {
         } finally {
             setLoading(false);
         }
-    }, [entityType]);
+    }, [entityType, helper]);
 
     // Create a new version (called during update)
     const createNewVersion = useCallback(async (currentRow, updatedData, userId) => {
@@ -61,7 +61,7 @@ const useVersioning = (entityType) => {
             console.error('Failed to create new version:', error);
             throw error;
         }
-    }, [entityType]);
+    }, [entityType, helper]);
 
     // Restore a previous version (creates new version with old data)
     const restoreVersion = useCallback(async (versionToRestore, userId) => {
@@ -88,7 +88,7 @@ const useVersioning = (entityType) => {
             console.error('Failed to restore version:', error);
             throw error;
         }
-    }, [entityType, createNewVersion]);
+    }, [entityType, createNewVersion, helper]);
 
     // Compare two versions
     const compareVersions = useCallback((version1, version2) => {
@@ -140,7 +140,7 @@ const useVersioning = (entityType) => {
             console.error('Failed to soft delete:', error);
             throw error;
         }
-    }, [entityType]);
+    }, [entityType, helper]);
 
     return {
         versionHistory,

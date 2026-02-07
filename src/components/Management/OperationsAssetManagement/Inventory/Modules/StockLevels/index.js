@@ -1,17 +1,18 @@
+import React from 'react';
 
-import RealTimeInventory from './RealTimeInventory';
-import WarehouseMgmt from './WarehouseMgmt';
-import StockStatus from './StockStatus';
-import ReorderPlanning from './ReorderPlanning';
-import Traceability from './Traceability';
-import MultiEntityStock from './MultiEntityStock';
-import Reservations from './Reservations';
-import QualityCompliance from './QualityCompliance';
-import InventoryValuation from './InventoryValuation';
-import StockAlerts from './StockAlerts';
-import DemandSignals from './DemandSignals';
-import Transfers from './Transfers';
-import StockReporting from './StockReporting';
+const RealTimeInventory = React.lazy(() => import('./RealTimeInventory'));
+const WarehouseMgmt = React.lazy(() => import('./WarehouseMgmt'));
+const StockStatus = React.lazy(() => import('./StockStatus'));
+const ReorderPlanning = React.lazy(() => import('./ReorderPlanning'));
+const Traceability = React.lazy(() => import('./Traceability'));
+const MultiEntityStock = React.lazy(() => import('./MultiEntityStock'));
+const Reservations = React.lazy(() => import('./Reservations'));
+const QualityCompliance = React.lazy(() => import('./QualityCompliance'));
+const InventoryValuation = React.lazy(() => import('./InventoryValuation'));
+const StockAlerts = React.lazy(() => import('./StockAlerts'));
+const DemandSignals = React.lazy(() => import('./DemandSignals'));
+const Transfers = React.lazy(() => import('./Transfers'));
+const StockReporting = React.lazy(() => import('./StockReporting'));
 
 export const modules = [
     {

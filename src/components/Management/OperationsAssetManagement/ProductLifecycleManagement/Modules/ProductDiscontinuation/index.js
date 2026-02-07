@@ -1,16 +1,17 @@
+import React from 'react';
 
-import DiscontinuationRequest from './DiscontinuationRequest';
-import LifecycleStatus from './LifecycleStatus';
-import ImpactAnalysis from './ImpactAnalysis';
-import PhaseOutPlan from './PhaseOutPlan';
-import ApprovalWorkflow from './ApprovalWorkflow';
-import InventoryDisposition from './InventoryDisposition';
-import FinancialWriteOffs from './FinancialWriteOffs';
-import SupplierClosure from './SupplierClosure';
-import SalesCustomer from './SalesCustomer';
-import ReplacementMigration from './ReplacementMigration';
-import ComplianceRegulatory from './ComplianceRegulatory';
-import DiscontinuationAnalytics from './DiscontinuationAnalytics';
+const DiscontinuationRequest = React.lazy(() => import('./DiscontinuationRequest'));
+const LifecycleStatus = React.lazy(() => import('./LifecycleStatus'));
+const ImpactAnalysis = React.lazy(() => import('./ImpactAnalysis'));
+const PhaseOutPlan = React.lazy(() => import('./PhaseOutPlan'));
+const ApprovalWorkflow = React.lazy(() => import('./ApprovalWorkflow'));
+const InventoryDisposition = React.lazy(() => import('./InventoryDisposition'));
+const FinancialWriteOffs = React.lazy(() => import('./FinancialWriteOffs'));
+const SupplierClosure = React.lazy(() => import('./SupplierClosure'));
+const SalesCustomer = React.lazy(() => import('./SalesCustomer'));
+const ReplacementMigration = React.lazy(() => import('./ReplacementMigration'));
+const ComplianceRegulatory = React.lazy(() => import('./ComplianceRegulatory'));
+const DiscontinuationAnalytics = React.lazy(() => import('./DiscontinuationAnalytics'));
 
 export const modules = [
     {

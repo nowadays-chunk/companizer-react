@@ -1,14 +1,15 @@
+import React from 'react';
 
-import AttributeMasterData from './AttributeMasterData';
-import ProductAssignment from './ProductAssignment';
-import DataValidation from './DataValidation';
-import PricingAttributes from './PricingAttributes';
-import ComplianceAttributes from './ComplianceAttributes';
-import LogisticsAttributes from './LogisticsAttributes';
-import VariantConfig from './VariantConfig';
-import AttributeAnalytics from './AttributeAnalytics';
-import AttributeWorkflow from './AttributeWorkflow';
-import AttributeChannels from './AttributeChannels';
+const AttributeMasterData = React.lazy(() => import('./AttributeMasterData'));
+const ProductAssignment = React.lazy(() => import('./ProductAssignment'));
+const DataValidation = React.lazy(() => import('./DataValidation'));
+const PricingAttributes = React.lazy(() => import('./PricingAttributes'));
+const ComplianceAttributes = React.lazy(() => import('./ComplianceAttributes'));
+const LogisticsAttributes = React.lazy(() => import('./LogisticsAttributes'));
+const VariantConfig = React.lazy(() => import('./VariantConfig'));
+const AttributeAnalytics = React.lazy(() => import('./AttributeAnalytics'));
+const AttributeWorkflow = React.lazy(() => import('./AttributeWorkflow'));
+const AttributeChannels = React.lazy(() => import('./AttributeChannels'));
 
 export const modules = [
     {

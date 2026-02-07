@@ -1,259 +1,205 @@
-import {
-    Gavel,
-    Folder,
-    QuestionAnswer,
-    FindInPage,
-    MoneyOff,
-    AccountBalance,
-    History,
-    MergeType,
-    Assessment,
-    ThumbUp,
-    Link,
-    EventBusy,
-    Policy,
-    Security,
-    Dashboard,
-    AutoGraph,
-    Lock
-} from '@mui/icons-material';
+import React from 'react';
 
-import AuditCaseManagement from './AuditCaseManagement';
-import AuditDocumentManagement from './AuditDocumentManagement';
-import AuditRequestsResponses from './AuditRequestsResponses';
-import AuditFindingsAdjustments from './AuditFindingsAdjustments';
-import PenaltiesInterestAssessments from './PenaltiesInterestAssessments';
-import AppealsDisputeManagement from './AppealsDisputeManagement';
-import AccountingGLIntegration from './AccountingGLIntegration';
-import AuditTrailHistory from './AuditTrailHistory';
-import AuditConsolidation from './AuditConsolidation';
-import AuditReportingAnalytics from './AuditReportingAnalytics';
-import AuditWorkflowApprovals from './AuditWorkflowApprovals';
-import TaxEcosystemIntegration from './TaxEcosystemIntegration';
-import ComplianceDeadlines from './ComplianceDeadlines';
-import InternalControlsRisk from './InternalControlsRisk';
-import AuditSecurityAccess from './AuditSecurityAccess';
-import AuditDashboard from './AuditDashboard';
-import AuditAutomationIntelligence from './AuditAutomationIntelligence';
-import DataIntegrityPeriodControls from './DataIntegrityPeriodControls';
+const AuditCaseManagement = React.lazy(() => import('./AuditCaseManagement'));
+const AuditDocumentManagement = React.lazy(() => import('./AuditDocumentManagement'));
+const AuditRequestsResponses = React.lazy(() => import('./AuditRequestsResponses'));
+const AuditFindingsAdjustments = React.lazy(() => import('./AuditFindingsAdjustments'));
+const PenaltiesInterestAssessments = React.lazy(() => import('./PenaltiesInterestAssessments'));
+const AppealsDisputeManagement = React.lazy(() => import('./AppealsDisputeManagement'));
+const AccountingGLIntegration = React.lazy(() => import('./AccountingGLIntegration'));
+const AuditTrailHistory = React.lazy(() => import('./AuditTrailHistory'));
+const AuditConsolidation = React.lazy(() => import('./AuditConsolidation'));
+const AuditReportingAnalytics = React.lazy(() => import('./AuditReportingAnalytics'));
+const AuditWorkflowApprovals = React.lazy(() => import('./AuditWorkflowApprovals'));
+const TaxEcosystemIntegration = React.lazy(() => import('./TaxEcosystemIntegration'));
+const ComplianceDeadlines = React.lazy(() => import('./ComplianceDeadlines'));
+const InternalControlsRisk = React.lazy(() => import('./InternalControlsRisk'));
+const AuditSecurityAccess = React.lazy(() => import('./AuditSecurityAccess'));
+const AuditDashboard = React.lazy(() => import('./AuditDashboard'));
+const AuditAutomationIntelligence = React.lazy(() => import('./AuditAutomationIntelligence'));
+const DataIntegrityPeriodControls = React.lazy(() => import('./DataIntegrityPeriodControls'));
 
-export const taxAuditModules = [
+export const modules = [
     {
-        id: 'audit-case-management',
-        name: 'Audit Case Management',
-        description: 'Core audit tracking and workflow',
-        icon: Gavel,
-        component: AuditCaseManagement,
-        group: 'Core',
-        type: 'General',
+        id: 'cases',
+        name: 'Case Management',
+        type: 'Specific',
         path: '/apps/tax-audits/cases',
-        label: 'Cases',
+        icon: 'FolderShared',
+        description: 'Manage active tax audit cases.',
+        component: AuditCaseManagement,
         requiresSelection: false
     },
     {
-        id: 'audit-document-management',
+        id: 'documents',
         name: 'Document Management',
-        description: 'Evidence and file repository',
-        icon: Folder,
-        component: AuditDocumentManagement,
-        group: 'Core',
         type: 'General',
         path: '/apps/tax-audits/documents',
-        label: 'Documents',
+        icon: 'SnippetFolder',
+        description: 'Centralized audit document repository.',
+        component: AuditDocumentManagement,
         requiresSelection: false
     },
     {
-        id: 'audit-requests-responses',
+        id: 'requests',
         name: 'Requests & Responses',
-        description: 'Track authority requests',
-        icon: QuestionAnswer,
-        component: AuditRequestsResponses,
-        group: 'Execution',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/tax-audits/requests',
-        label: 'Requests',
+        icon: 'QuestionAnswer',
+        description: 'Track information requests from auditors.',
+        component: AuditRequestsResponses,
         requiresSelection: false
     },
     {
-        id: 'audit-findings',
+        id: 'findings',
         name: 'Findings & Adjustments',
-        description: 'Record and simulate findings',
-        icon: FindInPage,
-        component: AuditFindingsAdjustments,
-        group: 'Execution',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/tax-audits/findings',
-        label: 'Findings',
+        icon: 'FindInPage',
+        description: 'Log audit findings and proposed adjustments.',
+        component: AuditFindingsAdjustments,
         requiresSelection: false
     },
     {
-        id: 'audit-penalties',
+        id: 'penalties',
         name: 'Penalties & Interest',
-        description: 'Calculate financial exposure',
-        icon: MoneyOff,
-        component: PenaltiesInterestAssessments,
-        group: 'Financial',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/tax-audits/penalties',
-        label: 'Penalties',
+        icon: 'Gavel',
+        description: 'Calculate and track penalties and interest.',
+        component: PenaltiesInterestAssessments,
         requiresSelection: false
     },
     {
-        id: 'audit-appeals',
+        id: 'appeals',
         name: 'Appeals & Disputes',
-        description: 'Manage legal challenges',
-        icon: Policy,
-        component: AppealsDisputeManagement,
-        group: 'Legal',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/tax-audits/appeals',
-        label: 'Appeals',
+        icon: 'Balance',
+        description: 'Manage appeals and dispute resolution.',
+        component: AppealsDisputeManagement,
         requiresSelection: false
     },
     {
-        id: 'audit-accounting',
-        name: 'Accounting & GL',
-        description: 'Post adjustments to GL',
-        icon: AccountBalance,
-        component: AccountingGLIntegration,
-        group: 'Financial',
+        id: 'accounting',
+        name: 'GL Integration',
         type: 'General',
         path: '/apps/tax-audits/accounting',
-        label: 'Accounting',
+        icon: 'AccountBalance',
+        description: 'Post audit adjustments to GL.',
+        component: AccountingGLIntegration,
         requiresSelection: false
     },
     {
-        id: 'audit-trail',
+        id: 'history',
         name: 'Audit Trail',
-        description: 'Immutable history log',
-        icon: History,
-        component: AuditTrailHistory,
-        group: 'Governance',
         type: 'General',
         path: '/apps/tax-audits/history',
-        label: 'Audit Trail',
+        icon: 'History',
+        description: 'Change log and history.',
+        component: AuditTrailHistory,
         requiresSelection: false
     },
     {
-        id: 'audit-consolidation',
-        name: 'Multi-Entity Support',
-        description: 'Group audit management',
-        icon: MergeType,
-        component: AuditConsolidation,
-        group: 'Enterprise',
+        id: 'consolidation',
+        name: 'Consolidation',
         type: 'General',
         path: '/apps/tax-audits/consolidation',
-        label: 'Consolidation',
+        icon: 'Compress',
+        description: 'Group level audit consolidation.',
+        component: AuditConsolidation,
         requiresSelection: false
     },
     {
-        id: 'audit-analytics',
+        id: 'analytics',
         name: 'Reporting & Analytics',
-        description: 'Insights and heatmaps',
-        icon: Assessment,
-        component: AuditReportingAnalytics,
-        group: 'Management',
         type: 'General',
         path: '/apps/tax-audits/analytics',
-        label: 'Analytics',
+        icon: 'Analytics',
+        description: 'Audit risk and outcome analysis.',
+        component: AuditReportingAnalytics,
         requiresSelection: false
     },
     {
-        id: 'audit-workflow',
-        name: 'Workflow & Approvals',
-        description: 'Approval controls',
-        icon: ThumbUp,
-        component: AuditWorkflowApprovals,
-        group: 'Governance',
+        id: 'workflow',
+        name: 'Workflows',
         type: 'General',
         path: '/apps/tax-audits/workflow',
-        label: 'Workflow',
+        icon: 'LinearScale',
+        description: 'Audit process workflows.',
+        component: AuditWorkflowApprovals,
         requiresSelection: false
     },
     {
-        id: 'audit-integration',
-        name: 'Tax Ecosystem',
-        description: 'Linkages to other modules',
-        icon: Link,
-        component: TaxEcosystemIntegration,
-        group: 'Enterprise',
+        id: 'integration',
+        name: 'Ecosystem Integration',
         type: 'General',
         path: '/apps/tax-audits/integration',
-        label: 'Integration',
+        icon: 'Hub',
+        description: 'Connect with wider tax ecosystem.',
+        component: TaxEcosystemIntegration,
         requiresSelection: false
     },
     {
-        id: 'audit-dates',
+        id: 'deadlines',
         name: 'Compliance Deadlines',
-        description: 'Statutory date tracking',
-        icon: EventBusy,
-        component: ComplianceDeadlines,
-        group: 'Compliance',
         type: 'General',
         path: '/apps/tax-audits/deadlines',
-        label: 'Deadlines',
+        icon: 'Event',
+        description: 'Track statutory deadlines.',
+        component: ComplianceDeadlines,
         requiresSelection: false
     },
     {
-        id: 'audit-controls',
-        name: 'Risk Management',
-        description: 'Internal controls & risk',
-        icon: Security,
-        component: InternalControlsRisk,
-        group: 'Governance',
+        id: 'risk',
+        name: 'Risk Control',
         type: 'General',
         path: '/apps/tax-audits/risk',
-        label: 'Risk',
+        icon: 'Shield',
+        description: 'Internal controls and risk assessment.',
+        component: InternalControlsRisk,
         requiresSelection: false
     },
     {
-        id: 'audit-security',
-        name: 'Security Access',
-        description: 'Role-based access control',
-        icon: Security,
-        component: AuditSecurityAccess,
-        group: 'Admin',
+        id: 'security',
+        name: 'Security',
         type: 'General',
         path: '/apps/tax-audits/security',
-        label: 'Security',
+        icon: 'Security',
+        description: 'Sensitive data access control.',
+        component: AuditSecurityAccess,
         requiresSelection: false
     },
     {
-        id: 'audit-dashboard',
+        id: 'dashboard',
         name: 'Audit Dashboard',
-        description: 'Central monitoring hub',
-        icon: Dashboard,
-        component: AuditDashboard,
-        group: 'Management',
         type: 'General',
         path: '/apps/tax-audits/dashboard',
-        label: 'Dashboard',
+        icon: 'Dashboard',
+        description: 'Overview of all audit activities.',
+        component: AuditDashboard,
         requiresSelection: false
     },
     {
-        id: 'audit-automation',
-        name: 'Automation (AI)',
-        description: 'Advanced intelligence',
-        icon: AutoGraph,
-        component: AuditAutomationIntelligence,
-        group: 'Advanced',
+        id: 'automation',
+        name: 'Automation',
         type: 'General',
         path: '/apps/tax-audits/automation',
-        label: 'Automation',
+        icon: 'SmartToy',
+        description: 'Automated audit response tools.',
+        component: AuditAutomationIntelligence,
         requiresSelection: false
     },
     {
-        id: 'audit-data-integrity',
-        name: 'Period Controls',
-        description: 'Data integrity & locking',
-        icon: Lock,
-        component: DataIntegrityPeriodControls,
-        group: 'Governance',
+        id: 'integrity',
+        name: 'Data Integrity',
         type: 'General',
         path: '/apps/tax-audits/integrity',
-        label: 'Data Integrity',
+        icon: 'VerifiedUser',
+        description: 'Period controls and data validation.',
+        component: DataIntegrityPeriodControls,
         requiresSelection: false
-    }
+    },
 ];
 
-export default taxAuditModules;
+export default modules;

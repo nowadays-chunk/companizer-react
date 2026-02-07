@@ -1,129 +1,128 @@
-import FiscalCalendarSetup from './FiscalCalendarSetup';
-import FiscalPeriodDefinition from './FiscalPeriodDefinition';
-import PeriodStatusManager from './PeriodStatusManager';
-import PostingControls from './PostingControls';
-import CloseProcessManager from './CloseProcessManager';
-import AdjustmentPeriods from './AdjustmentPeriods';
-import MultiEntityPeriods from './MultiEntityPeriods';
-import ParallelLedgers from './ParallelLedgers';
-import PeriodSecurity from './PeriodSecurity';
-import PeriodAutomation from './PeriodAutomation';
-import FiscalReporting from './FiscalReporting';
+import React from 'react';
+
+const FiscalCalendarSetup = React.lazy(() => import('./FiscalCalendarSetup'));
+const FiscalPeriodDefinition = React.lazy(() => import('./FiscalPeriodDefinition'));
+const PeriodStatusManager = React.lazy(() => import('./PeriodStatusManager'));
+const PostingControls = React.lazy(() => import('./PostingControls'));
+const CloseProcessManager = React.lazy(() => import('./CloseProcessManager'));
+const AdjustmentPeriods = React.lazy(() => import('./AdjustmentPeriods'));
+const MultiEntityPeriods = React.lazy(() => import('./MultiEntityPeriods'));
+const ParallelLedgers = React.lazy(() => import('./ParallelLedgers'));
+const PeriodSecurity = React.lazy(() => import('./PeriodSecurity'));
+const PeriodAutomation = React.lazy(() => import('./PeriodAutomation'));
+const FiscalReporting = React.lazy(() => import('./FiscalReporting'));
 
 export const modules = [
-    // GENERAL MODULES
     {
-        id: 'fiscal_calendar_setup',
-        name: 'Fiscal Calendar Setup',
+        id: 'calendar-setup',
+        name: 'Calendar Setup',
         type: 'General',
         path: '/apps/fiscal-periods/calendar-setup',
-        icon: 'Event',
-        description: 'Define fiscal years, 4-4-5 calendars, and templates',
+        icon: 'EventNote',
+        description: 'Setup fiscal years and calendars.',
         component: FiscalCalendarSetup,
         requiresSelection: false
     },
     {
-        id: 'fiscal_period_definition',
-        name: 'Fiscal Period Definition',
+        id: 'period-definition',
+        name: 'Period Definition',
         type: 'General',
         path: '/apps/fiscal-periods/period-definition',
         icon: 'DateRange',
-        description: 'Manage monthly/quarterly periods and status definitions',
+        description: 'Define fiscal periods.',
         component: FiscalPeriodDefinition,
         requiresSelection: false
     },
     {
-        id: 'period_status_manager',
-        name: 'Period Status Management',
-        type: 'General',
+        id: 'status-manager',
+        name: 'Status Manager',
+        type: 'Specific',
         path: '/apps/fiscal-periods/status-manager',
-        icon: 'LockClock',
-        description: 'Control period status (Open, Soft Close, Hard Close) and workflow',
+        icon: 'Flaky',
+        description: 'Open or close fiscal periods.',
         component: PeriodStatusManager,
         requiresSelection: false
     },
     {
-        id: 'multi_entity_periods',
-        name: 'Multi-Entity & Parallel Books',
-        type: 'General',
-        path: '/apps/fiscal-periods/multi-entity',
-        icon: 'Domain',
-        description: 'Manage fiscal periods across multiple entities',
-        component: MultiEntityPeriods,
-        requiresSelection: false
-    },
-    {
-        id: 'parallel_ledgers',
-        name: 'Parallel Ledgers',
-        type: 'General',
-        path: '/apps/fiscal-periods/parallel-ledgers',
-        icon: 'MenuBook',
-        description: 'Independent period closing for Statutory vs Management ledgers',
-        component: ParallelLedgers,
-        requiresSelection: false
-    },
-
-    // SPECIFIC MODULES
-    {
-        id: 'posting_controls',
+        id: 'posting-controls',
         name: 'Posting Controls',
         type: 'Specific',
         path: '/apps/fiscal-periods/posting-controls',
-        icon: 'Rule',
-        description: 'Configure grace periods, backdating rules, and overrides',
+        icon: 'Lock',
+        description: 'Control posting to periods.',
         component: PostingControls,
         requiresSelection: false
     },
     {
-        id: 'close_process_manager',
-        name: 'Close Process Integration',
+        id: 'close-process',
+        name: 'Close Process',
         type: 'Specific',
         path: '/apps/fiscal-periods/close-process',
         icon: 'FactCheck',
-        description: 'Closing checklists, sub-ledger reconciliation, and readiness checks',
+        description: 'Manage period end closing.',
         component: CloseProcessManager,
         requiresSelection: false
     },
     {
-        id: 'adjustment_periods',
-        name: 'Adjustment & Special Periods',
+        id: 'adjustment-periods',
+        name: 'Adjustment Periods',
         type: 'Specific',
         path: '/apps/fiscal-periods/adjustment-periods',
-        icon: 'EditCalendar',
-        description: 'Manage Period 13/14 and audit adjustment windows',
+        icon: 'Tune',
+        description: 'Manage special adjustment periods.',
         component: AdjustmentPeriods,
         requiresSelection: false
     },
     {
-        id: 'period_security',
-        name: 'Security & Permissions',
-        type: 'Specific',
+        id: 'multi-entity',
+        name: 'Multi-Entity',
+        type: 'General',
+        path: '/apps/fiscal-periods/multi-entity',
+        icon: 'Business',
+        description: 'Manage periods across entities.',
+        component: MultiEntityPeriods,
+        requiresSelection: false
+    },
+    {
+        id: 'parallel-ledgers',
+        name: 'Parallel Ledgers',
+        type: 'General',
+        path: '/apps/fiscal-periods/parallel-ledgers',
+        icon: 'ViewWeek',
+        description: 'Manage periods for parallel ledgers.',
+        component: ParallelLedgers,
+        requiresSelection: false
+    },
+    {
+        id: 'security',
+        name: 'Security',
+        type: 'General',
         path: '/apps/fiscal-periods/security',
         icon: 'Security',
-        description: 'Define who can close, reopen, or post to closed periods',
+        description: 'Access control for periods.',
         component: PeriodSecurity,
         requiresSelection: false
     },
     {
-        id: 'period_automation',
-        name: 'Automation & Scheduling',
-        type: 'Specific',
+        id: 'automation',
+        name: 'Automation',
+        type: 'General',
         path: '/apps/fiscal-periods/automation',
-        icon: 'Schedule',
-        description: 'Auto-close scheduling, SLA timers, and notifications',
+        icon: 'AutoMode',
+        description: 'Automate period opening/closing.',
         component: PeriodAutomation,
         requiresSelection: false
     },
     {
-        id: 'fiscal_reporting',
-        name: 'Fiscal Reporting',
-        type: 'Specific',
+        id: 'reporting',
+        name: 'Reporting',
+        type: 'General',
         path: '/apps/fiscal-periods/reporting',
         icon: 'Assessment',
-        description: 'View period snapshots and locked financial reports',
+        description: 'Fiscal period status reports.',
         component: FiscalReporting,
         requiresSelection: false
-    }
+    },
 ];
 
 export default modules;

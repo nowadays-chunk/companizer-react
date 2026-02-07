@@ -1,140 +1,172 @@
-import ValuationMethods from './ValuationMethods';
-import ValuationProcessing from './ValuationProcessing';
-import TransactionValuation from './TransactionValuation';
-import MultiEntityValuation from './MultiEntityValuation';
-import ProductCosting from './ProductCosting';
-import BatchSerialValuation from './BatchSerialValuation';
-import CostAdjustments from './CostAdjustments';
-import GLIntegration from './GLIntegration';
-import ValuationAging from './ValuationAging';
-import CurrencyValuation from './CurrencyValuation';
-import ValuationAnalytics from './ValuationAnalytics';
-import ValuationApprovals from './ValuationApprovals';
-import ValuationSimulation from './ValuationSimulation';
-import ValuationAutomation from './ValuationAutomation';
-import SecurityPermissions from './SecurityPermissions';
+import React from 'react';
+
+const ValuationMethods = React.lazy(() => import('./ValuationMethods'));
+const ValuationProcessing = React.lazy(() => import('./ValuationProcessing'));
+const TransactionValuation = React.lazy(() => import('./TransactionValuation'));
+const MultiEntityValuation = React.lazy(() => import('./MultiEntityValuation'));
+const ProductCosting = React.lazy(() => import('./ProductCosting'));
+const BatchSerialValuation = React.lazy(() => import('./BatchSerialValuation'));
+const CostAdjustments = React.lazy(() => import('./CostAdjustments'));
+const GLIntegration = React.lazy(() => import('./GLIntegration'));
+const ValuationAging = React.lazy(() => import('./ValuationAging'));
+const CurrencyValuation = React.lazy(() => import('./CurrencyValuation'));
+const ValuationAnalytics = React.lazy(() => import('./ValuationAnalytics'));
+const ValuationApprovals = React.lazy(() => import('./ValuationApprovals'));
+const ValuationSimulation = React.lazy(() => import('./ValuationSimulation'));
+const ValuationAutomation = React.lazy(() => import('./ValuationAutomation'));
+const SecurityPermissions = React.lazy(() => import('./SecurityPermissions'));
 
 export const modules = [
     {
+        id: 'methods',
         name: 'Valuation Methods',
         type: 'General',
         path: '/apps/inventory/valuation/methods',
-        icon: 'Settings',
-        description: 'FIFO, LIFO, Weighted Avg, Standard Cost',
-        component: ValuationMethods
+        icon: 'Functions',
+        description: 'Configure valuation methods (FIFO, LIFO, Weighted Average).',
+        component: ValuationMethods,
+        requiresSelection: false
     },
     {
-        name: 'Processing Control',
+        id: 'processing',
+        name: 'Valuation Processing',
         type: 'General',
         path: '/apps/inventory/valuation/processing',
-        icon: 'Update',
-        description: 'Real-time vs Periodic Valuation Control',
-        component: ValuationProcessing
+        icon: 'Autorenew',
+        description: 'Process inventory valuation updates.',
+        component: ValuationProcessing,
+        requiresSelection: false
     },
     {
+        id: 'transactions',
         name: 'Transaction Valuation',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/inventory/valuation/transactions',
-        icon: 'Receipt',
-        description: 'Valuation of Goods Receipts, Issues, Transfers',
-        component: TransactionValuation
+        icon: 'ReceiptLong',
+        description: 'View valuation impact of specific transactions.',
+        component: TransactionValuation,
+        requiresSelection: false
     },
     {
+        id: 'multi-entity',
         name: 'Multi-Entity Valuation',
         type: 'General',
         path: '/apps/inventory/valuation/multi-entity',
         icon: 'Business',
-        description: 'Warehouse & Entity Specific Valuation',
-        component: MultiEntityValuation
+        description: 'Manage valuation across multiple entities.',
+        component: MultiEntityValuation,
+        requiresSelection: false
     },
     {
+        id: 'costing',
         name: 'Product Costing',
         type: 'General',
         path: '/apps/inventory/valuation/costing',
-        icon: 'Category',
-        description: 'Granular SKU/Category Level Costing',
-        component: ProductCosting
+        icon: 'AttachMoney',
+        description: 'Manage product standard costs and variations.',
+        component: ProductCosting,
+        requiresSelection: false
     },
     {
+        id: 'traceability',
         name: 'Batch/Serial Valuation',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/inventory/valuation/traceability',
         icon: 'QrCode',
-        description: 'Valuation by Batch, Lot, or Serial Number',
-        component: BatchSerialValuation
+        description: 'Track costs at batch or serial number level.',
+        component: BatchSerialValuation,
+        requiresSelection: true
     },
     {
+        id: 'adjustments',
         name: 'Cost Adjustments',
-        type: 'General',
+        type: 'Specific',
         path: '/apps/inventory/valuation/adjustments',
         icon: 'Edit',
-        description: 'Landed Costs, Overhead Allocation',
-        component: CostAdjustments
+        description: 'Post manual cost adjustments.',
+        component: CostAdjustments,
+        requiresSelection: false
     },
     {
+        id: 'gl-integration',
         name: 'GL Integration',
         type: 'General',
         path: '/apps/inventory/valuation/gl-integration',
         icon: 'AccountBalance',
-        description: 'Automated COGS & Asset Account Posting',
-        component: GLIntegration
+        description: 'Configure GL mapping for inventory value.',
+        component: GLIntegration,
+        requiresSelection: false
     },
     {
+        id: 'aging',
         name: 'Inventory Aging',
         type: 'General',
         path: '/apps/inventory/valuation/aging',
-        icon: 'AccessTime',
-        description: 'Aging Analysis & Obsolescence Provisions',
-        component: ValuationAging
+        icon: 'Schedule',
+        description: 'Analyze inventory age and obsolescence.',
+        component: ValuationAging,
+        requiresSelection: false
     },
     {
-        name: 'Multi-Currency',
+        id: 'currency',
+        name: 'Currency Valuation',
         type: 'General',
         path: '/apps/inventory/valuation/currency',
-        icon: 'ShowChart',
-        description: 'Base Currency Conversion & Reporting',
-        component: CurrencyValuation
+        icon: 'CurrencyExchange',
+        description: 'Manage inventory value in foreign currencies.',
+        component: CurrencyValuation,
+        requiresSelection: false
     },
     {
+        id: 'analytics',
         name: 'Valuation Analytics',
         type: 'General',
         path: '/apps/inventory/valuation/analytics',
-        icon: 'Assessment',
-        description: 'Trends, Reports, and Valuation Insights',
-        component: ValuationAnalytics
+        icon: 'Analytics',
+        description: 'Dashboards and reports for inventory value.',
+        component: ValuationAnalytics,
+        requiresSelection: false
     },
     {
-        name: 'Approvals & Governance',
+        id: 'approvals',
+        name: 'Valuation Approvals',
         type: 'General',
         path: '/apps/inventory/valuation/approvals',
-        icon: 'VerifiedUser',
-        description: 'Workflows for Valuation Changes',
-        component: ValuationApprovals
+        icon: 'ThumbUp',
+        description: 'Workflow for cost changes and adjustments.',
+        component: ValuationApprovals,
+        requiresSelection: false
     },
     {
-        name: 'Scenario Simulation',
+        id: 'simulation',
+        name: 'Valuation Simulation',
         type: 'General',
         path: '/apps/inventory/valuation/simulation',
         icon: 'Science',
-        description: 'What-if Scenarios & Forecasting',
-        component: ValuationSimulation
+        description: 'Simulate cost changes and their impact.',
+        component: ValuationSimulation,
+        requiresSelection: false
     },
     {
-        name: 'Automation',
+        id: 'automation',
+        name: 'Valuation Automation',
         type: 'General',
         path: '/apps/inventory/valuation/automation',
-        icon: 'AutoFixHigh',
-        description: 'Automated Adjustments & Landed Costs',
-        component: ValuationAutomation
+        icon: 'SmartToy',
+        description: 'Automate periodic valuation tasks.',
+        component: ValuationAutomation,
+        requiresSelection: false
     },
     {
-        name: 'Security',
+        id: 'security',
+        name: 'Security & Permissions',
         type: 'General',
         path: '/apps/inventory/valuation/security',
         icon: 'Security',
-        description: 'Role-based Access & Controls',
-        component: SecurityPermissions
-    }
+        description: 'Manage access to valuation data.',
+        component: SecurityPermissions,
+        requiresSelection: false
+    },
 ];
 
 export default modules;

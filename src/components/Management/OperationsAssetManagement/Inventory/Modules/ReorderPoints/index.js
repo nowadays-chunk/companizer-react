@@ -1,122 +1,150 @@
-import ReorderPointMaster from './ReorderPointMaster';
-import AutoReplenishment from './AutoReplenishment';
-import DemandAnalysis from './DemandAnalysis';
-import LeadTimeManagement from './LeadTimeManagement';
-import ReplenishmentTriggers from './ReplenishmentTriggers';
-import ApprovalWorkflow from './ApprovalWorkflow';
-import PurchaseIntegration from './PurchaseIntegration';
-import MultiWarehousePlanning from './MultiWarehousePlanning';
-import FinancialImpact from './FinancialImpact';
-import ExceptionAlerts from './ExceptionAlerts';
-import ScenarioSimulation from './ScenarioSimulation';
-import IntegrationStatus from './IntegrationStatus';
-import ReorderAnalytics from './ReorderAnalytics';
+import React from 'react';
+
+const ReorderPointMaster = React.lazy(() => import('./ReorderPointMaster'));
+const AutoReplenishment = React.lazy(() => import('./AutoReplenishment'));
+const DemandAnalysis = React.lazy(() => import('./DemandAnalysis'));
+const LeadTimeManagement = React.lazy(() => import('./LeadTimeManagement'));
+const ReplenishmentTriggers = React.lazy(() => import('./ReplenishmentTriggers'));
+const ReorderApprovalWorkflow = React.lazy(() => import('./ApprovalWorkflow'));
+const PurchaseIntegration = React.lazy(() => import('./PurchaseIntegration'));
+const MultiWarehousePlanning = React.lazy(() => import('./MultiWarehousePlanning'));
+const FinancialImpact = React.lazy(() => import('./FinancialImpact'));
+const ExceptionAlerts = React.lazy(() => import('./ExceptionAlerts'));
+const ScenarioSimulation = React.lazy(() => import('./ScenarioSimulation'));
+const IntegrationStatus = React.lazy(() => import('./IntegrationStatus'));
+const ReorderAnalytics = React.lazy(() => import('./ReorderAnalytics'));
 
 export const modules = [
     {
-        name: 'Master Data',
+        id: 'master',
+        name: 'Reorder Point Master',
         type: 'General',
         path: '/apps/inventory/reorder-points/master',
-        icon: 'Inventory',
-        description: 'Manage reorder points and item configurations.',
-        component: ReorderPointMaster
+        icon: 'Tune',
+        description: 'Manage reorder point settings.',
+        component: ReorderPointMaster,
+        requiresSelection: false
     },
     {
+        id: 'auto-replenishment',
         name: 'Auto Replenishment',
         type: 'General',
         path: '/apps/inventory/reorder-points/auto-replenishment',
         icon: 'Autorenew',
-        description: 'Configure automated replenishment rules.',
-        component: AutoReplenishment
+        description: 'Automated stock replenishment.',
+        component: AutoReplenishment,
+        requiresSelection: false
     },
     {
+        id: 'demand-analysis',
         name: 'Demand Analysis',
         type: 'General',
         path: '/apps/inventory/reorder-points/demand-analysis',
-        icon: 'Analytics',
-        description: 'Analyze demand patterns and trends.',
-        component: DemandAnalysis
+        icon: 'Timeline',
+        description: 'Analyze demand patterns.',
+        component: DemandAnalysis,
+        requiresSelection: false
     },
     {
+        id: 'lead-time',
         name: 'Lead Time',
         type: 'General',
         path: '/apps/inventory/reorder-points/lead-time',
         icon: 'Timer',
-        description: 'Manage vendor lead times and variability.',
-        component: LeadTimeManagement
+        description: 'Manage supplier lead times.',
+        component: LeadTimeManagement,
+        requiresSelection: false
     },
     {
-        name: 'Replenishment Triggers',
+        id: 'triggers',
+        name: 'Triggers',
         type: 'General',
         path: '/apps/inventory/reorder-points/triggers',
-        icon: 'AdsClick',
-        description: 'Monitor and manage replenishment triggers.',
-        component: ReplenishmentTriggers
+        icon: 'NotificationsActive',
+        description: 'Replenishment triggers configuration.',
+        component: ReplenishmentTriggers,
+        requiresSelection: false
     },
     {
+        id: 'approvals',
         name: 'Approvals',
         type: 'General',
         path: '/apps/inventory/reorder-points/approvals',
-        icon: 'FactCheck',
-        description: 'Review and approve reorder requests.',
-        component: ApprovalWorkflow
+        icon: 'ThumbUp',
+        description: 'Reorder approval workflow.',
+        component: ReorderApprovalWorkflow,
+        requiresSelection: false
     },
     {
+        id: 'purchase-integration',
         name: 'Purchase Integration',
         type: 'General',
         path: '/apps/inventory/reorder-points/purchase-integration',
         icon: 'ShoppingCart',
-        description: 'Integration with purchase orders and suppliers.',
-        component: PurchaseIntegration
+        description: 'Integration with purchasing.',
+        component: PurchaseIntegration,
+        requiresSelection: false
     },
     {
+        id: 'multi-warehouse',
         name: 'Multi-Warehouse',
         type: 'General',
         path: '/apps/inventory/reorder-points/multi-warehouse',
         icon: 'Store',
-        description: 'Plan reorder points across multiple warehouses.',
-        component: MultiWarehousePlanning
+        description: 'Planning across warehouses.',
+        component: MultiWarehousePlanning,
+        requiresSelection: false
     },
     {
+        id: 'financial-impact',
         name: 'Financial Impact',
         type: 'General',
         path: '/apps/inventory/reorder-points/financial-impact',
         icon: 'AttachMoney',
-        description: 'Analyze financial impact of reorder strategies.',
-        component: FinancialImpact
+        description: 'Cost analysis of reorders.',
+        component: FinancialImpact,
+        requiresSelection: false
     },
     {
-        name: 'Exception Alerts',
+        id: 'exception-alerts',
+        name: 'Alerts',
         type: 'General',
         path: '/apps/inventory/reorder-points/exception-alerts',
         icon: 'Warning',
-        description: 'Manage exceptions and stock alerts.',
-        component: ExceptionAlerts
+        description: 'Exception management.',
+        component: ExceptionAlerts,
+        requiresSelection: false
     },
     {
-        name: 'Scenario Simulation',
+        id: 'scenarios',
+        name: 'Scenarios',
         type: 'General',
         path: '/apps/inventory/reorder-points/scenarios',
         icon: 'Science',
-        description: 'Simulate different reorder strategies.',
-        component: ScenarioSimulation
+        description: 'Replenishment scenario simulation.',
+        component: ScenarioSimulation,
+        requiresSelection: false
     },
     {
+        id: 'integration-status',
         name: 'Integration Status',
         type: 'General',
         path: '/apps/inventory/reorder-points/integration-status',
-        icon: 'Hub',
-        description: 'Monitor system integrations and health.',
-        component: IntegrationStatus
+        icon: 'Sync',
+        description: 'System integration monitoring.',
+        component: IntegrationStatus,
+        requiresSelection: false
     },
     {
+        id: 'analytics',
         name: 'Analytics',
         type: 'General',
         path: '/apps/inventory/reorder-points/analytics',
-        icon: 'Insights',
-        description: 'Comprehensive reorder analytics and reporting.',
-        component: ReorderAnalytics
-    }
+        icon: 'Analytics',
+        description: 'Reorder point analytics.',
+        component: ReorderAnalytics,
+        requiresSelection: false
+    },
 ];
 
 export default modules;

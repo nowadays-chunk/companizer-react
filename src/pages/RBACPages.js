@@ -2,8 +2,8 @@
 // These pages are outside the dynamic Management loading structure
 
 import React from 'react';
-import BaseManagementComponent from '../components/Management/Base';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import BaseManagementComponent from '../components/Base';
+import { helpersWrapper } from '../utils/clientQueries';
 import * as OrganizationsConfig from '../components/RBAC/Organizations';
 import * as UsersConfig from '../components/RBAC/Users';
 import * as AuthorizationsConfig from '../components/RBAC/Authorizations';

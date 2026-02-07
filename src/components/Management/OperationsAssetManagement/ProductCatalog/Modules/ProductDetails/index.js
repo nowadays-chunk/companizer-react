@@ -1,14 +1,15 @@
+import React from 'react';
 
-import ProductMasterData from './ProductMasterData';
-import ProductVariants from './ProductVariants';
-import PricingCosting from './PricingCosting';
-import TaxCompliance from './TaxCompliance';
-import InventoryAttributes from './InventoryAttributes';
-import AccountingMapping from './AccountingMapping';
-import ProcurementDetails from './ProcurementDetails';
-import SalesChannels from './SalesChannels';
-import ProductAnalytics from './ProductAnalytics';
-import ProductWorkflow from './ProductWorkflow';
+const ProductMasterData = React.lazy(() => import('./ProductMasterData'));
+const ProductVariants = React.lazy(() => import('./ProductVariants'));
+const PricingCosting = React.lazy(() => import('./PricingCosting'));
+const TaxCompliance = React.lazy(() => import('./TaxCompliance'));
+const InventoryAttributes = React.lazy(() => import('./InventoryAttributes'));
+const AccountingMapping = React.lazy(() => import('./AccountingMapping'));
+const ProcurementDetails = React.lazy(() => import('./ProcurementDetails'));
+const SalesChannels = React.lazy(() => import('./SalesChannels'));
+const ProductAnalytics = React.lazy(() => import('./ProductAnalytics'));
+const ProductWorkflow = React.lazy(() => import('./ProductWorkflow'));
 
 export const modules = [
     {

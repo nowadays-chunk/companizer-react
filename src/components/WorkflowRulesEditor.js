@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     Box,
-    Paper,
     Typography,
     Button,
     IconButton,
@@ -11,12 +10,11 @@ import {
     DialogActions,
     TextField,
     CircularProgress,
-    Alert,
-    Tooltip
+    Alert
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { Add, Delete, Edit, Save, Cancel } from '@mui/icons-material';
-import { helpersWrapper } from '../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../utils/clientQueries';
 
 const WorkflowRulesEditor = ({ entityName }) => {
     const [rules, setRules] = useState([]);
@@ -29,13 +27,7 @@ const WorkflowRulesEditor = ({ entityName }) => {
     const rulesHelper = helpersWrapper('entity_workflow_rules');
 
     // Fetch rules for selected entity
-    useEffect(() => {
-        if (entityName) {
-            fetchRules();
-        }
-    }, [entityName]);
-
-    const fetchRules = async () => {
+    const fetchRules = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
@@ -47,7 +39,13 @@ const WorkflowRulesEditor = ({ entityName }) => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [entityName, rulesHelper]);
+
+    useEffect(() => {
+        if (entityName) {
+            fetchRules();
+        }
+    }, [entityName, fetchRules]);
 
     const handleAddRule = () => {
         setCurrentRule({

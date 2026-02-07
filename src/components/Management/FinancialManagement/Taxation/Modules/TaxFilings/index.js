@@ -1,30 +1,31 @@
 // Tax Filings Module Definitions
+import React from 'react';
 import { Description, Calculate, Receipt, Public, CloudUpload, Payment, Assessment, Timeline, CheckCircle, History, Security, AutoMode, Dashboard, TrendingUp, CalendarMonth } from '@mui/icons-material';
 
 // Group 1: Core Tax Setup & Calculation
-import TaxMasterData from './TaxMasterData';
-import TaxCalculationEngine from './TaxCalculationEngine';
-import TransactionIntegration from './TransactionIntegration';
-import MultiJurisdictionManager from './MultiJurisdictionManager';
+const TaxMasterData = React.lazy(() => import('./TaxMasterData'));
+const TaxCalculationEngine = React.lazy(() => import('./TaxCalculationEngine'));
+const TransactionIntegration = React.lazy(() => import('./TransactionIntegration'));
+const MultiJurisdictionManager = React.lazy(() => import('./MultiJurisdictionManager'));
 
 // Group 2: Filing & Compliance
-import FilingPreparation from './FilingPreparation';
-import PaymentRemittance from './PaymentRemittance';
-import ComplianceReporting from './ComplianceReporting';
-import StatusTracking from './StatusTracking';
+const FilingPreparation = React.lazy(() => import('./FilingPreparation'));
+const PaymentRemittance = React.lazy(() => import('./PaymentRemittance'));
+const ComplianceReporting = React.lazy(() => import('./ComplianceReporting'));
+const StatusTracking = React.lazy(() => import('./StatusTracking'));
 
 // Group 3: Workflow & Audit
-import WorkflowApprovals from './WorkflowApprovals';
-import AuditTrail from './AuditTrail';
-import DataIntegrityControls from './DataIntegrityControls';
+const WorkflowApprovals = React.lazy(() => import('./WorkflowApprovals'));
+const AuditTrail = React.lazy(() => import('./AuditTrail'));
+const DataIntegrityControls = React.lazy(() => import('./DataIntegrityControls'));
 
 // Group 4: Automation & Analytics
-import AutomationRules from './AutomationRules';
-import TaxDashboard from './TaxDashboard';
-import TaxAnalytics from './TaxAnalytics';
-import DeadlineCalendar from './DeadlineCalendar';
+const AutomationRules = React.lazy(() => import('./AutomationRules'));
+const TaxDashboard = React.lazy(() => import('./TaxDashboard'));
+const TaxAnalytics = React.lazy(() => import('./TaxAnalytics'));
+const DeadlineCalendar = React.lazy(() => import('./DeadlineCalendar'));
 
-export const taxFilingsModules = [
+export const modules = [
     // Group 1: Core Tax Setup & Calculation
     {
         id: 'tax-master-data',
@@ -229,4 +230,4 @@ export const taxFilingsModules = [
     }
 ];
 
-export default taxFilingsModules;
+export default modules;

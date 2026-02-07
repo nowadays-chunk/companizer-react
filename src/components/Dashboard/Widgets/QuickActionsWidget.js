@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Button, Grid } from '@mui/material';
-import { Add, Assessment, People, AttachMoney, Inventory } from '@mui/icons-material';
+import { Button, Grid } from '@mui/material';
+import { Assessment, People, AttachMoney, Inventory } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import DashboardWidget from '../DashboardWidget';
 

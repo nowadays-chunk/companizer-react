@@ -1,16 +1,17 @@
+import React from 'react';
 
-import IdeaConcept from './IdeaConcept';
-import StageGateWorkflow from './StageGateWorkflow';
-import ProductConcept from './ProductConcept';
-import TechnicalDesign from './TechnicalDesign';
-import CostingProfitability from './CostingProfitability';
-import PrototypePilot from './PrototypePilot';
-import QualityCompliance from './QualityCompliance';
-import ProjectResource from './ProjectResource';
-import GoToMarket from './GoToMarket';
-import NPDAnalytics from './NPDAnalytics';
-import NPDWorkflow from './NPDWorkflow';
-import MasterDataCreation from './MasterDataCreation';
+const IdeaConcept = React.lazy(() => import('./IdeaConcept'));
+const StageGateWorkflow = React.lazy(() => import('./StageGateWorkflow'));
+const ProductConcept = React.lazy(() => import('./ProductConcept'));
+const TechnicalDesign = React.lazy(() => import('./TechnicalDesign'));
+const CostingProfitability = React.lazy(() => import('./CostingProfitability'));
+const PrototypePilot = React.lazy(() => import('./PrototypePilot'));
+const QualityCompliance = React.lazy(() => import('./QualityCompliance'));
+const ProjectResource = React.lazy(() => import('./ProjectResource'));
+const GoToMarket = React.lazy(() => import('./GoToMarket'));
+const NPDAnalytics = React.lazy(() => import('./NPDAnalytics'));
+const NPDWorkflow = React.lazy(() => import('./NPDWorkflow'));
+const MasterDataCreation = React.lazy(() => import('./MasterDataCreation'));
 
 export const modules = [
     {

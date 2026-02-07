@@ -14,7 +14,7 @@ import {
     Alert
 } from '@mui/material';
 import { Send } from '@mui/icons-material';
-import { helpersWrapper } from '../../utils/firebaseCrudHelpers';
+import { helpersWrapper } from '../../utils/clientQueries';
 import useNotifications from '../../hooks/useNotifications';
 import { useAuthorization } from '../../hooks/useAuthorization';
 

@@ -1,22 +1,22 @@
 import React from 'react';
 
-import FixedIncomeDashboard from './FixedIncomeDashboard';
-import FixedIncomeMasterData from './FixedIncomeMasterData';
-import PurchaseSaleTransactions from './PurchaseSaleTransactions';
-import CouponManagement from './CouponManagement';
-import MaturityRedemption from './MaturityRedemption';
-import ReinvestmentPortfolio from './ReinvestmentPortfolio';
-import IntercompanyFixedIncome from './IntercompanyFixedIncome';
-import AmortizationPremiumDiscount from './AmortizationPremiumDiscount';
-import FairValueRevaluation from './FairValueRevaluation';
-import ForeignCurrencyFixedIncome from './ForeignCurrencyFixedIncome';
-import AccountingGLIntegration from './AccountingGLIntegration';
-import PeriodCloseControls from './PeriodCloseControls';
-import AuditTrailCompliance from './AuditTrailCompliance';
-import WorkflowApprovals from './WorkflowApprovals';
-import DataIntegrityControls from './DataIntegrityControls';
-import FixedIncomeReporting from './FixedIncomeReporting';
-import TreasuryCashIntegration from './TreasuryCashIntegration';
+const FixedIncomeDashboard = React.lazy(() => import('./FixedIncomeDashboard'));
+const FixedIncomeMasterData = React.lazy(() => import('./FixedIncomeMasterData'));
+const PurchaseSaleTransactions = React.lazy(() => import('./PurchaseSaleTransactions'));
+const CouponManagement = React.lazy(() => import('./CouponManagement'));
+const MaturityRedemption = React.lazy(() => import('./MaturityRedemption'));
+const ReinvestmentPortfolio = React.lazy(() => import('./ReinvestmentPortfolio'));
+const IntercompanyFixedIncome = React.lazy(() => import('./IntercompanyFixedIncome'));
+const AmortizationPremiumDiscount = React.lazy(() => import('./AmortizationPremiumDiscount'));
+const FairValueRevaluation = React.lazy(() => import('./FairValueRevaluation'));
+const ForeignCurrencyFixedIncome = React.lazy(() => import('./ForeignCurrencyFixedIncome'));
+const AccountingGLIntegration = React.lazy(() => import('./AccountingGLIntegration'));
+const PeriodCloseControls = React.lazy(() => import('./PeriodCloseControls'));
+const AuditTrailCompliance = React.lazy(() => import('./AuditTrailCompliance'));
+const WorkflowApprovals = React.lazy(() => import('./WorkflowApprovals'));
+const DataIntegrityControls = React.lazy(() => import('./DataIntegrityControls'));
+const FixedIncomeReporting = React.lazy(() => import('./FixedIncomeReporting'));
+const TreasuryCashIntegration = React.lazy(() => import('./TreasuryCashIntegration'));
 
 export const modules = [
     {
@@ -26,7 +26,8 @@ export const modules = [
         path: '/apps/fixed-income/dashboard',
         icon: 'Dashboard',
         description: 'Fixed income portfolio overview.',
-        component: FixedIncomeDashboard
+        component: FixedIncomeDashboard,
+        requiresSelection: false
     },
     {
         id: 'fi-master-data',
@@ -35,7 +36,8 @@ export const modules = [
         path: '/apps/fixed-income/master-data',
         icon: 'Business',
         description: 'Manage bonds and security definitions.',
-        component: FixedIncomeMasterData
+        component: FixedIncomeMasterData,
+        requiresSelection: false
     },
     {
         id: 'fi-transactions',
@@ -44,7 +46,8 @@ export const modules = [
         path: '/apps/fixed-income/transactions',
         icon: 'ReceiptLong',
         description: 'Record acquisitions and disposals.',
-        component: PurchaseSaleTransactions
+        component: PurchaseSaleTransactions,
+        requiresSelection: false
     },
     {
         id: 'fi-coupons',
@@ -53,7 +56,8 @@ export const modules = [
         path: '/apps/fixed-income/coupons',
         icon: 'EventRepeat',
         description: 'Track interest payments and accruals.',
-        component: CouponManagement
+        component: CouponManagement,
+        requiresSelection: false
     },
     {
         id: 'fi-maturity',
@@ -62,7 +66,8 @@ export const modules = [
         path: '/apps/fixed-income/maturity',
         icon: 'EventBusy',
         description: 'Maturity calendar and redemption planning.',
-        component: MaturityRedemption
+        component: MaturityRedemption,
+        requiresSelection: false
     },
     {
         id: 'fi-amortization',
@@ -71,7 +76,8 @@ export const modules = [
         path: '/apps/fixed-income/amortization',
         icon: 'TrendingDown',
         description: 'Premium/Discount amortization schedules.',
-        component: AmortizationPremiumDiscount
+        component: AmortizationPremiumDiscount,
+        requiresSelection: false
     },
     {
         id: 'fi-fair-value',
@@ -80,7 +86,8 @@ export const modules = [
         path: '/apps/fixed-income/fair-value',
         icon: 'TrendingUp',
         description: 'Market valuation and revaluation.',
-        component: FairValueRevaluation
+        component: FairValueRevaluation,
+        requiresSelection: false
     },
     {
         id: 'fi-fx',
@@ -89,7 +96,8 @@ export const modules = [
         path: '/apps/fixed-income/fx',
         icon: 'Public',
         description: 'FX exposure and translation.',
-        component: ForeignCurrencyFixedIncome
+        component: ForeignCurrencyFixedIncome,
+        requiresSelection: false
     },
     {
         id: 'fi-reinvestment',
@@ -98,7 +106,8 @@ export const modules = [
         path: '/apps/fixed-income/reinvestment',
         icon: 'Autorenew',
         description: 'Portfolio management and reinvestment.',
-        component: ReinvestmentPortfolio
+        component: ReinvestmentPortfolio,
+        requiresSelection: false
     },
     {
         id: 'fi-accounting',
@@ -107,7 +116,8 @@ export const modules = [
         path: '/apps/fixed-income/accounting',
         icon: 'AccountBalance',
         description: 'GL integration and posting rules.',
-        component: AccountingGLIntegration
+        component: AccountingGLIntegration,
+        requiresSelection: false
     },
     {
         id: 'fi-treasury',
@@ -116,7 +126,8 @@ export const modules = [
         path: '/apps/fixed-income/treasury',
         icon: 'AccountBalanceWallet',
         description: 'Cash flow forecasting and bank links.',
-        component: TreasuryCashIntegration
+        component: TreasuryCashIntegration,
+        requiresSelection: false
     },
     {
         id: 'fi-intercompany',
@@ -125,7 +136,8 @@ export const modules = [
         path: '/apps/fixed-income/intercompany',
         icon: 'Domain',
         description: 'Group holdings and eliminations.',
-        component: IntercompanyFixedIncome
+        component: IntercompanyFixedIncome,
+        requiresSelection: false
     },
     {
         id: 'fi-controls',
@@ -134,7 +146,8 @@ export const modules = [
         path: '/apps/fixed-income/close',
         icon: 'LockClock',
         description: 'Period-end checklist and validation.',
-        component: PeriodCloseControls
+        component: PeriodCloseControls,
+        requiresSelection: false
     },
     {
         id: 'fi-audit',
@@ -143,7 +156,8 @@ export const modules = [
         path: '/apps/fixed-income/audit',
         icon: 'HistoryEdu',
         description: 'Transaction logs and compliance reporting.',
-        component: AuditTrailCompliance
+        component: AuditTrailCompliance,
+        requiresSelection: false
     },
     {
         id: 'fi-workflows',
@@ -152,7 +166,8 @@ export const modules = [
         path: '/apps/fixed-income/workflows',
         icon: 'Approval',
         description: 'Transaction and valuation approvals.',
-        component: WorkflowApprovals
+        component: WorkflowApprovals,
+        requiresSelection: false
     },
     {
         id: 'fi-integrity',
@@ -161,7 +176,8 @@ export const modules = [
         path: '/apps/fixed-income/integrity',
         icon: 'Security',
         description: 'System rules and controls.',
-        component: DataIntegrityControls
+        component: DataIntegrityControls,
+        requiresSelection: false
     },
     {
         id: 'fi-reporting',
@@ -170,6 +186,7 @@ export const modules = [
         path: '/apps/fixed-income/reporting',
         icon: 'Assessment',
         description: 'Standard reports and analytics.',
-        component: FixedIncomeReporting
+        component: FixedIncomeReporting,
+        requiresSelection: false
     }
 ];
