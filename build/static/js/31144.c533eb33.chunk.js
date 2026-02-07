@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunktresorerie_management=self.webpackChunktresorerie_management||[]).push([[31144],{31144:(e,n,r)=>{r.r(n),r.d(n,{default:()=>a});r(65043);var c=r(96446),i=r(85865),s=r(70579);const a=()=>(0,s.jsxs)(c.A,{sx:{p:3},children:[(0,s.jsx)(i.A,{variant:"h5",children:"FX Reconciliation"}),(0,s.jsx)(i.A,{children:"Module for reconciling Foreign Currency accounts considering FX differences."})]})}}]);
-//# sourceMappingURL=31144.c533eb33.chunk.js.map
