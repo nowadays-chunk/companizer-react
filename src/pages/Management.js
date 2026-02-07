@@ -13,15 +13,14 @@ function ManagementComponent({ showAnalytics, ...props }) {
     const module = props.module || params.module;
     const subModule = props.subModule || params.subModule;
     const component = props.component || params.component;
-
-    const capitalizedModuleName = getPath(module);
-    const capitalizedSubModuleName = getPath(subModule);
-    const capitalizedComponentName = getPath(component);
-
     const [config, setConfig] = useState(null);
-    const [AnalysisComponent, setAnalysisComponent] = useState(null);
-    const [showConfigDialog, setShowConfigDialog] = useState(false);
-    const rulesHelpers = React.useMemo(() => helpersWrapper('entity_workflow_rules'), []);
+
+    let capitalizedModuleName, capitalizedSubModuleName, capitalizedComponentName;
+    if (module && subModule && component) {
+        capitalizedModuleName = getPath(module);
+        capitalizedSubModuleName = getPath(subModule);
+        capitalizedComponentName = getPath(component);
+    }
 
     useEffect(() => {
         const loadConfig = async () => {
@@ -62,6 +61,10 @@ function ManagementComponent({ showAnalytics, ...props }) {
 
         loadConfig();
     }, [capitalizedComponentName, capitalizedModuleName, capitalizedSubModuleName]);
+
+    if (!module || !subModule || !component) {
+        return <div>Invalid URL</div>;
+    }
 
     if (!config) {
         return <div>Loading...</div>;

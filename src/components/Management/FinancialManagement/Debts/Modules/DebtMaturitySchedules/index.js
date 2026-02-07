@@ -24,7 +24,7 @@ export const modules = [
         id: 'debt-source',
         name: 'Debt Source Integration',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/source',
+        path: '/apps/debts/debt-maturity-schedules/source',
         icon: 'Input',
         description: 'Auto-population from Loans, Bonds, and Leases.',
         component: DebtSourceIntegration
@@ -33,7 +33,7 @@ export const modules = [
         id: 'maturity-structure',
         name: 'Maturity Structure & Bucketing',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/structure',
+        path: '/apps/debts/debt-maturity-schedules/structure',
         icon: 'ViewColumn',
         description: 'Maturity buckets (Current, 1-2 Years, >5 Years).',
         component: MaturityStructureBucketing
@@ -42,7 +42,7 @@ export const modules = [
         id: 'principal-repayment',
         name: 'Principal Repayment Schedule',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/principal',
+        path: '/apps/debts/debt-maturity-schedules/principal',
         icon: 'Schedule',
         description: 'Granular repayment schedules with balloons/bullets.',
         component: PrincipalRepaymentSchedule
@@ -51,7 +51,7 @@ export const modules = [
         id: 'interest-principal',
         name: 'Interest vs Principal',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/separation',
+        path: '/apps/debts/debt-maturity-schedules/separation',
         icon: 'CallSplit',
         description: 'Separate reporting for principal and interest.',
         component: InterestPrincipalSeparation
@@ -60,7 +60,7 @@ export const modules = [
         id: 'current-non-current',
         name: 'Current vs Non-Current',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/classification',
+        path: '/apps/debts/debt-maturity-schedules/classification',
         icon: 'Balance',
         description: 'Balance sheet classification and reclassification journals.',
         component: CurrentNonCurrentClassification
@@ -69,7 +69,7 @@ export const modules = [
         id: 'multi-currency',
         name: 'Multi-Currency & FX',
         type: 'Specific',
-        path: '/financial-management/debts/debt-maturity-schedules/fx',
+        path: '/apps/debts/debt-maturity-schedules/fx',
         icon: 'CurrencyExchange',
         description: 'Forecasting in transaction and base currency.',
         component: MultiCurrencyFX
@@ -78,7 +78,7 @@ export const modules = [
         id: 'liquidity-planning',
         name: 'Forecasting & Liquidity',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/liquidity',
+        path: '/apps/debts/debt-maturity-schedules/liquidity',
         icon: 'TrendingUp',
         description: 'Cash outflow forecasts and gap analysis.',
         component: ForecastingLiquidityPlanning
@@ -87,7 +87,7 @@ export const modules = [
         id: 'consolidated-maturity',
         name: 'Consolidated Debt Maturity',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/consolidation',
+        path: '/apps/debts/debt-maturity-schedules/consolidation',
         icon: 'Domain',
         description: 'Group-level maturity views and eliminations.',
         component: ConsolidatedDebtMaturity
@@ -96,7 +96,7 @@ export const modules = [
         id: 'covenant-compliance',
         name: 'Covenant Compliance',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/covenants',
+        path: '/apps/debts/debt-maturity-schedules/covenants',
         icon: 'GppGood',
         description: 'Maturity concentration and ratio analysis.',
         component: CovenantComplianceIntegration
@@ -105,7 +105,7 @@ export const modules = [
         id: 'reporting-disclosure',
         name: 'Reporting & Disclosure',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/reporting',
+        path: '/apps/debts/debt-maturity-schedules/reporting',
         icon: 'Assessment',
         description: 'Financial statement notes and auditor schedules.',
         component: ReportingDisclosure
@@ -114,7 +114,7 @@ export const modules = [
         id: 'period-close',
         name: 'Period & Close',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/close',
+        path: '/apps/debts/debt-maturity-schedules/close',
         icon: 'Rule',
         description: 'Month-end snapshots and validation.',
         component: PeriodCloseIntegration
@@ -123,7 +123,7 @@ export const modules = [
         id: 'workflow-approvals',
         name: 'Workflow & Approvals',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/workflow',
+        path: '/apps/debts/debt-maturity-schedules/workflow',
         icon: 'Approval',
         description: 'Approval for classification changes.',
         component: WorkflowApprovals
@@ -132,7 +132,7 @@ export const modules = [
         id: 'intercompany-treasury',
         name: 'Intercompany & Treasury',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/treasury',
+        path: '/apps/debts/debt-maturity-schedules/treasury',
         icon: 'AccountBalance',
         description: 'Group treasury planning and settlement.',
         component: IntercompanyTreasury
@@ -141,7 +141,7 @@ export const modules = [
         id: 'ux-visualization',
         name: 'UX & Visualization',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/visuals',
+        path: '/apps/debts/debt-maturity-schedules/visuals',
         icon: 'BarChart',
         description: 'Maturity ladders and heatmaps.',
         component: UXVisualization
@@ -150,7 +150,7 @@ export const modules = [
         id: 'api-integration',
         name: 'API & Integration',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/api',
+        path: '/apps/debts/debt-maturity-schedules/api',
         icon: 'Api',
         description: 'System connectivity and API status.',
         component: APIIntegration
@@ -159,7 +159,7 @@ export const modules = [
         id: 'audit-trail',
         name: 'Audit Trail & Versioning',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/audit',
+        path: '/apps/debts/debt-maturity-schedules/audit',
         icon: 'HistoryEdu',
         description: 'Change logs and version control.',
         component: AuditTrailVersioning
@@ -168,7 +168,7 @@ export const modules = [
         id: 'controls-integrity',
         name: 'Controls & Data Integrity',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/controls',
+        path: '/apps/debts/debt-maturity-schedules/controls',
         icon: 'Security',
         description: 'Validation rules and missing maturity checks.',
         component: ControlsDataIntegrity
@@ -177,7 +177,7 @@ export const modules = [
         id: 'platform-alignment',
         name: 'Platform Alignment',
         type: 'General',
-        path: '/financial-management/debts/debt-maturity-schedules/platform',
+        path: '/apps/debts/debt-maturity-schedules/platform',
         icon: 'AppSettingsAlt',
         description: 'Integration with system architecture and tasks.',
         component: PlatformArchitectureAlignment

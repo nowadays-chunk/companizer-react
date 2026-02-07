@@ -24,7 +24,7 @@ export const modules = [
         id: 'interest-source-types',
         name: 'Interest Source Types',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/source-types',
+        path: '/apps/debts/interest-payments/source-types',
         icon: 'AccountTree',
         description: 'Manage diverse interest sources (Loans, Intercompany, etc.).',
         component: InterestSourceTypes
@@ -33,7 +33,7 @@ export const modules = [
         id: 'calculation-engine',
         name: 'Interest Calculation Engine',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/calculator',
+        path: '/apps/debts/interest-payments/calculator',
         icon: 'Calculate',
         description: 'Core logic for rates, day counts, and compounding.',
         component: InterestCalculationEngine
@@ -42,7 +42,7 @@ export const modules = [
         id: 'accrued-vs-paid',
         name: 'Accrued vs Paid Handling',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/accruals',
+        path: '/apps/debts/interest-payments/accruals',
         icon: 'CompareArrows',
         description: 'Track and reconcile accrued vs paid balances.',
         component: AccruedVsPaidHandling
@@ -51,7 +51,7 @@ export const modules = [
         id: 'payment-scheduling',
         name: 'Payment Scheduling',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/scheduling',
+        path: '/apps/debts/interest-payments/scheduling',
         icon: 'EventNote',
         description: 'Calendars, due dates, and payment planning.',
         component: PaymentScheduling
@@ -60,7 +60,7 @@ export const modules = [
         id: 'payment-processing',
         name: 'Payment Processing',
         type: 'Specific',
-        path: '/financial-management/debts/interest-payments/processing',
+        path: '/apps/debts/interest-payments/processing',
         icon: 'Payments',
         description: 'Execute interest payments and allocations.',
         component: PaymentProcessing
@@ -69,7 +69,7 @@ export const modules = [
         id: 'gl-integration',
         name: 'GL & Accounting',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/accounting',
+        path: '/apps/debts/interest-payments/accounting',
         icon: 'AccountBalance',
         description: 'GL mapping for expense, income, and liability.',
         component: GLAccountingIntegration
@@ -78,7 +78,7 @@ export const modules = [
         id: 'fx-interest',
         name: 'Foreign Currency Interest',
         type: 'Specific',
-        path: '/financial-management/debts/interest-payments/fx',
+        path: '/apps/debts/interest-payments/fx',
         icon: 'CurrencyExchange',
         description: 'Manage FX rates and realized/unrealized gains on interest.',
         component: ForeignCurrencyInterest
@@ -87,7 +87,7 @@ export const modules = [
         id: 'taxes-withholding',
         name: 'Taxes & Withholding',
         type: 'Specific',
-        path: '/financial-management/debts/interest-payments/tax',
+        path: '/apps/debts/interest-payments/tax',
         icon: 'Receipt',
         description: 'Withholding tax calculation and certificates.',
         component: TaxesWithholding
@@ -96,7 +96,7 @@ export const modules = [
         id: 'approvals-workflow',
         name: 'Approval Workflow',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/approvals',
+        path: '/apps/debts/interest-payments/approvals',
         icon: 'Approval',
         description: 'Authorization chains for payment release.',
         component: ApprovalsWorkflow
@@ -105,7 +105,7 @@ export const modules = [
         id: 'period-close',
         name: 'Period & Close Integration',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/close',
+        path: '/apps/debts/interest-payments/close',
         icon: 'Rule',
         description: 'Month-end controls and period validation.',
         component: PeriodCloseIntegration
@@ -114,7 +114,7 @@ export const modules = [
         id: 'status-lifecycle',
         name: 'Status Lifecycle',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/status',
+        path: '/apps/debts/interest-payments/status',
         icon: 'TrackChanges',
         description: 'Track payment status from Draft to Reconciled.',
         component: StatusLifecycle
@@ -123,7 +123,7 @@ export const modules = [
         id: 'reconciliation',
         name: 'Reconciliation Integration',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/reconciliation',
+        path: '/apps/debts/interest-payments/reconciliation',
         icon: 'FactCheck',
         description: 'Bank matching and control account clearing.',
         component: ReconciliationIntegration
@@ -132,7 +132,7 @@ export const modules = [
         id: 'reporting',
         name: 'Reporting & Analytics',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/reporting',
+        path: '/apps/debts/interest-payments/reporting',
         icon: 'Insights',
         description: 'Interest registers, forecasts, and expense analysis.',
         component: ReportingAnalytics
@@ -141,7 +141,7 @@ export const modules = [
         id: 'audit-trail',
         name: 'Audit Trail & Docs',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/audit',
+        path: '/apps/debts/interest-payments/audit',
         icon: 'HistoryEdu',
         description: 'Detailed logs of calculations and changes.',
         component: AuditTrailDocs
@@ -150,7 +150,7 @@ export const modules = [
         id: 'automation',
         name: 'Automation & Rules',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/automation',
+        path: '/apps/debts/interest-payments/automation',
         icon: 'AutoMode',
         description: 'Auto-creation and allocation rules.',
         component: AutomationRules
@@ -159,7 +159,7 @@ export const modules = [
         id: 'ux-productivity',
         name: 'UX & Productivity',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/tools',
+        path: '/apps/debts/interest-payments/tools',
         icon: 'Handyman',
         description: 'Wizards, bulk tools, and quick calculators.',
         component: UXProductivity
@@ -168,7 +168,7 @@ export const modules = [
         id: 'integration',
         name: 'Integration Architecture',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/integration',
+        path: '/apps/debts/interest-payments/integration',
         icon: 'Hub',
         description: 'System connectivity status.',
         component: IntegrationArchitecture
@@ -177,7 +177,7 @@ export const modules = [
         id: 'data-integrity',
         name: 'Data Integrity & Controls',
         type: 'General',
-        path: '/financial-management/debts/interest-payments/integrity',
+        path: '/apps/debts/interest-payments/integrity',
         icon: 'GppGood',
         description: 'Validation rules and duplicate prevention.',
         component: DataIntegrityControls

@@ -16,7 +16,7 @@ export const modules = [
         component: PaymentTermsUI,
         group: 'Configuration',
         type: 'General',
-        path: '/financial-management/accounts-payable/payment-terms/list',
+        path: '/apps/payment-terms/list',
         label: 'Terms List',
         requiresSelection: false
     },
@@ -28,7 +28,7 @@ export const modules = [
         component: TermRuleEditor,
         group: 'Configuration',
         type: 'Specific',
-        path: '/financial-management/accounts-payable/payment-terms/rules',
+        path: '/apps/payment-terms/rules',
         label: 'Rules',
         requiresSelection: false
     },
@@ -40,7 +40,7 @@ export const modules = [
         component: TermCalculator,
         group: 'Utilities',
         type: 'Specific',
-        path: '/financial-management/accounts-payable/payment-terms/calculator',
+        path: '/apps/payment-terms/calculator',
         label: 'Calculator',
         requiresSelection: false
     },
@@ -52,7 +52,7 @@ export const modules = [
         component: DiscountEngine,
         group: 'Configuration',
         type: 'Specific',
-        path: '/financial-management/accounts-payable/payment-terms/discounts',
+        path: '/apps/payment-terms/discounts',
         label: 'Discounts',
         requiresSelection: false
     },
@@ -64,7 +64,7 @@ export const modules = [
         component: InstallmentManager,
         group: 'Configuration',
         type: 'Specific',
-        path: '/financial-management/accounts-payable/payment-terms/installments',
+        path: '/apps/payment-terms/installments',
         label: 'Installments',
         requiresSelection: false
     },
@@ -76,7 +76,7 @@ export const modules = [
         component: TermTestBench,
         group: 'Utilities',
         type: 'Specific',
-        path: '/financial-management/accounts-payable/payment-terms/test-bench',
+        path: '/apps/payment-terms/test-bench',
         label: 'Test Bench',
         requiresSelection: false
     }

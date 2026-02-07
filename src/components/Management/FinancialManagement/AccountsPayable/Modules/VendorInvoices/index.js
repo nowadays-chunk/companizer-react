@@ -14,7 +14,7 @@ export const modules = [
         component: InvoiceCapture,
         group: 'Processing',
         type: 'General',
-        path: '/financial-management/accounts-payable/vendor-invoices/capture',
+        path: '/apps/vendor-invoices/capture',
         label: 'Capture',
         requiresSelection: false
     },
@@ -26,7 +26,7 @@ export const modules = [
         component: MatchingEngine,
         group: 'Processing',
         type: 'General',
-        path: '/financial-management/accounts-payable/vendor-invoices/matching',
+        path: '/apps/vendor-invoices/matching',
         label: 'Matching',
         requiresSelection: false
     },
@@ -38,7 +38,7 @@ export const modules = [
         component: PaymentRunManager,
         group: 'Payments',
         type: 'General',
-        path: '/financial-management/accounts-payable/vendor-invoices/payments',
+        path: '/apps/vendor-invoices/payments',
         label: 'Payments',
         requiresSelection: false
     },
@@ -50,7 +50,7 @@ export const modules = [
         component: VendorPortalHome,
         group: 'Portal',
         type: 'Specific',
-        path: '/financial-management/accounts-payable/vendor-invoices/portal',
+        path: '/apps/vendor-invoices/portal',
         label: 'Portal',
         requiresSelection: false
     }

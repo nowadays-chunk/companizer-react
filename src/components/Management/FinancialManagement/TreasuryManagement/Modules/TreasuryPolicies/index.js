@@ -17,7 +17,7 @@ export const modules = [
         component: PolicyDashboard,
         group: 'Governance',
         type: 'General',
-        path: '/financial-management/treasury-management/treasury-policies/dashboard',
+        path: '/apps/treasury-management/treasury-policies/dashboard',
         label: 'Dashboard',
         requiresSelection: false
     },
@@ -29,7 +29,7 @@ export const modules = [
         component: PolicyManager,
         group: 'Governance',
         type: 'Specific',
-        path: '/financial-management/treasury-management/treasury-policies/manager',
+        path: '/apps/treasury-management/treasury-policies/manager',
         label: 'Manager',
         requiresSelection: false
     },
@@ -41,7 +41,7 @@ export const modules = [
         component: PolicyLibrary,
         group: 'Governance',
         type: 'General',
-        path: '/financial-management/treasury-management/treasury-policies/library',
+        path: '/apps/treasury-management/treasury-policies/library',
         label: 'Library',
         requiresSelection: false
     },
@@ -53,7 +53,7 @@ export const modules = [
         component: ComplianceMonitor,
         group: 'Compliance',
         type: 'Specific',
-        path: '/financial-management/treasury-management/treasury-policies/compliance',
+        path: '/apps/treasury-management/treasury-policies/compliance',
         label: 'Compliance',
         requiresSelection: false
     },
@@ -65,7 +65,7 @@ export const modules = [
         component: LimitManagement,
         group: 'Compliance',
         type: 'Specific',
-        path: '/financial-management/treasury-management/treasury-policies/limits',
+        path: '/apps/treasury-management/treasury-policies/limits',
         label: 'Limits',
         requiresSelection: false
     },
@@ -77,7 +77,7 @@ export const modules = [
         component: ExceptionWorkflows,
         group: 'Governance',
         type: 'Specific',
-        path: '/financial-management/treasury-management/treasury-policies/exceptions',
+        path: '/apps/treasury-management/treasury-policies/exceptions',
         label: 'Exceptions',
         requiresSelection: false
     },
@@ -89,7 +89,7 @@ export const modules = [
         component: PolicyAuditLog,
         group: 'Governance',
         type: 'Specific',
-        path: '/financial-management/treasury-management/treasury-policies/audit',
+        path: '/apps/treasury-management/treasury-policies/audit',
         label: 'Audit',
         requiresSelection: false
     }

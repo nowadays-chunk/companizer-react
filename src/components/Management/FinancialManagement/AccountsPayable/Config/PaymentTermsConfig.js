@@ -42,23 +42,6 @@ export const actionsConfig = {
     }
 };
 
-export const modules = [
-    {
-        name: 'Test Bench',
-        type: 'Specific', // Appears on Detail View
-        path: '/apps/payment-terms/test-bench/:id',
-        icon: 'Science',
-        description: 'Simulate invoice dates to verify term logic.'
-    },
-    {
-        name: 'Calculator',
-        type: 'General', // Appears on List View
-        path: '/apps/payment-terms/calculator',
-        icon: 'Calculate',
-        description: 'Quick date calculator utility.'
-    }
-];
-
 export const collectionName = 'paymentterms_config';
 export const fieldsConfig = {
     // Standard Config Fields if needed for the "Configure" dialog

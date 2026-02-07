@@ -17,7 +17,7 @@ export const modules = [
         component: ForecastDashboard,
         group: 'Treasury',
         type: 'General',
-        path: '/financial-management/treasury-management/cash-flow-forecasts/dashboard',
+        path: '/apps/treasury-management/cash-flow-forecasts/dashboard',
         label: 'Dashboard',
         requiresSelection: false
     },
@@ -29,7 +29,7 @@ export const modules = [
         component: CashFlowVisualizer,
         group: 'Treasury',
         type: 'General',
-        path: '/financial-management/treasury-management/cash-flow-forecasts/visualizer',
+        path: '/apps/treasury-management/cash-flow-forecasts/visualizer',
         label: 'Visualizer',
         requiresSelection: false
     },
@@ -41,7 +41,7 @@ export const modules = [
         component: CashFlowSources,
         group: 'Treasury',
         type: 'Specific',
-        path: '/financial-management/treasury-management/cash-flow-forecasts/sources',
+        path: '/apps/treasury-management/cash-flow-forecasts/sources',
         label: 'Sources',
         requiresSelection: false
     },
@@ -53,7 +53,7 @@ export const modules = [
         component: ForecastScenarios,
         group: 'Treasury',
         type: 'Specific',
-        path: '/financial-management/treasury-management/cash-flow-forecasts/scenarios',
+        path: '/apps/treasury-management/cash-flow-forecasts/scenarios',
         label: 'Scenarios',
         requiresSelection: false
     },
@@ -65,7 +65,7 @@ export const modules = [
         component: AdjustmentsEntry,
         group: 'Treasury',
         type: 'Specific',
-        path: '/financial-management/treasury-management/cash-flow-forecasts/adjustments',
+        path: '/apps/treasury-management/cash-flow-forecasts/adjustments',
         label: 'Adjustments',
         requiresSelection: false
     },
@@ -77,7 +77,7 @@ export const modules = [
         component: VarianceAnalysis,
         group: 'Treasury',
         type: 'Specific',
-        path: '/financial-management/treasury-management/cash-flow-forecasts/variance',
+        path: '/apps/treasury-management/cash-flow-forecasts/variance',
         label: 'Variance',
         requiresSelection: false
     },
@@ -89,7 +89,7 @@ export const modules = [
         component: FXExposure,
         group: 'Treasury',
         type: 'Specific',
-        path: '/financial-management/treasury-management/cash-flow-forecasts/fx',
+        path: '/apps/treasury-management/cash-flow-forecasts/fx',
         label: 'FX Risk',
         requiresSelection: false
     }

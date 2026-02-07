@@ -147,17 +147,6 @@ const App = () => {
               />
 
               <Route
-                path="/apps/:module/:subModule"
-                element={
-                  <ProtectedRoute user={user}>
-                    <Dashboard colorMode={colorMode}>
-                      <Pages.Management />
-                    </Dashboard>
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
                 path="/blog"
                 element={
                   <ProtectedRoute user={user}>

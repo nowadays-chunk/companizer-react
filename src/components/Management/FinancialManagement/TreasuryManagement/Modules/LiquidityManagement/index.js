@@ -17,7 +17,7 @@ export const modules = [
         component: LiquidityDashboard,
         group: 'Liquidity',
         type: 'General',
-        path: '/financial-management/treasury-management/liquidity-management/dashboard',
+        path: '/apps/treasury-management/liquidity-management/dashboard',
         label: 'Dashboard',
         requiresSelection: false
     },
@@ -29,7 +29,7 @@ export const modules = [
         component: CashPositioning,
         group: 'Operations',
         type: 'General',
-        path: '/financial-management/treasury-management/liquidity-management/cash-positioning',
+        path: '/apps/treasury-management/liquidity-management/cash-positioning',
         label: 'Cash Positions',
         requiresSelection: false
     },
@@ -41,7 +41,7 @@ export const modules = [
         component: FundingGapAnalysis,
         group: 'Funding',
         type: 'Specific',
-        path: '/financial-management/treasury-management/liquidity-management/funding-gap',
+        path: '/apps/treasury-management/liquidity-management/funding-gap',
         label: 'Funding',
         requiresSelection: false
     },
@@ -53,7 +53,7 @@ export const modules = [
         component: CashPooling,
         group: 'Operations',
         type: 'Specific',
-        path: '/financial-management/treasury-management/liquidity-management/cash-pooling',
+        path: '/apps/treasury-management/liquidity-management/cash-pooling',
         label: 'Pooling',
         requiresSelection: false
     },
@@ -65,7 +65,7 @@ export const modules = [
         component: LiquidityStressTest,
         group: 'Risk',
         type: 'Specific',
-        path: '/financial-management/treasury-management/liquidity-management/stress-test',
+        path: '/apps/treasury-management/liquidity-management/stress-test',
         label: 'Stress Test',
         requiresSelection: false
     },
@@ -77,7 +77,7 @@ export const modules = [
         component: SurplusManagement,
         group: 'Liquidity',
         type: 'Specific',
-        path: '/financial-management/treasury-management/liquidity-management/investments',
+        path: '/apps/treasury-management/liquidity-management/investments',
         label: 'Investments',
         requiresSelection: false
     },
@@ -89,7 +89,7 @@ export const modules = [
         component: BankRiskSummary,
         group: 'Risk',
         type: 'Specific',
-        path: '/financial-management/treasury-management/liquidity-management/bank-risk',
+        path: '/apps/treasury-management/liquidity-management/bank-risk',
         label: 'Bank Risk',
         requiresSelection: false
     }

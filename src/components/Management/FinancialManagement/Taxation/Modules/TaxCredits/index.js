@@ -41,7 +41,7 @@ export const modules = [
         component: TaxCreditMasterData,
         group: 'Setup & Configuration',
         type: 'General',
-        path: '/financial-management/taxation/tax-credits/master-data',
+        path: '/apps/taxation/tax-credits/master-data',
         label: 'Tax Credit Master Data',
         requiresSelection: false
     },
@@ -53,7 +53,7 @@ export const modules = [
         component: CreditCalculationEngine,
         group: 'Calculation',
         type: 'General',
-        path: '/financial-management/taxation/tax-credits/calculation-engine',
+        path: '/apps/taxation/tax-credits/calculation-engine',
         label: 'Credit Calculation Engine',
         requiresSelection: false
     },
@@ -65,7 +65,7 @@ export const modules = [
         component: CreditApplication,
         group: 'Application',
         type: 'Specific',
-        path: '/financial-management/taxation/tax-credits/application/:id',
+        path: '/apps/taxation/tax-credits/application/:id',
         label: 'Credit Application',
         requiresSelection: true
     },
@@ -77,7 +77,7 @@ export const modules = [
         component: CarryforwardManagement,
         group: 'Management',
         type: 'Specific',
-        path: '/financial-management/taxation/tax-credits/carryforward/:id',
+        path: '/apps/taxation/tax-credits/carryforward/:id',
         label: 'Carryforward Management',
         requiresSelection: true
     },
@@ -89,7 +89,7 @@ export const modules = [
         component: MultiJurisdictionSupport,
         group: 'Management',
         type: 'General',
-        path: '/financial-management/taxation/tax-credits/multi-jurisdiction',
+        path: '/apps/taxation/tax-credits/multi-jurisdiction',
         label: 'Multi-Jurisdiction Support',
         requiresSelection: false
     },
@@ -101,7 +101,7 @@ export const modules = [
         component: AccountingIntegration,
         group: 'Integration',
         type: 'General',
-        path: '/financial-management/taxation/tax-credits/accounting',
+        path: '/apps/taxation/tax-credits/accounting',
         label: 'Accounting & GL Integration',
         requiresSelection: false
     },
@@ -113,7 +113,7 @@ export const modules = [
         component: CreditRedemption,
         group: 'Application',
         type: 'Specific',
-        path: '/financial-management/taxation/tax-credits/redemption/:id',
+        path: '/apps/taxation/tax-credits/redemption/:id',
         label: 'Credit Redemption',
         requiresSelection: true
     },
@@ -125,7 +125,7 @@ export const modules = [
         component: ReportingAnalytics,
         group: 'Reporting',
         type: 'General',
-        path: '/financial-management/taxation/tax-credits/reports',
+        path: '/apps/taxation/tax-credits/reports',
         label: 'Reporting & Analytics',
         requiresSelection: false
     },
@@ -137,7 +137,7 @@ export const modules = [
         component: ComplianceReporting,
         group: 'Compliance',
         type: 'Specific',
-        path: '/financial-management/taxation/tax-credits/compliance/:id',
+        path: '/apps/taxation/tax-credits/compliance/:id',
         label: 'Compliance Reporting',
         requiresSelection: true
     },
@@ -149,7 +149,7 @@ export const modules = [
         component: WorkflowApprovals,
         group: 'Governance',
         type: 'Specific',
-        path: '/financial-management/taxation/tax-credits/workflow/:id',
+        path: '/apps/taxation/tax-credits/workflow/:id',
         label: 'Workflow & Approvals',
         requiresSelection: true
     },
@@ -162,7 +162,7 @@ export const modules = [
         component: StatusTracking,
         group: 'Management',
         type: 'Specific',
-        path: '/financial-management/taxation/tax-credits/status/:id',
+        path: '/apps/taxation/tax-credits/status/:id',
         label: 'Status Tracking',
         requiresSelection: true
     },
@@ -174,7 +174,7 @@ export const modules = [
         component: AutomationRules,
         group: 'Automation',
         type: 'General',
-        path: '/financial-management/taxation/tax-credits/automation',
+        path: '/apps/taxation/tax-credits/automation',
         label: 'Automation Rules',
         requiresSelection: false
     },
@@ -186,7 +186,7 @@ export const modules = [
         component: UXProductivity,
         group: 'Tools',
         type: 'General',
-        path: '/financial-management/taxation/tax-credits/tools',
+        path: '/apps/taxation/tax-credits/tools',
         label: 'UX & Productivity',
         requiresSelection: false
     },
@@ -198,7 +198,7 @@ export const modules = [
         component: DataIntegrity,
         group: 'Governance',
         type: 'Specific',
-        path: '/financial-management/taxation/tax-credits/audit/:id',
+        path: '/apps/taxation/tax-credits/audit/:id',
         label: 'Data Integrity',
         requiresSelection: true
     },
@@ -210,7 +210,7 @@ export const modules = [
         component: ModuleIntegration,
         group: 'Integration',
         type: 'General',
-        path: '/financial-management/taxation/tax-credits/integration',
+        path: '/apps/taxation/tax-credits/integration',
         label: 'Module Integration',
         requiresSelection: false
     }
