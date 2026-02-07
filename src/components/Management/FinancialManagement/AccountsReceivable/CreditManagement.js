@@ -1,5 +1,4 @@
-
-import modules from './Modules/CreditManagement';
+import modules from './Modules/CreditManagement/';
 
 export const fieldsConfig = {
   // 1. Credit Master Data
@@ -51,7 +50,6 @@ export const fieldsConfig = {
   processing_step: { label: 'Processing Step', type: 'select', options: [{ 'id': 'draft', 'label': 'Draft' }, { 'id': 'approved', 'label': 'Approved' }], faker: 'random.arrayElement' },
   total_price: { label: 'Total Value', type: 'number', faker: 'finance.amount' }
 };
-
 
 export const entityName = 'Credit Management';
 export const collectionName = 'credit_management';

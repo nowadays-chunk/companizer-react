@@ -136,6 +136,28 @@ const App = () => {
               ))}
 
               <Route
+                path="/summary"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <Pages.PersonalizedDashboard />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/apps/:module/:subModule"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <Pages.Management />
+                    </Dashboard>
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
                 path="/blog"
                 element={
                   <ProtectedRoute user={user}>
@@ -179,6 +201,17 @@ const App = () => {
                 element={
                   <ProtectedRoute user={user}>
                     <Pages.ConfigurablePdf />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/:module/:subModule/:component/view/:id"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard colorMode={colorMode}>
+                      <Pages.UnitVisualizer mode="view" />
+                    </Dashboard>
                   </ProtectedRoute>
                 }
               />

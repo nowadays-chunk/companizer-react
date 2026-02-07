@@ -1,4 +1,7 @@
 
+import modules from './Modules/VendorInvoices/';
+export { modules };
+
 export const fieldsConfig = {
 
   // --- Header Information ---

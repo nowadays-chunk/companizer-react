@@ -5,8 +5,10 @@ import GenericAnalyticsDashboard from './GenericAnalyticsDashboard';
 import { helpersWrapper } from '../utils/clientQueries';
 import analysisRegistry from '../analysisRegistry';
 
-const Analytics = () => {
-    const { entity } = useParams();
+const Analytics = (props) => {
+    const params = useParams();
+    const entity = params.component;
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

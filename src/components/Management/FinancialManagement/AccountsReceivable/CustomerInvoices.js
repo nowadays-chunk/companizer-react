@@ -1,5 +1,5 @@
 
-import modules from './Modules/CustomerInvoices';
+import modules from './Modules/CustomerInvoices/';
 
 export const fieldsConfig = {
   // ==========================================

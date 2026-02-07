@@ -20,7 +20,7 @@ const LoginDialog = ({ open, onClose }) => {
       const isSuccess = await login(email, password);
       if (isSuccess) {
         onClose();
-        navigate('/summary'); // Or dashboard
+        navigate('/summary');
       } else {
         setError('Invalid credentials');
       }

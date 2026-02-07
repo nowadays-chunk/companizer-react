@@ -35,7 +35,7 @@ export const modules = [
         component: TaxMasterData,
         group: 'Core Tax Setup & Calculation',
         type: 'General',
-        path: '/apps/tax-filings/tax-master-data',
+        path: '/financial-management/taxation/tax-filings/tax-master-data',
         label: 'Tax Master Data',
         requiresSelection: false,
         order: 1
@@ -48,7 +48,7 @@ export const modules = [
         component: TaxCalculationEngine,
         group: 'Core Tax Setup & Calculation',
         type: 'General',
-        path: '/apps/tax-filings/tax-calculation-engine',
+        path: '/financial-management/taxation/tax-filings/tax-calculation-engine',
         label: 'Tax Calculation Engine',
         requiresSelection: false,
         order: 2
@@ -61,7 +61,7 @@ export const modules = [
         component: TransactionIntegration,
         group: 'Core Tax Setup & Calculation',
         type: 'General',
-        path: '/apps/tax-filings/transaction-integration',
+        path: '/financial-management/taxation/tax-filings/transaction-integration',
         label: 'Transaction Integration',
         requiresSelection: false,
         order: 3
@@ -74,7 +74,7 @@ export const modules = [
         component: MultiJurisdictionManager,
         group: 'Core Tax Setup & Calculation',
         type: 'General',
-        path: '/apps/tax-filings/multi-jurisdiction-manager',
+        path: '/financial-management/taxation/tax-filings/multi-jurisdiction-manager',
         label: 'Multi-Jurisdiction Manager',
         requiresSelection: false,
         order: 4
@@ -89,7 +89,7 @@ export const modules = [
         component: FilingPreparation,
         group: 'Filing & Compliance',
         type: 'Specific',
-        path: '/apps/tax-filings/filing-preparation',
+        path: '/financial-management/taxation/tax-filings/filing-preparation',
         label: 'Filing Preparation',
         requiresSelection: false,
         order: 5
@@ -102,7 +102,7 @@ export const modules = [
         component: PaymentRemittance,
         group: 'Filing & Compliance',
         type: 'Specific',
-        path: '/apps/tax-filings/payment-remittance',
+        path: '/financial-management/taxation/tax-filings/payment-remittance',
         label: 'Payment & Remittance',
         requiresSelection: false,
         order: 6
@@ -115,7 +115,7 @@ export const modules = [
         component: ComplianceReporting,
         group: 'Filing & Compliance',
         type: 'Specific',
-        path: '/apps/tax-filings/compliance-reporting',
+        path: '/financial-management/taxation/tax-filings/compliance-reporting',
         label: 'Compliance Reporting',
         requiresSelection: false,
         order: 7
@@ -128,7 +128,7 @@ export const modules = [
         component: StatusTracking,
         group: 'Filing & Compliance',
         type: 'Specific',
-        path: '/apps/tax-filings/status-tracking',
+        path: '/financial-management/taxation/tax-filings/status-tracking',
         label: 'Status Tracking',
         requiresSelection: false,
         order: 8
@@ -143,7 +143,7 @@ export const modules = [
         component: WorkflowApprovals,
         group: 'Workflow & Audit',
         type: 'Specific',
-        path: '/apps/tax-filings/workflow-approvals',
+        path: '/financial-management/taxation/tax-filings/workflow-approvals',
         label: 'Workflow & Approvals',
         requiresSelection: false,
         order: 9
@@ -156,7 +156,7 @@ export const modules = [
         component: AuditTrail,
         group: 'Workflow & Audit',
         type: 'Specific',
-        path: '/apps/tax-filings/audit-trail',
+        path: '/financial-management/taxation/tax-filings/audit-trail',
         label: 'Audit Trail',
         requiresSelection: false,
         order: 10
@@ -169,7 +169,7 @@ export const modules = [
         component: DataIntegrityControls,
         group: 'Workflow & Audit',
         type: 'Specific',
-        path: '/apps/tax-filings/data-integrity-controls',
+        path: '/financial-management/taxation/tax-filings/data-integrity-controls',
         label: 'Data Integrity Controls',
         requiresSelection: false,
         order: 11
@@ -184,7 +184,7 @@ export const modules = [
         component: AutomationRules,
         group: 'Automation & Analytics',
         type: 'General',
-        path: '/apps/tax-filings/automation-rules',
+        path: '/financial-management/taxation/tax-filings/automation-rules',
         label: 'Automation Rules',
         requiresSelection: false,
         order: 12
@@ -197,7 +197,7 @@ export const modules = [
         component: TaxDashboard,
         group: 'Automation & Analytics',
         type: 'General',
-        path: '/apps/tax-filings/tax-dashboard',
+        path: '/financial-management/taxation/tax-filings/tax-dashboard',
         label: 'Tax Dashboard',
         requiresSelection: false,
         order: 13
@@ -210,7 +210,7 @@ export const modules = [
         component: TaxAnalytics,
         group: 'Automation & Analytics',
         type: 'General',
-        path: '/apps/tax-filings/tax-analytics',
+        path: '/financial-management/taxation/tax-filings/tax-analytics',
         label: 'Tax Analytics',
         requiresSelection: false,
         order: 14
@@ -223,7 +223,7 @@ export const modules = [
         component: DeadlineCalendar,
         group: 'Automation & Analytics',
         type: 'General',
-        path: '/apps/tax-filings/deadline-calendar',
+        path: '/financial-management/taxation/tax-filings/deadline-calendar',
         label: 'Deadline Calendar',
         requiresSelection: false,
         order: 15

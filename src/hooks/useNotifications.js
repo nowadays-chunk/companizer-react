@@ -29,14 +29,14 @@ const useNotifications = (userId) => {
 
     // Initial load
     useEffect(() => {
-        fetchNotifications();
+        // fetchNotifications();
     }, [fetchNotifications]);
 
     // Poll for new notifications every 30 seconds
-    useEffect(() => {
-        const interval = setInterval(fetchNotifications, 30000);
-        return () => clearInterval(interval);
-    }, [fetchNotifications]);
+    // useEffect(() => {
+    //     const interval = setInterval(fetchNotifications, 30000);
+    //     return () => clearInterval(interval);
+    // }, [fetchNotifications]);
 
     // Mark notification as read
     const markAsRead = useCallback(async (notificationId) => {
@@ -94,7 +94,7 @@ const useNotifications = (userId) => {
             await notificationHelper.addItem(newNotification);
 
             // Refresh notifications
-            fetchNotifications();
+            // fetchNotifications();
         } catch (error) {
             console.error('Failed to create notification:', error);
             throw error;
@@ -124,7 +124,7 @@ const useNotifications = (userId) => {
         markAllAsRead,
         createNotification,
         deleteNotification,
-        refresh: fetchNotifications
+        refresh: () => { console.log("Fetching Notifications.") } // fetchNotifications
     };
 };
 

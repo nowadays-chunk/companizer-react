@@ -1,29 +1,19 @@
-import modules from './Modules/CreditorsLedger/index.js';
+import modules from './Modules/CreditorsLedger/';
+export { modules };
 
 export const fieldsConfig = {
-  // ==========================================
-  // 1. CORE LEDGER STRUCTURE
-  // ==========================================
-
-  // --- Identity & Classification ---
   creditor_id: { label: 'Creditor ID', type: 'text', faker: 'datatype.uuid', hidden: true },
   vendor_id: { label: 'Vendor', type: 'related', collection: 'vendors', displayField: 'name', required: true, faker: 'datatype.uuid' },
   creditor_name: { label: 'Creditor Name', type: 'text', required: true, faker: 'company.name' },
   creditor_account_number: { label: 'Account Number', type: 'text', faker: 'finance.account' },
   contact_number: { label: 'Contact Number', type: 'tel', faker: 'phone.number' },
-
-  // --- Entity & Company Segregation ---
   entity_code: { label: 'Entity Code', type: 'text', required: true, faker: 'datatype.string' },
   company_code: { label: 'Company Code', type: 'text', required: true, faker: 'datatype.string' },
   business_unit: { label: 'Business Unit', type: 'text', faker: 'commerce.department' },
-
-  // --- Fiscal Period Control ---
   fiscal_year: { label: 'Fiscal Year', type: 'number', required: true, faker: 'date.future' },
   fiscal_period: { label: 'Fiscal Period', type: 'number', required: true, faker: 'datatype.number' },
   posting_date: { label: 'Posting Date', type: 'date', required: true, faker: 'date.recent' },
   document_date: { label: 'Document Date', type: 'date', required: true, faker: 'date.recent' },
-
-  // --- Ledger Account & Mode ---
   gl_control_account: { label: 'GL Control Account', type: 'text', required: true, faker: 'finance.account' },
   subledger_account: { label: 'Subledger Account', type: 'text', faker: 'finance.account' },
   ledger_mode: {
@@ -36,17 +26,10 @@ export const fieldsConfig = {
     defaultValue: 'open_item',
     faker: 'random.arrayElement'
   },
-
-  // --- Version Control (Append-Only) ---
   version_number: { label: 'Version', type: 'number', defaultValue: 1, faker: 'datatype.number' },
   is_current_version: { label: 'Current Version', type: 'checkbox', defaultValue: true },
   superseded_by: { label: 'Superseded By', type: 'text', hidden: true, faker: 'datatype.uuid' },
   immutable_record: { label: 'Immutable', type: 'checkbox', defaultValue: true, disabled: true },
-
-  // ==========================================
-  // 2. POSTING SOURCES & TRANSACTION TYPES
-  // ==========================================
-
   transaction_type: {
     label: 'Transaction Type',
     type: 'select',
@@ -69,7 +52,6 @@ export const fieldsConfig = {
     required: true,
     faker: 'random.arrayElement'
   },
-
   source_document_type: { label: 'Source Doc Type', type: 'text', faker: 'random.word' },
   source_document_id: { label: 'Source Doc ID', type: 'text', faker: 'datatype.uuid' },
   source_document_number: { label: 'Source Doc Number', type: 'text', faker: 'finance.account' },
@@ -86,11 +68,6 @@ export const fieldsConfig = {
 
   is_system_generated: { label: 'System Generated', type: 'checkbox', faker: 'datatype.boolean' },
   posting_source: { label: 'Posting Source', type: 'text', faker: 'random.word' },
-
-  // ==========================================
-  // 3. OPEN ITEM MANAGEMENT
-  // ==========================================
-
   open_item_id: { label: 'Open Item ID', type: 'text', faker: 'datatype.uuid' },
   open_item_status: {
     label: 'Open Item Status',
@@ -138,10 +115,6 @@ export const fieldsConfig = {
 
   promise_to_pay_date: { label: 'Promise to Pay Date', type: 'date', faker: 'date.future' },
 
-  // ==========================================
-  // 4. AGING & DUE MANAGEMENT
-  // ==========================================
-
   due_date: { label: 'Due Date', type: 'date', required: true, faker: 'date.future' },
   baseline_date: { label: 'Baseline Date', type: 'date', faker: 'date.recent' },
 
@@ -169,10 +142,6 @@ export const fieldsConfig = {
 
   is_high_risk_overdue: { label: 'High Risk Overdue', type: 'checkbox', faker: 'datatype.boolean' },
   aging_snapshot_date: { label: 'Aging Snapshot Date', type: 'date', faker: 'date.recent' },
-
-  // ==========================================
-  // 5. RECONCILIATION & CONTROLS
-  // ==========================================
 
   reconciliation_status: {
     label: 'Reconciliation Status',
@@ -216,10 +185,6 @@ export const fieldsConfig = {
 
   audit_evidence_ids: { label: 'Audit Evidence IDs', type: 'text', hidden: true, faker: 'datatype.uuid' },
 
-  // ==========================================
-  // 6. MULTI-CURRENCY & FX
-  // ==========================================
-
   transaction_currency: {
     label: 'Transaction Currency',
     type: 'select',
@@ -258,10 +223,6 @@ export const fieldsConfig = {
   unrealized_fx_revaluation: { label: 'Unrealized FX Revaluation', type: 'number', defaultValue: 0, faker: 'finance.amount' },
   fx_difference_account: { label: 'FX Difference Account', type: 'text', faker: 'finance.account' },
 
-  // ==========================================
-  // 7. TAX & STATUTORY PAYABLES
-  // ==========================================
-
   vat_payable_amount: { label: 'VAT Payable', type: 'number', defaultValue: 0, faker: 'finance.amount' },
   vat_code: { label: 'VAT Code', type: 'text', faker: 'datatype.string' },
 
@@ -286,10 +247,6 @@ export const fieldsConfig = {
     ],
     faker: 'random.arrayElement'
   },
-
-  // ==========================================
-  // 8. DISPUTES & EXCEPTIONS
-  // ==========================================
 
   dispute_status: {
     label: 'Dispute Status',
@@ -343,10 +300,6 @@ export const fieldsConfig = {
     ],
     faker: 'random.arrayElement'
   },
-
-  // ==========================================
-  // 9. PAYMENT INTEGRATION
-  // ==========================================
 
   payment_proposal_id: { label: 'Payment Proposal ID', type: 'text', faker: 'datatype.uuid' },
   payment_batch_id: { label: 'Payment Batch ID', type: 'text', faker: 'datatype.uuid' },
@@ -431,8 +384,5 @@ export const fieldsConfig = {
   total_price: { label: 'Total Price', type: 'number', faker: 'finance.amount' }
 };
 
-
 export const entityName = 'Creditors Ledger';
 export const collectionName = 'creditors_ledger';
-
-export { modules };

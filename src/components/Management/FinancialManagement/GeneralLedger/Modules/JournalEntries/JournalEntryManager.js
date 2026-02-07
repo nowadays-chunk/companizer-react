@@ -54,6 +54,7 @@ const JournalEntryManager = () => {
     const location = window.location.href; // Quick check for route context
     const isAllocation = location.includes('allocations');
     const isIntercompany = location.includes('intercompany');
+    const { loading, setLoading } = useState(true);
 
     const [journal, setJournal] = useState(JournalEntryService.createEmptyJournal());
 

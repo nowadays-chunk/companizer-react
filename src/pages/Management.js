@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import BaseManagementComponent from '../components/Base';
 import { helpersWrapper } from '../utils/clientQueries';
 import { useParams } from 'react-router-dom';
+import Analytics from './Analytics';
 
 const getPath = (path) => {
     return path.split('-').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join('');
 }
 
-function ManagementComponent(props) {
+function ManagementComponent({ showAnalytics, ...props }) {
     const params = useParams();
     const module = props.module || params.module;
     const subModule = props.subModule || params.subModule;
@@ -18,6 +19,9 @@ function ManagementComponent(props) {
     const capitalizedComponentName = getPath(component);
 
     const [config, setConfig] = useState(null);
+    const [AnalysisComponent, setAnalysisComponent] = useState(null);
+    const [showConfigDialog, setShowConfigDialog] = useState(false);
+    const rulesHelpers = React.useMemo(() => helpersWrapper('entity_workflow_rules'), []);
 
     useEffect(() => {
         const loadConfig = async () => {
@@ -64,20 +68,26 @@ function ManagementComponent(props) {
     }
 
     return (
-        <BaseManagementComponent
-            fieldConfig={config.fieldsConfig}
-            entityName={config.entityName}
-            fetchItems={config.fetchItems}
-            addItem={config.addItem}
-            updateItem={config.updateItem}
-            deleteItem={config.deleteItem}
-            headCells={config.headCells}
-            modules={config.modules}
-            initialFilters={props.initialFilters}
-            onConfigure={() => {
-                window.open(`/#/${module}/${subModule}/${component}/configuration`, '_blank');
-            }}
-        />
+        <>
+            {showAnalytics ? (
+                <Analytics entity={config.entityName} ></Analytics>
+            ) : (
+                <BaseManagementComponent
+                    fieldConfig={config.fieldsConfig}
+                    entityName={config.entityName}
+                    fetchItems={config.fetchItems}
+                    addItem={config.addItem}
+                    updateItem={config.updateItem}
+                    deleteItem={config.deleteItem}
+                    headCells={config.headCells}
+                    modules={config.modules}
+                    initialFilters={props.initialFilters}
+                    onConfigure={() => {
+                        window.open(`/#/${module}/${subModule}/${component}/configuration`, '_blank');
+                    }}
+                />
+            )}
+        </>
     );
 }
 

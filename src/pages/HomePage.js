@@ -18,11 +18,11 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArticleIcon from '@mui/icons-material/Article';
 
 // --- STYLES & ANIMATIONS ---
-const neonBlue = '#00f3ff';
-const neonRed = '#ff0055';
-const darkBg = '#050505';
+const neonBlue = '#ffffff';
+const neonRed = '#888888';
+const darkBg = '#000000';
 const cardBg = '#0a0a0a';
-const border = '1px solid #222';
+const border = '1px solid #333';
 
 const styles = {
   root: {
@@ -33,11 +33,9 @@ const styles = {
     overflowX: 'hidden',
   },
   neonTextBlue: {
-    textShadow: `0 0 5px ${neonBlue}, 0 0 10px ${neonBlue}, 0 0 20px ${neonBlue}`,
     color: '#fff',
   },
   neonTextRed: {
-    textShadow: `0 0 5px ${neonRed}, 0 0 10px ${neonRed}, 0 0 20px ${neonRed}`,
     color: '#fff',
   },
   bentoBox: {
@@ -54,16 +52,13 @@ const styles = {
     overflow: 'hidden',
     '&:hover': {
       transform: 'translateY(-5px)',
-      boxShadow: `0 0 20px rgba(0, 243, 255, 0.2)`,
-      borderColor: neonBlue,
+      borderColor: '#fff',
     },
     '&:hover .icon-blue': {
-      color: neonBlue,
-      filter: `drop-shadow(0 0 5px ${neonBlue})`,
+      color: '#fff',
     },
     '&:hover .icon-red': {
-      color: neonRed,
-      filter: `drop-shadow(0 0 5px ${neonRed})`,
+      color: '#fff',
     }
   },
   heroTitle: {
@@ -78,9 +73,8 @@ const styles = {
     color: '#fff',
     borderColor: '#333',
     '&:hover': {
-      borderColor: neonBlue,
-      color: neonBlue,
-      boxShadow: `0 0 10px ${neonBlue}`,
+      borderColor: '#fff',
+      color: '#fff',
     },
   },
   actionButton: {
@@ -90,9 +84,8 @@ const styles = {
     borderRadius: '30px',
     padding: '10px 30px',
     '&:hover': {
-      backgroundColor: neonBlue,
+      backgroundColor: '#ddd',
       color: 'black',
-      boxShadow: `0 0 20px ${neonBlue}`,
     },
   },
   docLink: {
@@ -117,8 +110,8 @@ const FeatureBox = ({ title, icon, description, delay, accent = 'blue' }) => (
       animation: `fadeInUp 0.6s ease-out ${delay}s backwards`,
       '&:hover': {
         ...styles.bentoBox['&:hover'],
-        borderColor: accent === 'red' ? neonRed : neonBlue,
-        boxShadow: `0 0 20px rgba(${accent === 'red' ? '255, 0, 85' : '0, 243, 255'}, 0.2)`,
+        borderColor: '#fff',
+        // boxShadow: `0 0 20px rgba(255, 255, 255, 0.1)`, // Removed glow
       },
     }}
   >
@@ -156,11 +149,6 @@ const HomePage = () => {
         50% { transform: translateY(-10px); }
         100% { transform: translateY(0px); }
       }
-       @keyframes pulseNeon {
-        0% { box-shadow: 0 0 5px ${neonBlue}55; }
-        50% { box-shadow: 0 0 20px ${neonBlue}aa; }
-        100% { box-shadow: 0 0 5px ${neonBlue}55; }
-      }
     `;
     document.head.appendChild(styleSheet);
     return () => document.head.removeChild(styleSheet);
@@ -174,7 +162,7 @@ const HomePage = () => {
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               {/* Logo Placeholder */}
-              <Box sx={{ width: 40, height: 40, borderRadius: '8px', background: `linear-gradient(45deg, ${neonBlue}, ${neonRed})`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
+              <Box sx={{ width: 40, height: 40, borderRadius: '8px', background: '#fff', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
                 VI
               </Box>
               <Typography variant="h6" sx={{ fontWeight: 'bold', letterSpacing: '1px' }}>
@@ -186,7 +174,7 @@ const HomePage = () => {
               <Button onClick={handleLoginOpen} variant="outlined" sx={styles.navButton}>
                 Log In
               </Button>
-              <Button component={Link} to="/registration" variant="contained" sx={{ ...styles.actionButton, background: neonBlue, border: 'none' }}>
+              <Button component={Link} to="/registration" variant="contained" sx={{ ...styles.actionButton, background: '#fff', color: '#000', border: 'none', '&:hover': { background: '#ccc' } }}>
                 Get Started
               </Button>
             </Box>
@@ -202,7 +190,7 @@ const HomePage = () => {
         <Grid container spacing={4} alignItems="center" sx={{ minHeight: '60vh', mb: 8 }}>
           <Grid item xs={12} md={7}>
             <Box sx={{ animation: 'fadeInUp 0.8s ease-out' }}>
-              <Chip label="v2.0 REALEASE" sx={{ backgroundColor: 'rgba(255,255,255,0.1)', color: neonBlue, border: `1px solid ${neonBlue}`, mb: 3, fontWeight: 'bold' }} />
+              <Chip label="v2.0 REALEASE" sx={{ backgroundColor: 'rgba(255,255,255,0.1)', color: '#fff', border: `1px solid #fff`, mb: 3, fontWeight: 'bold' }} />
               <Typography variant="h1" sx={{ ...styles.heroTitle, fontSize: { xs: '3rem', md: '5rem' } }}>
                 Enterprise <br />
                 <span style={{ color: 'transparent', WebkitTextStroke: '1px white' }}>Intelligence.</span>
@@ -210,7 +198,7 @@ const HomePage = () => {
               <Typography variant="h5" sx={{ color: '#888', maxWidth: '600px', mb: 5, lineHeight: 1.6 }}>
                 The comprehensive ERP & CRM solution for modern businesses.
                 Manage Finance, HR, Operations, and more in a unified,
-                <span style={{ color: neonBlue }}> secure</span> environment.
+                <span style={{ color: '#fff', fontWeight: 'bold' }}> secure</span> environment.
               </Typography>
 
               <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
@@ -241,16 +229,14 @@ const HomePage = () => {
             }}>
               <Box sx={{
                 position: 'absolute', width: '80%', height: '80%',
-                border: `2px solid ${neonBlue}`,
+                border: `2px solid #fff`,
                 borderRadius: '50%',
-                filter: `drop-shadow(0 0 20px ${neonBlue})`
               }} />
               <Box sx={{
                 position: 'absolute', width: '60%', height: '60%',
-                border: `2px solid ${neonRed}`,
+                border: `2px solid #888`,
                 borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
                 animation: 'float 4s ease-in-out infinite reverse',
-                filter: `drop-shadow(0 0 20px ${neonRed})`
               }} />
               <Paper sx={{
                 p: 3,
@@ -262,7 +248,7 @@ const HomePage = () => {
                 zIndex: 2
               }}>
                 <Stack direction="row" alignItems="center" spacing={2} mb={2}>
-                  <SecurityIcon sx={{ color: neonBlue }} />
+                  <SecurityIcon sx={{ color: '#fff' }} />
                   <Typography variant="h6">Security First</Typography>
                 </Stack>
                 <Typography variant="body2" color="text.secondary">
@@ -276,7 +262,7 @@ const HomePage = () => {
         </Grid>
 
         {/* BENTO GRID LAYOUT */}
-        <Typography variant="h6" sx={{ color: neonBlue, mb: 2, textTransform: 'uppercase', letterSpacing: '3px' }}>
+        <Typography variant="h6" sx={{ color: '#fff', mb: 2, textTransform: 'uppercase', letterSpacing: '3px' }}>
           System Modules
         </Typography>
         <Grid container spacing={3}>
@@ -285,7 +271,7 @@ const HomePage = () => {
           <Grid item xs={12} md={8}>
             <Paper sx={{ ...styles.bentoBox, minHeight: '300px', background: `linear-gradient(135deg, ${cardBg} 0%, #111 100%)` }}>
               <Box>
-                <Chip label="Core Module" size="small" sx={{ bgcolor: neonBlue, color: '#000', fontWeight: 'bold', mb: 2 }} />
+                <Chip label="Core Module" size="small" sx={{ bgcolor: '#fff', color: '#000', fontWeight: 'bold', mb: 2 }} />
                 <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 2 }}>
                   Financial Management
                 </Typography>
@@ -358,11 +344,11 @@ const HomePage = () => {
                 </Typography>
                 <List>
                   <ListItem disablePadding sx={{ mb: 1 }}>
-                    <ListItemIcon><CampaignIcon sx={{ color: neonRed }} /></ListItemIcon>
+                    <ListItemIcon><CampaignIcon sx={{ color: '#aaa' }} /></ListItemIcon>
                     <ListItemText primary="Sales & Marketing: Lead scoring, campaigns, and opportunity tracking." primaryTypographyProps={{ color: '#aaa' }} />
                   </ListItem>
                   <ListItem disablePadding>
-                    <ListItemIcon><AssignmentIcon sx={{ color: neonBlue }} /></ListItemIcon>
+                    <ListItemIcon><AssignmentIcon sx={{ color: '#fff' }} /></ListItemIcon>
                     <ListItemText primary="Projects: Task tracking, resource allocation, and milestone management." primaryTypographyProps={{ color: '#aaa' }} />
                   </ListItem>
                 </List>
@@ -392,7 +378,7 @@ const HomePage = () => {
                 background: '#000',
                 '&:hover': {
                   borderColor: '#fff',
-                  boxShadow: '0 0 30px rgba(255,255,255,0.1)'
+                  // boxShadow: '0 0 30px rgba(255,255,255,0.1)' // Removed glow
                 }
               }}
             >
