@@ -498,7 +498,7 @@ const HomePage = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               {/* Logo Placeholder */}
               <Box sx={{ width: 40, height: 40, borderRadius: '8px', background: '#fff', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
-                VI
+                TB
               </Box>
               <Typography variant="h6" sx={{ fontWeight: 'bold', letterSpacing: '1px', color: '#fff' }}>
                 TAILORED BRIDGE

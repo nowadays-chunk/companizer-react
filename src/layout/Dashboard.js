@@ -7,12 +7,28 @@ import {
   Button,
   Container,
   Typography,
+  useMediaQuery,
+  Toolbar
 } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CheckIcon from '@mui/icons-material/Check';
+import TranslateIcon from '@mui/icons-material/Translate';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import LogoutIcon from '@mui/icons-material/Logout';
+import DataUsageIcon from '@mui/icons-material/DataUsage';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import { translate } from '../utils/translate';
 import { useTranslation } from '../contexts/TranslationProvider';
@@ -45,8 +61,8 @@ const Main = styled('main', {
   }),
   marginLeft: open ? expandedDrawerWidth : collapsedDrawerWidth,
   [theme.breakpoints.down('md')]: {
-    // still align with collapsed/expanded drawer, but smaller screens
-    marginLeft: open ? expandedDrawerWidth : collapsedDrawerWidth,
+    marginLeft: 0,
+    width: '100%',
     padding: theme.spacing(2),
   },
 }));
@@ -66,11 +82,17 @@ const AppBar = styled(MuiAppBar, {
     width: `calc(100% - ${collapsedDrawerWidth}px)`,
     marginLeft: `${collapsedDrawerWidth}px`,
   }),
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+    marginLeft: 0,
+  },
 }));
 
 const Dashboard = ({ children, colorMode }) => {
   const theme = useTheme();
   const { language, toggleLanguage, t } = useTranslation();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   const { description } = usePageDescription();
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,6 +104,17 @@ const Dashboard = ({ children, colorMode }) => {
   const [genModalOpen, setGenModalOpen] = useState(false);
   const [genProgressLog, setGenProgressLog] = useState([]);
   const [genIsFinished, setGenIsFinished] = useState(false);
+
+  // AppBar Menu State
+  const [anchorElNav, setAnchorElNav] = useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
   const [showAnalytics, setShowAnalytics] = useState(() => {
     const saved = localStorage.getItem('showAnalytics');
@@ -177,7 +210,13 @@ const Dashboard = ({ children, colorMode }) => {
             color="inherit"
             onClick={handleDrawerToggle}
             edge="start"
-            sx={{ mr: 2 }}
+            sx={{
+              mr: 2,
+              backgroundColor: 'transparent',
+              '&:hover': {
+                backgroundColor: 'transparent',
+              },
+            }}
           >
             {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
@@ -193,28 +232,154 @@ const Dashboard = ({ children, colorMode }) => {
               overflowX: 'auto',
             }}
           >
-            <Button
-              variant="outlined"
-              color="inherit"
-              size="small"
-              onClick={toggleShowAnalytics}
-              sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
-            >
-              {showAnalytics
-                ? translate('Show Data', language)
-                : translate('Show Analysis', language)}
-            </Button>
+            {isTablet ? (
+              <>
+                <NotificationBar />
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: 'block', lg: 'none' },
+                  }}
+                >
+                  <MenuItem onClick={() => { toggleShowAnalytics(); handleCloseNavMenu(); }}>
+                    <ListItemIcon>
+                      <AnalyticsIcon fontSize="small" sx={{ color: colorMode.mode === 'dark' ? 'white' : 'black' }} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      {showAnalytics
+                        ? translate('Show Data', language)
+                        : translate('Show Analysis', language)}
+                    </ListItemText>
+                  </MenuItem>
 
-            {showAnalytics && (
+                  {showAnalytics && (
+                    <Box>
+                      <MenuItem onClick={() => { handlePreviousAnalysis(); handleCloseNavMenu(); }}>
+                        <ListItemIcon>
+                          <NavigateBeforeIcon fontSize="small" sx={{ color: colorMode.mode === 'dark' ? 'white' : 'black' }} />
+                        </ListItemIcon>
+                        <ListItemText>Previous</ListItemText>
+                      </MenuItem>
+                      <MenuItem onClick={() => { handleNextAnalysis(); handleCloseNavMenu(); }}>
+                        <ListItemIcon>
+                          <NavigateNextIcon fontSize="small" sx={{ color: colorMode.mode === 'dark' ? 'white' : 'black' }} />
+                        </ListItemIcon>
+                        <ListItemText>Next</ListItemText>
+                      </MenuItem>
+                      <Divider />
+                    </Box>
+                  )}
+
+                  <MenuItem onClick={() => { toggleLanguage(); handleCloseNavMenu(); }}>
+                    <ListItemIcon>
+                      <TranslateIcon fontSize="small" sx={{ color: colorMode.mode === 'dark' ? 'white' : 'black' }} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      {translate('Switch Language', language)}
+                    </ListItemText>
+                  </MenuItem>
+
+                  <MenuItem onClick={() => { colorMode.toggleColorMode(); handleCloseNavMenu(); }}>
+                    <ListItemIcon>
+                      {colorMode.mode === 'dark' ? (
+                        <LightModeIcon fontSize="small" sx={{ color: 'white' }} />
+                      ) : (
+                        <DarkModeIcon fontSize="small" sx={{ color: 'black' }} />
+                      )}
+                    </ListItemIcon>
+                    <ListItemText>
+                      {colorMode.mode === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                    </ListItemText>
+                  </MenuItem>
+
+                  <MenuItem onClick={() => { handleGenerateData(); handleCloseNavMenu(); }}>
+                    <ListItemIcon>
+                      <DataUsageIcon fontSize="small" sx={{ color: colorMode.mode === 'dark' ? 'white' : 'black' }} />
+                    </ListItemIcon>
+                    <ListItemText>Generate Random Row</ListItemText>
+                  </MenuItem>
+
+                  <Divider />
+
+                  <MenuItem onClick={() => { handleLogout(); handleCloseNavMenu(); }}>
+                    <ListItemIcon>
+                      <LogoutIcon fontSize="small" sx={{ color: colorMode.mode === 'dark' ? 'white' : 'black' }} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      {translate('Logout', language)}
+                    </ListItemText>
+                  </MenuItem>
+                </Menu>
+              </>
+            ) : (
+              // Desktop View
               <>
                 <Button
                   variant="outlined"
                   color="inherit"
                   size="small"
+                  onClick={toggleShowAnalytics}
                   sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
-                  onClick={handlePreviousAnalysis}
                 >
-                  Previous
+                  {showAnalytics
+                    ? translate('Show Data', language)
+                    : translate('Show Analysis', language)}
+                </Button>
+
+                {showAnalytics && (
+                  <>
+                    <Button
+                      variant="outlined"
+                      color="inherit"
+                      size="small"
+                      sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
+                      onClick={handlePreviousAnalysis}
+                    >
+                      Previous
+                    </Button>
+
+                    <Button
+                      variant="outlined"
+                      color="inherit"
+                      size="small"
+                      sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
+                      onClick={handleNextAnalysis}
+                    >
+                      Next
+                    </Button>
+                  </>
+                )}
+
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  size="small"
+                  sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
+                  onClick={toggleLanguage}
+                >
+                  {translate('Switch Language', language)}
                 </Button>
 
                 <Button
@@ -222,54 +387,34 @@ const Dashboard = ({ children, colorMode }) => {
                   color="inherit"
                   size="small"
                   sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
-                  onClick={handleNextAnalysis}
+                  onClick={colorMode.toggleColorMode}
                 >
-                  Next
+                  {colorMode.mode === 'dark' ? 'Light' : 'Dark'}
+                </Button>
+
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  size="small"
+                  sx={{ whiteSpace: 'nowrap', flexShrink: 0 }}
+                  onClick={handleLogout}
+                >
+                  {translate('Logout', language)}
+                </Button>
+
+                <NotificationBar />
+
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
+                  onClick={handleGenerateData}
+                >
+                  Generate Random Row
                 </Button>
               </>
             )}
-
-            <Button
-              variant="outlined"
-              color="inherit"
-              size="small"
-              sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
-              onClick={toggleLanguage}
-            >
-              {translate('Switch Language', language)}
-            </Button>
-
-            <Button
-              variant="outlined"
-              color="inherit"
-              size="small"
-              sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
-              onClick={colorMode.toggleColorMode}
-            >
-              {colorMode.mode === 'dark' ? 'Light' : 'Dark'}
-            </Button>
-
-            <Button
-              variant="outlined"
-              color="inherit"
-              size="small"
-              sx={{ whiteSpace: 'nowrap', flexShrink: 0 }}
-              onClick={handleLogout}
-            >
-              {translate('Logout', language)}
-            </Button>
-
-            <NotificationBar />
-
-            <Button
-              variant="contained"
-              color="secondary"
-              size="small"
-              sx={{ mr: 1, whiteSpace: 'nowrap', flexShrink: 0 }}
-              onClick={handleGenerateData}
-            >
-              Generate Random Row
-            </Button>
           </Box>
         </Toolbar>
       </AppBar>
@@ -277,6 +422,7 @@ const Dashboard = ({ children, colorMode }) => {
       <DrawerDashboard
         open={open}
         onToggleDrawer={handleDrawerToggle}
+        isMobile={isMobile}
       />
 
       <Main open={open}>

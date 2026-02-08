@@ -8,7 +8,11 @@ import {
   FormControlLabel,
   Switch,
   Button,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
+
+import BoxesListing from './BoxesListing';
 
 import FilterManager from './FilterManager';
 import BaseTableToolbar from './BaseTableToolbar';
@@ -91,6 +95,8 @@ export default function BaseTableComponent({
   modules, // NEW: Module configuration for General modules
   initialFilters = [], // NEW: Allow pre-set filters
 }) {
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   const { t } = useTranslation();
   const [refreshedFieldsConfig, setRefreshedFieldsConfig] = useState(fieldConfig);
 
@@ -280,6 +286,15 @@ export default function BaseTableComponent({
       setSelected([]);
       const data = await fetchItems();
       setItems(data);
+    }
+  };
+
+  const handleDeleteSingleItem = async (id) => {
+    if (window.confirm(t('Are you sure you want to delete this item?'))) {
+      setLoading(true);
+      await deleteItem(id);
+      const data = await fetchItems();
+      setItems(data);
       setLoading(false);
     }
   };
@@ -399,10 +414,10 @@ export default function BaseTableComponent({
                   onClick={() => window.open(`/#${module.path}`, '_blank')}
                   variant="contained"
                   sx={{
-                    bgcolor: 'black',
-                    color: 'white',
+                    bgcolor: theme.palette.mode === 'dark' ? '#FFFFFF' : '#111111',
+                    color: theme.palette.mode === 'dark' ? '#000000' : '#FFFFFF',
                     '&:hover': {
-                      bgcolor: '#333',
+                      bgcolor: theme.palette.mode === 'dark' ? '#E0E0E0' : '#333333',
                     }
                   }}
                 >
@@ -413,46 +428,64 @@ export default function BaseTableComponent({
           )}
         </Box>
 
-        <Paper sx={{ width: '100%', mb: 2 }}>
-          <BaseTableToolbar
-            numSelected={selected.length}
-            onAdd={handleAddItem}
-            onDelete={handleDeleteItems}
-            onEdit={handleEditItem}
-            onGenerateRandomRow={generateRandomRow}
-            onViewItem={handleViewItem}
-            onConfigure={onConfigureProp}
-            entityName={entityName}
-            modules={modules}
-          />
-
-          <BaseTable
+        {isTablet ? (
+          <BoxesListing
             items={filteredItems}
-            order={order}
-            setOrder={setOrder}
-            orderBy={orderBy}
-            setOrderBy={setOrderBy}
-            selected={selected}
-            setSelected={setSelected}
-            page={page}
-            setPage={setPage}
-            rowsPerPage={rowsPerPage}
-            setRowsPerPage={setRowsPerPage}
-            dense={dense}
-            setDense={setDense}
             fieldConfig={fieldConfig}
-            validationRules={validationRules}
             onViewItem={handleViewItem}
             onEditItem={handleEditItem}
+            onLoadMore={() => setPage((prev) => prev + 1)}
             hasMore={hasMore}
+            loading={loading}
+            onGenerateRandomRow={generateRandomRow}
+            onDeleteItem={handleDeleteSingleItem}
+            onAddItem={handleAddItem}
           />
-        </Paper>
-        <FormControlLabel
-          control={
-            <Switch checked={dense} onChange={() => setDense(!dense)} />
-          }
-          label="Dense padding"
-        />
+        ) : (
+          <Paper sx={{ width: '100%', mb: 2 }}>
+            <BaseTableToolbar
+              numSelected={selected.length}
+              onAdd={handleAddItem}
+              onDelete={handleDeleteItems}
+              onEdit={handleEditItem}
+              onGenerateRandomRow={generateRandomRow}
+              onViewItem={handleViewItem}
+              onConfigure={onConfigureProp}
+              entityName={entityName}
+              modules={modules}
+            />
+
+            <BaseTable
+              items={filteredItems}
+              order={order}
+              setOrder={setOrder}
+              orderBy={orderBy}
+              setOrderBy={setOrderBy}
+              selected={selected}
+              setSelected={setSelected}
+              page={page}
+              setPage={setPage}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+              dense={dense}
+              setDense={setDense}
+              fieldConfig={fieldConfig}
+              validationRules={validationRules}
+              onViewItem={handleViewItem}
+              onEditItem={handleEditItem}
+              hasMore={hasMore}
+            />
+
+          </Paper>
+        )}
+        {!isTablet && (
+          <FormControlLabel
+            control={
+              <Switch checked={dense} onChange={() => setDense(!dense)} />
+            }
+            label="Dense padding"
+          />
+        )}
         <Backdrop
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={loading}
