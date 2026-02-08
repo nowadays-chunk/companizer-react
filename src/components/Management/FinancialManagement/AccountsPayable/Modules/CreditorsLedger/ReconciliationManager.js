@@ -31,66 +31,42 @@ import {
     Description
 } from '@mui/icons-material';
 
+import { apReconcileCreditorsLedger } from '../../../../../../utils/clientQueries';
+
 const ReconciliationManager = ({ items = [], glData = [], onReconcile, onRefresh }) => {
     const [reconciliationStatus, setReconciliationStatus] = useState({});
     const [variances, setVariances] = useState([]);
     const [showApprovalDialog, setShowApprovalDialog] = useState(false);
     const [selectedVariance, setSelectedVariance] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        performReconciliation();
-    }, [items, glData]);
+        // Optionally fetch last status on load, or just wait for user to run
+        // For now, we keep it empty or mock initial state until user runs it
+    }, []);
 
-    const performReconciliation = () => {
-        if (!items || items.length === 0) {
-            setReconciliationStatus({});
-            setVariances([]);
-            return;
+    const performReconciliation = async () => {
+        setLoading(true);
+        try {
+            const result = await apReconcileCreditorsLedger({
+                // Pass any necessary params, currently backend takes orgID from user
+            });
+
+            setReconciliationStatus({
+                subledgerTotal: result.subledgerTotal,
+                glTotal: result.glTotal,
+                difference: result.difference,
+                isReconciled: result.isReconciled,
+                reconciledCount: result.reconciledCount || 0,
+                unreconciledCount: result.unreconciledCount || 0,
+                varianceCount: result.variances ? result.variances.length : 0
+            });
+            setVariances(result.variances || []);
+        } catch (error) {
+            console.error("Reconciliation failed", error);
+        } finally {
+            setLoading(false);
         }
-
-        // Calculate subledger total
-        const subledgerTotal = items.reduce((sum, item) => {
-            return sum + parseFloat(item.balance || item.original_amount || 0);
-        }, 0);
-
-        // Mock GL total (in real implementation, this would come from GL)
-        const glTotal = subledgerTotal + (Math.random() - 0.5) * 1000; // Simulate variance
-
-        const difference = Math.abs(subledgerTotal - glTotal);
-        const isReconciled = difference < 10; // Tolerance of $10
-
-        // Find variances
-        const varianceList = items
-            .filter(item => {
-                const itemBalance = parseFloat(item.balance || item.original_amount || 0);
-                return Math.abs(itemBalance) > 0 && item.reconciliation_status !== 'reconciled';
-            })
-            .map(item => ({
-                id: item.id || item.creditor_id,
-                creditor_name: item.creditor_name,
-                subledger_balance: parseFloat(item.balance || item.original_amount || 0),
-                gl_balance: parseFloat(item.balance || item.original_amount || 0) * (0.95 + Math.random() * 0.1), // Mock variance
-                variance: 0,
-                status: item.reconciliation_status || 'unreconciled',
-                last_reconciliation_date: item.last_reconciliation_date
-            }))
-            .map(item => ({
-                ...item,
-                variance: item.subledger_balance - item.gl_balance
-            }))
-            .filter(item => Math.abs(item.variance) > 1);
-
-        setReconciliationStatus({
-            subledgerTotal,
-            glTotal,
-            difference,
-            isReconciled,
-            reconciledCount: items.filter(i => i.reconciliation_status === 'reconciled').length,
-            unreconciledCount: items.filter(i => i.reconciliation_status !== 'reconciled').length,
-            varianceCount: varianceList.length
-        });
-
-        setVariances(varianceList);
     };
 
     const handleRunReconciliation = () => {
@@ -108,7 +84,7 @@ const ReconciliationManager = ({ items = [], glData = [], onReconcile, onRefresh
         console.log('Approving variance:', selectedVariance);
         setShowApprovalDialog(false);
         setSelectedVariance(null);
-        performReconciliation();
+        // performReconciliation(); // Refresh
     };
 
     const getStatusIcon = (status) => {
@@ -153,8 +129,9 @@ const ReconciliationManager = ({ items = [], glData = [], onReconcile, onRefresh
                         variant="contained"
                         startIcon={<PlayArrow />}
                         onClick={handleRunReconciliation}
+                        disabled={loading}
                     >
-                        Run Reconciliation
+                        {loading ? 'Running...' : 'Run Reconciliation'}
                     </Button>
                 </Box>
             </Box>

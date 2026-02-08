@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Card,
@@ -16,22 +16,99 @@ import {
     Paper,
     Checkbox,
     Divider,
-    useTheme
+    useTheme,
+    Alert,
+    CircularProgress
 } from '@mui/material';
+import { bankMatchTransaction, bankAutoReconcile } from '../../../../../../utils/clientQueries';
 
 const BankReconciliation = () => {
     const theme = useTheme();
+    const [selectedBankTx, setSelectedBankTx] = useState([]);
+    const [selectedGlTx, setSelectedGlTx] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(null);
+
+    // Mock data with IDs
+    const bankTransactions = [
+        { id: 'btx-001', date: 'Jan 15', description: 'ACH Transfer - Vendor X', amount: -500.00 },
+        { id: 'btx-002', date: 'Jan 16', description: 'Bank Fee', amount: -25.00 }
+    ];
+
+    const glTransactions = [
+        { id: 'gtx-001', date: 'Jan 15', reference: 'Payment #10023', amount: -500.00 },
+        { id: 'gtx-002', date: 'Jan 18', reference: 'Deposit #555', amount: 1200.00 }
+    ];
+
+    const handleBankSelect = (id) => {
+        setSelectedBankTx(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+    };
+
+    const handleGlSelect = (id) => {
+        setSelectedGlTx(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+    };
+
+    const handleMatch = async () => {
+        if (selectedBankTx.length !== 1 || selectedGlTx.length !== 1) {
+            setMessage({ type: 'warning', text: 'Please select exactly one Bank Transaction and one GL Transaction to match manually.' });
+            return;
+        }
+        setLoading(true);
+        try {
+            await bankMatchTransaction({
+                bankTransactionId: selectedBankTx[0],
+                glTransactionId: selectedGlTx[0]
+            });
+            setMessage({ type: 'success', text: 'Transactions matched successfully' });
+            setSelectedBankTx([]);
+            setSelectedGlTx([]);
+        } catch (error) {
+            console.error(error);
+            setMessage({ type: 'error', text: 'Failed to match transactions' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleAutoMatch = async () => {
+        setLoading(true);
+        try {
+            await bankAutoReconcile({ accountId: 'default-account-id' }); // Placeholder account ID
+            setMessage({ type: 'success', text: 'Auto-reconciliation completed successfully' });
+        } catch (error) {
+            console.error(error);
+            setMessage({ type: 'error', text: 'Auto-reconciliation failed' });
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <Box sx={{ p: 3 }}>
+            {message && <Alert severity={message.type} sx={{ mb: 3 }} onClose={() => setMessage(null)}>{message.text}</Alert>}
+
             <Card sx={{ mb: 3 }}>
                 <CardHeader
                     title="Bank & Cash Reconciliation"
                     titleTypographyProps={{ variant: 'h5', fontWeight: 'bold' }}
                     action={
                         <Box>
-                            <Button variant="outlined" sx={{ mr: 1 }}>Auto-Match</Button>
-                            <Button variant="contained" color="primary">Match Selected</Button>
+                            <Button
+                                variant="outlined"
+                                sx={{ mr: 1 }}
+                                onClick={handleAutoMatch}
+                                disabled={loading}
+                            >
+                                {loading ? 'Running...' : 'Auto-Match'}
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleMatch}
+                                disabled={loading}
+                            >
+                                Match Selected
+                            </Button>
                         </Box>
                     }
                 />
@@ -63,25 +140,26 @@ const BankReconciliation = () => {
                                 <Table stickyHeader size="small">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell padding="checkbox"><Checkbox /></TableCell>
+                                            <TableCell padding="checkbox"></TableCell>
                                             <TableCell>Date</TableCell>
                                             <TableCell>Description</TableCell>
                                             <TableCell align="right">Amount</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        <TableRow hover>
-                                            <TableCell padding="checkbox"><Checkbox /></TableCell>
-                                            <TableCell>Jan 15</TableCell>
-                                            <TableCell>ACH Transfer - Vendor X</TableCell>
-                                            <TableCell align="right">-500.00</TableCell>
-                                        </TableRow>
-                                        <TableRow hover>
-                                            <TableCell padding="checkbox"><Checkbox /></TableCell>
-                                            <TableCell>Jan 16</TableCell>
-                                            <TableCell>Bank Fee</TableCell>
-                                            <TableCell align="right">-25.00</TableCell>
-                                        </TableRow>
+                                        {bankTransactions.map((tx) => (
+                                            <TableRow hover key={tx.id} selected={selectedBankTx.includes(tx.id)}>
+                                                <TableCell padding="checkbox">
+                                                    <Checkbox
+                                                        checked={selectedBankTx.includes(tx.id)}
+                                                        onChange={() => handleBankSelect(tx.id)}
+                                                    />
+                                                </TableCell>
+                                                <TableCell>{tx.date}</TableCell>
+                                                <TableCell>{tx.description}</TableCell>
+                                                <TableCell align="right">{tx.amount.toFixed(2)}</TableCell>
+                                            </TableRow>
+                                        ))}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
@@ -93,25 +171,26 @@ const BankReconciliation = () => {
                                 <Table stickyHeader size="small">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell padding="checkbox"><Checkbox /></TableCell>
+                                            <TableCell padding="checkbox"></TableCell>
                                             <TableCell>Date</TableCell>
                                             <TableCell>Reference</TableCell>
                                             <TableCell align="right">Amount</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        <TableRow hover>
-                                            <TableCell padding="checkbox"><Checkbox /></TableCell>
-                                            <TableCell>Jan 15</TableCell>
-                                            <TableCell>Payment #10023</TableCell>
-                                            <TableCell align="right">-500.00</TableCell>
-                                        </TableRow>
-                                        <TableRow hover>
-                                            <TableCell padding="checkbox"><Checkbox /></TableCell>
-                                            <TableCell>Jan 18</TableCell>
-                                            <TableCell>Deposit #555</TableCell>
-                                            <TableCell align="right">1,200.00</TableCell>
-                                        </TableRow>
+                                        {glTransactions.map((tx) => (
+                                            <TableRow hover key={tx.id} selected={selectedGlTx.includes(tx.id)}>
+                                                <TableCell padding="checkbox">
+                                                    <Checkbox
+                                                        checked={selectedGlTx.includes(tx.id)}
+                                                        onChange={() => handleGlSelect(tx.id)}
+                                                    />
+                                                </TableCell>
+                                                <TableCell>{tx.date}</TableCell>
+                                                <TableCell>{tx.reference}</TableCell>
+                                                <TableCell align="right">{tx.amount.toFixed(2)}</TableCell>
+                                            </TableRow>
+                                        ))}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
@@ -122,5 +201,4 @@ const BankReconciliation = () => {
         </Box>
     );
 };
-
 export default BankReconciliation;

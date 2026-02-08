@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Box,
     Paper,
@@ -27,60 +27,44 @@ import {
     Visibility
 } from '@mui/icons-material';
 
+import { apGenerateCreditorStatement } from '../../../../../../utils/clientQueries';
+
 const VendorStatement = ({ items = [], vendors = [] }) => {
     const [selectedVendor, setSelectedVendor] = useState('');
     const [periodStart, setPeriodStart] = useState('');
     const [periodEnd, setPeriodEnd] = useState('');
+    const [statement, setStatement] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    const generateStatement = () => {
-        if (!selectedVendor || !items || items.length === 0) return null;
+    useEffect(() => {
+        const fetchStatement = async () => {
+            if (!selectedVendor || !periodStart || !periodEnd) {
+                setStatement(null);
+                return;
+            }
 
-        const vendorItems = items.filter(item =>
-            item.vendor_id === selectedVendor || item.creditor_id === selectedVendor
-        );
-
-        const openingBalance = vendorItems
-            .filter(item => periodStart && new Date(item.posting_date) < new Date(periodStart))
-            .reduce((sum, item) => sum + parseFloat(item.balance || item.original_amount || 0), 0);
-
-        const periodItems = vendorItems.filter(item => {
-            const postingDate = new Date(item.posting_date);
-            const start = periodStart ? new Date(periodStart) : new Date(0);
-            const end = periodEnd ? new Date(periodEnd) : new Date();
-            return postingDate >= start && postingDate <= end;
-        });
-
-        const totalDebits = periodItems
-            .filter(item => item.transaction_type === 'vendor_invoice' || item.transaction_type === 'debit_note')
-            .reduce((sum, item) => sum + parseFloat(item.original_amount || 0), 0);
-
-        const totalCredits = periodItems
-            .filter(item => item.transaction_type === 'credit_note')
-            .reduce((sum, item) => sum + parseFloat(item.original_amount || 0), 0);
-
-        const totalPayments = periodItems
-            .filter(item => item.open_item_status === 'cleared')
-            .reduce((sum, item) => sum + parseFloat(item.cleared_amount || 0), 0);
-
-        const closingBalance = openingBalance + totalDebits - totalCredits - totalPayments;
-
-        const openItems = vendorItems.filter(item =>
-            item.open_item_status !== 'cleared' &&
-            !item.is_disputed
-        );
-
-        return {
-            openingBalance,
-            totalDebits,
-            totalCredits,
-            totalPayments,
-            closingBalance,
-            periodItems,
-            openItems
+            setLoading(true);
+            try {
+                const result = await apGenerateCreditorStatement({
+                    creditorId: selectedVendor,
+                    startDate: periodStart,
+                    endDate: periodEnd
+                });
+                setStatement(result);
+            } catch (error) {
+                console.error("Failed to generate statement", error);
+                setStatement(null);
+            } finally {
+                setLoading(false);
+            }
         };
-    };
 
-    const statement = generateStatement();
+        const timeoutId = setTimeout(() => {
+            fetchStatement();
+        }, 500); // Debounce
+
+        return () => clearTimeout(timeoutId);
+    }, [selectedVendor, periodStart, periodEnd]);
 
     const handleDownload = () => {
         if (!statement) return;
@@ -368,7 +352,7 @@ const VendorStatement = ({ items = [], vendors = [] }) => {
             {!statement && (
                 <Paper sx={{ p: 4, textAlign: 'center' }}>
                     <Typography variant="h6" color="textSecondary">
-                        Select a vendor and period to generate statement
+                        {loading ? 'Generating Statement...' : 'Select a vendor and period to generate statement'}
                     </Typography>
                 </Paper>
             )}

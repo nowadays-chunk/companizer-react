@@ -1,51 +1,64 @@
-
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, TextField, Grid, Paper, Divider, Chip } from '@mui/material';
+import { Box, Typography, TextField, Grid, Paper, Divider, Chip, Button } from '@mui/material';
 import { TermCalculator } from './TermCalculator';
 import { DiscountEngine } from './DiscountEngine';
 import { InstallmentManager } from './InstallmentManager';
+
+import { apApplyPaymentTerm } from '../../../../../../utils/clientQueries';
 
 export const TermTestBench = ({ termConfig }) => {
     const [testDate, setTestDate] = useState(new Date().toISOString().split('T')[0]);
     const [testAmount, setTestAmount] = useState(1000);
     const [results, setResults] = useState(null);
+    const [backendResults, setBackendResults] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!termConfig) return;
 
-        // Run Simulations
+        // Run Local Simulations
         const baseDate = new Date(testDate);
-
-        // 1. Due Date
         const dueDate = TermCalculator.calculateDueDate(termConfig, baseDate);
-
-        // 2. Installments
-        const installments = InstallmentManager.generateInstallments(
-            termConfig.installment_plan,
-            Number(testAmount),
-            baseDate,
-            termConfig
-        );
-
-        // 3. Discount (Simulation: if paid today? Or if paid within discount window?)
-        // Let's show the potential discount expiry
-        const discountInfo = DiscountEngine.calculateDiscount(
-            termConfig.discount_rules,
-            Number(testAmount),
-            baseDate,
-            baseDate // Check eligibility as of start date (always available initially)
-        );
+        const installments = InstallmentManager.generateInstallments(termConfig.installment_plan, Number(testAmount), baseDate, termConfig);
+        const discountInfo = DiscountEngine.calculateDiscount(termConfig.discount_rules, Number(testAmount), baseDate, baseDate);
 
         setResults({ dueDate, installments, discountInfo });
+        setBackendResults(null); // Reset backend results on change
     }, [termConfig, testDate, testAmount]);
+
+    const handleBackendSimulation = async () => {
+        if (!termConfig) return;
+        setLoading(true);
+        try {
+            const response = await apApplyPaymentTerm({
+                termId: termConfig.id,
+                amount: Number(testAmount),
+                date: testDate
+            });
+            setBackendResults(response);
+        } catch (error) {
+            console.error("Backend simulation failed", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     if (!termConfig) return null;
 
     return (
         <Paper variant="outlined" sx={{ p: 2, mt: 3, bgcolor: 'background.default' }}>
-            <Typography variant="h6" gutterBottom color="primary">
-                Term Logic Simulator
-            </Typography>
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                <Typography variant="h6" color="primary">Term Logic Simulator</Typography>
+                <Button
+                    variant="outlined"
+                    onClick={handleBackendSimulation}
+                    disabled={loading}
+                    size="small"
+                >
+                    {loading ? 'Simulating...' : 'Verify on Backend'}
+                </Button>
+            </Box>
+
             <Typography variant="body2" paragraph>
                 Test how this term behaves with hypothetical data.
             </Typography>
@@ -78,9 +91,16 @@ export const TermTestBench = ({ termConfig }) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={4}>
                         <Typography variant="subtitle2" color="textSecondary">Calculated Due Date</Typography>
-                        <Typography variant="h5">
-                            {results.dueDate ? results.dueDate.toLocaleDateString() : '-'}
-                        </Typography>
+                        <Box>
+                            <Typography variant="h5" component="span">
+                                {results.dueDate ? results.dueDate.toLocaleDateString() : '-'}
+                            </Typography>
+                            {backendResults && (
+                                <Typography variant="caption" color="secondary" display="block">
+                                    Backend: {backendResults.dueDate ? new Date(backendResults.dueDate).toLocaleDateString() : 'N/A'}
+                                </Typography>
+                            )}
+                        </Box>
                         <Typography variant="caption">
                             Method: {termConfig.due_date_method}
                         </Typography>

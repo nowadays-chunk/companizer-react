@@ -1,16 +1,59 @@
 import React, { useState } from 'react';
-import { Box, Tabs, Tab, Typography, Grid, TextField, MenuItem, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Tabs, Tab, Typography, Grid, TextField, MenuItem, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, List, ListItem, ListItemText, Alert, Button } from '@mui/material';
+
+import { arApproveCreditProfile } from '../../../../../../utils/clientQueries';
 
 const CreditProfiles = () => {
     const [activeTab, setActiveTab] = useState(0);
+    const [customerId, setCustomerId] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(null);
 
     const handleTabChange = (event, newValue) => {
         setActiveTab(newValue);
     };
 
+    const handleApproveProfile = async () => {
+        if (!customerId) {
+            setMessage({ type: 'error', text: 'Please enter a Customer ID to approve.' });
+            return;
+        }
+        setLoading(true);
+        try {
+            await arApproveCreditProfile({ profileId: customerId, approvedBy: 'current-user-id' });
+            setMessage({ type: 'success', text: 'Credit Profile Approved Successfully' });
+        } catch (error) {
+            console.error(error);
+            setMessage({ type: 'error', text: 'Failed to approve profile' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Box sx={{ p: 3 }}>
-            <Typography variant="h4" gutterBottom>Credit Profiles & Master Data</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                <Typography variant="h4">Credit Profiles & Master Data</Typography>
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                    <TextField
+                        label="Customer/Profile ID"
+                        variant="outlined"
+                        size="small"
+                        value={customerId}
+                        onChange={(e) => setCustomerId(e.target.value)}
+                    />
+                    <Button
+                        variant="contained"
+                        color="success"
+                        onClick={handleApproveProfile}
+                        disabled={loading}
+                    >
+                        {loading ? 'Approving...' : 'Approve Profile'}
+                    </Button>
+                </Box>
+            </Box>
+
+            {message && <Alert severity={message.type} sx={{ mb: 3 }} onClose={() => setMessage(null)}>{message.text}</Alert>}
 
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
                 <Tabs value={activeTab} onChange={handleTabChange} aria-label="credit profiles tabs">

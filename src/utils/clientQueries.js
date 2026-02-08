@@ -200,3 +200,99 @@ export const helpersWrapper = (collectionName) => {
     fetchItemsByKeyByValue
   };
 };
+
+// ==========================================
+// FINANCIAL MANAGEMENT ACTIONS
+// ==========================================
+
+// --- Accounts Payable ---
+export const apMatchInvoice = (data) => api.post('/financial/accounts-payable/vendor-invoices/match', data);
+export const apCreatePaymentBatch = (data) => api.post('/financial/accounts-payable/vendor-invoices/create-payment-batch', data);
+export const apMarkInvoicePaid = (id) => api.post(`/financial/accounts-payable/vendor-invoices/${id}/mark-paid`);
+
+export const apApplyPaymentTerm = (data) => api.post('/financial/accounts-payable/payment-terms/apply-term', data);
+
+export const apReconcileCreditorsLedger = (data) => api.post('/financial/accounts-payable/creditors-ledger/reconcile-ledger', data);
+export const apGenerateCreditorStatement = (data) => api.post('/financial/accounts-payable/creditors-ledger/generate-statement', data);
+
+// --- Accounts Receivable ---
+export const arCalculateCreditRisk = (data) => api.post('/financial/accounts-receivable/credit-management/calculate-risk', data);
+export const arApproveCreditProfile = (data) => api.post('/financial/accounts-receivable/credit-management/approve-profile', data);
+
+export const arSendInvoiceReminder = (data) => api.post('/financial/accounts-receivable/customer-invoices/send-reminder', data);
+export const arApplyLateFee = (data) => api.post('/financial/accounts-receivable/customer-invoices/apply-late-fee', data);
+
+export const arFlagBadDebt = (data) => api.post('/financial/accounts-receivable/debtor-aging/flag-bad-debt', data);
+
+// --- Bank Accounts ---
+export const bankExecuteTransfer = (data) => api.post('/financial/bank-accounts/bank-transfers/execute-transfer', data);
+export const bankTransferFunds = (data) => api.post('/financial/bank-accounts/bank-transfers/execute-transfer', data);
+export const bankValidateIBAN = (data) => api.post('/financial/bank-accounts/bank-transfers/validate-iban', data);
+
+export const bankMatchTransaction = (data) => api.post('/financial/bank-accounts/reconciliation/match-transaction', data);
+export const bankImportFeed = (data) => api.post('/financial/bank-accounts/reconciliation/import-feed', data);
+export const bankAutoReconcile = (data) => api.post('/financial/bank-accounts/reconciliation/auto-reconcile', data);
+export const bankGenerateCashPosition = (data) => api.post('/financial/bank-accounts/reconciliation/cash-position', data);
+
+export const bankUpdateExchangeRate = (data) => api.post('/financial/bank-accounts/foreign-currency/update-rate', data);
+
+// --- Budget ---
+export const budgetAllocate = (data) => api.post('/financial/budget/allocations/allocate', data);
+export const budgetApproveAllocation = (data) => api.post('/financial/budget/allocations/approve', data);
+export const budgetTrackSpending = (data) => api.post('/financial/budget/allocations/track-spending', data);
+export const budgetCreateBudget = (data) => api.post('/financial/budget/budgets/create', data);
+
+export const budgetGenerateForecast = (data) => api.post('/financial/budget/forecasting/generate-forecast', data);
+export const budgetForecast = (data) => api.post('/financial/budget/forecasting/generate-forecast', data);
+export const budgetSaveScenario = (data) => api.post('/financial/budget/forecasting/save-scenario', data);
+
+export const budgetCalculateVariance = (data) => api.post('/financial/budget/variance/calculate', data);
+
+// --- Debts ---
+export const debtsGenerateMaturitySchedule = (data) => api.post('/financial/debts/maturity/generate-schedule', data);
+export const debtsCalculateInterest = (data) => api.post('/financial/debts/interest/calculate', data);
+export const debtsValidateCovenants = (data) => api.post('/financial/debts/loan-agreements/validate-covenants', data);
+
+// --- General Ledger ---
+export const glValidateChartOfAccounts = () => api.post('/financial/general-ledger/chart-of-accounts/validate');
+export const glCloseFiscalPeriod = (data) => api.post('/financial/general-ledger/fiscal-periods/close', data);
+export const glOpenFiscalPeriod = (data) => api.post('/financial/general-ledger/fiscal-periods/open', data);
+
+export const glPostJournalEntry = (data) => api.post('/financial/general-ledger/journal-entries/post', data);
+export const glReverseJournalEntry = (data) => api.post('/financial/general-ledger/journal-entries/reverse', data);
+export const glApproveJournalEntry = (data) => api.post('/financial/general-ledger/journal-entries/approve', data);
+
+export const glGenerateTrialBalance = (data) => api.post('/financial/general-ledger/trial-balance/generate', data);
+
+// --- Investments ---
+export const invRecordEquityPurchase = (data) => api.post('/financial/investments/equity/record-purchase', data);
+export const invUpdateEquityValuation = (data) => api.post('/financial/investments/equity/update-valuation', data);
+
+export const invCalculateAccruedInterest = (data) => api.post('/financial/investments/fixed-income/calculate-accrued-interest', data);
+
+export const invCalculateROI = (data) => api.post('/financial/investments/returns/calculate-roi', data);
+
+// --- Taxation ---
+export const taxInitiateAudit = (data) => api.post('/financial/taxation/audits/initiate', data);
+export const taxLogAuditFinding = (data) => api.post('/financial/taxation/audits/log-finding', data);
+
+export const taxCalculateCredit = (data) => api.post('/financial/taxation/credits/calculate', data);
+export const taxApplyCredit = (data) => api.post('/financial/taxation/credits/apply', data);
+
+export const taxGenerateFiling = (data) => api.post('/financial/taxation/filings/generate', data);
+export const taxSubmitFiling = (data) => api.post('/financial/taxation/filings/submit', data);
+
+export const taxGenerateVATReport = (data) => api.post('/financial/taxation/vat-gst/generate-report', data);
+export const taxReconcileVAT = (data) => api.post('/financial/taxation/vat-gst/reconcile', data);
+
+export const taxCalculateWithholding = (data) => api.post('/financial/taxation/withholding/calculate', data);
+
+// --- Treasury Management ---
+export const treasuryGenerateCashFlowForecast = (data) => api.post('/financial/treasury/cash-flow/generate-forecast', data);
+export const treasuryCalculateLiquidityRatios = () => api.post('/financial/treasury/liquidity/calculate-ratios');
+
+export const treasuryCreatePolicy = (data) => api.post('/financial/treasury/policies/create', data);
+export const treasuryApprovePolicy = (data) => api.post('/financial/treasury/policies/approve', data);
+
+// --- Payment Terms ---
+export const calculatePaymentDueDate = (data) => api.post('/financial/accounts-payable/payment-terms/calculate-due-date', data);

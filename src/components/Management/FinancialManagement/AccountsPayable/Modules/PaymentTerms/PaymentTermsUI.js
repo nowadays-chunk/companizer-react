@@ -45,3 +45,5 @@ export const PaymentTermsExtraPanel = ({ data, onChange }) => {
     </Box>
   );
 };
+
+export default PaymentTermsExtraPanel;

@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Paper, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, IconButton, Chip, TextField, Alert } from '@mui/material';
 import { LinkOff, Link as LinkIcon, CompareArrows, CheckCircle } from '@mui/icons-material';
+import { fetchDocuments, apMatchInvoice } from '../../../../../../utils/clientQueries';
 
 const MatchingEngine = ({ invoiceAmount, invoiceId }) => {
-    // Mock Data for POs
-    const [mockPOs, setMockPOs] = useState([
-        { id: 'PO-10234', vendor: 'Acme Corp Supply', date: '2023-10-15', total: 4500.00, status: 'Open' },
-        { id: 'PO-10255', vendor: 'Acme Corp Supply', date: '2023-10-20', total: 1250.00, status: 'Received' },
-    ]);
-
+    const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [selectedPO, setSelectedPO] = useState(null);
     const [variance, setVariance] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(null);
+
+    // Fetch Open POs
+    useEffect(() => {
+        const loadPOs = async () => {
+            // Assuming 'purchase_orders' is the collection name
+            const results = await fetchDocuments('purchase_orders', { status: 'Open' }); // Filter by status if API supports it
+            // Fallback if API doesn't support params yet, or just all POs
+            setPurchaseOrders(results || []);
+        };
+        loadPOs();
+    }, []);
 
     const handleSelectPO = (po) => {
         if (selectedPO?.id === po.id) {
@@ -22,12 +31,30 @@ const MatchingEngine = ({ invoiceAmount, invoiceId }) => {
 
     useEffect(() => {
         if (selectedPO && invoiceAmount) {
-            const diff = parseFloat(invoiceAmount) - selectedPO.total;
+            const diff = parseFloat(invoiceAmount) - selectedPO.total_amount; // Assuming snake_case from DB
             setVariance(diff.toFixed(2));
         } else {
             setVariance(0);
         }
     }, [selectedPO, invoiceAmount]);
+
+    const handleConfirmMatch = async () => {
+        if (!selectedPO) return;
+        setLoading(true);
+        try {
+            await apMatchInvoice({
+                invoiceId,
+                purchaseOrderId: selectedPO.id,
+                variance: parseFloat(variance)
+            });
+            setMessage({ type: 'success', text: 'Invoice matched successfully!' });
+            // Optionally refresh or redirect
+        } catch (error) {
+            setMessage({ type: 'error', text: 'Failed to match invoice.' });
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
@@ -36,11 +63,17 @@ const MatchingEngine = ({ invoiceAmount, invoiceId }) => {
                 <Typography variant="h6">PO Matching Engine</Typography>
             </Box>
 
+            {message && (
+                <Alert severity={message.type} sx={{ mb: 2 }} onClose={() => setMessage(null)}>
+                    {message.text}
+                </Alert>
+            )}
+
             {!selectedPO ? (
                 <Box>
                     <Typography variant="subtitle2" gutterBottom>Suggested Purchase Orders</Typography>
-                    <TableContainer component={Paper} variant="outlined">
-                        <Table size="small">
+                    <TableContainer component={Paper} variant="outlined" sx={{ maxHeight: 300 }}>
+                        <Table size="small" stickyHeader>
                             <TableHead>
                                 <TableRow>
                                     <TableCell>PO Number</TableCell>
@@ -52,25 +85,31 @@ const MatchingEngine = ({ invoiceAmount, invoiceId }) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {mockPOs.map((po) => (
-                                    <TableRow key={po.id} hover>
-                                        <TableCell component="th" scope="row">{po.id}</TableCell>
-                                        <TableCell>{po.vendor}</TableCell>
-                                        <TableCell>{po.date}</TableCell>
-                                        <TableCell align="right">${po.total.toFixed(2)}</TableCell>
-                                        <TableCell><Chip size="small" label={po.status} color={po.status === 'Received' ? 'success' : 'default'} /></TableCell>
-                                        <TableCell align="center">
-                                            <Button
-                                                size="small"
-                                                variant="outlined"
-                                                startIcon={<LinkIcon />}
-                                                onClick={() => handleSelectPO(po)}
-                                            >
-                                                Match
-                                            </Button>
-                                        </TableCell>
+                                {purchaseOrders.length === 0 ? (
+                                    <TableRow>
+                                        <TableCell colSpan={6} align="center">No open Purchase Orders found.</TableCell>
                                     </TableRow>
-                                ))}
+                                ) : (
+                                    purchaseOrders.map((po) => (
+                                        <TableRow key={po.id} hover>
+                                            <TableCell component="th" scope="row">{po.po_number || po.id}</TableCell>
+                                            <TableCell>{po.vendor_name || 'N/A'}</TableCell>
+                                            <TableCell>{new Date(po.created_at).toLocaleDateString()}</TableCell>
+                                            <TableCell align="right">${parseFloat(po.total_amount || 0).toFixed(2)}</TableCell>
+                                            <TableCell><Chip size="small" label={po.status} color={po.status === 'Received' ? 'success' : 'default'} /></TableCell>
+                                            <TableCell align="center">
+                                                <Button
+                                                    size="small"
+                                                    variant="outlined"
+                                                    startIcon={<LinkIcon />}
+                                                    onClick={() => handleSelectPO(po)}
+                                                >
+                                                    Match
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                )}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -81,7 +120,7 @@ const MatchingEngine = ({ invoiceAmount, invoiceId }) => {
                         <Alert severity="info" action={
                             <Button color="inherit" size="small" onClick={() => setSelectedPO(null)}>Unlink</Button>
                         }>
-                            Linked to <strong>{selectedPO.id}</strong>
+                            Linked to <strong>{selectedPO.po_number || selectedPO.id}</strong>
                         </Alert>
                     </Grid>
 
@@ -95,8 +134,8 @@ const MatchingEngine = ({ invoiceAmount, invoiceId }) => {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Paper variant="outlined" sx={{ p: 2 }}>
-                            <Typography variant="subtitle2" color="textSecondary">PURCHASE ORDER ({selectedPO.id})</Typography>
-                            <Typography variant="h4">${selectedPO.total.toFixed(2)}</Typography>
+                            <Typography variant="subtitle2" color="textSecondary">PURCHASE ORDER ({selectedPO.po_number || selectedPO.id})</Typography>
+                            <Typography variant="h4">${parseFloat(selectedPO.total_amount || 0).toFixed(2)}</Typography>
                             <Typography variant="caption">Total Value</Typography>
                         </Paper>
                     </Grid>
@@ -117,8 +156,10 @@ const MatchingEngine = ({ invoiceAmount, invoiceId }) => {
                                     variant="contained"
                                     color={Math.abs(variance) > 0 ? "warning" : "success"}
                                     startIcon={Math.abs(variance) === 0 ? <CheckCircle /> : null}
+                                    onClick={handleConfirmMatch}
+                                    disabled={loading}
                                 >
-                                    {Math.abs(variance) === 0 ? "Confirm Match" : "Request Approval"}
+                                    {loading ? "Processing..." : (Math.abs(variance) === 0 ? "Confirm Match" : "Request Approval")}
                                 </Button>
                             </Box>
                         </Box>

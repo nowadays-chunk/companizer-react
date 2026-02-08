@@ -1,28 +1,44 @@
-import React, { useState } from 'react';
-import { Box, Typography, Grid, Card, CardContent, LinearProgress, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, Grid, Card, CardContent, LinearProgress, FormControl, InputLabel, Select, MenuItem, CircularProgress, Alert } from '@mui/material';
 import { CompareArrows } from '@mui/icons-material';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { budgetTrackSpending } from '../../../../../../utils/clientQueries';
 
 const COLORS = ['#FF8042', '#00C49F'];
 
 const ActualVsBudgetTracking = () => {
     const [department, setDepartment] = useState('All');
+    const [spendingData, setSpendingData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const getUtilization = (dept) => {
-        switch (dept) {
-            case 'Sales': return 85;
-            case 'Engineering': return 75;
-            case 'Marketing': return 65;
-            case 'HR': return 55;
-            default: return 75; // All
-        }
-    };
+    useEffect(() => {
+        const fetchSpending = async () => {
+            setLoading(true);
+            try {
+                const data = await budgetTrackSpending({ department: department === 'All' ? null : department });
+                setSpendingData(data);
+            } catch (err) {
+                console.error(err);
+                setError("Failed to load spending data");
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchSpending();
+    }, [department]);
 
-    const percentage = getUtilization(department);
-    const data = [
-        { name: 'Spent', value: percentage * 1000 },
-        { name: 'Remaining', value: (100 - percentage) * 1000 },
+    // Derived stats from data or fallbacks
+    const totalBudget = spendingData?.totalBudget || 100000;
+    const totalSpent = spendingData?.totalSpent || 0;
+    const utilization = totalBudget > 0 ? (totalSpent / totalBudget) * 100 : 0;
+
+    const pieData = [
+        { name: 'Spent', value: totalSpent },
+        { name: 'Remaining', value: Math.max(0, totalBudget - totalSpent) },
     ];
+
+    if (loading && !spendingData) return <Box p={3}><CircularProgress /></Box>;
 
     return (
         <Box sx={{ p: 3 }}>
@@ -42,6 +58,8 @@ const ActualVsBudgetTracking = () => {
                 </FormControl>
             </Box>
 
+            {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
+
             <Grid container spacing={3}>
                 <Grid item xs={12} md={4}>
                     <Card sx={{ height: '100%' }}>
@@ -49,14 +67,14 @@ const ActualVsBudgetTracking = () => {
                             <Typography variant="h6" gutterBottom>Overall Utilization</Typography>
                             <ResponsiveContainer width="100%" height={250}>
                                 <PieChart>
-                                    <Pie data={data} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
-                                        {data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
+                                    <Pie data={pieData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
+                                        {pieData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
                                     </Pie>
-                                    <Tooltip />
+                                    <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
                                     <Legend />
                                 </PieChart>
                             </ResponsiveContainer>
-                            <Typography align="center" variant="h4">{percentage}%</Typography>
+                            <Typography align="center" variant="h4">{utilization.toFixed(1)}%</Typography>
                             <Typography align="center" color="text.secondary">Budget Consumed</Typography>
                         </CardContent>
                     </Card>
@@ -67,20 +85,25 @@ const ActualVsBudgetTracking = () => {
                         <CardContent>
                             <Typography variant="h6" gutterBottom>Department Performance Breakdown</Typography>
                             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, mt: 2 }}>
-                                {['Sales', 'Engineering', 'Marketing', 'HR'].map((dept, idx) => (
-                                    <Box key={dept} sx={{ opacity: department === 'All' || department === dept ? 1 : 0.3 }}>
+                                {(spendingData?.departmentBreakdown || []).map((dept) => (
+                                    <Box key={dept.name}>
                                         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                                            <Typography fontWeight={department === dept ? 'bold' : 'normal'}>{dept}</Typography>
-                                            <Typography>{getUtilization(dept)}% Used</Typography>
+                                            <Typography fontWeight="bold">{dept.name}</Typography>
+                                            <Typography>
+                                                ${dept.spent.toLocaleString()} / ${dept.budget.toLocaleString()} ({dept.utilization.toFixed(1)}%)
+                                            </Typography>
                                         </Box>
                                         <LinearProgress
                                             variant="determinate"
-                                            value={getUtilization(dept)}
-                                            color={getUtilization(dept) > 80 ? 'error' : 'primary'}
+                                            value={Math.min(dept.utilization, 100)}
+                                            color={dept.utilization > 90 ? 'error' : 'primary'}
                                             sx={{ height: 10, borderRadius: 5 }}
                                         />
                                     </Box>
                                 ))}
+                                {(!spendingData?.departmentBreakdown || spendingData.departmentBreakdown.length === 0) && (
+                                    <Typography color="textSecondary">No breakdown data available.</Typography>
+                                )}
                             </Box>
                         </CardContent>
                     </Card>

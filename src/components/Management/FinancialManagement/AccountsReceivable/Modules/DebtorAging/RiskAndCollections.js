@@ -1,14 +1,77 @@
 
-import React from 'react';
-import { Box, Typography, Grid, Paper, Chip, List, ListItem, ListItemText, ListItemIcon, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, Grid, Paper, Chip, List, ListItem, ListItemText, ListItemIcon, Button, TextField, Alert } from '@mui/material';
 import WarningIcon from '@mui/icons-material/Warning';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { arFlagBadDebt } from '../../../../../../utils/clientQueries';
 
 const RiskAndCollections = () => {
+    const [invoiceId, setInvoiceId] = useState('');
+    const [reason, setReason] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(null);
+
+    const handleFlagBadDebt = async () => {
+        if (!invoiceId || !reason) {
+            setMessage({ type: 'error', text: 'Please enter Invoice ID and Reason' });
+            return;
+        }
+        setLoading(true);
+        try {
+            await arFlagBadDebt({ invoiceId, reason });
+            setMessage({ type: 'success', text: 'Invoice flagged as Bad Debt successfully' });
+            setInvoiceId('');
+            setReason('');
+        } catch (error) {
+            console.error(error);
+            setMessage({ type: 'error', text: 'Failed to flag bad debt' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Box sx={{ p: 3 }}>
             <Typography variant="h5" gutterBottom>Risk Indicators & Collection Triggers</Typography>
+
+            {message && <Alert severity={message.type} sx={{ mb: 3 }} onClose={() => setMessage(null)}>{message.text}</Alert>}
+
+            {/* Manual Bad Debt Flagging */}
+            <Paper sx={{ p: 2, mb: 3 }}>
+                <Typography variant="h6" gutterBottom>Manual Risk Actions</Typography>
+                <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={12} md={4}>
+                        <TextField
+                            label="Invoice ID to Flag"
+                            fullWidth
+                            size="small"
+                            value={invoiceId}
+                            onChange={(e) => setInvoiceId(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={5}>
+                        <TextField
+                            label="Reason for Bad Debt"
+                            fullWidth
+                            size="small"
+                            value={reason}
+                            onChange={(e) => setReason(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <Button
+                            variant="contained"
+                            color="error"
+                            fullWidth
+                            onClick={handleFlagBadDebt}
+                            disabled={loading}
+                        >
+                            {loading ? 'Flagging...' : 'Flag as Bad Debt'}
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Paper>
 
             <Grid container spacing={3}>
                 {/* 4. Overdue & Risk Indicators */}

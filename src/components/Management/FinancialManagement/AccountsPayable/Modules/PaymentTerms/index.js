@@ -2,7 +2,7 @@ import React from 'react';
 
 const PaymentTermsUI = React.lazy(() => import('./PaymentTermsUI'));
 const TermRuleEditor = React.lazy(() => import('./TermRuleEditor'));
-const TermCalculator = React.lazy(() => import('./TermCalculator'));
+const TermCalculator = React.lazy(() => import('./TermCalculatorUI'));
 const DiscountEngine = React.lazy(() => import('./DiscountEngine'));
 const InstallmentManager = React.lazy(() => import('./InstallmentManager'));
 const TermTestBench = React.lazy(() => import('./TermTestBench'));

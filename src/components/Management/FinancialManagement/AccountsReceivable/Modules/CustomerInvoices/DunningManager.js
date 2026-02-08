@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Typography,
@@ -19,16 +19,107 @@ import {
     List,
     ListItem,
     ListItemText,
-    Divider
+    Divider,
+    TextField,
+    Alert
 } from '@mui/material';
+import { arSendInvoiceReminder, arApplyLateFee } from '../../../../../../utils/clientQueries';
 
 const DunningManager = () => {
+    const [invoiceId, setInvoiceId] = useState('');
+    const [feeAmount, setFeeAmount] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(null);
+
+    const handleSendReminder = async () => {
+        if (!invoiceId) {
+            setMessage({ type: 'error', text: 'Please enter an Invoice ID' });
+            return;
+        }
+        setLoading(true);
+        try {
+            await arSendInvoiceReminder({ invoiceId });
+            setMessage({ type: 'success', text: 'Reminder sent successfully' });
+        } catch (error) {
+            console.error(error);
+            setMessage({ type: 'error', text: 'Failed to send reminder' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleApplyLateFee = async () => {
+        if (!invoiceId || !feeAmount) {
+            setMessage({ type: 'error', text: 'Please enter Invoice ID and Fee Amount' });
+            return;
+        }
+        setLoading(true);
+        try {
+            await arApplyLateFee({ invoiceId, feeAmount: parseFloat(feeAmount) });
+            setMessage({ type: 'success', text: 'Late fee applied successfully' });
+        } catch (error) {
+            console.error(error);
+            setMessage({ type: 'error', text: 'Failed to apply late fee' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Box p={3}>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
                 <Typography variant="h5">Collections & Dunning Manager</Typography>
-                <Button variant="contained" color="error">Run Dunning Process</Button>
+                <Button variant="contained" color="error">Run Batch Dunning Process</Button>
             </Box>
+
+            {message && <Alert severity={message.type} sx={{ mb: 3 }} onClose={() => setMessage(null)}>{message.text}</Alert>}
+
+            {/* Manual Actions */}
+            <Card sx={{ mb: 3 }}>
+                <CardContent>
+                    <Typography variant="h6" gutterBottom>Manual Actions</Typography>
+                    <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={12} md={4}>
+                            <TextField
+                                label="Invoice ID"
+                                fullWidth
+                                size="small"
+                                value={invoiceId}
+                                onChange={(e) => setInvoiceId(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <TextField
+                                label="Late Fee Amount"
+                                type="number"
+                                fullWidth
+                                size="small"
+                                value={feeAmount}
+                                onChange={(e) => setFeeAmount(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={5}>
+                            <Box display="flex" gap={2}>
+                                <Button
+                                    variant="outlined"
+                                    onClick={handleSendReminder}
+                                    disabled={loading}
+                                >
+                                    Send Reminder
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    color="secondary"
+                                    onClick={handleApplyLateFee}
+                                    disabled={loading}
+                                >
+                                    Apply Late Fee
+                                </Button>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
 
             <Grid container spacing={3}>
                 {/* KPI Cards */}
