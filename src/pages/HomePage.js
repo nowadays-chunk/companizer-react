@@ -500,8 +500,8 @@ const HomePage = () => {
               <Box sx={{ width: 40, height: 40, borderRadius: '8px', background: '#fff', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
                 VI
               </Box>
-              <Typography variant="h6" sx={{ fontWeight: 'bold', letterSpacing: '1px' }}>
-                VAULT INSIGHT
+              <Typography variant="h6" sx={{ fontWeight: 'bold', letterSpacing: '1px', color: '#fff' }}>
+                TAILORED BRIDGE
               </Typography>
             </Box>
 
@@ -599,7 +599,7 @@ const HomePage = () => {
         {/* --- NEW MARKETING & UX SECTION --- */}
         <Box sx={styles.marketingSection}>
           <Typography variant="h6" sx={{ color: '#fff', mb: 6, textAlign: 'center', textTransform: 'uppercase', letterSpacing: '3px', opacity: 0.7 }}>
-            Why Vault Insight?
+            Why Tailored Bridge ?
           </Typography>
 
           <MarketingFeature
@@ -885,7 +885,9 @@ const HomePage = () => {
         <Box sx={{ mt: 15, borderTop: '1px solid #222', pt: 5 }}>
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-              <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>VAULT INSIGHT</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: '#fff' }}>
+                TAILORED BRIDGE
+              </Typography>
               <Typography variant="body2" sx={{ color: '#666', maxWidth: '400px' }}>
                 Empowering enterprises with next-generation resource planning and management tools. Built for scale, security, and speed.
               </Typography>
@@ -907,7 +909,7 @@ const HomePage = () => {
             </Grid>
           </Grid>
           <Typography variant="body2" sx={{ color: '#444', mt: 8, textAlign: 'center' }}>
-            © {new Date().getFullYear()} Vault Insight. All rights reserved.
+            © {new Date().getFullYear()} Tailored Bridge. All rights reserved.
           </Typography>
         </Box>
 
