@@ -46,18 +46,21 @@ const FireNav = styled(List)(({ theme }) => ({
 const StyledFireNav = styled('div')({
   flex: 1,
   overflowY: 'auto',
+  height: '100%', // Ensure it takes full height of flex container
+  display: 'flex',
+  flexDirection: 'column',
   '&::-webkit-scrollbar': {
     width: '4px',
   },
   '&::-webkit-scrollbar-track': {
-    background: '#f1f1f1',
+    background: 'transparent',
   },
   '&::-webkit-scrollbar-thumb': {
-    background: '#888',
-    borderRadius: '4px',
+    background: '#CCC',
+    borderRadius: '0px', // Sharp
   },
   '&::-webkit-scrollbar-thumb:hover': {
-    background: '#555',
+    background: '#000',
   },
 });
 
@@ -339,12 +342,20 @@ export default function DashboardDrawer({ open, onToggleDrawer, isMobile }) {
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
+          zIndex: 1200, // Ensure it's on top
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: expandedDrawerWidth,
             bgcolor: '#FFFFFF',
             color: '#000000',
             borderRight: '1px solid #000000',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            height: '100vh',
+            position: 'fixed',
+            left: 0,
+            top: 0,
           },
         }}
       >
@@ -370,6 +381,7 @@ export default function DashboardDrawer({ open, onToggleDrawer, isMobile }) {
           bgcolor: '#FFFFFF', // Always White
           color: '#000000',     // Always Black
           borderRight: '1px solid #000000', // Always Black Border
+          overflow: 'hidden', // Prevent container scroll
         }}
       >
         {drawerContent}
