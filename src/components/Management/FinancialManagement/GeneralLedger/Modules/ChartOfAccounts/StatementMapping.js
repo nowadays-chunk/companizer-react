@@ -21,6 +21,8 @@ import {
 } from '@mui/material';
 import { AccountBalance, Map, TrendingUp } from '@mui/icons-material';
 
+import { fieldsConfig, collectionName, entityName } from './Modules/General/StatementMappingConfig';
+
 const StatementMapping = () => {
     const [tabValue, setTabValue] = useState(0);
 

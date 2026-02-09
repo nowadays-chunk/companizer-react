@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Paper, Grid, FormControl, InputLabel, Select, MenuItem, Slider, Button, Snackbar, Alert, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { Rule, Save, Settings } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/AllocationRulesMethods';
 
 const AllocationRulesMethods = () => {
     const [method, setMethod] = useState('top-down');

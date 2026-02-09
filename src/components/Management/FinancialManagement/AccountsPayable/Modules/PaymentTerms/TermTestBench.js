@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, TextField, Grid, Paper, Divider, Chip, Button } from '@mui/material';
-import { TermCalculator } from './TermCalculator';
-import { DiscountEngine } from './DiscountEngine';
-import { InstallmentManager } from './InstallmentManager';
+import TermCalculator from './TermCalculator';
+import DiscountEngine from './DiscountEngine';
+import InstallmentManager from './InstallmentManager';
 
 import { apApplyPaymentTerm } from '../../../../../../utils/clientQueries';
 import { fieldsConfig, collectionName } from './Modules/Specific/TermTestBench';
@@ -145,3 +145,5 @@ export const TermTestBench = ({ termConfig }) => {
         </Paper>
     );
 };
+
+export default TermTestBench;

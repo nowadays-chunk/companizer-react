@@ -21,6 +21,7 @@ import {
     Tab
 } from '@mui/material';
 import { Add, Refresh, TrendingUp, Edit, History, Lock } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/ExchangeRateManager';
 
 const ExchangeRateManager = () => {
     const [tabValue, setTabValue] = useState(0);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Grid, Card, CardContent, Slider, TextField, Chip } from '@mui/material';
 import { Settings, TrendingUp, TrendingDown } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/DriverBasedModeling';
 
 const DriverBasedModeling = () => {
     const [drivers, setDrivers] = useState({

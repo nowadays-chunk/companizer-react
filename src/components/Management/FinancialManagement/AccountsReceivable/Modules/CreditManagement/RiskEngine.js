@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Grid, Card, CardContent, Divider, Button, List, ListItem, ListItemIcon, ListItemText, Alert, LinearProgress, TextField, CircularProgress } from '@mui/material';
 import { CheckCircle, Warning, PlayArrow, TrendingUp } from '@mui/icons-material';
 import { arCalculateCreditRisk } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/RiskEngine';
 
 const RiskEngine = () => {
     const [customerId, setCustomerId] = useState('');

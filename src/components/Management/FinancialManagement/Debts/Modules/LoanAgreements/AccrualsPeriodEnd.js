@@ -15,6 +15,7 @@ import {
     Divider
 } from '@mui/material';
 import { CheckCircle, Pending, DateRange } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/AccrualsPeriodEnd';
 
 const AccrualsPeriodEnd = () => {
     return (

@@ -3,6 +3,7 @@ import { Box, Typography, Grid, Card, CardContent, LinearProgress, FormControl, 
 import { CompareArrows } from '@mui/icons-material';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { budgetTrackSpending } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/ActualVsBudgetTracking';
 
 const COLORS = ['#FF8042', '#00C49F'];
 

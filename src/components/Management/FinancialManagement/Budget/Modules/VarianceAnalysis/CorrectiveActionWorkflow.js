@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Chip, Button, Stepper, Step, StepLabel, Card, CardContent, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@mui/material';
 import { AssignmentTurnedIn, Add } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/CorrectiveActionWorkflow';
 
 const CorrectiveActionWorkflow = () => {
     const steps = ['Issue Identified', 'Action Plan Proposed', 'Manager Approval', 'Implementation', 'Verification'];

@@ -7,4 +7,5 @@ export const fieldsConfig = {
     status: { label: 'Status', type: 'select', options: ['Active', 'Paused', 'Cancelled'], defaultValue: 'Active' }
 };
 
+export const entityName = 'Invoice Generator';
 export const collectionName = 'ar_recurring_billing';

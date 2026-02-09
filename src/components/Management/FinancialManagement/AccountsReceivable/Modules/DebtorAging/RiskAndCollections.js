@@ -5,6 +5,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { arFlagBadDebt } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/RiskAndCollections';
 
 const RiskAndCollections = () => {
     const [invoiceId, setInvoiceId] = useState('');

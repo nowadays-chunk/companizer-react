@@ -4,4 +4,5 @@ export const fieldsConfig = {
     test_amount: { label: 'Test Amount', type: 'number', defaultValue: 1000 }
 };
 
+export const entityName = 'Term Test Bench';
 export const collectionName = 'payment_term_test_bench';

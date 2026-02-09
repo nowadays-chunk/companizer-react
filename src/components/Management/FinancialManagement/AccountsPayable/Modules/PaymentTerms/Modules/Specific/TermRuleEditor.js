@@ -5,4 +5,5 @@ export const fieldsConfig = {
     days_offset: { label: 'Days Offset', type: 'number' }
 };
 
+export const entityName = 'Term Rule Editor';
 export const collectionName = 'payment_term_rules';

@@ -6,4 +6,5 @@ export const fieldsConfig = {
     percentage: { label: 'Percentage', type: 'number' }
 };
 
+export const entityName = 'AR Aging';
 export const collectionName = 'ar_aging_buckets';

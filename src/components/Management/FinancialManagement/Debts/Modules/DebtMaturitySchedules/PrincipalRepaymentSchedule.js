@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Grid, Card, CardContent, Button, Stack, TextField, MenuItem } from '@mui/material';
 import { FilterList, Download, PlayArrow } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/PrincipalRepaymentSchedule';
 
 const PrincipalRepaymentSchedule = () => {
     return (

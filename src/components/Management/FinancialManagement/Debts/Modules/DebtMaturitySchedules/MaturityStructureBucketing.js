@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Paper, Grid, LinearProgress, Card, CardContent, Tabs, Tab, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip } from '@mui/material';
 import { Settings, BarChart } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/MaturityStructureBucketing';
 
 const MaturityStructureBucketing = () => {
     const [tabValue, setTabValue] = useState(0);

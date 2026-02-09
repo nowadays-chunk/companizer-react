@@ -14,6 +14,7 @@ import {
     Chip,
     LinearProgress
 } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/CovenantsCompliance';
 
 const CovenantsCompliance = () => {
     const covenants = [

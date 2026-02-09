@@ -1,5 +1,5 @@
 
-import { TermCalculator } from './TermCalculator';
+import TermCalculator from './TermCalculator';
 
 export const InstallmentManager = {
     /**
@@ -59,3 +59,5 @@ export const InstallmentManager = {
         return installments;
     }
 };
+
+export default InstallmentManager;

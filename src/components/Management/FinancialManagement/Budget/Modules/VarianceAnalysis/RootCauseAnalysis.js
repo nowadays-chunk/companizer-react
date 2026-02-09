@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import { Search, Add } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/RootCauseAnalysis';
 
 const RootCauseAnalysis = () => {
     const [causes, setCauses] = useState([

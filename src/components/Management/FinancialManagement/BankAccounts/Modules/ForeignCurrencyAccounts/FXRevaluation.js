@@ -16,6 +16,7 @@ import {
     Alert
 } from '@mui/material';
 import { PlayArrow, Assessment, CheckCircle, Warning, Article } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/FXRevaluation';
 
 const FXRevaluation = () => {
     return (

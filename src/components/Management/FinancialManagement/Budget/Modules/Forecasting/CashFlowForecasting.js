@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
 import { AccountBalance } from '@mui/icons-material';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/CashFlowForecasting';
 
 const data = [
     { name: 'Jul', netFlow: 2000 },

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Grid, Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Chip, Divider } from '@mui/material';
 import { Warning, Info, TrendingUp, Speed, Block } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/CreditDashboard';
 
 const CreditDashboard = () => {
     return (

@@ -8,4 +8,5 @@ export const fieldsConfig = {
     days_open: { label: 'Days Open', type: 'number' }
 };
 
+export const entityName = 'Dispute Manager';
 export const collectionName = 'ar_disputes';

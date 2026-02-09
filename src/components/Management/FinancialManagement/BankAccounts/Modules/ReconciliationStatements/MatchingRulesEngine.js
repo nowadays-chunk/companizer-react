@@ -15,6 +15,7 @@ import {
     Paper,
     useTheme
 } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/MatchingRulesEngine';
 
 const MatchingRulesEngine = () => {
     const theme = useTheme();

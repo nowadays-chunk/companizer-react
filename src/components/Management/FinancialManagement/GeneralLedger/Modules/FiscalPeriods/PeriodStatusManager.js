@@ -17,14 +17,7 @@ import {
     Typography
 } from '@mui/material';
 
-export const fieldsConfig = {
-    period: { label: 'Period', type: 'text' },
-    current_status: { label: 'Current Status', type: 'text' },
-    action: { label: 'Action', type: 'select', options: [{ id: 'lock', label: 'Lock' }, { id: 'unlock', label: 'Unlock' }, { id: 'soft_close', label: 'Soft Close' }] },
-    comments: { label: 'Comments', type: 'textarea' }
-};
-
-export const entityName = 'Period Status';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/PeriodStatusManagerConfig';
 
 const PeriodStatusManager = () => {
     const theme = useTheme();

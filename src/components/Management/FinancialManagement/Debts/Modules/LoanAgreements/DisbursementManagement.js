@@ -14,6 +14,7 @@ import {
     TableRow,
     LinearProgress
 } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/DisbursementManagement';
 
 const DisbursementManagement = () => {
     return (

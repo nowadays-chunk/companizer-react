@@ -296,3 +296,234 @@ export const treasuryApprovePolicy = (data) => api.post('/financial/treasury/pol
 
 // --- Payment Terms ---
 export const calculatePaymentDueDate = (data) => api.post('/financial/accounts-payable/payment-terms/calculate-due-date', data);
+
+// ==========================================
+// EXTENDED FINANCIAL MANAGEMENT ACTIONS
+// ==========================================
+
+// --- Accounts Payable - Payment Terms (4 submodules) ---
+export const apPaymentTermsList = (params) => api.get('/financial/accounts-payable/payment-terms', { params });
+export const apPaymentTermsCreate = (data) => api.post('/financial/accounts-payable/payment-terms', data);
+export const apPaymentTermsUpdate = (id, data) => api.put(`/financial/accounts-payable/payment-terms/${id}`, data);
+export const apPaymentTermsDelete = (id) => api.delete(`/financial/accounts-payable/payment-terms/${id}`);
+export const apPaymentTermsCalculateDueDate = (data) => api.post('/financial/accounts-payable/payment-terms/calculate-due-date', data);
+export const apPaymentTermsApplyDiscount = (data) => api.post('/financial/accounts-payable/payment-terms/apply-discount', data);
+export const apPaymentTermsManageInstallments = (data) => api.post('/financial/accounts-payable/payment-terms/manage-installments', data);
+export const apPaymentTermsTestConfiguration = (data) => api.post('/financial/accounts-payable/payment-terms/test-configuration', data);
+
+// --- Accounts Payable - Creditors Ledger (5 submodules) ---
+export const apCreditorsLedgerReconcile = (data) => api.post('/financial/accounts-payable/creditors-ledger/reconcile', data);
+export const apCreditorsLedgerCashForecast = (data) => api.post('/financial/accounts-payable/creditors-ledger/cash-forecast', data);
+export const apCreditorsLedgerDPOAnalytics = (params) => api.get('/financial/accounts-payable/creditors-ledger/dpo-analytics', { params });
+export const apCreditorsLedgerManageDisputes = (data) => api.post('/financial/accounts-payable/creditors-ledger/disputes', data);
+export const apCreditorsLedgerAgingAnalysis = (params) => api.get('/financial/accounts-payable/creditors-ledger/aging-analysis', { params });
+
+// --- Accounts Payable - Vendor Invoices (4 submodules) ---
+export const apVendorInvoicesCapture = (data) => api.post('/financial/accounts-payable/vendor-invoices/capture', data);
+export const apVendorInvoicesMatch = (data) => api.post('/financial/accounts-payable/vendor-invoices/match', data);
+export const apVendorInvoicesPaymentRun = (data) => api.post('/financial/accounts-payable/vendor-invoices/payment-run', data);
+export const apVendorInvoicesPortalAccess = (params) => api.get('/financial/accounts-payable/vendor-invoices/portal', { params });
+
+// --- Accounts Receivable - Credit Management (5 submodules) ---
+export const arCreditDashboard = (params) => api.get('/financial/accounts-receivable/credit-management/dashboard', { params });
+export const arCreditProfilesManage = (data) => api.post('/financial/accounts-receivable/credit-management/profiles', data);
+export const arCreditRiskAssess = (data) => api.post('/financial/accounts-receivable/credit-management/risk-assessment', data);
+export const arCreditExposureManage = (data) => api.post('/financial/accounts-receivable/credit-management/exposure', data);
+export const arCreditGovernance = (params) => api.get('/financial/accounts-receivable/credit-management/governance', { params });
+
+// --- Accounts Receivable - Customer Invoices (5 submodules) ---
+export const arCustomerInvoicesGenerate = (data) => api.post('/financial/accounts-receivable/customer-invoices/generate', data);
+export const arCustomerInvoicesARAging = (params) => api.get('/financial/accounts-receivable/customer-invoices/ar-aging', { params });
+export const arCustomerInvoicesRevenueAnalytics = (params) => api.get('/financial/accounts-receivable/customer-invoices/revenue-analytics', { params });
+export const arCustomerInvoicesDunning = (data) => api.post('/financial/accounts-receivable/customer-invoices/dunning', data);
+export const arCustomerInvoicesDisputes = (data) => api.post('/financial/accounts-receivable/customer-invoices/disputes', data);
+
+// --- Accounts Receivable - Debtor Aging (5 submodules) ---
+export const arDebtorAgingDashboard = (params) => api.get('/financial/accounts-receivable/debtor-aging/dashboard', { params });
+export const arDebtorAgingAnalysis = (params) => api.get('/financial/accounts-receivable/debtor-aging/analysis', { params });
+export const arDebtorAgingRiskCollections = (data) => api.post('/financial/accounts-receivable/debtor-aging/risk-collections', data);
+export const arDebtorAgingCashForecast = (params) => api.get('/financial/accounts-receivable/debtor-aging/cash-forecast', { params });
+export const arDebtorAgingConfiguration = (data) => api.post('/financial/accounts-receivable/debtor-aging/configuration', data);
+
+// --- Bank Accounts - Bank Transfers (10 submodules) ---
+export const bankTransfersDashboard = (params) => api.get('/financial/bank-accounts/bank-transfers/dashboard', { params });
+export const bankTransfersCreate = (data) => api.post('/financial/bank-accounts/bank-transfers/create', data);
+export const bankTransfersApproval = (data) => api.post('/financial/bank-accounts/bank-transfers/approval', data);
+export const bankTransfersExecute = (data) => api.post('/financial/bank-accounts/bank-transfers/execute', data);
+export const bankTransfersFXManage = (data) => api.post('/financial/bank-accounts/bank-transfers/fx-manage', data);
+export const bankTransfersAccountingIntegration = (data) => api.post('/financial/bank-accounts/bank-transfers/accounting-integration', data);
+export const bankTransfersIntercompany = (data) => api.post('/financial/bank-accounts/bank-transfers/intercompany', data);
+export const bankTransfersReconciliationStatus = (params) => api.get('/financial/bank-accounts/bank-transfers/reconciliation-status', { params });
+export const bankTransfersAutomation = (data) => api.post('/financial/bank-accounts/bank-transfers/automation', data);
+export const bankTransfersHistory = (params) => api.get('/financial/bank-accounts/bank-transfers/history', { params });
+
+// --- Bank Accounts - Foreign Currency (7 submodules) ---
+export const bankForeignCurrencyDashboard = (params) => api.get('/financial/bank-accounts/foreign-currency/dashboard', { params });
+export const bankForeignCurrencyPositionManager = (params) => api.get('/financial/bank-accounts/foreign-currency/position-manager', { params });
+export const bankForeignCurrencyRevaluation = (data) => api.post('/financial/bank-accounts/foreign-currency/revaluation', data);
+export const bankForeignCurrencyHedgeAccounting = (data) => api.post('/financial/bank-accounts/foreign-currency/hedge-accounting', data);
+export const bankForeignCurrencyRateManagement = (data) => api.post('/financial/bank-accounts/foreign-currency/rate-management', data);
+export const bankForeignCurrencyTranslationImpact = (params) => api.get('/financial/bank-accounts/foreign-currency/translation-impact', { params });
+export const bankForeignCurrencyAnalytics = (params) => api.get('/financial/bank-accounts/foreign-currency/analytics', { params });
+
+// --- Bank Accounts - Reconciliation (6 submodules) ---
+export const bankReconciliationDashboard = (params) => api.get('/financial/bank-accounts/reconciliation/dashboard', { params });
+export const bankReconciliationAutoMatch = (data) => api.post('/financial/bank-accounts/reconciliation/auto-match', data);
+export const bankReconciliationManualMatch = (data) => api.post('/financial/bank-accounts/reconciliation/manual-match', data);
+export const bankReconciliationVarianceInvestigation = (params) => api.get('/financial/bank-accounts/reconciliation/variance-investigation', { params });
+export const bankReconciliationReports = (params) => api.get('/financial/bank-accounts/reconciliation/reports', { params });
+export const bankReconciliationBankFeedManager = (data) => api.post('/financial/bank-accounts/reconciliation/bank-feed-manager', data);
+
+// --- Budget - Budget Allocations (18 submodules) ---
+export const budgetAllocationsStructure = (data) => api.post('/financial/budget/allocations/structure', data);
+export const budgetAllocationsRules = (data) => api.post('/financial/budget/allocations/rules', data);
+export const budgetAllocationsTimeBased = (data) => api.post('/financial/budget/allocations/time-based', data);
+export const budgetAllocationsControls = (data) => api.post('/financial/budget/allocations/controls', data);
+export const budgetAllocationsRevisions = (data) => api.post('/financial/budget/allocations/revisions', data);
+export const budgetAllocationsTracking = (params) => api.get('/financial/budget/allocations/tracking', { params });
+export const budgetAllocationsConsolidation = (data) => api.post('/financial/budget/allocations/consolidation', data);
+export const budgetAllocationsWorkflow = (data) => api.post('/financial/budget/allocations/workflow', data);
+export const budgetAllocationsPlanningIntegration = (data) => api.post('/financial/budget/allocations/planning-integration', data);
+export const budgetAllocationsAnalytics = (params) => api.get('/financial/budget/allocations/analytics', { params });
+export const budgetAllocationsEncumbrances = (data) => api.post('/financial/budget/allocations/encumbrances', data);
+export const budgetAllocationsCalendar = (params) => api.get('/financial/budget/allocations/calendar', { params });
+export const budgetAllocationsAudit = (params) => api.get('/financial/budget/allocations/audit', { params });
+export const budgetAllocationsAutomation = (data) => api.post('/financial/budget/allocations/automation', data);
+export const budgetAllocationsProductivity = (data) => api.post('/financial/budget/allocations/productivity', data);
+export const budgetAllocationsSecurity = (data) => api.post('/financial/budget/allocations/security', data);
+export const budgetAllocationsIntegration = (data) => api.post('/financial/budget/allocations/integration', data);
+export const budgetAllocationsAdvanced = (data) => api.post('/financial/budget/allocations/advanced', data);
+
+// --- Budget - Forecasting (6 submodules) ---
+export const budgetForecastingDashboard = (params) => api.get('/financial/budget/forecasting/dashboard', { params });
+export const budgetForecastingScenarioPlanner = (data) => api.post('/financial/budget/forecasting/scenario-planner', data);
+export const budgetForecastingDriverBased = (data) => api.post('/financial/budget/forecasting/driver-based', data);
+export const budgetForecastingRolling = (data) => api.post('/financial/budget/forecasting/rolling', data);
+export const budgetForecastingAccuracy = (params) => api.get('/financial/budget/forecasting/accuracy', { params });
+export const budgetForecastingCollaboration = (data) => api.post('/financial/budget/forecasting/collaboration', data);
+
+// --- Budget - Variance Analysis (6 submodules) ---
+export const budgetVarianceDashboard = (params) => api.get('/financial/budget/variance/dashboard', { params });
+export const budgetVarianceBudgetVsActual = (params) => api.get('/financial/budget/variance/budget-vs-actual', { params });
+export const budgetVarianceForecastVsActual = (params) => api.get('/financial/budget/variance/forecast-vs-actual', { params });
+export const budgetVarianceDecomposition = (params) => api.get('/financial/budget/variance/decomposition', { params });
+export const budgetVarianceTrendAnalysis = (params) => api.get('/financial/budget/variance/trend-analysis', { params });
+export const budgetVarianceAlerts = (data) => api.post('/financial/budget/variance/alerts', data);
+
+// --- Debts - Debt Maturity Schedules (4 submodules) ---
+export const debtsMaturityDashboard = (params) => api.get('/financial/debts/maturity/dashboard', { params });
+export const debtsMaturityScheduleManager = (data) => api.post('/financial/debts/maturity/schedule-manager', data);
+export const debtsMaturityRefinancingPlanner = (data) => api.post('/financial/debts/maturity/refinancing-planner', data);
+export const debtsMaturityCovenantTracker = (params) => api.get('/financial/debts/maturity/covenant-tracker', { params });
+
+// --- Debts - Interest Payments (4 submodules) ---
+export const debtsInterestDashboard = (params) => api.get('/financial/debts/interest/dashboard', { params });
+export const debtsInterestCalculationEngine = (data) => api.post('/financial/debts/interest/calculation-engine', data);
+export const debtsInterestAccrualManager = (data) => api.post('/financial/debts/interest/accrual-manager', data);
+export const debtsInterestPaymentScheduler = (data) => api.post('/financial/debts/interest/payment-scheduler', data);
+
+// --- Debts - Loan Agreements (3 submodules) ---
+export const debtsLoanAgreementRepository = (params) => api.get('/financial/debts/loan-agreements/repository', { params });
+export const debtsLoanCovenantMonitor = (params) => api.get('/financial/debts/loan-agreements/covenant-monitor', { params });
+export const debtsLoanAmendmentTracker = (data) => api.post('/financial/debts/loan-agreements/amendment-tracker', data);
+
+// --- General Ledger - Chart of Accounts (5 submodules) ---
+export const glChartAccountHierarchy = (params) => api.get('/financial/general-ledger/chart-of-accounts/hierarchy', { params });
+export const glChartAccountMaintenance = (data) => api.post('/financial/general-ledger/chart-of-accounts/maintenance', data);
+export const glChartMappingManager = (data) => api.post('/financial/general-ledger/chart-of-accounts/mapping-manager', data);
+export const glChartSegmentRules = (data) => api.post('/financial/general-ledger/chart-of-accounts/segment-rules', data);
+export const glChartAccountAnalytics = (params) => api.get('/financial/general-ledger/chart-of-accounts/analytics', { params });
+
+// --- General Ledger - Fiscal Periods (4 submodules) ---
+export const glFiscalPeriodCalendar = (params) => api.get('/financial/general-ledger/fiscal-periods/calendar', { params });
+export const glFiscalPeriodStatus = (data) => api.post('/financial/general-ledger/fiscal-periods/status', data);
+export const glFiscalYearEndClose = (data) => api.post('/financial/general-ledger/fiscal-periods/year-end-close', data);
+export const glFiscalPeriodAnalytics = (params) => api.get('/financial/general-ledger/fiscal-periods/analytics', { params });
+
+// --- General Ledger - Journal Entries (5 submodules) ---
+export const glJournalEntryDashboard = (params) => api.get('/financial/general-ledger/journal-entries/dashboard', { params });
+export const glJournalManualEntry = (data) => api.post('/financial/general-ledger/journal-entries/manual-entry', data);
+export const glJournalRecurringEntries = (data) => api.post('/financial/general-ledger/journal-entries/recurring', data);
+export const glJournalApprovalWorkflow = (data) => api.post('/financial/general-ledger/journal-entries/approval-workflow', data);
+export const glJournalEntryAnalytics = (params) => api.get('/financial/general-ledger/journal-entries/analytics', { params });
+
+// --- General Ledger - Trial Balance (4 submodules) ---
+export const glTrialBalanceReport = (params) => api.get('/financial/general-ledger/trial-balance/report', { params });
+export const glTrialBalanceAdjustingEntries = (data) => api.post('/financial/general-ledger/trial-balance/adjusting-entries', data);
+export const glTrialBalanceReconciliation = (data) => api.post('/financial/general-ledger/trial-balance/reconciliation', data);
+export const glTrialBalancePeriodComparison = (params) => api.get('/financial/general-ledger/trial-balance/period-comparison', { params });
+
+// --- Investments - Equity Investments (4 submodules) ---
+export const investmentsEquityPortfolioDashboard = (params) => api.get('/financial/investments/equity/portfolio-dashboard', { params });
+export const investmentsEquityPositionManager = (data) => api.post('/financial/investments/equity/position-manager', data);
+export const investmentsEquityValuationEngine = (data) => api.post('/financial/investments/equity/valuation-engine', data);
+export const investmentsEquityPerformanceAnalytics = (params) => api.get('/financial/investments/equity/performance-analytics', { params });
+
+// --- Investments - Fixed Income (4 submodules) ---
+export const investmentsFixedIncomeBondPortfolio = (params) => api.get('/financial/investments/fixed-income/bond-portfolio', { params });
+export const investmentsFixedIncomeYieldCalculator = (data) => api.post('/financial/investments/fixed-income/yield-calculator', data);
+export const investmentsFixedIncomeMaturityLadder = (params) => api.get('/financial/investments/fixed-income/maturity-ladder', { params });
+export const investmentsFixedIncomeCreditRiskMonitor = (params) => api.get('/financial/investments/fixed-income/credit-risk-monitor', { params });
+
+// --- Investments - Investment Returns (3 submodules) ---
+export const investmentsReturnsDashboard = (params) => api.get('/financial/investments/returns/dashboard', { params });
+export const investmentsReturnsROICalculator = (data) => api.post('/financial/investments/returns/roi-calculator', data);
+export const investmentsReturnsPerformanceAttribution = (params) => api.get('/financial/investments/returns/performance-attribution', { params });
+
+// --- Taxation - Tax Audits (4 submodules) ---
+export const taxAuditsDashboard = (params) => api.get('/financial/taxation/audits/dashboard', { params });
+export const taxAuditsManager = (data) => api.post('/financial/taxation/audits/manager', data);
+export const taxAuditsDocumentationRepository = (params) => api.get('/financial/taxation/audits/documentation-repository', { params });
+export const taxAuditsFindingsTracker = (data) => api.post('/financial/taxation/audits/findings-tracker', data);
+
+// --- Taxation - Tax Credits (4 submodules) ---
+export const taxCreditsDashboard = (params) => api.get('/financial/taxation/credits/dashboard', { params });
+export const taxCreditsCalculator = (data) => api.post('/financial/taxation/credits/calculator', data);
+export const taxCreditsTracker = (params) => api.get('/financial/taxation/credits/tracker', { params });
+export const taxCreditsCarryforwardManager = (data) => api.post('/financial/taxation/credits/carryforward-manager', data);
+
+// --- Taxation - Tax Filings (4 submodules) ---
+export const taxFilingsDashboard = (params) => api.get('/financial/taxation/filings/dashboard', { params });
+export const taxFilingsPreparation = (data) => api.post('/financial/taxation/filings/preparation', data);
+export const taxFilingsSubmissionManager = (data) => api.post('/financial/taxation/filings/submission-manager', data);
+export const taxFilingsCalendar = (params) => api.get('/financial/taxation/filings/calendar', { params });
+
+// --- Taxation - VAT/GST Records (4 submodules) ---
+export const taxVATDashboard = (params) => api.get('/financial/taxation/vat-gst/dashboard', { params });
+export const taxVATCalculator = (data) => api.post('/financial/taxation/vat-gst/calculator', data);
+export const taxVATReturnPreparation = (data) => api.post('/financial/taxation/vat-gst/return-preparation', data);
+export const taxVATReconciliation = (data) => api.post('/financial/taxation/vat-gst/reconciliation', data);
+
+// --- Taxation - Withholding Taxes (4 submodules) ---
+export const taxWithholdingDashboard = (params) => api.get('/financial/taxation/withholding/dashboard', { params });
+export const taxWithholdingRateManager = (data) => api.post('/financial/taxation/withholding/rate-manager', data);
+export const taxWithholdingCertificateTracker = (params) => api.get('/financial/taxation/withholding/certificate-tracker', { params });
+export const taxWithholdingComplianceMonitor = (params) => api.get('/financial/taxation/withholding/compliance-monitor', { params });
+
+// --- Treasury Management - Cash Flow Forecasts (8 submodules) ---
+export const treasuryCashFlowDashboard = (params) => api.get('/financial/treasury/cash-flow/dashboard', { params });
+export const treasuryCashFlowDirectMethod = (data) => api.post('/financial/treasury/cash-flow/direct-method', data);
+export const treasuryCashFlowIndirectMethod = (data) => api.post('/financial/treasury/cash-flow/indirect-method', data);
+export const treasuryCashFlowScenarioManager = (data) => api.post('/financial/treasury/cash-flow/scenario-manager', data);
+export const treasuryCashFlowAdjustments = (data) => api.post('/financial/treasury/cash-flow/adjustments', data);
+export const treasuryCashFlowVarianceAnalysis = (params) => api.get('/financial/treasury/cash-flow/variance-analysis', { params });
+export const treasuryCashFlowFXExposure = (params) => api.get('/financial/treasury/cash-flow/fx-exposure', { params });
+export const treasuryCashFlowIntegrationHub = (data) => api.post('/financial/treasury/cash-flow/integration-hub', data);
+
+// --- Treasury Management - Liquidity Management (7 submodules) ---
+export const treasuryLiquidityDashboard = (params) => api.get('/financial/treasury/liquidity/dashboard', { params });
+export const treasuryLiquidityCashPositioning = (params) => api.get('/financial/treasury/liquidity/cash-positioning', { params });
+export const treasuryLiquidityFundingGapAnalysis = (params) => api.get('/financial/treasury/liquidity/funding-gap-analysis', { params });
+export const treasuryLiquidityCashPooling = (data) => api.post('/financial/treasury/liquidity/cash-pooling', data);
+export const treasuryLiquidityStressTest = (data) => api.post('/financial/treasury/liquidity/stress-test', data);
+export const treasuryLiquiditySurplusManagement = (data) => api.post('/financial/treasury/liquidity/surplus-management', data);
+export const treasuryLiquidityBankRiskSummary = (params) => api.get('/financial/treasury/liquidity/bank-risk-summary', { params });
+
+// --- Treasury Management - Treasury Policies (7 submodules) ---
+export const treasuryPoliciesDashboard = (params) => api.get('/financial/treasury/policies/dashboard', { params });
+export const treasuryPoliciesManager = (data) => api.post('/financial/treasury/policies/manager', data);
+export const treasuryPoliciesLibrary = (params) => api.get('/financial/treasury/policies/library', { params });
+export const treasuryPoliciesComplianceMonitor = (params) => api.get('/financial/treasury/policies/compliance-monitor', { params });
+export const treasuryPoliciesLimitManagement = (data) => api.post('/financial/treasury/policies/limit-management', data);
+export const treasuryPoliciesExceptionWorkflows = (data) => api.post('/financial/treasury/policies/exception-workflows', data);
+export const treasuryPoliciesAuditLog = (params) => api.get('/financial/treasury/policies/audit-log', { params });

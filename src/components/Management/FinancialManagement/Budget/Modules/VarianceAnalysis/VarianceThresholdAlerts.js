@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button, Grid, Card, CardContent, TextField, Switch, FormControlLabel, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { NotificationsActive, Add } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/VarianceThresholdAlerts';
 
 const VarianceThresholdAlerts = () => {
     const [open, setOpen] = useState(false);

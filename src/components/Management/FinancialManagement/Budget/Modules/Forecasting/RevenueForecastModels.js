@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
 import { MonetizationOn, ShowChart } from '@mui/icons-material';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/RevenueForecastModels';
 
 const data = [
     { name: 'Month 1', pipeline: 4000, trend: 2400 },

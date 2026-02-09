@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Grid, Card, CardActionArea, CardContent, Chip } from '@mui/material';
 import { CompareArrows } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/ScenarioPlanningManager';
 
 const ScenarioPlanningManager = () => {
     return (

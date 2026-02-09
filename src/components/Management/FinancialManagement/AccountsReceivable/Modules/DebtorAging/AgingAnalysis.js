@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Box, Typography, Grid, Paper, Tabs, Tab } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/AgingAnalysis';
 
 const AgingAnalysis = () => {
     const [value, setValue] = React.useState(0);

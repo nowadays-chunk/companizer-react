@@ -4,4 +4,5 @@ export const fieldsConfig = {
     installment_plan: { label: 'Installment Plan', type: 'json' }
 };
 
+export const entityName = 'Payment Terms';
 export const collectionName = 'payment_terms_ui';

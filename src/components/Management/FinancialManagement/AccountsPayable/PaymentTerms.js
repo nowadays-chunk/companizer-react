@@ -1,3 +1,5 @@
+import { modules } from './Modules/PaymentTerms';
+export { modules };
 
 export const fieldsConfig = {
     // --- Identity ---
@@ -68,8 +70,8 @@ export const fieldsConfig = {
     accountable_id: { label: 'Owner', type: 'text', hidden: true, faker: 'datatype.uuid' },
 };
 
-
 export const entityName = 'Payment Terms';
+
 export const collectionName = 'payment_terms';
 
 export default {

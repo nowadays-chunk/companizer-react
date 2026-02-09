@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Paper, Grid, Card, CardContent, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, LinearProgress } from '@mui/material';
 import { TrendingUp, TrendingDown, CheckCircle, Warning } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/CovenantComplianceIntegration';
 
 const CovenantComplianceIntegration = () => {
     return (

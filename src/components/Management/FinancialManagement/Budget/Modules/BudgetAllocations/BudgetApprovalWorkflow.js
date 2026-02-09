@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Stepper, Step, StepLabel, Card, CardContent, Button, Stack, Snackbar, Alert } from '@mui/material';
 import { Approval } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/BudgetApprovalWorkflow';
 
 const BudgetApprovalWorkflow = () => {
     const [activeStep, setActiveStep] = useState(2);

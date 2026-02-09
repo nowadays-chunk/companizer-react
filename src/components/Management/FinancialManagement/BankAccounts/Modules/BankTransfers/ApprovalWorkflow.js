@@ -18,6 +18,7 @@ import {
 
 // Helper component for TableContainer since it was missing in imports
 import { TableContainer } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/ApprovalWorkflow';
 
 const ApprovalWorkflow = () => {
     const theme = useTheme();

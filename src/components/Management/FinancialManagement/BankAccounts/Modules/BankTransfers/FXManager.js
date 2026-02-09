@@ -12,6 +12,7 @@ import {
     Paper,
     useTheme
 } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/FXManager';
 
 const FXManager = () => {
     const theme = useTheme();

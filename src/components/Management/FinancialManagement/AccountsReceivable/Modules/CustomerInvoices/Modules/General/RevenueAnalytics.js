@@ -5,4 +5,5 @@ export const fieldsConfig = {
     period: { label: 'Period', type: 'text' }
 };
 
+export const entityName = 'Revenue Analytics';
 export const collectionName = 'ar_revenue_metrics';

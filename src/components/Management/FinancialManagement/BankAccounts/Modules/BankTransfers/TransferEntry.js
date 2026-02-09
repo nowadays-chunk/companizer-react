@@ -20,6 +20,7 @@ import {
     CircularProgress
 } from '@mui/material';
 import { bankTransferFunds } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/TransferEntry';
 
 const TransferEntry = () => {
     const theme = useTheme();

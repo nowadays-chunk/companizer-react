@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { 
-    Box, 
-    Paper, 
-    Typography, 
-    Grid, 
-    Button, 
-    TextField, 
+import {
+    Box,
+    Paper,
+    Typography,
+    Grid,
+    Button,
+    TextField,
     MenuItem,
     Card,
     CardContent,
@@ -20,11 +20,11 @@ import {
     Collapse,
     Tooltip
 } from '@mui/material';
-import { 
-    FilterList, 
-    GetApp, 
-    Refresh, 
-    KeyboardArrowDown, 
+import {
+    FilterList,
+    GetApp,
+    Refresh,
+    KeyboardArrowDown,
     KeyboardArrowRight,
     Search,
     PictureAsPdf,
@@ -32,20 +32,26 @@ import {
     Print
 } from '@mui/icons-material';
 
+import { fieldsConfig, collectionName, entityName } from './Modules/General/TrialBalanceStandardConfig';
+
 const TrialBalanceStandard = () => {
     const [filterDate, setFilterDate] = useState(new Date().toISOString().split('T')[0]);
     const [periodType, setPeriodType] = useState('as-of'); // 'as-of' or 'range'
     const [viewMode, setViewMode] = useState('hierarchy'); // 'hierarchy' or 'flat'
-    
+
     // Mock data for initial display
     const [accounts, setAccounts] = useState([
-        { id: 1, name: 'Assets', type: 'Asset', code: '1000', debit: 500000, credit: 0, level: 0, children: [
-            { id: 11, name: 'Current Assets', type: 'Asset', code: '1100', debit: 200000, credit: 0, level: 1, children: [
-                { id: 111, name: 'Cash', type: 'Asset', code: '1110', debit: 50000, credit: 0, level: 2 },
-                { id: 112, name: 'Bank', type: 'Asset', code: '1120', debit: 150000, credit: 0, level: 2 },
-            ]},
-            { id: 12, name: 'Fixed Assets', type: 'Asset', code: '1200', debit: 300000, credit: 0, level: 1 }
-        ]},
+        {
+            id: 1, name: 'Assets', type: 'Asset', code: '1000', debit: 500000, credit: 0, level: 0, children: [
+                {
+                    id: 11, name: 'Current Assets', type: 'Asset', code: '1100', debit: 200000, credit: 0, level: 1, children: [
+                        { id: 111, name: 'Cash', type: 'Asset', code: '1110', debit: 50000, credit: 0, level: 2 },
+                        { id: 112, name: 'Bank', type: 'Asset', code: '1120', debit: 150000, credit: 0, level: 2 },
+                    ]
+                },
+                { id: 12, name: 'Fixed Assets', type: 'Asset', code: '1200', debit: 300000, credit: 0, level: 1 }
+            ]
+        },
         { id: 2, name: 'Liabilities', type: 'Liability', code: '2000', debit: 0, credit: 300000, level: 0, children: [] },
         { id: 3, name: 'Equity', type: 'Equity', code: '3000', debit: 0, credit: 200000, level: 0, children: [] },
     ]);
@@ -59,7 +65,7 @@ const TrialBalanceStandard = () => {
     const renderRow = (account) => {
         const hasChildren = account.children && account.children.length > 0;
         const isExpanded = expanded[account.id];
-        
+
         return (
             <React.Fragment key={account.id}>
                 <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} hover>
@@ -109,9 +115,9 @@ const TrialBalanceStandard = () => {
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>Standard Trial Balance</Typography>
                 <Box sx={{ display: 'flex', gap: 2 }}>
-                     <Button startIcon={<Print />} variant="outlined">Print</Button>
-                     <Button startIcon={<PictureAsPdf />} variant="outlined">PDF</Button>
-                     <Button startIcon={<TableChart />} variant="outlined">Excel</Button>
+                    <Button startIcon={<Print />} variant="outlined">Print</Button>
+                    <Button startIcon={<PictureAsPdf />} variant="outlined">PDF</Button>
+                    <Button startIcon={<TableChart />} variant="outlined">Excel</Button>
                 </Box>
             </Box>
 
@@ -141,7 +147,7 @@ const TrialBalanceStandard = () => {
                             InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
-                     <Grid item xs={12} md={3}>
+                    <Grid item xs={12} md={3}>
                         <TextField
                             select
                             label="Department"
@@ -155,8 +161,8 @@ const TrialBalanceStandard = () => {
                         </TextField>
                     </Grid>
                     <Grid item xs={12} md={3}>
-                        <Button 
-                            variant="contained" 
+                        <Button
+                            variant="contained"
                             startIcon={<Refresh />}
                             fullWidth
                             sx={{ height: 40 }}

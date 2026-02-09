@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Grid, Card, CardContent, Table, TableBody, TableCell, TableRow, Chip, Divider } from '@mui/material';
 import { Security, AccountBalance } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/ExposureManager';
 
 const ExposureManager = () => {
     return (

@@ -5,4 +5,5 @@ export const fieldsConfig = {
     days_due: { label: 'Days / Day Param', type: 'number', defaultValue: 30 }
 };
 
+export const entityName = 'Term Calculator';
 export const collectionName = 'payment_term_calculator';

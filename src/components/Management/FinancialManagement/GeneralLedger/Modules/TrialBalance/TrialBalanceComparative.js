@@ -22,6 +22,8 @@ import {
     CompareArrows
 } from '@mui/icons-material';
 
+import { fieldsConfig, collectionName, entityName } from './Modules/General/TrialBalanceComparativeConfig';
+
 const TrialBalanceComparative = () => {
     const [comparisonType, setComparisonType] = useState('prior_period');
 

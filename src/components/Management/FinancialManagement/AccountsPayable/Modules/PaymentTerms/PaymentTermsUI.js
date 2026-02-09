@@ -2,7 +2,7 @@
 import React from 'react';
 import { Grid, Typography, Divider, Box } from '@mui/material';
 import TermRuleEditor from './TermRuleEditor';
-import { TermTestBench } from './TermTestBench';
+import TermTestBench from './TermTestBench';
 import { fieldsConfig, collectionName } from './Modules/General/PaymentTermsUI';
 
 // This component acts as an extension/plugin to the Generic Visualizer 

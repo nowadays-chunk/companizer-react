@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Box, Typography, Grid, Paper, Slider, Button } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/CashForecast';
 
 const CashForecast = () => {
     return (

@@ -11,6 +11,8 @@ import {
 } from '@mui/material';
 import { Save } from '@mui/icons-material';
 
+import { fieldsConfig, collectionName, entityName } from './Modules/General/TrialBalanceConfigConfig';
+
 const TrialBalanceConfig = () => {
     return (
         <Box sx={{ p: 3 }}>

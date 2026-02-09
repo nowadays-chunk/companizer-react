@@ -13,6 +13,7 @@ import {
     Chip,
     Button
 } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/GLAccountingIntegration';
 
 const GLAccountingIntegration = () => {
     // Mock journal entry preview

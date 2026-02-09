@@ -14,6 +14,7 @@ import {
     useTheme
 } from '@mui/material';
 import { Edit } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/AutomationRules';
 
 const AutomationRules = () => {
     return (

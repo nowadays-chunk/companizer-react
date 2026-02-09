@@ -18,6 +18,7 @@ import {
     Alert
 } from '@mui/material';
 import { Save, Refresh } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/CurrencyConfiguration';
 
 const CurrencyConfiguration = () => {
     const [config, setConfig] = useState({

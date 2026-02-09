@@ -37,6 +37,8 @@ import {
     Security
 } from '@mui/icons-material';
 
+import { fieldsConfig, collectionName, entityName } from './Modules/General/SegmentConfigurationConfig';
+
 const SegmentConfiguration = () => {
     const [tabValue, setTabValue] = useState(0);
     const [dialogOpen, setDialogOpen] = useState(false);

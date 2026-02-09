@@ -18,6 +18,7 @@ import {
     Schedule,
     Add
 } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/TransferDashboard';
 
 const TransferDashboard = () => {
     const theme = useTheme();

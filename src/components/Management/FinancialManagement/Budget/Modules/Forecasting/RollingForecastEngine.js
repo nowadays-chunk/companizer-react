@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, CircularProgress, Snackbar, Alert } from '@mui/material';
 import { Update, FastForward } from '@mui/icons-material';
 import { budgetForecast } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/RollingForecastEngine';
 
 const RollingForecastEngine = () => {
     const [months, setMonths] = useState(['Jul 2024', 'Aug 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024']);

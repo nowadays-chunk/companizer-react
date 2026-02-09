@@ -25,6 +25,7 @@ import {
     ArrowForward as ArrowForwardIcon
 } from '@mui/icons-material';
 import { bankGenerateCashPosition } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/ReconciliationDashboard';
 
 const ReconciliationDashboard = () => {
     const theme = useTheme();

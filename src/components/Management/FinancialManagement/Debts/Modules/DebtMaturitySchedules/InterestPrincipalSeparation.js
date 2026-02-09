@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Paper, Grid, Card, CardContent, Tooltip } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/InterestPrincipalSeparation';
 
 const InterestPrincipalSeparation = () => {
     // Mock Data

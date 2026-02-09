@@ -63,3 +63,5 @@ export const TermCalculator = {
         return date ? format(date, 'yyyy-MM-dd') : '';
     }
 };
+
+export default TermCalculator;

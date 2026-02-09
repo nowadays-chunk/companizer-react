@@ -16,14 +16,7 @@ import {
     Paper
 } from '@mui/material';
 
-export const fieldsConfig = {
-    task_name: { label: 'Task Name', type: 'text' },
-    is_completed: { label: 'Completed', type: 'checkbox' },
-    completed_by: { label: 'Completed By', type: 'text' },
-    completion_date: { label: 'Date', type: 'date' }
-};
-
-export const entityName = 'Close Process';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/CloseProcessManagerConfig';
 
 const CloseProcessManager = () => {
     const theme = useTheme();

@@ -14,6 +14,7 @@ import {
     InputLabel,
     Select
 } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/LoanModifications';
 
 const LoanModifications = () => {
     return (

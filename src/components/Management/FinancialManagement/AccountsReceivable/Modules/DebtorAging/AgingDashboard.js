@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Box, Typography, Grid, Paper, Card, CardContent } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/AgingDashboard';
 
 // Placeholder for charts - in a real app, use recharts, chart.js, etc.
 const MockChart = ({ title, color }) => (

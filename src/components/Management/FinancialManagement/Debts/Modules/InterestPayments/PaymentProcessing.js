@@ -14,6 +14,7 @@ import {
     MenuItem,
     Alert
 } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/PaymentProcessing';
 
 const PaymentProcessing = () => {
     return (

@@ -16,6 +16,8 @@ import {
 } from '@mui/material';
 import { Settings, Security, Backup, Rule } from '@mui/icons-material';
 
+import { fieldsConfig, collectionName, entityName } from './Modules/General/CoAAdminConfig';
+
 const CoAAdmin = () => {
     const [tabValue, setTabValue] = useState(0);
 

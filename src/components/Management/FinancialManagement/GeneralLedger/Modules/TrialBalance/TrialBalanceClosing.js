@@ -24,6 +24,8 @@ import {
     HistoryEdu
 } from '@mui/icons-material';
 
+import { fieldsConfig, collectionName, entityName } from './Modules/General/TrialBalanceClosingConfig';
+
 const TrialBalanceClosing = () => {
     const [tabValue, setTabValue] = useState(0);
 

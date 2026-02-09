@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Box, Typography, Grid, Card, CardActionArea, CardContent, Snackbar, Alert, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
 import { Speed, FileUpload, FileDownload, ContentCopy, AddCircle } from '@mui/icons-material';
 import { budgetCreateBudget } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/BudgetEntryProductivity';
 
 const BudgetEntryProductivity = () => {
     const fileInputRef = useRef(null);

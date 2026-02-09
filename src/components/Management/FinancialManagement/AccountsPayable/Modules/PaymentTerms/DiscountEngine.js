@@ -53,3 +53,5 @@ export const DiscountEngine = {
         return { discountAmount: 0, discountPercent: 0, status: 'expired' };
     }
 };
+
+export default DiscountEngine;

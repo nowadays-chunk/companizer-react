@@ -3,8 +3,6 @@ import React from 'react';
 const PaymentTermsUI = React.lazy(() => import('./PaymentTermsUI'));
 const TermRuleEditor = React.lazy(() => import('./TermRuleEditor'));
 const TermCalculator = React.lazy(() => import('./TermCalculatorUI'));
-const DiscountEngine = React.lazy(() => import('./DiscountEngine'));
-const InstallmentManager = React.lazy(() => import('./InstallmentManager'));
 const TermTestBench = React.lazy(() => import('./TermTestBench'));
 
 export const modules = [
@@ -45,30 +43,6 @@ export const modules = [
         requiresSelection: false
     },
     {
-        id: 'discount-engine',
-        name: 'Discount Management',
-        description: 'Early payment discounts',
-        icon: 'LocalOffer',
-        component: DiscountEngine,
-        group: 'Configuration',
-        type: 'Specific',
-        path: '/apps/payment-terms/discounts',
-        label: 'Discounts',
-        requiresSelection: false
-    },
-    {
-        id: 'installment-manager',
-        name: 'Installments',
-        description: 'Split payments setup',
-        icon: 'ViewWeek',
-        component: InstallmentManager,
-        group: 'Configuration',
-        type: 'Specific',
-        path: '/apps/payment-terms/installments',
-        label: 'Installments',
-        requiresSelection: false
-    },
-    {
         id: 'term-test-bench',
         name: 'Test Bench',
         description: 'Validate term configurations',
@@ -81,3 +55,5 @@ export const modules = [
         requiresSelection: false
     }
 ];
+
+export default modules;

@@ -21,6 +21,7 @@ import {
     Divider
 } from '@mui/material';
 import { Calculate, Info } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/InterestCalculationEngine';
 
 const InterestCalculationEngine = () => {
     const [calculation, setCalculation] = useState(null);

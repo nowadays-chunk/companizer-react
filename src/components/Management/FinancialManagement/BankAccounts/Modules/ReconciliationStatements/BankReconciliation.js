@@ -21,6 +21,7 @@ import {
     CircularProgress
 } from '@mui/material';
 import { bankMatchTransaction, bankAutoReconcile } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/BankReconciliation';
 
 const BankReconciliation = () => {
     const theme = useTheme();

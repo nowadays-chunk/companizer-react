@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Box, Typography, Grid, Paper, FormControlLabel, Switch, TextField, Button, Divider, Alert } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/AgingConfiguration';
 
 const AgingConfiguration = () => {
     return (

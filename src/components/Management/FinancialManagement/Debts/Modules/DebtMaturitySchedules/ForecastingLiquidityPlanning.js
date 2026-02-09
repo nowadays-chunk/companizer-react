@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Paper, Grid, Alert, LinearProgress, Tooltip } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/ForecastingLiquidityPlanning';
 
 const ForecastingLiquidityPlanning = () => {
     const forecastData = [

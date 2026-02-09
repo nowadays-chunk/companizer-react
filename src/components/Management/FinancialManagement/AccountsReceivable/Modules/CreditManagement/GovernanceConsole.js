@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Grid, Card, CardContent, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Button, List, ListItem, ListItemText, TextField, MenuItem } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/GovernanceConsole';
 
 const GovernanceConsole = () => {
     return (

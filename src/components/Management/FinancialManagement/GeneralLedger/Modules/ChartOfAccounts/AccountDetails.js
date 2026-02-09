@@ -18,6 +18,8 @@ import {
 } from '@mui/material';
 import { Edit, Language, Security, Public } from '@mui/icons-material';
 
+import { fieldsConfig, collectionName, entityName } from './Modules/General/AccountDetailsConfig';
+
 const AccountDetails = ({ accountId: propAccountId }) => {
     const { id: paramId } = useParams();
     const accountId = propAccountId || paramId;

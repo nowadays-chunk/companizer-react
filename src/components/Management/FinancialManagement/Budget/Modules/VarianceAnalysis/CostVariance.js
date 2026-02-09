@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Grid, Card, CardContent, Button, Dialog, DialogTitle, DialogContent, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import { MoneyOff, Visibility } from '@mui/icons-material';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/CostVariance';
 
 const data = [
     { name: 'Fixed Costs Variance', value: 400 },

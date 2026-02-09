@@ -18,6 +18,7 @@ import {
     Select,
     Chip
 } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/FeesPenalties';
 
 const FeesPenalties = () => {
     const [fees, setFees] = useState([

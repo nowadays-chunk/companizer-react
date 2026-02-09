@@ -18,6 +18,8 @@ import {
     Visibility
 } from '@mui/icons-material';
 
+import { fieldsConfig, collectionName, entityName } from './Modules/General/TrialBalanceAuditConfig';
+
 const TrialBalanceAudit = () => {
     const history = [
         { id: 1, date: '2026-01-31 23:59:59', type: 'System Snapshot', user: 'System', status: 'Locked' },

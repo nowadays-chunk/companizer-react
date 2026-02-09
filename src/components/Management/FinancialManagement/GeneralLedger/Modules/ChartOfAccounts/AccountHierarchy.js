@@ -33,6 +33,8 @@ import {
     History
 } from '@mui/icons-material';
 
+import { fieldsConfig, collectionName, entityName } from './Modules/General/AccountHierarchyConfig';
+
 const AccountHierarchy = () => {
     const [expandedNodes, setExpandedNodes] = useState(['root']);
     const [selectedAccount, setSelectedAccount] = useState(null);

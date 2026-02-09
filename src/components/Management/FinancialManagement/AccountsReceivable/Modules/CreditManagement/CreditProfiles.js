@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Tabs, Tab, Typography, Grid, TextField, MenuItem, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, List, ListItem, ListItemText, Alert, Button } from '@mui/material';
 
 import { arApproveCreditProfile } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/CreditProfiles';
 
 const CreditProfiles = () => {
     const [activeTab, setActiveTab] = useState(0);

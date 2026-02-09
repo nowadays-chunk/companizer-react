@@ -18,14 +18,7 @@ import {
     alpha
 } from '@mui/material';
 
-export const fieldsConfig = {
-    adjustment_code: { label: 'Adjustment Code', type: 'text' },
-    fiscal_year: { label: 'Fiscal Year', type: 'text' },
-    type: { label: 'Type', type: 'select', options: [{ id: 'audit', label: 'Audit' }, { id: 'tax', label: 'Tax' }, { id: 'management', label: 'Management' }] },
-    status: { label: 'Status', type: 'text' }
-};
-
-export const entityName = 'Adjustment Period';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/AdjustmentPeriodsConfig';
 
 const AdjustmentPeriods = () => {
     const theme = useTheme();

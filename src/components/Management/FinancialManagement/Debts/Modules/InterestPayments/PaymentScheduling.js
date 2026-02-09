@@ -16,6 +16,7 @@ import {
     IconButton
 } from '@mui/material';
 import { Event, NotificationsActive, ChevronLeft, ChevronRight, CalendarMonth } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/PaymentScheduling';
 
 const PaymentScheduling = () => {
     const upcomingPayments = [

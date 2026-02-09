@@ -33,6 +33,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { JournalEntryService } from './JournalEntryService';
 import { helpersWrapper } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/JournalEntryManagerConfig';
 
 // Mock Data for Selectors (Ideally fetched from backend/config)
 const ACCOUNTS = [
@@ -54,7 +55,7 @@ const JournalEntryManager = () => {
     const location = window.location.href; // Quick check for route context
     const isAllocation = location.includes('allocations');
     const isIntercompany = location.includes('intercompany');
-    const { loading, setLoading } = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const [journal, setJournal] = useState(JournalEntryService.createEmptyJournal());
 

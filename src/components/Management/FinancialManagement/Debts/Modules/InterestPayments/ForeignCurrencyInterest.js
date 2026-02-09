@@ -10,6 +10,7 @@ import {
     InputAdornment,
     Divider
 } from '@mui/material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/ForeignCurrencyInterest';
 
 const ForeignCurrencyInterest = () => {
     return (

@@ -7,4 +7,5 @@ export const fieldsConfig = {
     status: { label: 'Status', type: 'text' }
 };
 
+export const entityName = 'Dunning Manager';
 export const collectionName = 'ar_dunning_runs';

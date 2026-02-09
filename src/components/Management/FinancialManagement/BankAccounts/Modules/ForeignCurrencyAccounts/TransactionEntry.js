@@ -14,6 +14,7 @@ import {
     Checkbox
 } from '@mui/material';
 import { Save, Calculate, AttachMoney } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/General/TransactionEntry';
 
 const TransactionEntry = () => {
     const [formData, setFormData] = useState({

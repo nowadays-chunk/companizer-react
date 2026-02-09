@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Card, CardContent, Grid, Chip, Button, TextField, Divider, Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { AccountTree, Add, Edit, Delete } from '@mui/icons-material';
+import { fieldsConfig, collectionName, entityName } from './Modules/Specific/BudgetStructureDimensions';
 
 const BudgetStructureDimensions = () => {
     const [dimensions, setDimensions] = useState([
