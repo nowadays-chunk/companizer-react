@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Paper, Button, Grid, TextField, Alert } from '@mui/material';
 import { CloudUpload, Scanner } from '@mui/icons-material';
+import { fieldsConfig, collectionName } from './Modules/General/InvoiceCapture';
 
 const InvoiceCapture = ({ onCaptureComplete }) => {
     const [file, setFile] = useState(null);

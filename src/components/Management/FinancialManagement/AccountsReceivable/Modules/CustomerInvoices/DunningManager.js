@@ -24,6 +24,7 @@ import {
     Alert
 } from '@mui/material';
 import { arSendInvoiceReminder, arApplyLateFee } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName } from './Modules/General/DunningManager';
 
 const DunningManager = () => {
     const [invoiceId, setInvoiceId] = useState('');

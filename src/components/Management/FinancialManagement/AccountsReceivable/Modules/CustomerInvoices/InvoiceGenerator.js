@@ -24,6 +24,7 @@ import {
     TableRow,
     Checkbox
 } from '@mui/material';
+import { fieldsConfig, collectionName } from './Modules/General/InvoiceGenerator';
 
 const InvoiceGenerator = () => {
     const [tabValue, setTabValue] = useState(0);

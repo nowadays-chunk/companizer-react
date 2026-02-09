@@ -14,6 +14,7 @@ import {
     TableRow,
     Paper
 } from '@mui/material';
+import { fieldsConfig, collectionName } from './Modules/General/ARAging';
 
 const ARAging = () => {
     // Mock data for aging buckets

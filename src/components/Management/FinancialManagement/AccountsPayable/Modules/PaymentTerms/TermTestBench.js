@@ -5,6 +5,7 @@ import { DiscountEngine } from './DiscountEngine';
 import { InstallmentManager } from './InstallmentManager';
 
 import { apApplyPaymentTerm } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName } from './Modules/Specific/TermTestBench';
 
 export const TermTestBench = ({ termConfig }) => {
     const [testDate, setTestDate] = useState(new Date().toISOString().split('T')[0]);

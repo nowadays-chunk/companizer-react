@@ -12,6 +12,7 @@ import {
     Paper,
     Divider
 } from '@mui/material';
+import { fieldsConfig, collectionName } from './Modules/Specific/DisputeManager';
 
 const DisputeManager = () => {
     const disputes = [

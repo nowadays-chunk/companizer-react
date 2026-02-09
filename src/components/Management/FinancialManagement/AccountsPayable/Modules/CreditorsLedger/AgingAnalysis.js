@@ -33,6 +33,7 @@ import {
     ResponsiveContainer
 } from 'recharts';
 import { Download, Refresh } from '@mui/icons-material';
+import { fieldsConfig, collectionName } from './Modules/General/AgingAnalysis';
 
 const AGING_BUCKETS = [
     { id: 'current', label: 'Current', color: '#4caf50' },

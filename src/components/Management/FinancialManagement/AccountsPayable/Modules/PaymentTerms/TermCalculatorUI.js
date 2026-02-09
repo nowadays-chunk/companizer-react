@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Paper, TextField, MenuItem, Grid, Button } from '@mui/material';
 // import { TermCalculator } from './TermCalculator'; // No longer needed for calculation
 import { calculatePaymentDueDate } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName } from './Modules/Specific/TermCalculatorUI';
 
 const TermCalculatorUI = () => {
     const [baseDate, setBaseDate] = useState(new Date().toISOString().split('T')[0]);

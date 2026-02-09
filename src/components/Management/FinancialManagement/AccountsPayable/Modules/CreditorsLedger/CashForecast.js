@@ -31,6 +31,7 @@ import {
     CalendarToday,
     Circle
 } from '@mui/icons-material';
+import { fieldsConfig, collectionName } from './Modules/General/CashForecast';
 
 const CashForecast = ({ items = [] }) => {
     const [forecastPeriod, setForecastPeriod] = useState(30);

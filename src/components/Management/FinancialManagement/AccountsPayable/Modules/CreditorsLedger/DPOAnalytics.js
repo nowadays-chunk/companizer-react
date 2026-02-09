@@ -32,6 +32,7 @@ import {
     ResponsiveContainer
 } from 'recharts';
 import { TrendingUp, TrendingDown, Assessment } from '@mui/icons-material';
+import { fieldsConfig, collectionName } from './Modules/General/DPOAnalytics';
 
 const DPOAnalytics = ({ items = [], purchases = [] }) => {
     const [period, setPeriod] = useState('monthly');
@@ -183,89 +184,89 @@ const DPOAnalytics = ({ items = [], purchases = [] }) => {
                     <Card>
                         <CardContent>
                             <Typography color="textSecondary" gutterBottom>Total Payables</Typography>
-                        <Typography variant="h4">
-                            ${((dpoData.totalPayables || 0) / 1000).toFixed(0)}K
-                        </Typography>
-                        <Typography variant="caption" color="textSecondary">
-                            Outstanding balance
-                        </Typography>
-                    </CardContent>
-                </Card>
+                            <Typography variant="h4">
+                                ${((dpoData.totalPayables || 0) / 1000).toFixed(0)}K
+                            </Typography>
+                            <Typography variant="caption" color="textSecondary">
+                                Outstanding balance
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </Grid>
-        </Grid>
 
-      {/* Trend Charts */ }
-    <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} md={6}>
-            <Paper sx={{ p: 2 }}>
-                <Typography variant="h6" gutterBottom>DPO Trend</Typography>
-                <ResponsiveContainer width="100%" height={250}>
-                    <LineChart data={trendData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="dpo" stroke="#8884d8" name="DPO (Days)" />
-                    </LineChart>
-                </ResponsiveContainer>
-            </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-            <Paper sx={{ p: 2 }}>
-                <Typography variant="h6" gutterBottom>AP Turnover Trend</Typography>
-                <ResponsiveContainer width="100%" height={250}>
-                    <LineChart data={trendData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="apTurnover" stroke="#82ca9d" name="AP Turnover" />
-                    </LineChart>
-                </ResponsiveContainer>
-            </Paper>
-        </Grid>
-    </Grid>
+            {/* Trend Charts */}
+            <Grid container spacing={2} sx={{ mb: 3 }}>
+                <Grid item xs={12} md={6}>
+                    <Paper sx={{ p: 2 }}>
+                        <Typography variant="h6" gutterBottom>DPO Trend</Typography>
+                        <ResponsiveContainer width="100%" height={250}>
+                            <LineChart data={trendData}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="month" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="dpo" stroke="#8884d8" name="DPO (Days)" />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <Paper sx={{ p: 2 }}>
+                        <Typography variant="h6" gutterBottom>AP Turnover Trend</Typography>
+                        <ResponsiveContainer width="100%" height={250}>
+                            <LineChart data={trendData}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="month" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="apTurnover" stroke="#82ca9d" name="AP Turnover" />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </Paper>
+                </Grid>
+            </Grid>
 
-    {/* Vendor-wise DPO */ }
-    <Paper>
-        <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
-            <Typography variant="h6">Vendor-wise DPO Analysis</Typography>
-        </Box>
-        <TableContainer>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Vendor</TableCell>
-                        <TableCell align="right">Total Payables</TableCell>
-                        <TableCell align="right">Avg DPO (Days)</TableCell>
-                        <TableCell align="right">Invoice Count</TableCell>
-                        <TableCell>Performance</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {(dpoData.vendorDPO || []).map((vendor, index) => (
-                        <TableRow key={index} hover>
-                            <TableCell>{vendor.vendor}</TableCell>
-                            <TableCell align="right">${vendor.totalAmount.toLocaleString()}</TableCell>
-                            <TableCell align="right">{vendor.avgDPO.toFixed(1)}</TableCell>
-                            <TableCell align="right">{vendor.count}</TableCell>
-                            <TableCell>
-                                <Chip
-                                    label={vendor.avgDPO > 60 ? 'Extended' : vendor.avgDPO > 30 ? 'Normal' : 'Fast'}
-                                    color={vendor.avgDPO > 60 ? 'success' : vendor.avgDPO > 30 ? 'primary' : 'warning'}
-                                    size="small"
-                                />
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    </Paper>
-    </Box >
-  );
+            {/* Vendor-wise DPO */}
+            <Paper>
+                <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+                    <Typography variant="h6">Vendor-wise DPO Analysis</Typography>
+                </Box>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Vendor</TableCell>
+                                <TableCell align="right">Total Payables</TableCell>
+                                <TableCell align="right">Avg DPO (Days)</TableCell>
+                                <TableCell align="right">Invoice Count</TableCell>
+                                <TableCell>Performance</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {(dpoData.vendorDPO || []).map((vendor, index) => (
+                                <TableRow key={index} hover>
+                                    <TableCell>{vendor.vendor}</TableCell>
+                                    <TableCell align="right">${vendor.totalAmount.toLocaleString()}</TableCell>
+                                    <TableCell align="right">{vendor.avgDPO.toFixed(1)}</TableCell>
+                                    <TableCell align="right">{vendor.count}</TableCell>
+                                    <TableCell>
+                                        <Chip
+                                            label={vendor.avgDPO > 60 ? 'Extended' : vendor.avgDPO > 30 ? 'Normal' : 'Fast'}
+                                            color={vendor.avgDPO > 60 ? 'success' : vendor.avgDPO > 30 ? 'primary' : 'warning'}
+                                            size="small"
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Paper>
+        </Box >
+    );
 };
 
 export default DPOAnalytics;

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Card, CardContent, Button, Grid, Chip } from '@mui/material';
 import { helpersWrapper } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName } from './Modules/General/PaymentRunManager';
 
 const PaymentRunManager = () => {
     const [dueInvoices, setDueInvoices] = useState([]);

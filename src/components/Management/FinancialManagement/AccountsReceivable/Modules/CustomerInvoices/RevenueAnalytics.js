@@ -8,6 +8,7 @@ import {
     CardContent,
     Paper
 } from '@mui/material';
+import { fieldsConfig, collectionName } from './Modules/General/RevenueAnalytics';
 
 const RevenueAnalytics = () => {
     return (

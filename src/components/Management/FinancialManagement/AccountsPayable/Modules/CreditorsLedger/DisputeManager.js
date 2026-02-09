@@ -32,6 +32,7 @@ import {
     Download,
     Add
 } from '@mui/icons-material';
+import { fieldsConfig, collectionName } from './Modules/Specific/DisputeManager';
 
 const DisputeManager = ({ items = [], onRaiseDispute, onResolveDispute }) => {
     const [filterStatus, setFilterStatus] = useState('all');

@@ -32,6 +32,7 @@ import {
 } from '@mui/icons-material';
 
 import { apReconcileCreditorsLedger } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName } from './Modules/General/ReconciliationManager';
 
 const ReconciliationManager = ({ items = [], glData = [], onReconcile, onRefresh }) => {
     const [reconciliationStatus, setReconciliationStatus] = useState({});

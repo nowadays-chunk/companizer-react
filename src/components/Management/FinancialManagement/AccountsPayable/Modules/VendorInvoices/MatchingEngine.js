@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Typography, Paper, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, IconButton, Chip, TextField, Alert } from '@mui/material';
 import { LinkOff, Link as LinkIcon, CompareArrows, CheckCircle } from '@mui/icons-material';
 import { fetchDocuments, apMatchInvoice } from '../../../../../../utils/clientQueries';
+import { fieldsConfig, collectionName } from './Modules/General/MatchingEngine';
 
 const MatchingEngine = ({ invoiceAmount, invoiceId }) => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);

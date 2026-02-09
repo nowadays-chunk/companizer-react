@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button, IconButton, Table, TableBody, TableCell, TableHead, TableRow, TextField, Paper } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import { fieldsConfig, collectionName } from './Modules/Specific/TermRuleEditor';
 
 /**
  * A generic internal editor for JSON array rules (Discounts, Installments).
